@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class AssetLeasing extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'harga_beli',
+        'jangka_waktu_leasing',
+        'biaya_leasing',
+        'legalitas',
+    ];
+
+    public function asset(): BelongsTo
+    {
+        return $this->belongsTo(Asset::class);
+    }
+
+    public function dealer(): BelongsTo
+    {
+        return $this->belongsTo(Dealer::class);
+    }
+
+    public function leasing(): BelongsTo
+    {
+        return $this->belongsTo(Leasing::class);
+    }
+}
