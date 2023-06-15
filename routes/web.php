@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
+use App\Http\Controllers\Masters\SubClusterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('clusters/store', [ClusterController::class, 'store'])->name('clusters.store');
     Route::post('clusters/{cluster}/edit', [ClusterController::class, 'edit'])->name('clusters.edit');
     Route::delete('clusters/{cluster}/destroy', [ClusterController::class, 'destroy'])->name('clusters.destroy');
+
+    Route::get('sub-clusters', [SubClusterController::class, 'index'])->name('sub-clusters.index');
+    Route::post('sub-clusters/datatable', [SubClusterController::class, 'datatable'])->name('sub-clusters.datatable');
+    Route::post('sub-clusters/store', [SubClusterController::class, 'store'])->name('sub-clusters.store');
+    Route::post('sub-clusters/{subCluster}/edit', [SubClusterController::class, 'edit'])->name('sub-clusters.edit');
+    Route::delete('sub-clusters/{subCluster}/destroy', [SubClusterController::class, 'destroy'])->name('sub-clusters.destroy');
 });

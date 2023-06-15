@@ -69,6 +69,15 @@
                                 <span class="menu-title">Cluster</span>
                             </a>
                         </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('sub-clusters.index') ? 'active' : '' }}"
+                                href="{{ route('sub-clusters.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Sub Cluster</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
