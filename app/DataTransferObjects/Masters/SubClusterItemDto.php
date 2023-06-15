@@ -2,21 +2,21 @@
 
 namespace App\DataTransferObjects\Masters;
 
-use App\Http\Requests\Masters\SubClusterRequest;
+use App\Http\Requests\Masters\SubClusterItemRequest;
 
-class SubClusterDto
+class SubClusterItemDto
 {
     public function __construct(
-        public readonly mixed $cluster_id,
+        public readonly mixed $sub_cluster_id,
         public readonly string $name,
         public readonly mixed $key = null,
     ) {
     }
 
-    public static function fromRequest(SubClusterRequest $request): self
+    public static function fromRequest(SubClusterItemRequest $request): self
     {
         return new self(
-            $request->get('cluster_id'),
+            $request->get('sub_cluster_id'),
             $request->get('name'),
             $request->get('key'),
         );

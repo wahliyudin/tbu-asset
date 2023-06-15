@@ -11,7 +11,8 @@ class SubClusterItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'sub_cluster_id',
+        'name',
     ];
 
     public function subCluster(): BelongsTo

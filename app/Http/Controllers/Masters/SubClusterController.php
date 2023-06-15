@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\SubClusterDTO;
+use App\DataTransferObjects\Masters\SubClusterDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\SubClusterRequest;
 use App\Models\SubCluster;
@@ -42,7 +42,7 @@ class SubClusterController extends Controller
     public function store(SubClusterRequest $request)
     {
         try {
-            $this->service->updateOrCreate(SubClusterDTO::fromRequest($request));
+            $this->service->updateOrCreate(SubClusterDto::fromRequest($request));
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
 use App\Http\Controllers\Masters\SubClusterController;
+use App\Http\Controllers\Masters\SubClusterItemController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,4 +48,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('sub-clusters/store', [SubClusterController::class, 'store'])->name('sub-clusters.store');
     Route::post('sub-clusters/{subCluster}/edit', [SubClusterController::class, 'edit'])->name('sub-clusters.edit');
     Route::delete('sub-clusters/{subCluster}/destroy', [SubClusterController::class, 'destroy'])->name('sub-clusters.destroy');
+
+    Route::get('sub-cluster-items', [SubClusterItemController::class, 'index'])->name('sub-cluster-items.index');
+    Route::post('sub-cluster-items/datatable', [SubClusterItemController::class, 'datatable'])->name('sub-cluster-items.datatable');
+    Route::post('sub-cluster-items/store', [SubClusterItemController::class, 'store'])->name('sub-cluster-items.store');
+    Route::post('sub-cluster-items/{subClusterItem}/edit', [SubClusterItemController::class, 'edit'])->name('sub-cluster-items.edit');
+    Route::delete('sub-cluster-items/{subClusterItem}/destroy', [SubClusterItemController::class, 'destroy'])->name('sub-cluster-items.destroy');
 });
