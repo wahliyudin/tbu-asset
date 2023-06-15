@@ -87,25 +87,7 @@ var CategorysList = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: function (jqXHR) {
-                            if (jqXHR.status == 422) {
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Peringatan!',
-                                    text: JSON.parse(jqXHR.responseText).message,
-                                }).then(function () {
-                                    $(target).removeAttr("data-kt-indicator");
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: jqXHR.responseText,
-                                }).then(function () {
-                                    $(target).removeAttr("data-kt-indicator");
-                                });
-                            }
-                        }
+                        error: handleError
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -263,6 +245,8 @@ var CategorysList = function () {
     }
 
     var handleError = function (jqXHR) {
+        submitButton.removeAttribute('data-kt-indicator');
+        submitButton.disabled = false;
         if (jqXHR.status == 422) {
             Swal.fire({
                 icon: 'warning',

@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\DataTransferObjects\Masters\CategoryDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Masters\CategoryRequest;
 use App\Models\Category;
+use App\Services\Masters\CategoryService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
+    public function __construct(
+        private CategoryService $service
+    ) {
+    }
+
     public function index()
     {
         return view('master.category.index');
@@ -16,8 +24,7 @@ class CategoryController extends Controller
 
     public function datatable()
     {
-        $data = Category::query()->get();
-        return DataTables::of($data)
+        return DataTables::of($this->service->all())
             ->editColumn('action', function (Category $category) {
                 return view('master.category.action', compact('category'))->render();
             })
@@ -25,14 +32,10 @@ class CategoryController extends Controller
             ->make();
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         try {
-            Category::query()->updateOrCreate([
-                'id' => $request->key
-            ], [
-                'name' => $request->name,
-            ]);
+            $this->service->updateOrCreate(CategoryDto::fromRequest($request));
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
@@ -53,7 +56,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
-            $category->delete();
+            $this->service->delete($category);
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);
