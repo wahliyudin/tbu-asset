@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Master\CategoryController;
+use App\Http\Controllers\Masters\CategoryController;
+use App\Http\Controllers\Masters\ClusterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,4 +34,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('categories/store', [CategoryController::class, 'store'])->name('categories.store');
     Route::post('categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
     Route::delete('categories/{category}/destroy', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    Route::get('clusters', [ClusterController::class, 'index'])->name('clusters.index');
+    Route::post('clusters/datatable', [ClusterController::class, 'datatable'])->name('clusters.datatable');
+    Route::post('clusters/store', [ClusterController::class, 'store'])->name('clusters.store');
+    Route::post('clusters/{cluster}/edit', [ClusterController::class, 'edit'])->name('clusters.edit');
+    Route::delete('clusters/{cluster}/destroy', [ClusterController::class, 'destroy'])->name('clusters.destroy');
 });

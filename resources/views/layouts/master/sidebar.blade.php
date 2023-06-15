@@ -50,7 +50,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('categories.index') ? 'hover show' : '' }}">
+                        class="menu-sub menu-sub-accordion {{ request()->routeIs('categories.index') || request()->routeIs('clusters.index') ? 'hover show' : '' }}">
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('categories.index') ? 'active' : '' }}"
                                 href="{{ route('categories.index') }}">
@@ -58,6 +58,15 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Category</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('clusters.index') ? 'active' : '' }}"
+                                href="{{ route('clusters.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Cluster</span>
                             </a>
                         </div>
                     </div>
