@@ -50,7 +50,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('categories.index') || request()->routeIs('clusters.index') || request()->routeIs('sub-clusters.index') || request()->routeIs('sub-cluster-items.index') || request()->routeIs('catalogs.index') || request()->routeIs('dealers.index') ? 'hover show' : '' }}">
+                        class="menu-sub menu-sub-accordion {{ request()->routeIs('categories.index') || request()->routeIs('clusters.index') || request()->routeIs('sub-clusters.index') || request()->routeIs('sub-cluster-items.index') || request()->routeIs('catalogs.index') || request()->routeIs('dealers.index') || request()->routeIs('leasings.index') ? 'hover show' : '' }}">
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('categories.index') ? 'active' : '' }}"
                                 href="{{ route('categories.index') }}">
@@ -103,6 +103,15 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Dealer</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('leasings.index') ? 'active' : '' }}"
+                                href="{{ route('leasings.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Leasing</span>
                             </a>
                         </div>
                     </div>

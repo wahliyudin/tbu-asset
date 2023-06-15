@@ -4,7 +4,7 @@ namespace App\Http\Requests\Masters;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DealerRequest extends FormRequest
+class LeasingRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

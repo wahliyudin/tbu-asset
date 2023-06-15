@@ -5,6 +5,7 @@ use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
 use App\Http\Controllers\Masters\DealerController;
+use App\Http\Controllers\Masters\LeasingController;
 use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use Illuminate\Support\Facades\Auth;
@@ -68,4 +69,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('dealers/store', [DealerController::class, 'store'])->name('dealers.store');
     Route::post('dealers/{dealer}/edit', [DealerController::class, 'edit'])->name('dealers.edit');
     Route::delete('dealers/{dealer}/destroy', [DealerController::class, 'destroy'])->name('dealers.destroy');
+
+    Route::get('leasings', [LeasingController::class, 'index'])->name('leasings.index');
+    Route::post('leasings/datatable', [LeasingController::class, 'datatable'])->name('leasings.datatable');
+    Route::post('leasings/store', [LeasingController::class, 'store'])->name('leasings.store');
+    Route::post('leasings/{leasing}/edit', [LeasingController::class, 'edit'])->name('leasings.edit');
+    Route::delete('leasings/{leasing}/destroy', [LeasingController::class, 'destroy'])->name('leasings.destroy');
 });
