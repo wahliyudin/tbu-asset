@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('serial_number');
             $table->string('spesification');
             $table->year('tahun_pembuatan');
-            $table->string('brand');
             $table->timestamps();
         });
     }
