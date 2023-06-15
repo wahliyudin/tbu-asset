@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
 use App\Http\Controllers\Masters\SubClusterController;
@@ -54,4 +55,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('sub-cluster-items/store', [SubClusterItemController::class, 'store'])->name('sub-cluster-items.store');
     Route::post('sub-cluster-items/{subClusterItem}/edit', [SubClusterItemController::class, 'edit'])->name('sub-cluster-items.edit');
     Route::delete('sub-cluster-items/{subClusterItem}/destroy', [SubClusterItemController::class, 'destroy'])->name('sub-cluster-items.destroy');
+
+    Route::get('catalogs', [CatalogController::class, 'index'])->name('catalogs.index');
+    Route::post('catalogs/datatable', [CatalogController::class, 'datatable'])->name('catalogs.datatable');
+    Route::post('catalogs/store', [CatalogController::class, 'store'])->name('catalogs.store');
+    Route::post('catalogs/{catalog}/edit', [CatalogController::class, 'edit'])->name('catalogs.edit');
+    Route::delete('catalogs/{catalog}/destroy', [CatalogController::class, 'destroy'])->name('catalogs.destroy');
 });

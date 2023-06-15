@@ -22,8 +22,8 @@ class ClusterService
         ]);
     }
 
-    public function delete(Cluster $category)
+    public function delete(Cluster $cluster)
     {
-        return $category->delete();
+        return $cluster->delete();
     }
 }

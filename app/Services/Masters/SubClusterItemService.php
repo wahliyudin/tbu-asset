@@ -22,8 +22,8 @@ class SubClusterItemService
         ]);
     }
 
-    public function delete(SubClusterItem $category)
+    public function delete(SubClusterItem $subClusterItem)
     {
-        return $category->delete();
+        return $subClusterItem->delete();
     }
 }
