@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
+use App\Http\Controllers\Masters\DealerController;
 use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use Illuminate\Support\Facades\Auth;
@@ -61,4 +62,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('catalogs/store', [CatalogController::class, 'store'])->name('catalogs.store');
     Route::post('catalogs/{catalog}/edit', [CatalogController::class, 'edit'])->name('catalogs.edit');
     Route::delete('catalogs/{catalog}/destroy', [CatalogController::class, 'destroy'])->name('catalogs.destroy');
+
+    Route::get('dealers', [DealerController::class, 'index'])->name('dealers.index');
+    Route::post('dealers/datatable', [DealerController::class, 'datatable'])->name('dealers.datatable');
+    Route::post('dealers/store', [DealerController::class, 'store'])->name('dealers.store');
+    Route::post('dealers/{dealer}/edit', [DealerController::class, 'edit'])->name('dealers.edit');
+    Route::delete('dealers/{dealer}/destroy', [DealerController::class, 'destroy'])->name('dealers.destroy');
 });
