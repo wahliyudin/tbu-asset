@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTransferObjects\AssetDto;
 use App\Http\Requests\AssetRequest;
 use App\Models\Asset;
-use App\Models\SubCluster;
+use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Services\AssetService;
 use Yajra\DataTables\Facades\DataTables;

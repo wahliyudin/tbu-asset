@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\SubCluster;
+use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

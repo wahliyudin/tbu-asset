@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\SubClusterItemDTO;
-use App\Models\SubClusterItem;
+use App\Models\Masters\SubClusterItem;
 
 class SubClusterItemService
 {

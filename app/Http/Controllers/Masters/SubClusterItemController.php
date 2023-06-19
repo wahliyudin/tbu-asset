@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\SubClusterItemDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\SubClusterItemRequest;
-use App\Models\SubClusterItem;
+use App\Models\Masters\SubClusterItem;
 use App\Services\Masters\SubClusterItemService;
 use App\Services\Masters\SubClusterService;
 use Illuminate\Http\Request;

@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Masters;
 
-use App\Models\SubCluster;
-use App\Models\SubClusterItem;
+use App\Models\Masters\SubCluster;
+use App\Models\Masters\SubClusterItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

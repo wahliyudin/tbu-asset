@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\SubClusterDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\SubClusterRequest;
-use App\Models\SubCluster;
+use App\Models\Masters\SubCluster;
 use App\Services\Masters\ClusterService;
 use App\Services\Masters\SubClusterService;
 use Yajra\DataTables\Facades\DataTables;

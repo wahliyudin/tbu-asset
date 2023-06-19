@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Asset\Status;
 use App\Models\Asset;
-use App\Models\SubCluster;
+use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -3,7 +3,7 @@
 namespace Database\Factories\Masters;
 
 use App\Models\Masters\Cluster;
-use App\Models\SubCluster;
+use App\Models\Masters\SubCluster;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
