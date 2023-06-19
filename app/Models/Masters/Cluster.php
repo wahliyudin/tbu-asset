@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Masters\Models;
 
 use Database\Factories\Masters\ClusterFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;

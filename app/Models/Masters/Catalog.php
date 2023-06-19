@@ -1,22 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Masters\Models;
 
-use Database\Factories\Masters\DealerFactory;
+use Database\Factories\Masters\CatalogFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dealer extends Model
+class Catalog extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'unit_model',
+        'unit_type',
+        'seri',
+        'unit_class',
+        'brand',
+        'spesification',
     ];
 
     protected static function newFactory(): Factory
     {
-        return DealerFactory::new();
+        return CatalogFactory::new();
     }
 }

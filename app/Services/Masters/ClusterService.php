@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\ClusterDTO;
-use App\Models\Cluster;
+use App\Masters\Models\Cluster;
 
 class ClusterService
 {

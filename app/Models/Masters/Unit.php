@@ -1,27 +1,30 @@
 <?php
 
-namespace App\Models;
+namespace App\Masters\Models;
 
-use Database\Factories\Masters\CatalogFactory;
+use Database\Factories\Masters\UnitFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Catalog extends Model
+class Unit extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'unit_model',
-        'unit_type',
+        'kode',
+        'model',
+        'type',
         'seri',
-        'unit_class',
+        'class',
         'brand',
+        'serial_number',
         'spesification',
+        'tahun_pembuatan',
     ];
 
     protected static function newFactory(): Factory
     {
-        return CatalogFactory::new();
+        return UnitFactory::new();
     }
 }

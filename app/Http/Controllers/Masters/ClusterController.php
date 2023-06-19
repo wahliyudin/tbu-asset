@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\ClusterDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\ClusterRequest;
-use App\Models\Cluster;
+use App\Masters\Models\Cluster;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
 use Yajra\DataTables\Facades\DataTables;

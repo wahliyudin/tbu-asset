@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Masters\Models;
 
-use Database\Factories\Masters\LeasingFactory;
+use Database\Factories\Masters\DealerFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Leasing extends Model
+class Dealer extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,6 @@ class Leasing extends Model
 
     protected static function newFactory(): Factory
     {
-        return LeasingFactory::new();
+        return DealerFactory::new();
     }
 }

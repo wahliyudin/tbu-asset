@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Enums\Asset\Status;
 use App\Models\Asset;
 use App\Models\SubCluster;
-use App\Models\Unit;
+use App\Masters\Models\Unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

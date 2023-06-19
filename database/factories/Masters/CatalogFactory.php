@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Masters;
 
-use App\Models\Catalog;
+use App\Masters\Models\Catalog;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

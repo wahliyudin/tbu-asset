@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Masters;
 
-use App\Models\Leasing;
+use App\Masters\Models\Leasing;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

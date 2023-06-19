@@ -2,8 +2,8 @@
 
 namespace Database\Factories\Masters;
 
-use App\Models\Category;
-use App\Models\Cluster;
+use App\Masters\Models\Category;
+use App\Masters\Models\Cluster;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
