@@ -20,7 +20,7 @@ class AssetMasterController extends Controller
 
     public function index()
     {
-        return view('asset.index', [
+        return view('assets.asset.index', [
             'units' => Unit::query()->get(),
             'subClusters' => SubCluster::query()->get(),
         ]);
@@ -48,7 +48,7 @@ class AssetMasterController extends Controller
                 return $asset->pic;
             })
             ->editColumn('action', function (Asset $asset) {
-                return view('asset.action', compact('asset'))->render();
+                return view('assets.asset.action', compact('asset'))->render();
             })
             ->rawColumns(['action'])
             ->make();

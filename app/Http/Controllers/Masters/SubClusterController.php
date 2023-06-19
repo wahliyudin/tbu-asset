@@ -21,7 +21,7 @@ class SubClusterController extends Controller
     public function index()
     {
         $clusters = $this->clusterService->all();
-        return view('master.sub-cluster.index', [
+        return view('masters.sub-cluster.index', [
             'clusters' => $clusters
         ]);
     }
@@ -33,7 +33,7 @@ class SubClusterController extends Controller
                 return $subCluster->cluster?->name;
             })
             ->editColumn('action', function (SubCluster $subCluster) {
-                return view('master.sub-cluster.action', compact('subCluster'))->render();
+                return view('masters.sub-cluster.action', compact('subCluster'))->render();
             })
             ->rawColumns(['action'])
             ->make();

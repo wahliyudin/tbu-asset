@@ -18,14 +18,14 @@ class CategoryController extends Controller
 
     public function index()
     {
-        return view('master.category.index');
+        return view('masters.category.index');
     }
 
     public function datatable()
     {
         return DataTables::of($this->service->all())
             ->editColumn('action', function (Category $category) {
-                return view('master.category.action', compact('category'))->render();
+                return view('masters.category.action', compact('category'))->render();
             })
             ->rawColumns(['action'])
             ->make();

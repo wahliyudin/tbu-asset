@@ -18,14 +18,14 @@ class DealerController extends Controller
 
     public function index()
     {
-        return view('master.dealer.index');
+        return view('masters.dealer.index');
     }
 
     public function datatable()
     {
         return DataTables::of($this->service->all())
             ->editColumn('action', function (Dealer $dealer) {
-                return view('master.dealer.action', compact('dealer'))->render();
+                return view('masters.dealer.action', compact('dealer'))->render();
             })
             ->rawColumns(['action'])
             ->make();

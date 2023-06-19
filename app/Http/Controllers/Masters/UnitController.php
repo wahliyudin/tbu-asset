@@ -18,14 +18,14 @@ class UnitController extends Controller
 
     public function index()
     {
-        return view('master.unit.index');
+        return view('masters.unit.index');
     }
 
     public function datatable()
     {
         return DataTables::of($this->service->all())
             ->editColumn('action', function (Unit $unit) {
-                return view('master.unit.action', compact('unit'))->render();
+                return view('masters.unit.action', compact('unit'))->render();
             })
             ->rawColumns(['action'])
             ->make();

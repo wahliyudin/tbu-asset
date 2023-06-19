@@ -50,10 +50,10 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('master.categories.index') || request()->routeIs('master.clusters.index') || request()->routeIs('master.sub-clusters.index') || request()->routeIs('master.sub-cluster-items.index') || request()->routeIs('master.catalogs.index') || request()->routeIs('master.dealers.index') || request()->routeIs('master.leasings.index') || request()->routeIs('master.units.index') ? 'hover show' : '' }}">
+                        class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index') || request()->routeIs('masters.clusters.index') || request()->routeIs('masters.sub-clusters.index') || request()->routeIs('masters.sub-cluster-items.index') || request()->routeIs('masters.catalogs.index') || request()->routeIs('masters.dealers.index') || request()->routeIs('masters.leasings.index') || request()->routeIs('masters.units.index') ? 'hover show' : '' }}">
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.categories.index') ? 'active' : '' }}"
-                                href="{{ route('master.categories.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.categories.index') ? 'active' : '' }}"
+                                href="{{ route('masters.categories.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -61,8 +61,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.clusters.index') ? 'active' : '' }}"
-                                href="{{ route('master.clusters.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.clusters.index') ? 'active' : '' }}"
+                                href="{{ route('masters.clusters.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -70,8 +70,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.sub-clusters.index') ? 'active' : '' }}"
-                                href="{{ route('master.sub-clusters.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.sub-clusters.index') ? 'active' : '' }}"
+                                href="{{ route('masters.sub-clusters.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -79,8 +79,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.sub-cluster-items.index') ? 'active' : '' }}"
-                                href="{{ route('master.sub-cluster-items.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.sub-cluster-items.index') ? 'active' : '' }}"
+                                href="{{ route('masters.sub-cluster-items.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -88,8 +88,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.catalogs.index') ? 'active' : '' }}"
-                                href="{{ route('master.catalogs.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.catalogs.index') ? 'active' : '' }}"
+                                href="{{ route('masters.catalogs.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -97,8 +97,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.dealers.index') ? 'active' : '' }}"
-                                href="{{ route('master.dealers.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.dealers.index') ? 'active' : '' }}"
+                                href="{{ route('masters.dealers.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -106,8 +106,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.leasings.index') ? 'active' : '' }}"
-                                href="{{ route('master.leasings.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.leasings.index') ? 'active' : '' }}"
+                                href="{{ route('masters.leasings.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
@@ -115,8 +115,8 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('master.units.index') ? 'active' : '' }}"
-                                href="{{ route('master.units.index') }}">
+                            <a class="menu-link {{ request()->routeIs('masters.units.index') ? 'active' : '' }}"
+                                href="{{ route('masters.units.index') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

@@ -19,14 +19,14 @@ class LeasingController extends Controller
 
     public function index()
     {
-        return view('master.leasing.index');
+        return view('masters.leasing.index');
     }
 
     public function datatable()
     {
         return DataTables::of($this->service->all())
             ->editColumn('action', function (Leasing $leasing) {
-                return view('master.leasing.action', compact('leasing'))->render();
+                return view('masters.leasing.action', compact('leasing'))->render();
             })
             ->rawColumns(['action'])
             ->make();

@@ -18,14 +18,14 @@ class CatalogController extends Controller
 
     public function index()
     {
-        return view('master.catalog.index');
+        return view('masters.catalog.index');
     }
 
     public function datatable()
     {
         return DataTables::of($this->service->all())
             ->editColumn('action', function (Catalog $catalog) {
-                return view('master.catalog.action', compact('catalog'))->render();
+                return view('masters.catalog.action', compact('catalog'))->render();
             })
             ->rawColumns(['action'])
             ->make();

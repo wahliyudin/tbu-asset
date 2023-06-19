@@ -21,7 +21,7 @@ class ClusterController extends Controller
     public function index()
     {
         $categories = $this->categoryService->all();
-        return view('master.cluster.index', [
+        return view('masters.cluster.index', [
             'categories' => $categories
         ]);
     }
@@ -33,7 +33,7 @@ class ClusterController extends Controller
                 return $cluster->category?->name;
             })
             ->editColumn('action', function (Cluster $cluster) {
-                return view('master.cluster.action', compact('cluster'))->render();
+                return view('masters.cluster.action', compact('cluster'))->render();
             })
             ->rawColumns(['action'])
             ->make();
