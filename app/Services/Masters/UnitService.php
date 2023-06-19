@@ -17,6 +17,7 @@ class UnitService
         return Unit::query()->updateOrCreate([
             'id' => $dto->key
         ], [
+            'kode' => $dto->kode,
             'model' => $dto->model,
             'type' => $dto->type,
             'seri' => $dto->seri,

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\Masters\CategoryFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,6 +15,11 @@ class Category extends Model
     protected $fillable = [
         'name'
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return CategoryFactory::new();
+    }
 
     public function clusters(): HasMany
     {

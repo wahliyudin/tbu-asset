@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Asset\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,7 @@ class Asset extends Model
     use HasFactory;
 
     protected $fillable = [
+        'kode',
         'unit_id',
         'sub_cluster_id',
         'member_name',
@@ -28,6 +30,10 @@ class Asset extends Model
         'gr_number',
         'remark',
         'status',
+    ];
+
+    protected $casts = [
+        'status' => Status::class
     ];
 
     public function unit(): BelongsTo

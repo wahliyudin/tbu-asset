@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
             $table->string('model');
             $table->string('type');
             $table->string('seri');

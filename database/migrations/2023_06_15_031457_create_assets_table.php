@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
+            $table->string('kode');
             $table->foreignIdFor(Unit::class);
             $table->foreignIdFor(SubCluster::class);
             $table->string('member_name');

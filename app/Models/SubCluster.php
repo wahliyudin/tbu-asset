@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\Masters\SubClusterFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +17,11 @@ class SubCluster extends Model
         'cluster_id',
         'name',
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return SubClusterFactory::new();
+    }
 
     public function cluster(): BelongsTo
     {

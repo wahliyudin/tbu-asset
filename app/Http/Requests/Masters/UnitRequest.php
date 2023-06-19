@@ -14,6 +14,7 @@ class UnitRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'kode' => ['required'],
             'model' => ['required'],
             'type' => ['required'],
             'seri' => ['required'],

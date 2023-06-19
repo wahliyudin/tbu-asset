@@ -85,23 +85,23 @@
                     </div>
                     <div class="modal-body py-10 px-lg-17">
                         <div class="row">
-                            <div class="col-md-4 fv-row mb-7">
+                            <div class="col-md-4 fv-row mb-7 unit">
                                 <label class="required fs-6 fw-semibold mb-2">Unit</label>
                                 <select class="form-select form-select-solid" name="unit_id" data-control="select2"
-                                    data-placeholder="Unit" data-dropdown-parent="#create-asset">
+                                    data-placeholder="Unit" data-dropdown-parent=".unit">
                                     <option></option>
                                     @foreach ($units as $unit)
                                         <option value="{{ $unit->getKey() }}">{{ $unit->model }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4 fv-row mb-7">
+                            <div class="col-md-4 fv-row mb-7 sub-cluster">
                                 <label class="required fs-6 fw-semibold mb-2">Sub Cluster</label>
                                 <select class="form-select form-select-solid" name="sub_cluster_id" data-control="select2"
-                                    data-placeholder="Sub Cluster" data-dropdown-parent="#create-asset">
+                                    data-placeholder="Sub Cluster" data-dropdown-parent=".sub-cluster">
                                     <option></option>
                                     @foreach ($subClusters as $subCluster)
-                                        <option value="{{ $subCluster->getKey() }}">{{ $subCluster->model }}</option>
+                                        <option value="{{ $subCluster->getKey() }}">{{ $subCluster->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-4 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">PIC</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="PIC"
+                                <input type="number" class="form-control form-control-solid" placeholder="PIC"
                                     name="pic" />
                             </div>
                             <div class="col-md-4 fv-row mb-7">
@@ -122,7 +122,7 @@
                             </div>
                             <div class="col-md-4 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Asset Location"
+                                <input type="number" class="form-control form-control-solid" placeholder="Asset Location"
                                     name="asset_location" />
                             </div>
                             <div class="col-md-4 fv-row mb-7">
@@ -170,10 +170,15 @@
                                 <input type="text" class="form-control form-control-solid" placeholder="Remark"
                                     name="remark" />
                             </div>
-                            <div class="col-md-4 fv-row mb-7">
+                            <div class="col-md-4 fv-row mb-7 status">
                                 <label class="required fs-6 fw-semibold mb-2">Status</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Status"
-                                    name="status" />
+                                <select class="form-select form-select-solid" name="status" data-control="select2"
+                                    data-placeholder="Status" data-dropdown-parent=".status">
+                                    <option></option>
+                                    @foreach (\App\Enums\Asset\Status::cases() as $status)
+                                        <option value="{{ $status->value }}">{{ $status->label() }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -199,4 +204,9 @@
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/pages/asset/index.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#tgl_bast").flatpickr();
+        });
+    </script>
 @endpush

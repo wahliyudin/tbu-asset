@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\Masters\ClusterFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,8 +15,13 @@ class Cluster extends Model
 
     protected $fillable = [
         'category_id',
-        'name'
+        'name',
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return ClusterFactory::new();
+    }
 
     public function category(): BelongsTo
     {

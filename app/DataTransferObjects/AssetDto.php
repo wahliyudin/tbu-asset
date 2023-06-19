@@ -7,15 +7,15 @@ use App\Http\Requests\AssetRequest;
 class AssetDto
 {
     public function __construct(
-        public readonly string $unit_id,
-        public readonly string $sub_cluster_id,
+        public readonly int $unit_id,
+        public readonly int $sub_cluster_id,
         public readonly string $member_name,
-        public readonly string $pic,
+        public readonly int $pic,
         public readonly string $activity,
-        public readonly string $asset_location,
+        public readonly int $asset_location,
         public readonly string $kondisi,
         public readonly string $uom,
-        public readonly string $quantity,
+        public readonly int $quantity,
         public readonly string $tgl_bast,
         public readonly string $hm,
         public readonly string $pr_number,

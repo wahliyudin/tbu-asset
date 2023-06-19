@@ -7,6 +7,7 @@ use App\Http\Requests\Masters\UnitRequest;
 class UnitDto
 {
     public function __construct(
+        public readonly string $kode,
         public readonly string $model,
         public readonly string $type,
         public readonly string $seri,
@@ -22,6 +23,7 @@ class UnitDto
     public static function fromRequest(UnitRequest $request): self
     {
         return new self(
+            $request->get('kode'),
             $request->get('model'),
             $request->get('type'),
             $request->get('seri'),

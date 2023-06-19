@@ -29,10 +29,10 @@ class AssetMasterController extends Controller
     {
         return DataTables::of($this->service->all())
             ->editColumn('kode', function (Asset $asset) {
-                return '';
+                return $asset->kode;
             })
             ->editColumn('kode_unit', function (Asset $asset) {
-                return '';
+                return $asset->unit?->kode;
             })
             ->editColumn('unit_model', function (Asset $asset) {
                 return $asset->unit?->model;

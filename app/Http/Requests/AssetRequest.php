@@ -14,16 +14,16 @@ class AssetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'unit_id' => ['required'],
-            'sub_cluster_id' => ['required'],
+            'unit_id' => ['required', 'exists:units,id'],
+            'sub_cluster_id' => ['required', 'exists:sub_clusters,id'],
             'member_name' => ['required'],
-            'pic' => ['required'],
+            'pic' => ['required', 'integer'],
             'activity' => ['required'],
-            'asset_location' => ['required'],
+            'asset_location' => ['required', 'integer'],
             'kondisi' => ['required'],
             'uom' => ['required'],
-            'quantity' => ['required'],
-            'tgl_bast' => ['required'],
+            'quantity' => ['required', 'integer'],
+            'tgl_bast' => ['required', 'date'],
             'hm' => ['required'],
             'pr_number' => ['required'],
             'po_number' => ['required'],

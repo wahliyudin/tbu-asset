@@ -88,6 +88,11 @@
                     <div class="modal-body py-10 px-lg-17">
                         <div class="row">
                             <div class="col-md-6 fv-row mb-7">
+                                <label class="required fs-6 fw-semibold mb-2">Kode</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Kode"
+                                    name="kode" />
+                            </div>
+                            <div class="col-md-6 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Model</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Model"
                                     name="model" />
