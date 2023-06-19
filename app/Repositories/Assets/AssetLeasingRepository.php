@@ -26,4 +26,9 @@ class AssetLeasingRepository
             'legalitas' => $dto->legalitas,
         ]);
     }
+
+    public function delete(?AssetLeasing $assetLeasing)
+    {
+        return $assetLeasing?->delete();
+    }
 }

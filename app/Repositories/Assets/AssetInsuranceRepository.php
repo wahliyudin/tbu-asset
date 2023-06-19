@@ -23,4 +23,9 @@ class AssetInsuranceRepository
             'legalitas' => $dto->legalitas,
         ]);
     }
+
+    public function delete(?AssetInsurance $assetInsurance)
+    {
+        return $assetInsurance?->delete();
+    }
 }

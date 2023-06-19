@@ -40,8 +40,10 @@ class AssetService
         $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingDto::fromRequest($request), $asset);
     }
 
-    public function delete(Asset $category)
+    public function delete(Asset $asset)
     {
-        return $category->delete();
+        $this->assetInsuranceRepository->delete($asset->insurance);
+        $this->assetLeasingRepository->delete($asset->leasing);
+        return $asset->delete();
     }
 }
