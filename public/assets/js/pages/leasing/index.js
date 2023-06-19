@@ -23,7 +23,7 @@ var LeasingsList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/leasings/datatable"
+                url: "/master/leasings/datatable"
             },
             columns: [
                 {
@@ -71,7 +71,7 @@ var LeasingsList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/leasings/${leasing}/destroy`,
+                        url: `/master/leasings/${leasing}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -140,7 +140,7 @@ var LeasingsList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/leasings/store",
+                            url: "/master/leasings/store",
                             data: {
                                 key: $(submitButton).data('leasing'),
                                 name: $($(form).find('input[name="name"]')).val(),
@@ -277,7 +277,7 @@ var LeasingsList = function () {
             $(submitButton).data('leasing', leasing);
             $.ajax({
                 type: "POST",
-                url: `/leasings/${leasing}/edit`,
+                url: `/master/leasings/${leasing}/edit`,
                 dataType: "JSON",
                 success: function (response) {
                     $($(form).find('input[name="name"]')).val(response.name);

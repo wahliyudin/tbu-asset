@@ -23,7 +23,7 @@ var SubClusterItemsList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/sub-cluster-items/datatable"
+                url: "/master/sub-cluster-items/datatable"
             },
             columns: [
                 {
@@ -75,7 +75,7 @@ var SubClusterItemsList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/sub-cluster-items/${subClusterItem}/destroy`,
+                        url: `/master/sub-cluster-items/${subClusterItem}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -151,7 +151,7 @@ var SubClusterItemsList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/sub-cluster-items/store",
+                            url: "/master/sub-cluster-items/store",
                             data: {
                                 key: $(submitButton).data('sub-cluster-item'),
                                 sub_cluster_id: $($(form).find('select[name="sub_cluster_id"]')).val(),
@@ -290,7 +290,7 @@ var SubClusterItemsList = function () {
             $(submitButton).data('sub-cluster-item', subClusterItem);
             $.ajax({
                 type: "POST",
-                url: `/sub-cluster-items/${subClusterItem}/edit`,
+                url: `/master/sub-cluster-items/${subClusterItem}/edit`,
                 dataType: "JSON",
                 success: function (response) {
                     $($(form).find('select[name="sub_cluster_id"]')).val(response.sub_cluster_id).trigger('change');

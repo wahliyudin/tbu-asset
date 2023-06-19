@@ -1,6 +1,6 @@
 "use strict";
 
-var DealersList = function () {
+var AssetsList = function () {
     var datatable;
     var table;
     var submitButton;
@@ -23,12 +23,32 @@ var DealersList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/dealers/datatable"
+                url: "/asset-masters/datatable"
             },
             columns: [
                 {
-                    name: 'name',
-                    data: 'name',
+                    name: 'kode',
+                    data: 'kode',
+                },
+                {
+                    name: 'kode_unit',
+                    data: 'kode_unit',
+                },
+                {
+                    name: 'unit_model',
+                    data: 'unit_model',
+                },
+                {
+                    name: 'unit_type',
+                    data: 'unit_type',
+                },
+                {
+                    name: 'asset_location',
+                    data: 'asset_location',
+                },
+                {
+                    name: 'pic',
+                    data: 'pic',
                 },
                 {
                     name: 'action',
@@ -45,15 +65,15 @@ var DealersList = function () {
     }
 
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-dealer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
     }
 
     var handleDeleteRow = () => {
-        $('#dealer_table').on('click', '.btn-delete', function () {
-            var dealer = $(this).data('dealer');
+        $('#asset_table').on('click', '.btn-delete', function () {
+            var asset = $(this).data('asset');
             var target = this;
             $(target).attr("data-kt-indicator", "on");
             Swal.fire({
@@ -71,7 +91,7 @@ var DealersList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/master/dealers/${dealer}/destroy`,
+                        url: `/asset-masters/${asset}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -112,10 +132,115 @@ var DealersList = function () {
             form,
             {
                 fields: {
-                    'name': {
+                    'unit_id': {
                         validators: {
                             notEmpty: {
-                                message: 'Category name is required'
+                                message: 'Unit is required'
+                            }
+                        }
+                    },
+                    'sub_cluster_id': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Sub Cluster is required'
+                            }
+                        }
+                    },
+                    'member_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Member Name is required'
+                            }
+                        }
+                    },
+                    'pic': {
+                        validators: {
+                            notEmpty: {
+                                message: 'PIC is required'
+                            }
+                        }
+                    },
+                    'activity': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Activity is required'
+                            }
+                        }
+                    },
+                    'asset_location': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Asset Location is required'
+                            }
+                        }
+                    },
+                    'kondisi': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kondisi is required'
+                            }
+                        }
+                    },
+                    'uom': {
+                        validators: {
+                            notEmpty: {
+                                message: 'UOM is required'
+                            }
+                        }
+                    },
+                    'quantity': {
+                        validators: {
+                            notEmpty: {
+                                message: 'quantity is required'
+                            }
+                        }
+                    },
+                    'tgl_bast': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tanggal Bast is required'
+                            }
+                        }
+                    },
+                    'hm': {
+                        validators: {
+                            notEmpty: {
+                                message: 'HM is required'
+                            }
+                        }
+                    },
+                    'pr_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'PR Number is required'
+                            }
+                        }
+                    },
+                    'po_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'PO Number is required'
+                            }
+                        }
+                    },
+                    'gr_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'GR Number is required'
+                            }
+                        }
+                    },
+                    'remark': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Remark is required'
+                            }
+                        }
+                    },
+                    'status': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Status is required'
                             }
                         }
                     },
@@ -140,10 +265,25 @@ var DealersList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/master/dealers/store",
+                            url: "/asset-masters/store",
                             data: {
-                                key: $(submitButton).data('dealer'),
-                                name: $($(form).find('input[name="name"]')).val(),
+                                key: $(submitButton).data('asset'),
+                                unit_id: $($(form).find('select[name="unit_id"]')).val(),
+                                sub_cluster_id: $($(form).find('select[name="sub_cluster_id"]')).val(),
+                                member_name: $($(form).find('input[name="member_name"]')).val(),
+                                pic: $($(form).find('input[name="pic"]')).val(),
+                                activity: $($(form).find('input[name="activity"]')).val(),
+                                asset_location: $($(form).find('input[name="asset_location"]')).val(),
+                                kondisi: $($(form).find('input[name="kondisi"]')).val(),
+                                uom: $($(form).find('input[name="uom"]')).val(),
+                                quantity: $($(form).find('input[name="quantity"]')).val(),
+                                tgl_bast: $($(form).find('input[name="tgl_bast"]')).val(),
+                                hm: $($(form).find('input[name="hm"]')).val(),
+                                pr_number: $($(form).find('input[name="pr_number"]')).val(),
+                                po_number: $($(form).find('input[name="po_number"]')).val(),
+                                gr_number: $($(form).find('input[name="gr_number"]')).val(),
+                                remark: $($(form).find('input[name="remark"]')).val(),
+                                status: $($(form).find('input[name="status"]')).val(),
                             },
                             dataType: "JSON",
                             success: function (response) {
@@ -263,24 +403,54 @@ var DealersList = function () {
     };
 
     var buttonCreate = () => {
-        $('[data-bs-target="#create-dealer"]').on('click', function () {
-            $($(form).find('input[name="name"]')).val('');
-            $(submitButton).data('dealer', '');
+        $('[data-bs-target="#create-asset"]').on('click', function () {
+            $($(form).find('select[name="unit_id"]')).val('').trigger('change');
+            $($(form).find('select[name="sub_cluster_id"]')).val('').trigger('change');
+            $($(form).find('input[name="member_name"]')).val('');
+            $($(form).find('input[name="pic"]')).val('');
+            $($(form).find('input[name="activity"]')).val('');
+            $($(form).find('input[name="asset_location"]')).val('');
+            $($(form).find('input[name="kondisi"]')).val('');
+            $($(form).find('input[name="uom"]')).val('');
+            $($(form).find('input[name="quantity"]')).val('');
+            $($(form).find('input[name="tgl_bast"]')).val('');
+            $($(form).find('input[name="hm"]')).val('');
+            $($(form).find('input[name="pr_number"]')).val('');
+            $($(form).find('input[name="po_number"]')).val('');
+            $($(form).find('input[name="gr_number"]')).val('');
+            $($(form).find('input[name="remark"]')).val('');
+            $($(form).find('input[name="status"]')).val('');
+            $(submitButton).data('asset', '');
         });
     }
 
     var buttonEdit = () => {
-        $('#dealer_table').on('click', '.btn-edit', function () {
+        $('#asset_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
-            var dealer = $(this).data('dealer');
-            $(submitButton).data('dealer', dealer);
+            var asset = $(this).data('asset');
+            $(submitButton).data('asset', asset);
             $.ajax({
                 type: "POST",
-                url: `/master/dealers/${dealer}/edit`,
+                url: `/asset-masters/${asset}/edit`,
                 dataType: "JSON",
                 success: function (response) {
-                    $($(form).find('input[name="name"]')).val(response.name);
+                    $($(form).find('input[name="unit_id"]')).val(response.unit_id).trigger('change');
+                    $($(form).find('input[name="sub_cluster_id"]')).val(response.sub_cluster_id).trigger('change');
+                    $($(form).find('input[name="member_name"]')).val(response.member_name);
+                    $($(form).find('input[name="pic"]')).val(response.pic);
+                    $($(form).find('input[name="activity"]')).val(response.activity);
+                    $($(form).find('input[name="asset_location"]')).val(response.asset_location);
+                    $($(form).find('input[name="kondisi"]')).val(response.kondisi);
+                    $($(form).find('input[name="uom"]')).val(response.uom);
+                    $($(form).find('input[name="quantity"]')).val(response.quantity);
+                    $($(form).find('input[name="tgl_bast"]')).val(response.tgl_bast);
+                    $($(form).find('input[name="hm"]')).val(response.hm);
+                    $($(form).find('input[name="pr_number"]')).val(response.pr_number);
+                    $($(form).find('input[name="po_number"]')).val(response.po_number);
+                    $($(form).find('input[name="gr_number"]')).val(response.gr_number);
+                    $($(form).find('input[name="remark"]')).val(response.remark);
+                    $($(form).find('input[name="status"]')).val(response.status);
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
@@ -296,7 +466,7 @@ var DealersList = function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            table = document.querySelector('#dealer_table');
+            table = document.querySelector('#asset_table');
             if (!table) {
                 return;
             }
@@ -305,11 +475,11 @@ var DealersList = function () {
             handleDeleteRow();
 
 
-            modal = new bootstrap.Modal(document.querySelector('#create-dealer'));
-            form = document.querySelector('#create-dealer_form');
-            submitButton = form.querySelector('#create-dealer_submit');
-            cancelButton = form.querySelector('#create-dealer_cancel');
-            closeButton = form.querySelector('#create-dealer_close');
+            modal = new bootstrap.Modal(document.querySelector('#create-asset'));
+            form = document.querySelector('#create-asset_form');
+            submitButton = form.querySelector('#create-asset_submit');
+            cancelButton = form.querySelector('#create-asset_cancel');
+            closeButton = form.querySelector('#create-asset_close');
 
             handleForm();
             buttonCreate();
@@ -319,5 +489,5 @@ var DealersList = function () {
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    DealersList.init();
+    AssetsList.init();
 });

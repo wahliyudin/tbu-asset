@@ -23,7 +23,7 @@ var CategorysList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/categories/datatable"
+                url: "/master/categories/datatable"
             },
             columns: [
                 {
@@ -71,7 +71,7 @@ var CategorysList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/categories/${category}/destroy`,
+                        url: `/master/categories/${category}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -140,7 +140,7 @@ var CategorysList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/categories/store",
+                            url: "/master/categories/store",
                             data: {
                                 key: $(submitButton).data('category'),
                                 name: $($(form).find('input[name="name"]')).val(),
@@ -277,7 +277,7 @@ var CategorysList = function () {
             $(submitButton).data('category', category);
             $.ajax({
                 type: "POST",
-                url: `/categories/${category}/edit`,
+                url: `/master/categories/${category}/edit`,
                 dataType: "JSON",
                 success: function (response) {
                     $($(form).find('input[name="name"]')).val(response.name);

@@ -12,6 +12,8 @@ class Asset extends Model
     use HasFactory;
 
     protected $fillable = [
+        'unit_id',
+        'sub_cluster_id',
         'member_name',
         'pic',
         'activity',

@@ -1,6 +1,6 @@
 "use strict";
 
-var DealersList = function () {
+var CategorysList = function () {
     var datatable;
     var table;
     var submitButton;
@@ -23,12 +23,40 @@ var DealersList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/dealers/datatable"
+                url: "/master/units/datatable"
             },
             columns: [
                 {
-                    name: 'name',
-                    data: 'name',
+                    name: 'model',
+                    data: 'model',
+                },
+                {
+                    name: 'type',
+                    data: 'type',
+                },
+                {
+                    name: 'seri',
+                    data: 'seri',
+                },
+                {
+                    name: 'class',
+                    data: 'class',
+                },
+                {
+                    name: 'brand',
+                    data: 'brand',
+                },
+                {
+                    name: 'serial_number',
+                    data: 'serial_number',
+                },
+                {
+                    name: 'spesification',
+                    data: 'spesification',
+                },
+                {
+                    name: 'tahun_pembuatan',
+                    data: 'tahun_pembuatan',
                 },
                 {
                     name: 'action',
@@ -45,15 +73,15 @@ var DealersList = function () {
     }
 
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-dealer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-unit-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
             datatable.search(e.target.value).draw();
         });
     }
 
     var handleDeleteRow = () => {
-        $('#dealer_table').on('click', '.btn-delete', function () {
-            var dealer = $(this).data('dealer');
+        $('#unit_table').on('click', '.btn-delete', function () {
+            var unit = $(this).data('unit');
             var target = this;
             $(target).attr("data-kt-indicator", "on");
             Swal.fire({
@@ -71,7 +99,7 @@ var DealersList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/master/dealers/${dealer}/destroy`,
+                        url: `/master/units/${unit}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -112,10 +140,59 @@ var DealersList = function () {
             form,
             {
                 fields: {
-                    'name': {
+                    'model': {
                         validators: {
                             notEmpty: {
-                                message: 'Category name is required'
+                                message: 'Model is required'
+                            }
+                        }
+                    },
+                    'type': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Type is required'
+                            }
+                        }
+                    },
+                    'seri': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Seri is required'
+                            }
+                        }
+                    },
+                    'class': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Class is required'
+                            }
+                        }
+                    },
+                    'brand': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Brand is required'
+                            }
+                        }
+                    },
+                    'serial_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Serial Number is required'
+                            }
+                        }
+                    },
+                    'spesification': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Spesification is required'
+                            }
+                        }
+                    },
+                    'tahun_pembuatan': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tahun Pembuatan is required'
                             }
                         }
                     },
@@ -140,10 +217,17 @@ var DealersList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/master/dealers/store",
+                            url: "/master/units/store",
                             data: {
-                                key: $(submitButton).data('dealer'),
-                                name: $($(form).find('input[name="name"]')).val(),
+                                key: $(submitButton).data('unit'),
+                                model: $($(form).find('input[name="model"]')).val(),
+                                type: $($(form).find('input[name="type"]')).val(),
+                                seri: $($(form).find('input[name="seri"]')).val(),
+                                class: $($(form).find('input[name="class"]')).val(),
+                                brand: $($(form).find('input[name="brand"]')).val(),
+                                serial_number: $($(form).find('input[name="serial_number"]')).val(),
+                                spesification: $($(form).find('input[name="spesification"]')).val(),
+                                tahun_pembuatan: $($(form).find('input[name="tahun_pembuatan"]')).val(),
                             },
                             dataType: "JSON",
                             success: function (response) {
@@ -263,24 +347,38 @@ var DealersList = function () {
     };
 
     var buttonCreate = () => {
-        $('[data-bs-target="#create-dealer"]').on('click', function () {
-            $($(form).find('input[name="name"]')).val('');
-            $(submitButton).data('dealer', '');
+        $('[data-bs-target="#create-unit"]').on('click', function () {
+            $($(form).find('input[name="model"]')).val('');
+            $($(form).find('input[name="type"]')).val('');
+            $($(form).find('input[name="seri"]')).val('');
+            $($(form).find('input[name="class"]')).val('');
+            $($(form).find('input[name="brand"]')).val('');
+            $($(form).find('input[name="serial_number"]')).val('');
+            $($(form).find('input[name="spesification"]')).val('');
+            $($(form).find('input[name="tahun_pembuatan"]')).val('');
+            $(submitButton).data('unit', '');
         });
     }
 
     var buttonEdit = () => {
-        $('#dealer_table').on('click', '.btn-edit', function () {
+        $('#unit_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
-            var dealer = $(this).data('dealer');
-            $(submitButton).data('dealer', dealer);
+            var unit = $(this).data('unit');
+            $(submitButton).data('unit', unit);
             $.ajax({
                 type: "POST",
-                url: `/master/dealers/${dealer}/edit`,
+                url: `/master/units/${unit}/edit`,
                 dataType: "JSON",
                 success: function (response) {
-                    $($(form).find('input[name="name"]')).val(response.name);
+                    $($(form).find('input[name="model"]')).val(response.model);
+                    $($(form).find('input[name="type"]')).val(response.type);
+                    $($(form).find('input[name="seri"]')).val(response.seri);
+                    $($(form).find('input[name="class"]')).val(response.class);
+                    $($(form).find('input[name="brand"]')).val(response.brand);
+                    $($(form).find('input[name="serial_number"]')).val(response.serial_number);
+                    $($(form).find('input[name="spesification"]')).val(response.spesification);
+                    $($(form).find('input[name="tahun_pembuatan"]')).val(response.tahun_pembuatan);
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
@@ -296,7 +394,7 @@ var DealersList = function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            table = document.querySelector('#dealer_table');
+            table = document.querySelector('#unit_table');
             if (!table) {
                 return;
             }
@@ -305,11 +403,11 @@ var DealersList = function () {
             handleDeleteRow();
 
 
-            modal = new bootstrap.Modal(document.querySelector('#create-dealer'));
-            form = document.querySelector('#create-dealer_form');
-            submitButton = form.querySelector('#create-dealer_submit');
-            cancelButton = form.querySelector('#create-dealer_cancel');
-            closeButton = form.querySelector('#create-dealer_close');
+            modal = new bootstrap.Modal(document.querySelector('#create-unit'));
+            form = document.querySelector('#create-unit_form');
+            submitButton = form.querySelector('#create-unit_submit');
+            cancelButton = form.querySelector('#create-unit_cancel');
+            closeButton = form.querySelector('#create-unit_close');
 
             handleForm();
             buttonCreate();
@@ -319,5 +417,5 @@ var DealersList = function () {
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    DealersList.init();
+    CategorysList.init();
 });

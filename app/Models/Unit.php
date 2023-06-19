@@ -18,6 +18,5 @@ class Unit extends Model
         'serial_number',
         'spesification',
         'tahun_pembuatan',
-        'brand',
     ];
 }

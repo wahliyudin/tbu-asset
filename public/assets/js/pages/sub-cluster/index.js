@@ -23,7 +23,7 @@ var SubClustersList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/sub-clusters/datatable"
+                url: "/master/sub-clusters/datatable"
             },
             columns: [
                 {
@@ -75,7 +75,7 @@ var SubClustersList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/sub-clusters/${subCluster}/destroy`,
+                        url: `/master/sub-clusters/${subCluster}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -151,7 +151,7 @@ var SubClustersList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/sub-clusters/store",
+                            url: "/master/sub-clusters/store",
                             data: {
                                 key: $(submitButton).data('sub-cluster'),
                                 cluster_id: $($(form).find('select[name="cluster_id"]')).val(),
@@ -290,7 +290,7 @@ var SubClustersList = function () {
             $(submitButton).data('sub-cluster', subCluster);
             $.ajax({
                 type: "POST",
-                url: `/sub-clusters/${subCluster}/edit`,
+                url: `/master/sub-clusters/${subCluster}/edit`,
                 dataType: "JSON",
                 success: function (response) {
                     $($(form).find('select[name="cluster_id"]')).val(response.cluster_id).trigger('change');

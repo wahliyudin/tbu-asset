@@ -23,7 +23,7 @@ var ClustersList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/clusters/datatable"
+                url: "/master/clusters/datatable"
             },
             columns: [
                 {
@@ -75,7 +75,7 @@ var ClustersList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/clusters/${cluster}/destroy`,
+                        url: `/master/clusters/${cluster}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -151,7 +151,7 @@ var ClustersList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/clusters/store",
+                            url: "/master/clusters/store",
                             data: {
                                 key: $(submitButton).data('cluster'),
                                 category_id: $($(form).find('select[name="category_id"]')).val(),
@@ -290,7 +290,7 @@ var ClustersList = function () {
             $(submitButton).data('cluster', cluster);
             $.ajax({
                 type: "POST",
-                url: `/clusters/${cluster}/edit`,
+                url: `/master/clusters/${cluster}/edit`,
                 dataType: "JSON",
                 success: function (response) {
                     $($(form).find('select[name="category_id"]')).val(response.category_id).trigger('change');

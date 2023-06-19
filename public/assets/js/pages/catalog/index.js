@@ -23,7 +23,7 @@ var CatalogsList = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/catalogs/datatable"
+                url: "/master/catalogs/datatable"
             },
             columns: [
                 {
@@ -91,7 +91,7 @@ var CatalogsList = function () {
                 if (result.value) {
                     $.ajax({
                         type: "DELETE",
-                        url: `/catalogs/${catalog}/destroy`,
+                        url: `/master/catalogs/${catalog}/destroy`,
                         dataType: "JSON",
                         success: function (response) {
                             $(target).removeAttr("data-kt-indicator");
@@ -201,7 +201,7 @@ var CatalogsList = function () {
                         submitButton.disabled = true;
                         $.ajax({
                             type: "POST",
-                            url: "/catalogs/store",
+                            url: "/master/catalogs/store",
                             data: {
                                 key: $(submitButton).data('catalog'),
                                 unit_model: $($(form).find('input[name="unit_model"]')).val(),
@@ -348,7 +348,7 @@ var CatalogsList = function () {
             $(submitButton).data('catalog', catalog);
             $.ajax({
                 type: "POST",
-                url: `/catalogs/${catalog}/edit`,
+                url: `/master/catalogs/${catalog}/edit`,
                 dataType: "JSON",
                 success: function (response) {
                     $($(form).find('input[name="unit_model"]')).val(response.unit_model);
