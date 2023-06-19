@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\LeasingDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\LeasingRequest;
-use App\Masters\Models\Leasing;
+use App\Models\Masters\Leasing;
 use App\Services\Masters\LeasingService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;

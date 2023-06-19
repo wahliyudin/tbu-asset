@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\UnitDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\UnitRequest;
-use App\Masters\Models\Unit;
+use App\Models\Masters\Unit;
 use App\Services\Masters\UnitService;
 use Yajra\DataTables\Facades\DataTables;
 

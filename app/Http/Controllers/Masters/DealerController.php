@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\DealerDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\DealerRequest;
-use App\Masters\Models\Dealer;
+use App\Models\Masters\Dealer;
 use App\Services\Masters\DealerService;
 use Yajra\DataTables\Facades\DataTables;
 

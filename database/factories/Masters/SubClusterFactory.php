@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Masters;
 
-use App\Masters\Models\Cluster;
+use App\Models\Masters\Cluster;
 use App\Models\SubCluster;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

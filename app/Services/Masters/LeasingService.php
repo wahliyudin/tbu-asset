@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\LeasingDTO;
-use App\Masters\Models\Leasing;
+use App\Models\Masters\Leasing;
 
 class LeasingService
 {

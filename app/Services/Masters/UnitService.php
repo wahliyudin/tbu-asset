@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\UnitDTO;
-use App\Masters\Models\Unit;
+use App\Models\Masters\Unit;
 
 class UnitService
 {

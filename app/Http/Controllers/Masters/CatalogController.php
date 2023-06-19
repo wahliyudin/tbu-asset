@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\DataTransferObjects\Masters\CatalogDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\CatalogRequest;
-use App\Masters\Models\Catalog;
+use App\Models\Masters\Catalog;
 use App\Services\Masters\CatalogService;
 use Yajra\DataTables\Facades\DataTables;
 

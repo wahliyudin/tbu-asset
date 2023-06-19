@@ -1,6 +1,6 @@
 <?php
 
-use App\Masters\Models\Cluster;
+use App\Models\Masters\Cluster;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

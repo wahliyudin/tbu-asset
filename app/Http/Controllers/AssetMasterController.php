@@ -6,7 +6,7 @@ use App\DataTransferObjects\AssetDto;
 use App\Http\Requests\AssetRequest;
 use App\Models\Asset;
 use App\Models\SubCluster;
-use App\Masters\Models\Unit;
+use App\Models\Masters\Unit;
 use App\Services\AssetService;
 use Yajra\DataTables\Facades\DataTables;
 

@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\CatalogDTO;
-use App\Masters\Models\Catalog;
+use App\Models\Masters\Catalog;
 
 class CatalogService
 {

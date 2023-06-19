@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\DealerDTO;
-use App\Masters\Models\Dealer;
+use App\Models\Masters\Dealer;
 
 class DealerService
 {

@@ -3,7 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\CategoryDTO;
-use App\Masters\Models\Category;
+use App\Models\Masters\Category;
 
 class CategoryService
 {

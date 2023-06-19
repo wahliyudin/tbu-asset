@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Asset;
-use App\Masters\Models\Dealer;
-use App\Masters\Models\Leasing;
+use App\Models\Masters\Dealer;
+use App\Models\Masters\Leasing;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
