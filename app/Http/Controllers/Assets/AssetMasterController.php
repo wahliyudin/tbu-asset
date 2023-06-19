@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Assets;
 
-use App\DataTransferObjects\AssetDto;
-use App\Http\Requests\AssetRequest;
-use App\Models\Asset;
+use App\DataTransferObjects\Assets\AssetDto;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Assets\AssetRequest;
+use App\Models\Assets\Asset;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
-use App\Services\AssetService;
+use App\Services\Assets\AssetService;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller

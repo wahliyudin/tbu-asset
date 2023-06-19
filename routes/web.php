@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AssetMasterController;
+use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;

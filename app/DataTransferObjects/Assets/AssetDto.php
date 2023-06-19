@@ -1,8 +1,8 @@
 <?php
 
-namespace App\DataTransferObjects;
+namespace App\DataTransferObjects\Assets;
 
-use App\Http\Requests\AssetRequest;
+use App\Http\Requests\Assets\AssetRequest;
 
 class AssetDto
 {

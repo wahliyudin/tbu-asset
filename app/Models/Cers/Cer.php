@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Cers;
 
 use App\Enums\Cers\TypeBudget;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

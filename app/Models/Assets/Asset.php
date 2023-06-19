@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Assets;
 
 use App\Enums\Asset\Status;
+use App\Models\Assets\Assets\Depreciation;
+use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

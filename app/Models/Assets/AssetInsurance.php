@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Assets\Assets;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Depreciation extends Model
+class AssetInsurance extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'masa_pakai',
-        'umur_asset',
-        'umur_pakai',
-        'depresiasi',
-        'sisa',
+        'jangka_waktu',
+        'biaya',
+        'legalitas',
     ];
 
     public function asset(): BelongsTo

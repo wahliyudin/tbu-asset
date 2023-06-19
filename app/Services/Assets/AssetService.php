@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Assets;
 
-use App\DataTransferObjects\AssetDto;
-use App\Models\Asset;
+use App\DataTransferObjects\Assets\AssetDto;
+use App\Models\Assets\Asset;
 
 class AssetService
 {

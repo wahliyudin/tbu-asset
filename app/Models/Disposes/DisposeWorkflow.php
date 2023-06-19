@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Disposes;
 
 use App\Enums\Workflows\LastAction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

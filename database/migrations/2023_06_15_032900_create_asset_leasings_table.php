@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Asset;
+use App\Models\Assets\Asset;
 use App\Models\Masters\Dealer;
 use App\Models\Masters\Leasing;
 use Illuminate\Database\Migrations\Migration;

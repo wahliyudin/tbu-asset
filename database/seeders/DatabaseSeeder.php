@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Asset;
+use App\Models\Assets\Asset;
 use App\Models\Masters\Catalog;
 use App\Models\Masters\Category;
 use App\Models\Masters\Cluster;

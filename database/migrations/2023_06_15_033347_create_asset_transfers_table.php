@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Asset;
+use App\Models\Assets\Asset;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
