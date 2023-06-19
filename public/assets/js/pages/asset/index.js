@@ -132,6 +132,13 @@ var AssetsList = function () {
             form,
             {
                 fields: {
+                    'kode': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kode is required'
+                            }
+                        }
+                    },
                     'unit_id': {
                         validators: {
                             notEmpty: {
@@ -268,6 +275,7 @@ var AssetsList = function () {
                             url: "/asset-masters/store",
                             data: {
                                 key: $(submitButton).data('asset'),
+                                kode: $($(form).find('input[name="kode"]')).val(),
                                 unit_id: $($(form).find('select[name="unit_id"]')).val(),
                                 sub_cluster_id: $($(form).find('select[name="sub_cluster_id"]')).val(),
                                 member_name: $($(form).find('input[name="member_name"]')).val(),
@@ -283,7 +291,7 @@ var AssetsList = function () {
                                 po_number: $($(form).find('input[name="po_number"]')).val(),
                                 gr_number: $($(form).find('input[name="gr_number"]')).val(),
                                 remark: $($(form).find('input[name="remark"]')).val(),
-                                status: $($(form).find('input[name="status"]')).val(),
+                                status: $($(form).find('select[name="status"]')).val(),
                             },
                             dataType: "JSON",
                             success: function (response) {
@@ -404,6 +412,7 @@ var AssetsList = function () {
 
     var buttonCreate = () => {
         $('[data-bs-target="#create-asset"]').on('click', function () {
+            $($(form).find('input[name="kode"]')).val('');
             $($(form).find('select[name="unit_id"]')).val('').trigger('change');
             $($(form).find('select[name="sub_cluster_id"]')).val('').trigger('change');
             $($(form).find('input[name="member_name"]')).val('');
@@ -419,7 +428,7 @@ var AssetsList = function () {
             $($(form).find('input[name="po_number"]')).val('');
             $($(form).find('input[name="gr_number"]')).val('');
             $($(form).find('input[name="remark"]')).val('');
-            $($(form).find('input[name="status"]')).val('');
+            $($(form).find('select[name="status"]')).val('');
             $(submitButton).data('asset', '');
         });
     }
@@ -435,8 +444,9 @@ var AssetsList = function () {
                 url: `/asset-masters/${asset}/edit`,
                 dataType: "JSON",
                 success: function (response) {
-                    $($(form).find('input[name="unit_id"]')).val(response.unit_id).trigger('change');
-                    $($(form).find('input[name="sub_cluster_id"]')).val(response.sub_cluster_id).trigger('change');
+                    $($(form).find('input[name="kode"]')).val(response.kode);
+                    $($(form).find('select[name="unit_id"]')).val(response.unit_id).trigger('change');
+                    $($(form).find('select[name="sub_cluster_id"]')).val(response.sub_cluster_id).trigger('change');
                     $($(form).find('input[name="member_name"]')).val(response.member_name);
                     $($(form).find('input[name="pic"]')).val(response.pic);
                     $($(form).find('input[name="activity"]')).val(response.activity);
@@ -450,7 +460,7 @@ var AssetsList = function () {
                     $($(form).find('input[name="po_number"]')).val(response.po_number);
                     $($(form).find('input[name="gr_number"]')).val(response.gr_number);
                     $($(form).find('input[name="remark"]')).val(response.remark);
-                    $($(form).find('input[name="status"]')).val(response.status);
+                    $($(form).find('select[name="status"]')).val(response.status).trigger('change');
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },

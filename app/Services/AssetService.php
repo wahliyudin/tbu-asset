@@ -17,6 +17,7 @@ class AssetService
         return Asset::query()->updateOrCreate([
             'id' => $dto->key
         ], [
+            'kode' => $dto->kode,
             'unit_id' => $dto->unit_id,
             'sub_cluster_id' => $dto->sub_cluster_id,
             'member_name' => $dto->member_name,

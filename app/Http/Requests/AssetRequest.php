@@ -14,6 +14,7 @@ class AssetRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'kode' => ['required'],
             'unit_id' => ['required', 'exists:units,id'],
             'sub_cluster_id' => ['required', 'exists:sub_clusters,id'],
             'member_name' => ['required'],

@@ -85,6 +85,11 @@
                     </div>
                     <div class="modal-body py-10 px-lg-17">
                         <div class="row">
+                            <div class="col-md-4 fv-row mb-7">
+                                <label class="required fs-6 fw-semibold mb-2">Kode</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Kode"
+                                    name="kode" />
+                            </div>
                             <div class="col-md-4 fv-row mb-7 unit">
                                 <label class="required fs-6 fw-semibold mb-2">Unit</label>
                                 <select class="form-select form-select-solid" name="unit_id" data-control="select2"
@@ -122,8 +127,8 @@
                             </div>
                             <div class="col-md-4 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
-                                <input type="number" class="form-control form-control-solid" placeholder="Asset Location"
-                                    name="asset_location" />
+                                <input type="number" class="form-control form-control-solid"
+                                    placeholder="Asset Location" name="asset_location" />
                             </div>
                             <div class="col-md-4 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Kondisi</label>

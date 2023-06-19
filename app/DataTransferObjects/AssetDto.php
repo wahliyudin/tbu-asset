@@ -7,6 +7,7 @@ use App\Http\Requests\AssetRequest;
 class AssetDto
 {
     public function __construct(
+        public readonly string $kode,
         public readonly int $unit_id,
         public readonly int $sub_cluster_id,
         public readonly string $member_name,
@@ -30,6 +31,7 @@ class AssetDto
     public static function fromRequest(AssetRequest $request): self
     {
         return new self(
+            $request->get('kode'),
             $request->get('unit_id'),
             $request->get('sub_cluster_id'),
             $request->get('member_name'),
