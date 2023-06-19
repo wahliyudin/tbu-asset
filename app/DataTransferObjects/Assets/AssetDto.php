@@ -3,6 +3,7 @@
 namespace App\DataTransferObjects\Assets;
 
 use App\Http\Requests\Assets\AssetRequest;
+use App\Models\Assets\Asset;
 
 class AssetDto
 {
@@ -50,5 +51,53 @@ class AssetDto
             $request->get('status'),
             $request->get('key'),
         );
+    }
+
+    public static function fromModel(Asset $asset): self
+    {
+        return new self(
+            $asset->kode,
+            $asset->unit_id,
+            $asset->sub_cluster_id,
+            $asset->member_name,
+            $asset->pic,
+            $asset->activity,
+            $asset->asset_location,
+            $asset->kondisi,
+            $asset->uom,
+            $asset->quantity,
+            $asset->tgl_bast,
+            $asset->hm,
+            $asset->pr_number,
+            $asset->po_number,
+            $asset->gr_number,
+            $asset->remark,
+            $asset->status?->value,
+            $asset->getKey(),
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'kode' => $this->kode,
+            'unit_id' => $this->unit_id,
+            'sub_cluster_id' => $this->sub_cluster_id,
+            'member_name' => $this->member_name,
+            'pic' => $this->pic,
+            'activity' => $this->activity,
+            'asset_location' => $this->asset_location,
+            'kondisi' => $this->kondisi,
+            'uom' => $this->uom,
+            'quantity' => $this->quantity,
+            'tgl_bast' => $this->tgl_bast,
+            'hm' => $this->hm,
+            'pr_number' => $this->pr_number,
+            'po_number' => $this->po_number,
+            'gr_number' => $this->gr_number,
+            'remark' => $this->remark,
+            'status' => $this->status,
+            'key' => $this->key,
+        ];
     }
 }

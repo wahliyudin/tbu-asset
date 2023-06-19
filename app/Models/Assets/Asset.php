@@ -3,7 +3,9 @@
 namespace App\Models\Assets;
 
 use App\Enums\Asset\Status;
-use App\Models\Assets\Assets\Depreciation;
+use App\Models\Assets\AssetInsurance;
+use App\Models\Assets\AssetLeasing;
+use App\Models\Assets\Depreciation;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,5 +54,15 @@ class Asset extends Model
     public function depreciations(): HasMany
     {
         return $this->hasMany(Depreciation::class);
+    }
+
+    public function insurance()
+    {
+        return $this->hasOne(AssetInsurance::class);
+    }
+
+    public function leasing()
+    {
+        return $this->hasOne(AssetLeasing::class);
     }
 }

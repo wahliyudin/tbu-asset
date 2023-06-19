@@ -10,6 +10,38 @@ var AssetsList = function () {
     var form;
     var modal;
 
+    var attributes = {
+        key: '',
+        kode: '',
+        unit_id: '',
+        sub_cluster_id: '',
+        member_name: '',
+        pic: '',
+        activity: '',
+        asset_location: '',
+        kondisi: '',
+        uom: '',
+        quantity: '',
+        tgl_bast: '',
+        hm: '',
+        pr_number: '',
+        po_number: '',
+        gr_number: '',
+        remark: '',
+        status: '',
+
+        dealer_id_leasing: '',
+        leasing_id_leasing: '',
+        harga_beli_leasing: '',
+        jangka_waktu_leasing: '',
+        biaya_leasing: '',
+        legalitas_leasing: '',
+
+        jangka_waktu_insurance: '',
+        biaya_insurance: '',
+        legalitas_insurance: '',
+    };
+
     var initCategoryList = function () {
         const tableRows = table.querySelectorAll('tbody tr');
         tableRows.forEach(row => {
@@ -61,6 +93,13 @@ var AssetsList = function () {
 
         datatable.on('draw', function () {
             handleDeleteRow();
+        });
+    }
+
+    var initPlugins = () => {
+        $("#tgl_bast").flatpickr();
+        $('.uang').mask('0.000.000.000', {
+            reverse: true
         });
     }
 
@@ -251,6 +290,71 @@ var AssetsList = function () {
                             }
                         }
                     },
+
+                    'dealer_id_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Dealer is required'
+                            }
+                        }
+                    },
+                    'leasing_id_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Leasing is required'
+                            }
+                        }
+                    },
+                    'harga_beli_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Harga Beli is required'
+                            }
+                        }
+                    },
+                    'jangka_waktu_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Jangka Waktu is required'
+                            }
+                        }
+                    },
+                    'biaya_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Biaya is required'
+                            }
+                        }
+                    },
+                    'legalitas_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Legalitas is required'
+                            }
+                        }
+                    },
+
+                    'jangka_waktu_insurance': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Jangka Waktu is required'
+                            }
+                        }
+                    },
+                    'biaya_insurance': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Biaya is required'
+                            }
+                        }
+                    },
+                    'legalitas_insurance': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Legalitas is required'
+                            }
+                        }
+                    },
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -270,29 +374,11 @@ var AssetsList = function () {
                     if (status == 'Valid') {
                         submitButton.setAttribute('data-kt-indicator', 'on');
                         submitButton.disabled = true;
+                        fillAttributes();
                         $.ajax({
                             type: "POST",
                             url: "/asset-masters/store",
-                            data: {
-                                key: $(submitButton).data('asset'),
-                                kode: $($(form).find('input[name="kode"]')).val(),
-                                unit_id: $($(form).find('select[name="unit_id"]')).val(),
-                                sub_cluster_id: $($(form).find('select[name="sub_cluster_id"]')).val(),
-                                member_name: $($(form).find('input[name="member_name"]')).val(),
-                                pic: $($(form).find('input[name="pic"]')).val(),
-                                activity: $($(form).find('input[name="activity"]')).val(),
-                                asset_location: $($(form).find('input[name="asset_location"]')).val(),
-                                kondisi: $($(form).find('input[name="kondisi"]')).val(),
-                                uom: $($(form).find('input[name="uom"]')).val(),
-                                quantity: $($(form).find('input[name="quantity"]')).val(),
-                                tgl_bast: $($(form).find('input[name="tgl_bast"]')).val(),
-                                hm: $($(form).find('input[name="hm"]')).val(),
-                                pr_number: $($(form).find('input[name="pr_number"]')).val(),
-                                po_number: $($(form).find('input[name="po_number"]')).val(),
-                                gr_number: $($(form).find('input[name="gr_number"]')).val(),
-                                remark: $($(form).find('input[name="remark"]')).val(),
-                                status: $($(form).find('select[name="status"]')).val(),
-                            },
+                            data: attributes,
                             dataType: "JSON",
                             success: function (response) {
                                 submitButton.removeAttribute('data-kt-indicator');
@@ -392,6 +478,101 @@ var AssetsList = function () {
         })
     }
 
+    const fillAttributes = () => {
+        attributes.key = $(submitButton).data('asset');
+        attributes.kode = $($(form).find('input[name="kode"]')).val();
+        attributes.unit_id = $($(form).find('select[name="unit_id"]')).val();
+        attributes.sub_cluster_id = $($(form).find('select[name="sub_cluster_id"]')).val();
+        attributes.member_name = $($(form).find('input[name="member_name"]')).val();
+        attributes.pic = $($(form).find('input[name="pic"]')).val();
+        attributes.activity = $($(form).find('input[name="activity"]')).val();
+        attributes.asset_location = $($(form).find('input[name="asset_location"]')).val();
+        attributes.kondisi = $($(form).find('input[name="kondisi"]')).val();
+        attributes.uom = $($(form).find('input[name="uom"]')).val();
+        attributes.quantity = $($(form).find('input[name="quantity"]')).val();
+        attributes.tgl_bast = $($(form).find('input[name="tgl_bast"]')).val();
+        attributes.hm = $($(form).find('input[name="hm"]')).val();
+        attributes.pr_number = $($(form).find('input[name="pr_number"]')).val();
+        attributes.po_number = $($(form).find('input[name="po_number"]')).val();
+        attributes.gr_number = $($(form).find('input[name="gr_number"]')).val();
+        attributes.remark = $($(form).find('input[name="remark"]')).val();
+        attributes.status = $($(form).find('select[name="status"]')).val();
+
+        attributes.dealer_id_leasing = $($(form).find('select[name="dealer_id_leasing"]')).val();
+        attributes.leasing_id_leasing = $($(form).find('select[name="leasing_id_leasing"]')).val();
+        attributes.harga_beli_leasing = $($(form).find('input[name="harga_beli_leasing"]')).val();
+        attributes.jangka_waktu_leasing = $($(form).find('input[name="jangka_waktu_leasing"]')).val();
+        attributes.biaya_leasing = $($(form).find('input[name="biaya_leasing"]')).val();
+        attributes.legalitas_leasing = $($(form).find('input[name="legalitas_leasing"]')).val();
+
+        attributes.jangka_waktu_insurance = $($(form).find('input[name="jangka_waktu_insurance"]')).val();
+        attributes.biaya_insurance = $($(form).find('input[name="biaya_insurance"]')).val();
+        attributes.legalitas_insurance = $($(form).find('input[name="legalitas_insurance"]')).val();
+    }
+
+    var resetAttributes = () => {
+        attributes.key = '';
+        attributes.kode = '';
+        attributes.unit_id = '';
+        attributes.sub_cluster_id = '';
+        attributes.member_name = '';
+        attributes.pic = '';
+        attributes.activity = '';
+        attributes.asset_location = '';
+        attributes.kondisi = '';
+        attributes.uom = '';
+        attributes.quantity = '';
+        attributes.tgl_bast = '';
+        attributes.hm = '';
+        attributes.pr_number = '';
+        attributes.po_number = '';
+        attributes.gr_number = '';
+        attributes.remark = '';
+        attributes.status = '';
+
+        attributes.dealer_id_leasing = '';
+        attributes.leasing_id_leasing = '';
+        attributes.harga_beli_leasing = '';
+        attributes.jangka_waktu_leasing = '';
+        attributes.biaya_leasing = '';
+        attributes.legalitas_leasing = '';
+
+        attributes.jangka_waktu_insurance = '';
+        attributes.biaya_insurance = '';
+        attributes.legalitas_insurance = '';
+    }
+
+    const populateForm = (json = null) => {
+        $($(form).find('input[name="kode"]')).val(json === null ? attributes.kode : json.kode);
+        $($(form).find('select[name="unit_id"]')).val(json === null ? attributes.unit_id : json.unit_id).trigger('change');
+        $($(form).find('select[name="sub_cluster_id"]')).val(json === null ? attributes.sub_cluster_id : json.sub_cluster_id).trigger('change');
+        $($(form).find('input[name="member_name"]')).val(json === null ? attributes.member_name : json.member_name);
+        $($(form).find('input[name="pic"]')).val(json === null ? attributes.pic : json.pic);
+        $($(form).find('input[name="activity"]')).val(json === null ? attributes.activity : json.activity);
+        $($(form).find('input[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location);
+        $($(form).find('input[name="kondisi"]')).val(json === null ? attributes.kondisi : json.kondisi);
+        $($(form).find('input[name="uom"]')).val(json === null ? attributes.uom : json.uom);
+        $($(form).find('input[name="quantity"]')).val(json === null ? attributes.quantity : json.quantity);
+        $($(form).find('input[name="tgl_bast"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);
+        $($(form).find('input[name="hm"]')).val(json === null ? attributes.hm : json.hm);
+        $($(form).find('input[name="pr_number"]')).val(json === null ? attributes.pr_number : json.pr_number);
+        $($(form).find('input[name="po_number"]')).val(json === null ? attributes.po_number : json.po_number);
+        $($(form).find('input[name="gr_number"]')).val(json === null ? attributes.gr_number : json.gr_number);
+        $($(form).find('input[name="remark"]')).val(json === null ? attributes.remark : json.remark);
+        $($(form).find('select[name="status"]')).val(json === null ? attributes.status : json.status).trigger('change');
+
+        $($(form).find('select[name="dealer_id_leasing"]')).val(json === null ? attributes.dealer_id_leasing : json.dealer_id_leasing).trigger('change');
+        $($(form).find('select[name="leasing_id_leasing"]')).val(json === null ? attributes.leasing_id_leasing : json.leasing_id_leasing).trigger('change');
+        $($(form).find('input[name="harga_beli_leasing"]')).val(json === null ? attributes.harga_beli_leasing : json.harga_beli_leasing).trigger('input');
+        $($(form).find('input[name="jangka_waktu_leasing"]')).val(json === null ? attributes.jangka_waktu_leasing : json.jangka_waktu_leasing);
+        $($(form).find('input[name="biaya_leasing"]')).val(json === null ? attributes.biaya_leasing : json.biaya_leasing).trigger('input');
+        $($(form).find('input[name="legalitas_leasing"]')).val(json === null ? attributes.legalitas_leasing : json.legalitas_leasing);
+
+        $($(form).find('input[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.jangka_waktu_insurance);
+        $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.biaya_insurance).trigger('input');
+        $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.legalitas_insurance);
+    }
+
     var handleError = function (jqXHR) {
         submitButton.removeAttribute('data-kt-indicator');
         submitButton.disabled = false;
@@ -412,23 +593,8 @@ var AssetsList = function () {
 
     var buttonCreate = () => {
         $('[data-bs-target="#create-asset"]').on('click', function () {
-            $($(form).find('input[name="kode"]')).val('');
-            $($(form).find('select[name="unit_id"]')).val('').trigger('change');
-            $($(form).find('select[name="sub_cluster_id"]')).val('').trigger('change');
-            $($(form).find('input[name="member_name"]')).val('');
-            $($(form).find('input[name="pic"]')).val('');
-            $($(form).find('input[name="activity"]')).val('');
-            $($(form).find('input[name="asset_location"]')).val('');
-            $($(form).find('input[name="kondisi"]')).val('');
-            $($(form).find('input[name="uom"]')).val('');
-            $($(form).find('input[name="quantity"]')).val('');
-            $($(form).find('input[name="tgl_bast"]')).val('');
-            $($(form).find('input[name="hm"]')).val('');
-            $($(form).find('input[name="pr_number"]')).val('');
-            $($(form).find('input[name="po_number"]')).val('');
-            $($(form).find('input[name="gr_number"]')).val('');
-            $($(form).find('input[name="remark"]')).val('');
-            $($(form).find('select[name="status"]')).val('');
+            resetAttributes();
+            populateForm();
             $(submitButton).data('asset', '');
         });
     }
@@ -444,23 +610,7 @@ var AssetsList = function () {
                 url: `/asset-masters/${asset}/edit`,
                 dataType: "JSON",
                 success: function (response) {
-                    $($(form).find('input[name="kode"]')).val(response.kode);
-                    $($(form).find('select[name="unit_id"]')).val(response.unit_id).trigger('change');
-                    $($(form).find('select[name="sub_cluster_id"]')).val(response.sub_cluster_id).trigger('change');
-                    $($(form).find('input[name="member_name"]')).val(response.member_name);
-                    $($(form).find('input[name="pic"]')).val(response.pic);
-                    $($(form).find('input[name="activity"]')).val(response.activity);
-                    $($(form).find('input[name="asset_location"]')).val(response.asset_location);
-                    $($(form).find('input[name="kondisi"]')).val(response.kondisi);
-                    $($(form).find('input[name="uom"]')).val(response.uom);
-                    $($(form).find('input[name="quantity"]')).val(response.quantity);
-                    $($(form).find('input[name="tgl_bast"]')).val(response.tgl_bast);
-                    $($(form).find('input[name="hm"]')).val(response.hm);
-                    $($(form).find('input[name="pr_number"]')).val(response.pr_number);
-                    $($(form).find('input[name="po_number"]')).val(response.po_number);
-                    $($(form).find('input[name="gr_number"]')).val(response.gr_number);
-                    $($(form).find('input[name="remark"]')).val(response.remark);
-                    $($(form).find('select[name="status"]')).val(response.status).trigger('change');
+                    populateForm(response);
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
@@ -485,15 +635,17 @@ var AssetsList = function () {
             handleDeleteRow();
 
 
-            modal = new bootstrap.Modal(document.querySelector('#create-asset'));
+            var modalElement = document.querySelector('#create-asset');
+            modal = new bootstrap.Modal(modalElement);
             form = document.querySelector('#create-asset_form');
-            submitButton = form.querySelector('#create-asset_submit');
-            cancelButton = form.querySelector('#create-asset_cancel');
-            closeButton = form.querySelector('#create-asset_close');
+            submitButton = modalElement.querySelector('#create-asset_submit');
+            cancelButton = modalElement.querySelector('#create-asset_cancel');
+            closeButton = modalElement.querySelector('#create-asset_close');
 
             handleForm();
             buttonCreate();
             buttonEdit();
+            initPlugins();
         }
     }
 }();

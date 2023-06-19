@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Assets;
 
-use App\DataTransferObjects\Assets\AssetDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
+use App\Models\Masters\Dealer;
+use App\Models\Masters\Leasing;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Services\Assets\AssetService;
@@ -23,6 +24,8 @@ class AssetMasterController extends Controller
         return view('assets.asset.index', [
             'units' => Unit::query()->get(),
             'subClusters' => SubCluster::query()->get(),
+            'dealers' => Dealer::query()->get(),
+            'leasings' => Leasing::query()->get(),
         ]);
     }
 
@@ -57,7 +60,7 @@ class AssetMasterController extends Controller
     public function store(AssetRequest $request)
     {
         try {
-            $this->service->updateOrCreate(AssetDto::fromRequest($request));
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
@@ -69,7 +72,7 @@ class AssetMasterController extends Controller
     public function edit(Asset $asset)
     {
         try {
-            return response()->json($asset);
+            return response()->json($this->service->getDataForEdit($asset));
         } catch (\Throwable $th) {
             throw $th;
         }

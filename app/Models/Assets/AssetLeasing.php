@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Assets\Assets;
+namespace App\Models\Assets;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +11,8 @@ class AssetLeasing extends Model
     use HasFactory;
 
     protected $fillable = [
+        'dealer_id',
+        'leasing_id',
         'harga_beli',
         'jangka_waktu_leasing',
         'biaya_leasing',
