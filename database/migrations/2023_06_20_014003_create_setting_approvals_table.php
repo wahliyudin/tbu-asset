@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('setting_approvals', function (Blueprint $table) {
             $table->id();
-            $table->string('module', ['CER', 'TRANSFER', 'DISPOSE']);
-            $table->string('approval', ['ATASAN_LANGSUNG', 'DIRECTOR', 'GENERAL_MANAGER', 'DEPARTMENT_HEAD', 'PROJECT_OWNER', 'FINANCE', 'HCA', 'GENERAL_MANAGER_OPERATION', 'OTHER']);
+            $table->string('module');
+            $table->string('approval');
             $table->unsignedBigInteger('nik')->nullable();
             $table->string('title');
             $table->timestamps();

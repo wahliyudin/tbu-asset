@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Assets;
 
 use App\Enums\Asset\Status;
 use App\Models\Assets\Asset;
