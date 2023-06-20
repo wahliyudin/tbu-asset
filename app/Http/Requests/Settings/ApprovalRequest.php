@@ -23,7 +23,7 @@ class ApprovalRequest extends FormRequest
                     $rules["$modules[$i].$j" . '.title'] = 'required';
                     $rules["$modules[$i].$j" . '.approval'] = 'required';
                 }
-                if (Approval::byValue(request()->get($modules[$i])[$j]['approval']) === Approval::OTHER) {
+                if (Approval::byValue(request()->get($modules[$i])[$j]['approval'] ?? '') === Approval::OTHER) {
                     $rules["$modules[$i].$j" . '.nik'] = 'required';
                 }
             }

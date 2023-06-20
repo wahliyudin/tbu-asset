@@ -29,7 +29,7 @@ enum Approval: string
         };
     }
 
-    public static function byValue(string $val): self
+    public static function byValue(string $val): self|null
     {
         return match ($val) {
             self::ATASAN_LANGSUNG->value => self::ATASAN_LANGSUNG,

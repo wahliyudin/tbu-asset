@@ -17,7 +17,7 @@ enum Module: string
         };
     }
 
-    public static function byValue(string $val): Module
+    public static function byValue(string $val): Module|null
     {
         return match ($val) {
             Module::CER->value => Module::CER,

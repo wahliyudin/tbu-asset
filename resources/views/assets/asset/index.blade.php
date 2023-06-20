@@ -82,7 +82,7 @@
                         </i>
                     </div>
                 </div>
-                <div class="modal-body px-lg-17">
+                <div class="modal-body px-lg-17" style="min-height: 761px;">
                     <form class="form" action="#" id="create-asset_form">
                         <ul class="nav nav-tabs nav-line-tabs flex-wrap border-transparent bg-gray-200 px-4 py-2 rounded">
                             <li class="nav-item my-1">
