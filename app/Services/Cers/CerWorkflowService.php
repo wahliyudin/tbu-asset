@@ -2,6 +2,7 @@
 
 namespace App\Services\Cers;
 
+use App\Enums\Workflows\Module;
 use App\Models\Cers\Cer;
 use App\Services\WorkflowService;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ class CerWorkflowService extends WorkflowService
 
     public function __construct()
     {
-        parent::__construct($this->cer);
+        parent::__construct($this->cer, Module::CER);
     }
 
     public static function setModel(Model $model)
@@ -21,7 +22,7 @@ class CerWorkflowService extends WorkflowService
         return new static;
     }
 
-    protected function storeWorkflow()
+    protected function handleStoreWorkflow()
     {
     }
 

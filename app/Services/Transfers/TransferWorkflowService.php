@@ -2,6 +2,7 @@
 
 namespace App\Services\Transfers;
 
+use App\Enums\Workflows\Module;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\WorkflowService;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ class TransferWorkflowService extends WorkflowService
 
     public function __construct()
     {
-        parent::__construct($this->transfer);
+        parent::__construct($this->transfer, Module::TRANSFER);
     }
 
     public static function setModel(Model $model)
@@ -21,7 +22,7 @@ class TransferWorkflowService extends WorkflowService
         return new static;
     }
 
-    protected function storeWorkflow()
+    protected function handleStoreWorkflow()
     {
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Services\Disposes;
 
+use App\Enums\Workflows\Module;
 use App\Models\Disposes\AssetDispose;
 use App\Services\WorkflowService;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ class DisposeWorkflowService extends WorkflowService
 
     public function __construct()
     {
-        parent::__construct($this->dispose);
+        parent::__construct($this->dispose, Module::DISPOSE);
     }
 
     public static function setModel(Model $model)
@@ -21,7 +22,7 @@ class DisposeWorkflowService extends WorkflowService
         return new static;
     }
 
-    protected function storeWorkflow()
+    protected function handleStoreWorkflow()
     {
     }
 
