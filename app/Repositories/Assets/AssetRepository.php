@@ -14,7 +14,7 @@ class AssetRepository
 
     public function updateOrCreate(AssetDto $dto)
     {
-        return Asset::query()->updateOrCreate([
+        return $this->model->query()->updateOrCreate([
             'id' => $dto->key
         ], [
             'kode' => $dto->kode,

@@ -3,10 +3,13 @@
 namespace App\Models\Cers;
 
 use App\Enums\Cers\TypeBudget;
+use App\Interfaces\ModelWithWorkflowInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Cer extends Model
+class Cer extends Model implements ModelWithWorkflowInterface
 {
     use HasFactory;
 
@@ -25,4 +28,14 @@ class Cer extends Model
     protected $casts = [
         'type_budget' => TypeBudget::class
     ];
+
+    public function workflow(): HasOne
+    {
+        return $this->hasOne(CerWorkflow::class)->latestOfMany();
+    }
+
+    public function workflows(): HasMany
+    {
+        return $this->hasMany(CerWorkflow::class);
+    }
 }

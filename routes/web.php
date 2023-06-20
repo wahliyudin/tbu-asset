@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Assets\AssetMasterController;
+use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
@@ -89,4 +90,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-masters/store', [AssetMasterController::class, 'store'])->name('asset-masters.store');
     Route::post('asset-masters/{asset}/edit', [AssetMasterController::class, 'edit'])->name('asset-masters.edit');
     Route::delete('asset-masters/{asset}/destroy', [AssetMasterController::class, 'destroy'])->name('asset-masters.destroy');
+
+    Route::get('asset-requests', [CerController::class, 'index'])->name('asset-requests.index');
+    Route::post('asset-requests/datatable', [CerController::class, 'datatable'])->name('asset-requests.datatable');
+    Route::post('asset-requests/store', [CerController::class, 'store'])->name('asset-requests.store');
+    Route::post('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit');
+    Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy');
 });
