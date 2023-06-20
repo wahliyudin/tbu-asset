@@ -11,6 +11,7 @@ use App\Http\Controllers\Masters\LeasingController;
 use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
+use App\Http\Controllers\Settings\SettingApprovalController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -96,4 +97,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-requests/store', [CerController::class, 'store'])->name('asset-requests.store');
     Route::post('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit');
     Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy');
+
+    Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index');
+    Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store');
 });

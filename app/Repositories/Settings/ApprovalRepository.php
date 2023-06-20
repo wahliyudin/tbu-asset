@@ -2,11 +2,13 @@
 
 namespace App\Repositories\Settings;
 
+use App\DataTransferObjects\Settings\ApprovalDto;
 use App\Enums\Settings\Approval;
 use App\Enums\Workflows\Module;
 use App\Models\Settings\SettingApproval;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 
 class ApprovalRepository
 {
@@ -105,29 +107,65 @@ class ApprovalRepository
         };
     }
 
-    public static function updateOrCreate(array $data, Module $module)
+    /**
+     * @param ApprovalDto $dto
+     *
+     * @return mixed
+     */
+    public static function updateOrCreate(ApprovalDto $dto): mixed
     {
-        for ($i = 0; $i < count($data); $i++) {
-            if (isset($data[$i])) {
+        for ($i = 0; $i < count($dto->data ?? []); $i++) {
+            if (isset($dto->data[$i])) {
                 SettingApproval::query()->updateOrCreate([
-                    'id' => $data[$i]['key'],
+                    'id' => $dto->data[$i]['key'],
                 ], [
-                    'module' => $module,
-                    'approval' => $data[$i]['approval'],
-                    'title' => $data[$i]['title'],
-                    'nik' => $data[$i]['nik'],
+                    'module' => $dto->module,
+                    'approval' => $dto->data[$i]['approval'],
+                    'title' => $dto->data[$i]['title'],
+                    'nik' => $dto->data[$i]['nik'],
                 ]);
             }
         }
-        $ids = collect($data)->pluck('key')->values()->toArray();
         return SettingApproval::query()
-            ->where('module', $module)
-            ->whereNotIn('id', $ids)
+            ->where('module', $dto->module)
+            ->whereNotIn('id', $dto->keys)
             ->delete();
     }
 
-    public static function getByModule(Module $module)
+    /**
+     * @param Module $module
+     *
+     * @return Collection
+     */
+    public static function getByModule(Module $module): Collection
     {
         return SettingApproval::query()->where('module', $module)->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public static function all(): Collection
+    {
+        return SettingApproval::query()->select(['id', 'module', 'approval', 'nik', 'title'])->get();
+    }
+
+    /**
+     * @return array
+     */
+    public static function dataForView(): array
+    {
+        $settingApprovals = self::all();
+        $results = [];
+        foreach (Module::cases() as $key => $module) {
+            $tmp = $settingApprovals->where('module', $module);
+            $results = array_merge($results, [
+                $module->value => [
+                    'module' => $module->value,
+                    'childs' => $tmp
+                ],
+            ]);
+        }
+        return $results;
     }
 }
