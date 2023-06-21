@@ -46,7 +46,7 @@ var DealersList = function () {
 
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-dealer-table-filter="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
+        filterSearch.addEventListener('change', function (e) {
             datatable.search(e.target.value).draw();
         });
     }

@@ -46,7 +46,7 @@ var LeasingsList = function () {
 
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-leasing-table-filter="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
+        filterSearch.addEventListener('change', function (e) {
             datatable.search(e.target.value).draw();
         });
     }

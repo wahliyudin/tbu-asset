@@ -110,13 +110,14 @@ div.dataTables_scrollBody > table.dataTable > thead > tr > td:after {
 
 div.dataTables_processing {
   position: absolute;
-  top: 50%;
+  top: 10%;
   left: 50%;
   width: 200px;
   margin-left: -100px;
   margin-top: -26px;
   text-align: center;
   padding: 2px;
+  background-color: var(--fc-event-text-color) !important;
 }
 
 div.dataTables_processing > div:last-child {

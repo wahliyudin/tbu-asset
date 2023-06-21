@@ -105,7 +105,7 @@ var AssetsList = function () {
 
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
-        filterSearch.addEventListener('keyup', function (e) {
+        filterSearch.addEventListener('change', function (e) {
             datatable.search(e.target.value).draw();
         });
     }
