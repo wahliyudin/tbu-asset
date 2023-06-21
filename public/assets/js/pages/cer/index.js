@@ -311,6 +311,7 @@ var CersList = function () {
             cancelButton = form.querySelector('#create-cer_cancel');
             closeButton = form.querySelector('#create-cer_close');
 
+            $(".date").flatpickr();
             handleForm();
             buttonCreate();
             buttonEdit();

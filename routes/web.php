@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('asset-requests', [CerController::class, 'index'])->name('asset-requests.index');
     Route::post('asset-requests/datatable', [CerController::class, 'datatable'])->name('asset-requests.datatable');
+    Route::get('asset-requests/create', [CerController::class, 'create'])->name('asset-requests.create');
     Route::post('asset-requests/store', [CerController::class, 'store'])->name('asset-requests.store');
     Route::post('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit');
     Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy');

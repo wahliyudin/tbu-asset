@@ -34,6 +34,11 @@ class CerController extends Controller
             ->make();
     }
 
+    public function create()
+    {
+        return view('cers.cer.create');
+    }
+
     public function store(CerRequest $request)
     {
         try {
