@@ -208,7 +208,7 @@
                     <div class="d-flex flex-column mt-4">
                         <h5>2. Items</h5>
                         <div class="table-responsive ms-4" style="margin-right: -10px;">
-                            <table class="table table-bordered border-gray-300">
+                            <table class="table table-bordered border-gray-300 items">
                                 <thead>
                                     <tr class="fw-bold text-center bg-secondary bg-opacity-50">
                                         <th class="fs-6 fw-semibold w-200px">Asset Description</th>
@@ -217,10 +217,11 @@
                                         <th class="fs-6 fw-semibold w-100px">Asset Qty</th>
                                         <th class="fs-6 fw-semibold w-200px">Unit Price</th>
                                         <th class="fs-6 fw-semibold w-200px">Sub Total Price</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
+                                <tbody data-repeater-list="items">
+                                    <tr data-repeater-item>
                                         <td>
                                             <input type="text" class="form-control">
                                         </td>
@@ -242,8 +243,31 @@
                                         <td>
                                             <input type="text" readonly class="form-control">
                                         </td>
+                                        <td>
+                                            <button type="button" data-repeater-delete
+                                                class="btn btn-sm btn-danger ps-3 pe-2">
+                                                <i class="ki-duotone ki-trash fs-3">
+                                                    <span class="path1"></span>
+                                                    <span class="path2"></span>
+                                                    <span class="path3"></span>
+                                                    <span class="path4"></span>
+                                                    <span class="path5"></span>
+                                                </i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6"></td>
+                                        <td>
+                                            <button type="button" data-repeater-create
+                                                class="btn btn-sm btn-info ps-3 pe-2">
+                                                <i class="ki-duotone ki-plus fs-3"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -335,28 +359,130 @@
                         <textarea name="justifikasi" class="form-control ms-4"></textarea>
                     </div>
                 </div>
-                {{-- <div class="row d-flex">
-                    <button type="reset" id="create-cer_cancel" class="btn btn-light me-3">
-                        Discard
-                    </button>
-                    <button type="submit" id="create-cer_submit" class="btn btn-primary">
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="button" class="btn btn-primary simpan-form-cer">
                         <span class="indicator-label">
-                            Submit
+                            Simpan
                         </span>
                         <span class="indicator-progress">
                             Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
-                </div> --}}
+                </div>
             </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-center">
+                        <div class="d-flex flex-column bg-success w-200px"
+                            style="border-radius: 10px 0 0 10px; overflow: hidden;">
+                            <div class="border text-center text-white p-1 d-flex flex-column">
+                                <p class="m-0 fw-bold" style="font-size: 15px;">
+                                    Title
+                                    By
+                                </p>
+                                <p class="m-0">Nama Karyawan</p>
+                            </div>
+                            <div class="border text-center text-white p-1 d-flex flex-column">
+                                <p class="m-0 fw-bold" style="font-size: 15px;">
+                                    Title
+                                    On
+                                </p>
+                                <p class="m-0">
+                                    Tanggal
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column bg-success w-200px"
+                            style="border-radius: 0 10px 10px 0; overflow: hidden;">
+                            <div class="border text-center text-white p-1 d-flex flex-column">
+                                <p class="m-0 fw-bold" style="font-size: 15px;">
+                                    Title
+                                    By
+                                </p>
+                                <p class="m-0">Nama Karyawan</p>
+                            </div>
+                            <div class="border text-center text-white p-1 d-flex flex-column">
+                                <p class="m-0 fw-bold" style="font-size: 15px;">
+                                    Title
+                                    On
+                                </p>
+                                <p class="m-0">
+                                    Tanggal
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 
 @push('js')
+    <script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
     <script>
         $(document).ready(function() {
             $(".date").flatpickr();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('.items').repeater({
+                initEmpty: false,
+                defaultValues: {
+                    'text-input': 'foo'
+                },
+                show: function() {
+                    $(this).slideDown();
+                    $(this).find('[data-kt-repeater="select2"]').select2();
+                },
+                hide: function(deleteElement) {
+                    $(this).slideUp(deleteElement);
+                },
+                ready: function() {
+                    $(`.items [data-kt-repeater="select2"]`).select2();
+                }
+            });
+            $(`.form-cer`).on('click', `.simpan-form-cer`, function(e) {
+                e.preventDefault();
+                var postData = new FormData($(`.form-cer`)[0]);
+                $(`.simpan-form-cer`).attr("data-kt-indicator", "on");
+                $.ajax({
+                    type: 'POST',
+                    url: "/settings/approval/store",
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(response) {
+                        $(`.simpan-form-cer`).removeAttr("data-kt-indicator");
+                        Swal.fire(
+                            'Success!',
+                            response.message,
+                            'success'
+                        ).then(function() {
+                            location.reload();
+                        });
+                    },
+                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
+                        $(`.simpan-form-cer`).removeAttr("data-kt-indicator");
+                        if (jqXHR.status == 422) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Peringatan!',
+                                text: JSON.parse(jqXHR.responseText)
+                                    .message,
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: jqXHR.responseText,
+                            })
+                        }
+                    }
+                });
+            });
         });
     </script>
 @endpush

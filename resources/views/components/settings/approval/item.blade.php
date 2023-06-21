@@ -1,38 +1,37 @@
 <div data-repeater-item class="form-group d-flex align-items-end justify-content-between gap-5">
     <div class="row" style="width: 90%;">
-        <input type="hidden" name="key" value="">
+        <input type="hidden" name="key" value="{{ $child?->getKey() }}">
         <div class="col-md-4">
             <label for="title" class="form-label">Title
                 <small class="text-danger">*</small></label>
-            <input type="text" class="form-control form-control-solid" name="title" value="" />
+            <input type="text" class="form-control form-control-solid" name="title" value="{{ $child?->title }}" />
         </div>
         <div class="col-md-4">
             <label class="form-label">Approval
                 <small class="text-danger">*</small></label>
-            <select class="form-select approval form-select-solid" data-kt-repeater="select2"
+            <select class="form-select form-select-solid approval" data-kt-repeater="select2"
                 data-placeholder="Approval" name="approval">
                 <option selected readonly value="">- Select -</option>
                 @foreach (\App\Enums\Settings\Approval::cases() as $approval)
-                    <option value="{{ $approval }}">
+                    <option @selected($child?->approval == $approval) value="{{ $approval }}">
                         {{ $approval->label() }}
                     </option>
                 @endforeach
             </select>
         </div>
-        <div class="col-md-4 karyawan" style="display: none;">
+        <div class="col-md-4 karyawan" {!! $child?->approval == \App\Enums\Settings\Approval::OTHER ? '' : 'style="display: none;"' !!}>
             <label for="nik" class="form-label">Karyawan
                 <small class="text-danger">*</small></label>
             <select class="form-select form-select-solid" data-kt-repeater="select2" data-placeholder="Karyawan"
-                id="{{ $settingApproval['module'] }}1" name="nik" data-kode="nik">
+                id="{{ $settingApproval['module'] . $child?->getKey() }}" name="nik" data-kode="nik">
                 <option selected readonly value="">- Select -</option>
                 @foreach ($employees as $employee)
-                    <option value="{{ $employee->nik }}">
+                    <option @selected($child?->nik == $employee->nik) value="{{ $employee->nik }}">
                         {{ $employee->nik . ' - ' . $employee->nama_karyawan }}
                     </option>
                 @endforeach
             </select>
         </div>
-
     </div>
 
     <button type="button" data-repeater-delete class="btn btn-sm btn-icon btn-danger">

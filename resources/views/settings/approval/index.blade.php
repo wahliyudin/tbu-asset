@@ -38,15 +38,14 @@
                             <div class="form-group">
                                 <div data-repeater-list="{{ $settingApproval['module'] }}" class="d-flex flex-column gap-3">
                                     @forelse ($settingApproval['childs'] as $child)
-                                        @include('settings.approval.repeater.item-with-data')
+                                        <x-settings.approval.item :child="$child" :settingApproval="$settingApproval" :employees="$employees" />
                                     @empty
-                                        @include('settings.approval.repeater.item')
+                                        <x-settings.approval.item :child="null" :settingApproval="$settingApproval" :employees="$employees" />
                                     @endforelse
                                 </div>
                             </div>
                             <div class="form-group mt-3 d-flex align-items-center justify-content-between">
                                 <button type="button" data-repeater-create class="btn btn-sm btn-info text-white">
-                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr087.svg-->
                                     <span class="svg-icon svg-icon-2"><svg width="24" height="24" viewBox="0 0 24 24"
                                             fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <rect opacity="0.5" x="11" y="18" width="12" height="2"
@@ -54,7 +53,7 @@
                                             <rect x="6" y="11" width="12" height="2" rx="1"
                                                 fill="currentColor" />
                                         </svg></span>
-                                    <!--end::Svg Icon--> Add another approval
+                                    Add another approval
                                 </button>
                                 <button type="button" class="btn btn-primary simpan-{{ $settingApproval['module'] }}">
                                     <span class="indicator-label">
