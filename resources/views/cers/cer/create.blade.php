@@ -159,21 +159,21 @@
                                     <td class="fs-6 fw-semibold">Department</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" class="form-control">
+                                        {{ $employee->position->department->department_name }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="fs-6 fw-semibold">Project</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" class="form-control">
+                                        {{ $employee->position->project->project }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="fs-6 fw-semibold">Lokasi</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" class="form-control">
+                                        {{ $employee->position->project->location }}
                                     </td>
                                 </tr>
                             </tbody>

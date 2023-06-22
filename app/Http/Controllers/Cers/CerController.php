@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers\Cers;
 
+use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
+use App\Services\API\HRIS\EmployeeService;
 use App\Services\Cers\CerService;
 use App\Services\Cers\CerWorkflowService;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class CerController extends Controller
 {
     public function __construct(
-        private CerService $service
+        private CerService $service,
+        private EmployeeService $employeeService,
     ) {
     }
 
@@ -36,7 +40,10 @@ class CerController extends Controller
 
     public function create()
     {
-        return view('cers.cer.create');
+        $employee = EmployeeDto::fromResponse($this->employeeService->getByNik(Auth::user()->nik));
+        return view('cers.cer.create', [
+            'employee' => $employee
+        ]);
     }
 
     public function store(CerRequest $request)
