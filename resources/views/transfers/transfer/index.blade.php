@@ -2,6 +2,21 @@
 
 @push('css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        ol.bracket {
+            counter-reset: list;
+        }
+
+        ol.bracket>li {
+            list-style: none;
+        }
+
+        ol.bracket>li:before {
+            content: counter(list) ") ";
+            counter-increment: list;
+            font-size: 1rem !important;
+        }
+    </style>
 @endpush
 
 @section('title', 'Transfer')
@@ -41,7 +56,7 @@
                         data-bs-target="#create-transfer">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Transfer
                     </button>
-                    <a href="{{ route('asset-requests.create') }}" class="btn btn-primary ps-4">
+                    <a href="{{ route('asset-transfers.create') }}" class="btn btn-primary ps-4">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Transfer
                     </a>
                 </div>
@@ -88,7 +103,7 @@
                                         management
                                         system</h5>
                                     <h6 class="fw-bold text-center" style="text-transform: uppercase;">formulir <br>
-                                        CAPITAL EXPENDITURE REQUEST
+                                        TRANSFER ASSET
                                     </h6>
                                 </div>
                             </div>
@@ -99,7 +114,7 @@
                                             <td class="py-0" style="font-size: 14px;">Nomor</td>
                                             <td class="py-0 px-2">:</td>
                                             <td class="py-0" style="font-size: 14px; white-space: nowrap;">
-                                                TBU-FM-AST-001</td>
+                                                TBU-FM-AST-003</td>
                                         </tr>
                                         <tr>
                                             <td class="py-0" style="font-size: 14px; white-space: nowrap;">Tanggal
@@ -123,260 +138,171 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-md-6">
-                                <table class="w-100">
+                            <div class="col-md-12">
+                                <h5>Dengan ini mengajukan permintaan pemindahan (transfer) asset dengan data berikut: (*)
+                                </h5>
+                                <table class="w-100 ms-8 mt-4">
                                     <tbody>
                                         <tr>
-                                            <td class="fs-6 fw-semibold">Peruntukan</td>
+                                            <td class="fs-6 fw-semibold w-200px">Nama Asset</td>
                                             <td>:</td>
-                                            <td>
-                                                <div class="form-check form-check-custom">
-                                                    <input class="form-check-input" name="peruntukan" type="radio"
-                                                        value="" id="penggantian" />
-                                                    <label class="form-check-label fs-6 fw-semibold" for="penggantian">
-                                                        Penggantian
-                                                    </label>
-                                                </div>
-                                            </td>
+                                            <td></td>
                                         </tr>
                                         <tr>
+                                            <td class="fs-6 fw-semibold w-200px">Merk/Tipe/Model</td>
+                                            <td>:</td>
                                             <td></td>
-                                            <td></td>
-                                            <td>
-                                                <div class="form-check form-check-custom">
-                                                    <input class="form-check-input" name="peruntukan" type="radio"
-                                                        value="" id="penambahan" />
-                                                    <label class="form-check-label fs-6 fw-semibold" for="penambahan">
-                                                        Penambahan
-                                                    </label>
-                                                </div>
-                                            </td>
                                         </tr>
                                         <tr>
+                                            <td class="fs-6 fw-semibold w-200px">Serial Number Asset</td>
+                                            <td>:</td>
                                             <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fs-6 fw-semibold w-200px">Nomor Asset</td>
+                                            <td>:</td>
                                             <td></td>
-                                            <td>
-                                                <div class="form-check form-check-custom">
-                                                    <input class="form-check-input" name="peruntukan" type="radio"
-                                                        value="" id="safety" />
-                                                    <label class="form-check-label fs-6 fw-semibold" for="safety">
-                                                        Safety
-                                                    </label>
-                                                </div>
-                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fs-6 fw-semibold w-200px">Nilai Akuisisi / Nilai Buku</td>
+                                            <td>:</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="fs-6 fw-semibold w-200px">Kelengkapan Asset</td>
+                                            <td>:</td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-md-6">
-                                <table class="w-100">
+                        </div>
+                        <div class="row mt-8">
+                            <div class="col-md-12 ps-12">
+                                <table class="table table-bordered border-gray-300">
+                                    <thead class="border-0">
+                                        <tr class="text-center border-0">
+                                            <th class="border-0"></th>
+                                            <th class="border border-gray-300 bg-secondary bg-opacity-50">User Lama</th>
+                                            <th class="border border-gray-300 bg-secondary bg-opacity-50">User Baru</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="fs-6 fw-semibold">Status</td>
-                                            <td>:</td>
-                                            <td>
-                                                <div class="form-check form-check-custom">
-                                                    <input class="form-check-input" name="status" type="radio"
-                                                        value="" id="budgeted" />
-                                                    <label class="form-check-label fs-6 fw-semibold" for="budgeted">
-                                                        Budgeted
-                                                    </label>
-                                                </div>
-                                            </td>
+                                            <th class="bg-secondary bg-opacity-50 w-200px">Nama Pemegang Asset</th>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
                                         <tr>
+                                            <th class="bg-secondary bg-opacity-50 w-200px">Department</th>
                                             <td></td>
                                             <td></td>
-                                            <td>
-                                                <div class="form-check form-check-custom">
-                                                    <input class="form-check-input" name="status" type="radio"
-                                                        value="" id="nonbudgeted" />
-                                                    <label class="form-check-label fs-6 fw-semibold" for="nonbudgeted">
-                                                        Non Budgeted
-                                                    </label>
-                                                </div>
-                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-secondary bg-opacity-50 w-200px">Division</th>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-secondary bg-opacity-50 w-200px">Project</th>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <th class="bg-secondary bg-opacity-50 w-200px">Lokasi</th>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row mt-4 align-items-end ps-8">
+                            <div class="col-md-5">
+                                <h5>Tanggal Permintaan Pemindahan (Transfer)</h5>
+                            </div>
+                            <div class="col-md-5">
+                                <table class="table table-bordered border-gray-400 m-0">
+                                    <thead class="border-0">
+                                        <tr class="text-center border-0">
+                                            <th colspan="2" class="border-0">Tgl.</th>
+                                            <th colspan="4" class="border-0">Bln</th>
+                                            <th colspan="4" class="border-0">Tahun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center">
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px">-</td>
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px">-</td>
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px"></td>
+                                            <td class="p-1 w-50px"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-md-6">
-                                <table class="w-100">
-                                    <tbody>
-                                        <tr>
-                                            <td class="fs-6 fw-semibold">Department</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" class="form-control">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fs-6 fw-semibold">Project</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" class="form-control">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fs-6 fw-semibold">Lokasi</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" class="form-control">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-6">
-                                <table class="w-100">
-                                    <tbody>
-                                        <tr>
-                                            <td class="fs-6 fw-semibold">Tanggal Pengajuan</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" class="form-control date">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fs-6 fw-semibold">Tanggal Kebutuhan</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" class="form-control date">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h5>Justifikasi/ Alasan Pemindahan (Transfer) Asset, yaitu :</h5>
+                            <ol class="bracket">
+                                <li class="d-flex align-items-center gap-6">
+                                    <input type="text" class="form-control mt-1">
+                                </li>
+                                <li class="d-flex align-items-center gap-6">
+                                    <input type="text" class="form-control mt-1">
+                                </li>
+                                <li class="d-flex align-items-center gap-6">
+                                    <input type="text" class="form-control mt-1">
+                                </li>
+                            </ol>
                         </div>
-                        <div class="d-flex flex-column mt-4 me-4">
-                            <div class="d-flex flex-column">
-                                <h5>1. Justifikasi / alasan pengadaan</h5>
-                                <textarea name="justifikasi" class="form-control ms-4"></textarea>
-                            </div>
-                            <div class="d-flex flex-column mt-4">
-                                <h5>2. Items</h5>
-                                <div class="table-responsive ms-4" style="margin-right: -10px;">
-                                    <table class="table table-bordered border-gray-300">
-                                        <thead>
-                                            <tr class="fw-bold text-center bg-secondary bg-opacity-50">
-                                                <th class="fs-6 fw-semibold w-200px">Asset Description</th>
-                                                <th class="fs-6 fw-semibold w-200px">Asset Model</th>
-                                                <th class="fs-6 fw-semibold w-200px">Est. Umur Asset</th>
-                                                <th class="fs-6 fw-semibold w-100px">Asset Qty</th>
-                                                <th class="fs-6 fw-semibold w-200px">Unit Price</th>
-                                                <th class="fs-6 fw-semibold w-200px">Sub Total Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <div class="input-group">
-                                                        <input type="number" min="1" class="form-control">
-                                                        <span class="input-group-text">Bulan</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input type="number" min="1" class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="text" readonly class="form-control">
-                                                </td>
-                                                <td>
-                                                    <input type="text" readonly class="form-control">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-8">
-                                    <h5>3. Harga Total (estimasi)</h5>
-                                </div>
-                                <div class="col-md-4 pe-0 ps-8">
-                                    <table class="table table-bordered border-gray-300 w-100">
-                                        <tbody>
-                                            <tr>
-                                                <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">IDR</td>
-                                                <td class="w-200px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">USD</td>
-                                                <td class="w-200px"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-4">
-                                    <h5>4. Sumber Pendanaan</h5>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="d-flex align-items-center justify-content-evenly w-100">
-                                        <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="sumber_pendanaan" type="radio"
-                                                value="" id="leasing" />
-                                            <label class="form-check-label fs-6 fw-semibold" for="leasing">
-                                                Leasing
-                                            </label>
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-center">
+                                    <div class="d-flex flex-column bg-success w-200px"
+                                        style="border-radius: 10px 0 0 10px; overflow: hidden;">
+                                        <div class="border text-center text-white p-1 d-flex flex-column">
+                                            <p class="m-0 fw-bold" style="font-size: 15px;">
+                                                Title
+                                                By
+                                            </p>
+                                            <p class="m-0">Nama Karyawan</p>
                                         </div>
-                                        <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="sumber_pendanaan" type="radio"
-                                                value="" id="bukanleasing" />
-                                            <label class="form-check-label fs-6 fw-semibold" for="bukanleasing">
-                                                Bukan Leasing
-                                            </label>
+                                        <div class="border text-center text-white p-1 d-flex flex-column">
+                                            <p class="m-0 fw-bold" style="font-size: 15px;">
+                                                Title
+                                                On
+                                            </p>
+                                            <p class="m-0">
+                                                Tanggal
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column bg-success w-200px"
+                                        style="border-radius: 0 10px 10px 0; overflow: hidden;">
+                                        <div class="border text-center text-white p-1 d-flex flex-column">
+                                            <p class="m-0 fw-bold" style="font-size: 15px;">
+                                                Title
+                                                By
+                                            </p>
+                                            <p class="m-0">Nama Karyawan</p>
+                                        </div>
+                                        <div class="border text-center text-white p-1 d-flex flex-column">
+                                            <p class="m-0 fw-bold" style="font-size: 15px;">
+                                                Title
+                                                On
+                                            </p>
+                                            <p class="m-0">
+                                                Tanggal
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-md-4">
-                                    <h5>5. Badget</h5>
-                                </div>
-                                <div class="col-md-4">
-                                    <table class="table table-bordered w-100 border-gray-300">
-                                        <tbody>
-                                            <tr>
-                                                <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">Ref No</td>
-                                                <td class="w-200px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">Periode
-                                                    (tahun)
-                                                </td>
-                                                <td class="w-200px"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="col-md-4 pe-0">
-                                    <table class="table table-bordered w-100 border-gray-300">
-                                        <tbody>
-                                            <tr>
-                                                <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">IDR</td>
-                                                <td class="w-200px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">USD</td>
-                                                <td class="w-200px"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="d-flex flex-column mt-4">
-                                <h5>6. Cost & Benefit Analyst</h5>
-                                <textarea name="justifikasi" class="form-control ms-4"></textarea>
                             </div>
                         </div>
                     </div>
