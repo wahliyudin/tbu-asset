@@ -10,6 +10,16 @@
         </div>
 
         <div class="fv-row mb-8">
+            <input type="number" placeholder="NIK" class="form-control bg-transparent @error('nik') is-invalid @enderror"
+                name="nik" value="{{ old('nik') }}" required autocomplete="nik" />
+            @error('nik')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+        <div class="fv-row mb-8">
             <input type="text" placeholder="Name" class="form-control bg-transparent @error('name') is-invalid @enderror"
                 name="name" value="{{ old('name') }}" required autocomplete="name" />
             @error('name')

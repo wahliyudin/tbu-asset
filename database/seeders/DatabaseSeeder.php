@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::query()->create([
+            'nik' => 11180627,
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make(1234567890),
