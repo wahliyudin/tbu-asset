@@ -129,25 +129,64 @@
                     <a class="menu-link {{ request()->routeIs('asset-masters.index') ? 'active' : '' }}"
                         href="{{ route('asset-masters.index') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-category fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
+                            <i class="ki-duotone ki-lots-shopping fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                                <i class="path3"></i>
+                                <i class="path4"></i>
+                                <i class="path5"></i>
+                                <i class="path6"></i>
+                                <i class="path7"></i>
+                                <i class="path8"></i>
                             </i>
                         </span>
                         <span class="menu-title">Asset Master</span>
                     </a>
                 </div>
                 <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('asset-disposes.index') ? 'active' : '' }}"
+                        href="{{ route('asset-disposes.index') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-disconnect fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                                <i class="path3"></i>
+                                <i class="path4"></i>
+                                <i class="path5"></i>
+                            </i>
+                        </span>
+                        <span class="menu-title">Asset Dispose</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link {{ request()->routeIs('asset-transfers.index') ? 'active' : '' }}"
+                        href="{{ route('asset-transfers.index') }}">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-share fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                                <i class="path3"></i>
+                                <i class="path4"></i>
+                                <i class="path5"></i>
+                                <i class="path6"></i>
+                            </i>
+                        </span>
+                        <span class="menu-title">Asset Transfer</span>
+                    </a>
+                </div>
+                <div class="menu-item">
                     <a class="menu-link {{ request()->routeIs('asset-requests.index') ? 'active' : '' }}"
                         href="{{ route('asset-requests.index') }}">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-category fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
+                            <i class="ki-duotone ki-call fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                                <i class="path3"></i>
+                                <i class="path4"></i>
+                                <i class="path5"></i>
+                                <i class="path6"></i>
+                                <i class="path7"></i>
+                                <i class="path8"></i>
                             </i>
                         </span>
                         <span class="menu-title">Asset Request</span>
@@ -156,12 +195,9 @@
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
-                            <i class="ki-duotone ki-dropbox fs-2">
+                            <i class="ki-duotone ki-setting fs-2">
                                 <i class="path1"></i>
                                 <i class="path2"></i>
-                                <i class="path3"></i>
-                                <i class="path4"></i>
-                                <i class="path5"></i>
                             </i>
                         </span>
                         <span class="menu-title">Setting</span>
