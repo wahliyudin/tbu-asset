@@ -3,6 +3,7 @@
 namespace App\Services\Cers;
 
 use App\DataTransferObjects\Cers\CerDto;
+use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CerService
         return Cer::query()->get();
     }
 
-    public function updateOrCreate(Request $request)
+    public function updateOrCreate(CerRequest $request)
     {
         $cer = $this->cerRepository->updateOrCreate(CerDto::fromRequest($request));
     }

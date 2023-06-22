@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
+use App\Http\Controllers\Disposes\DisposeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
 use App\Http\Controllers\Settings\SettingApprovalController;
+use App\Http\Controllers\Transfers\TransferController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -98,6 +100,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-requests/store', [CerController::class, 'store'])->name('asset-requests.store');
     Route::post('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit');
     Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy');
+
+    Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index');
+    Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable');
+    Route::get('asset-transfers/create', [TransferController::class, 'create'])->name('asset-transfers.create');
+    Route::post('asset-transfers/store', [TransferController::class, 'store'])->name('asset-transfers.store');
+    Route::post('asset-transfers/{assetTransfer}/edit', [TransferController::class, 'edit'])->name('asset-transfers.edit');
+    Route::delete('asset-transfers/{assetTransfer}/destroy', [TransferController::class, 'destroy'])->name('asset-transfers.destroy');
+
+    Route::get('asset-disposes', [DisposeController::class, 'index'])->name('asset-disposes.index');
+    Route::post('asset-disposes/datatable', [DisposeController::class, 'datatable'])->name('asset-disposes.datatable');
+    Route::get('asset-disposes/create', [DisposeController::class, 'create'])->name('asset-disposes.create');
+    Route::post('asset-disposes/store', [DisposeController::class, 'store'])->name('asset-disposes.store');
+    Route::post('asset-disposes/{assetDispose}/edit', [DisposeController::class, 'edit'])->name('asset-disposes.edit');
+    Route::delete('asset-disposes/{assetDispose}/destroy', [DisposeController::class, 'destroy'])->name('asset-disposes.destroy');
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store');
