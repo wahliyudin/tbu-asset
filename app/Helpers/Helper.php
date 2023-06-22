@@ -11,4 +11,9 @@ class Helper
             ->replace('.', '')
             ->value();
     }
+
+    public static function clearUrl(string $url): string
+    {
+        return str($url)->replace('//', '/')->value();
+    }
 }
