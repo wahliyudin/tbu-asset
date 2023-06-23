@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\Disposes\DisposeController;
@@ -13,9 +14,13 @@ use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
 use App\Http\Controllers\Settings\SettingApprovalController;
+use App\Http\Controllers\SSO\AuthController;
 use App\Http\Controllers\ThirdParty\TXIS\BudgetController;
 use App\Http\Controllers\Transfers\TransferController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +40,9 @@ Route::get('/', function () {
     }
     return to_route('home');
 });
+
+Route::get('sso/login', [AuthController::class, 'login'])->name('sso.login');
+Route::get('sso/callback', [AuthController::class, 'callback'])->name('sso.callback');
 
 Auth::routes();
 

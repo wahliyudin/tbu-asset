@@ -20,10 +20,17 @@ abstract class HRISService implements APIInterface
         return $this->url() . "/$extend";
     }
 
-    protected function get($url, $query = null)
+    protected function get($url, $query = null, $token = null)
     {
+        $token = $this->token() ?? $token;
         return Http::withHeaders([
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer $token",
         ])->get($url, $query);
+    }
+
+    private function token()
+    {
+        return auth()->user()?->oatuhToken?->access_token;
     }
 }
