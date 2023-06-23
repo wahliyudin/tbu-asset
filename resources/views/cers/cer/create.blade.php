@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@push('css')
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @section('title', 'Create Cer')
 
 @section('toolbar')
@@ -28,49 +32,8 @@
     <div class="card">
         <div class="card-body">
             <form action="" class="form-cer">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <img src="{{ asset('assets/media/logos/tbu.png') }}" style="width: 100%;" alt="">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex flex-column">
-                            <h5 class="fw-bold text-center" style="text-transform: uppercase;">tbu
-                                management
-                                system</h5>
-                            <h6 class="fw-bold text-center" style="text-transform: uppercase;">formulir <br>
-                                CAPITAL EXPENDITURE REQUEST
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px;">Nomor</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px; white-space: nowrap;">
-                                        TBU-FM-AST-001</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px; white-space: nowrap;">Tanggal
-                                        Terbit</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px;">12-04-2023</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px;">Revisi</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px;">00</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px;">Halaman</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px;">1 dari 1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <x-form-header title="CAPITAL EXPENDITURE REQUEST" nomor="TBU-FM-AST-001" tanggal="12-04-2023"
+                    revisi="00" halaman="1 dari 1" />
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
@@ -81,8 +44,8 @@
                                     <td>:</td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="peruntukan" type="radio" value=""
-                                                id="penggantian" />
+                                            <input class="form-check-input" checked name="peruntukan" type="radio"
+                                                value="penggantian" id="penggantian" />
                                             <label class="form-check-label fs-6 fw-semibold" for="penggantian">
                                                 Penggantian
                                             </label>
@@ -94,8 +57,8 @@
                                     <td></td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="peruntukan" type="radio" value=""
-                                                id="penambahan" />
+                                            <input class="form-check-input" name="peruntukan" type="radio"
+                                                value="penambahan" id="penambahan" />
                                             <label class="form-check-label fs-6 fw-semibold" for="penambahan">
                                                 Penambahan
                                             </label>
@@ -107,7 +70,7 @@
                                     <td></td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="peruntukan" type="radio" value=""
+                                            <input class="form-check-input" name="peruntukan" type="radio" value="safety"
                                                 id="safety" />
                                             <label class="form-check-label fs-6 fw-semibold" for="safety">
                                                 Safety
@@ -126,8 +89,8 @@
                                     <td>:</td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="status" type="radio" value=""
-                                                id="budgeted" />
+                                            <input class="form-check-input" checked name="status" type="radio"
+                                                value="budgeted" id="budgeted" />
                                             <label class="form-check-label fs-6 fw-semibold" for="budgeted">
                                                 Budgeted
                                             </label>
@@ -139,8 +102,8 @@
                                     <td></td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="status" type="radio" value=""
-                                                id="nonbudgeted" />
+                                            <input class="form-check-input" name="status" type="radio"
+                                                value="nonbudgeted" id="nonbudgeted" />
                                             <label class="form-check-label fs-6 fw-semibold" for="nonbudgeted">
                                                 Non Budgeted
                                             </label>
@@ -156,21 +119,21 @@
                         <table class="w-100">
                             <tbody>
                                 <tr>
-                                    <td class="fs-6 fw-semibold">Department</td>
+                                    <td class="fs-6 fw-semibold w-150px">Department</td>
                                     <td>:</td>
                                     <td>
                                         {{ $employee->position->department->department_name }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="fs-6 fw-semibold">Project</td>
+                                    <td class="fs-6 fw-semibold w-150px">Project</td>
                                     <td>:</td>
                                     <td>
                                         {{ $employee->position->project->project }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="fs-6 fw-semibold">Lokasi</td>
+                                    <td class="fs-6 fw-semibold w-150px">Lokasi</td>
                                     <td>:</td>
                                     <td>
                                         {{ $employee->position->project->location }}
@@ -186,14 +149,14 @@
                                     <td class="fs-6 fw-semibold">Tanggal Pengajuan</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" class="form-control date">
+                                        <input type="text" name="tanggal_pengajuan" class="form-control date">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="fs-6 fw-semibold">Tanggal Kebutuhan</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" class="form-control date">
+                                        <input type="text" name="tanggal_kebutuhan" class="form-control date">
                                     </td>
                                 </tr>
                             </tbody>
@@ -207,6 +170,10 @@
                     </div>
                     <div class="d-flex flex-column mt-4">
                         <h5>2. Items</h5>
+                        <div class="d-flex justify-content-end py-2">
+                            <button type="button" class="btn btn-sm btn-primary ps-3 add-item"><i
+                                    class="ki-duotone ki-plus fs-3"></i>Tambah</button>
+                        </div>
                         <div class="table-responsive ms-4" style="margin-right: -10px;">
                             <table class="table table-bordered border-gray-300 items">
                                 <thead>
@@ -223,25 +190,30 @@
                                 <tbody data-repeater-list="items">
                                     <tr data-repeater-item>
                                         <td>
-                                            <input type="text" class="form-control">
+                                            <input type="hidden" name="asset" class="asset">
+                                            <input type="text" readonly name="asset_description"
+                                                class="form-control asset-description">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control">
+                                            <input type="text" readonly name="asset_model"
+                                                class="form-control asset-model">
                                         </td>
                                         <td>
                                             <div class="input-group">
-                                                <input type="number" min="1" class="form-control">
+                                                <input type="number" name="umur_asset" min="1"
+                                                    class="form-control umur-asset">
                                                 <span class="input-group-text">Bulan</span>
                                             </div>
                                         </td>
                                         <td>
-                                            <input type="number" min="1" class="form-control">
+                                            <input type="number" min="1" value="1"
+                                                class="form-control qty">
                                         </td>
                                         <td>
-                                            <input type="text" readonly class="form-control">
+                                            <input type="text" readonly class="form-control uang price">
                                         </td>
                                         <td>
-                                            <input type="text" readonly class="form-control">
+                                            <input type="text" readonly class="form-control uang sub-total">
                                         </td>
                                         <td>
                                             <button type="button" data-repeater-delete
@@ -257,7 +229,7 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfoot>
+                                <tfoot style="display: none;">
                                     <tr>
                                         <td colspan="6"></td>
                                         <td>
@@ -279,12 +251,18 @@
                             <table class="table table-bordered border-gray-300 w-100">
                                 <tbody>
                                     <tr>
-                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">IDR</td>
-                                        <td class="w-200px"></td>
+                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50"
+                                            style="vertical-align: middle;">IDR</td>
+                                        <td class="w-200px">
+                                            <input type="text" readonly name="total_idr" class="form-control uang">
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">USD</td>
-                                        <td class="w-200px"></td>
+                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50"
+                                            style="vertical-align: middle;">USD</td>
+                                        <td class="w-200px">
+                                            <input type="text" readonly name="total_usd" class="form-control uang">
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -297,7 +275,7 @@
                         <div class="col-md-8">
                             <div class="d-flex align-items-center justify-content-evenly w-100">
                                 <div class="form-check form-check-custom">
-                                    <input class="form-check-input" name="sumber_pendanaan" type="radio"
+                                    <input class="form-check-input" checked name="sumber_pendanaan" type="radio"
                                         value="" id="leasing" />
                                     <label class="form-check-label fs-6 fw-semibold" for="leasing">
                                         Leasing
@@ -310,31 +288,31 @@
                                         Bukan Leasing
                                     </label>
                                 </div>
-                                <div class="form-check form-check-custom">
-                                    <input class="form-check-input" name="sumber_pendanaan" type="radio"
-                                        value="" id="transfer" />
-                                    <label class="form-check-label fs-6 fw-semibold" for="transfer">
-                                        Transfer Asset
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <div class="col-md-4">
+                        <div class="col-md-4 d-flex justify-content-between align-items-start">
                             <h5>5. Badget</h5>
+                            <button type="button" class="btn btn-sm btn-primary ps-3 pe-2 search-budget">
+                                <i class="ki-duotone ki-search-list fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                    <i class="path3"></i>
+                                </i>
+                            </button>
                         </div>
                         <div class="col-md-4">
                             <table class="table table-bordered w-100 border-gray-300">
                                 <tbody>
                                     <tr>
-                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">Ref No</td>
-                                        <td class="w-200px"></td>
+                                        <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Ref No</td>
+                                        <td class="w-250px"></td>
                                     </tr>
                                     <tr>
-                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">Periode (tahun)
+                                        <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
                                         </td>
-                                        <td class="w-200px"></td>
+                                        <td class="w-250px"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -343,12 +321,13 @@
                             <table class="table table-bordered w-100 border-gray-300">
                                 <tbody>
                                     <tr>
-                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">IDR</td>
-                                        <td class="w-200px"></td>
+                                        <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
+                                        <td class="w-250px"></td>
                                     </tr>
                                     <tr>
-                                        <td class="fs-6 fw-semibold w-200px bg-secondary bg-opacity-50">USD</td>
-                                        <td class="w-200px"></td>
+                                        <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">USD
+                                        </td>
+                                        <td class="w-250px"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -356,7 +335,7 @@
                     </div>
                     <div class="d-flex flex-column mt-4">
                         <h5>6. Cost & Benefit Analyst</h5>
-                        <textarea name="justifikasi" class="form-control ms-4"></textarea>
+                        <textarea name="cost_benefit" class="form-control ms-4"></textarea>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
@@ -418,71 +397,14 @@
     </div>
 @endsection
 
+@push('modal')
+    @include('cers.cer.modals.data-asset')
+    @include('cers.cer.modals.data-budget')
+@endpush
+
 @push('js')
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $(".date").flatpickr();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $('.items').repeater({
-                initEmpty: false,
-                defaultValues: {
-                    'text-input': 'foo'
-                },
-                show: function() {
-                    $(this).slideDown();
-                    $(this).find('[data-kt-repeater="select2"]').select2();
-                },
-                hide: function(deleteElement) {
-                    $(this).slideUp(deleteElement);
-                },
-                ready: function() {
-                    $(`.items [data-kt-repeater="select2"]`).select2();
-                }
-            });
-            $(`.form-cer`).on('click', `.simpan-form-cer`, function(e) {
-                e.preventDefault();
-                var postData = new FormData($(`.form-cer`)[0]);
-                $(`.simpan-form-cer`).attr("data-kt-indicator", "on");
-                $.ajax({
-                    type: 'POST',
-                    url: "/settings/approval/store",
-                    processData: false,
-                    contentType: false,
-                    data: postData,
-                    success: function(response) {
-                        $(`.simpan-form-cer`).removeAttr("data-kt-indicator");
-                        Swal.fire(
-                            'Success!',
-                            response.message,
-                            'success'
-                        ).then(function() {
-                            location.reload();
-                        });
-                    },
-                    error: function(jqXHR, xhr, textStatus, errorThrow, exception) {
-                        $(`.simpan-form-cer`).removeAttr("data-kt-indicator");
-                        if (jqXHR.status == 422) {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Peringatan!',
-                                text: JSON.parse(jqXHR.responseText)
-                                    .message,
-                            })
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: jqXHR.responseText,
-                            })
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('assets/plugins/custom/mask/jquery.mask.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/cer/create.js') }}"></script>
 @endpush

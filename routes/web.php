@@ -13,6 +13,7 @@ use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
 use App\Http\Controllers\Settings\SettingApprovalController;
+use App\Http\Controllers\ThirdParty\TXIS\BudgetController;
 use App\Http\Controllers\Transfers\TransferController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('asset-masters', [AssetMasterController::class, 'index'])->name('asset-masters.index');
     Route::post('asset-masters/datatable', [AssetMasterController::class, 'datatable'])->name('asset-masters.datatable');
+    Route::post('asset-masters/datatable-asset-idle', [AssetMasterController::class, 'datatableAssetIdle'])->name('asset-masters.datatable-asset-idle');
     Route::post('asset-masters/store', [AssetMasterController::class, 'store'])->name('asset-masters.store');
     Route::post('asset-masters/{asset}/edit', [AssetMasterController::class, 'edit'])->name('asset-masters.edit');
     Route::delete('asset-masters/{asset}/destroy', [AssetMasterController::class, 'destroy'])->name('asset-masters.destroy');
@@ -117,4 +119,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store');
+
+    Route::post('budgets/datatable', [BudgetController::class, 'datatable'])->name('budgets.datatable');
 });

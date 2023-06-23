@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Cers;
 
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
+use App\DataTransferObjects\API\TXIS\BudgetDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
+use App\Services\API\TXIS\BudgetService;
 use App\Services\Cers\CerService;
 use App\Services\Cers\CerWorkflowService;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +19,7 @@ class CerController extends Controller
     public function __construct(
         private CerService $service,
         private EmployeeService $employeeService,
+        private BudgetService $budgetService,
     ) {
     }
 
@@ -49,6 +52,7 @@ class CerController extends Controller
     public function store(CerRequest $request)
     {
         try {
+            dd($request->all());
             $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'

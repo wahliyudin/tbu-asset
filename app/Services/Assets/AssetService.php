@@ -5,6 +5,7 @@ namespace App\Services\Assets;
 use App\DataTransferObjects\Assets\AssetDto;
 use App\DataTransferObjects\Assets\AssetInsuranceDto;
 use App\DataTransferObjects\Assets\AssetLeasingDto;
+use App\Enums\Asset\Status;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
 use App\Repositories\Assets\AssetInsuranceRepository;
@@ -23,6 +24,11 @@ class AssetService
     public function all()
     {
         return Asset::query()->get();
+    }
+
+    public function getByStatus(Status $status)
+    {
+        return Asset::query()->where('status', $status)->get();
     }
 
     public function getDataForEdit(Asset $asset): array

@@ -28,49 +28,8 @@
     <div class="card">
         <div class="card-body">
             <form action="" class="form-dispose">
-                <div class="row align-items-center">
-                    <div class="col-md-3">
-                        <img src="{{ asset('assets/media/logos/tbu.png') }}" style="width: 100%;" alt="">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex flex-column">
-                            <h5 class="fw-bold text-center" style="text-transform: uppercase;">tbu
-                                management
-                                system</h5>
-                            <h6 class="fw-bold text-center" style="text-transform: uppercase;">formulir <br>
-                                PENGHAPUSAN ASSET
-                            </h6>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px;">Nomor</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px; white-space: nowrap;">
-                                        TBU-FM-AST-002</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px; white-space: nowrap;">Tanggal
-                                        Terbit</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px;">12-04-2023</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px;">Revisi</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px;">00</td>
-                                </tr>
-                                <tr>
-                                    <td class="py-0" style="font-size: 14px;">Halaman</td>
-                                    <td class="py-0 px-2">:</td>
-                                    <td class="py-0" style="font-size: 14px;">1 dari 1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <x-form-header title="PENGHAPUSAN ASSET" nomor="TBU-FM-AST-002" tanggal="12-04-2023" revisi="00"
+                    halaman="1 dari 1" />
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
