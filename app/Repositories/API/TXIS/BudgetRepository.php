@@ -5,7 +5,7 @@ namespace App\Services\API\TXIS;
 use App\DataTransferObjects\API\TXIS\BudgetDto;
 use App\Services\API\TXIS\Contracts\TXISService;
 
-class BudgetService extends TXISService
+class BudgetRepository extends TXISService
 {
     const PREFIX = '/budgetdetails';
 

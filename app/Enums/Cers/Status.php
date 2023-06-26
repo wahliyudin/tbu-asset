@@ -2,18 +2,29 @@
 
 namespace App\Enums\Cers;
 
-enum Status: string
+use App\Interfaces\EnumInterface;
+
+enum Status: string implements EnumInterface
 {
     case OPEN = 'open';
     case CLOSE = 'close';
     case REJECT = 'reject';
 
-    public function badge()
+    public function label(): string
     {
         return match ($this) {
-            self::OPEN => '<span class="badge badge-primary">' . self::OPEN . '</span>',
-            self::CLOSE => '<span class="badge badge-warning">' . self::CLOSE . '</span>',
-            self::REJECT => '<span class="badge badge-danger">' . self::REJECT . '</span>',
+            self::OPEN => 'Open',
+            self::CLOSE => 'Close',
+            self::REJECT => 'Reject',
+        };
+    }
+
+    public function badge(): string
+    {
+        return match ($this) {
+            self::OPEN => '<span class="badge badge-primary">' . self::OPEN->label() . '</span>',
+            self::CLOSE => '<span class="badge badge-warning">' . self::CLOSE->label() . '</span>',
+            self::REJECT => '<span class="badge badge-danger">' . self::REJECT->label() . '</span>',
         };
     }
 }

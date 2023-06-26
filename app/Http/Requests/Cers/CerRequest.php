@@ -20,7 +20,7 @@ class CerRequest extends FormRequest
             'justifikasi' => ['required'],
             'items' => ['array'],
             'sumber_pendanaan' => ['required'],
-            'budget_ref' => ['required'],
+            'budget_ref' => ['nullable'],
             'cost_analyst' => ['required'],
         ];
         foreach (request()->get('items') ?? [] as $key => $value) {

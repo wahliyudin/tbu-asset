@@ -11,7 +11,7 @@ class CerDto
         public readonly string $no_cer,
         public readonly string $nik,
         public readonly string $type_budget,
-        public readonly string $budget_ref,
+        public readonly ?string $budget_ref,
         public readonly string $peruntukan,
         public readonly string $tgl_kebutuhan,
         public readonly string $justifikasi,
@@ -26,8 +26,8 @@ class CerDto
     public static function fromRequest(CerRequest $request): self
     {
         return new self(
-            $request->get('no_cer'),
-            $request->get('nik'),
+            'example',
+            auth()->user()?->nik,
             $request->get('type_budget'),
             $request->get('budget_ref'),
             $request->get('peruntukan'),

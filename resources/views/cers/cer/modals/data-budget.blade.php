@@ -30,6 +30,7 @@
                                 <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                                     <th class="min-w-50px">Actions</th>
                                     <th>Kode</th>
+                                    <th>Periode</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>

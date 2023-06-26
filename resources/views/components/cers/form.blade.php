@@ -93,24 +93,25 @@
                         <tr data-repeater-item>
                             <td>
                                 <input type="hidden" name="asset" class="asset">
-                                <input type="text" readonly name="asset_description"
+                                <input type="text" readonly name="description"
                                     class="form-control asset-description">
                             </td>
                             <td>
-                                <input type="text" readonly name="asset_model" class="form-control asset-model">
+                                <input type="text" readonly name="model" class="form-control asset-model">
                             </td>
                             <td>
                                 <div class="input-group">
-                                    <input type="number" name="umur_asset" min="1"
+                                    <input type="number" name="est_umur" min="1"
                                         class="form-control umur-asset">
                                     <span class="input-group-text">Bulan</span>
                                 </div>
                             </td>
                             <td>
-                                <input type="number" min="1" value="1" class="form-control qty">
+                                <input type="number" name="qty" min="1" value="1"
+                                    class="form-control qty">
                             </td>
                             <td>
-                                <input type="text" readonly class="form-control uang price">
+                                <input type="text" name="price" readonly class="form-control uang price">
                             </td>
                             <td>
                                 <input type="text" readonly class="form-control uang sub-total">
@@ -197,7 +198,9 @@
                         <tr>
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
                             </td>
-                            <td class="w-250px"></td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control" readonly name="budget_periode">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -207,12 +210,16 @@
                     <tbody>
                         <tr>
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
-                            <td class="w-250px"></td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control" readonly name="total_budget_idr">
+                            </td>
                         </tr>
                         <tr>
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">USD
                             </td>
-                            <td class="w-250px"></td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control" readonly name="total_budget_usd">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -271,3 +278,20 @@
         @endpermission
     </div> --}}
 </div>
+@push('js')
+    <script>
+        $(document).ready(function() {
+            $('input[name="type_budget"]').change(function(e) {
+                e.preventDefault();
+                if ($(this).val() == '{{ \App\Enums\Cers\TypeBudget::BUDGET }}') {
+                    $('.search-budget').attr('disabled', false);
+                } else {
+                    $('.search-budget').attr('disabled', true);
+                    $('input[name="budget_ref"]').val('');
+                    $('input[name="budget_periode"]').val('');
+                    $('input[name="total_budget_idr"]').val('');
+                }
+            });
+        });
+    </script>
+@endpush

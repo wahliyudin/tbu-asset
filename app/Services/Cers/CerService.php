@@ -23,11 +23,13 @@ class CerService
     {
         $dto = CerDto::fromRequest($request);
         $cer = $this->cerRepository->updateOrCreate($dto);
-        $cer->items()->sync($dto->itemsToAttach);
+        $cer->items()->delete();
+        $cer->items()->createMany($dto->itemsToAttach);
     }
 
     public function delete(Cer $cer)
     {
+        $cer->items()->delete();
         return $cer->delete();
     }
 }

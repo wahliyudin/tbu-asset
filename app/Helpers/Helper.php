@@ -12,6 +12,19 @@ class Helper
             ->value();
     }
 
+    public static function resetRupiah(string $val): int
+    {
+        return (int) str($val)
+            ->replace('Rp. ', '')
+            ->replace('.', '')
+            ->value();
+    }
+
+    public static function formatRupiah($val)
+    {
+        return number_format($val, 0, ',', '.');
+    }
+
     public static function clearUrl(string $url): string
     {
         return str($url)->replace('//', '/')->value();

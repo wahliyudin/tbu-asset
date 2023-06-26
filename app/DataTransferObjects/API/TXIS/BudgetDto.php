@@ -6,6 +6,7 @@ class BudgetDto
 {
     public function __construct(
         public readonly ?int $id,
+        public readonly ?string $periode,
         public readonly ?string $kode,
         public readonly ?int $total,
     ) {
@@ -20,9 +21,10 @@ class BudgetDto
         $results = [];
         foreach ($data as $key => $value) {
             $results = array_merge($results, [new self(
-                isset($value['id']) ? $value['id'] : null,
-                isset($value['kode']) ? $value['kode'] : null,
-                isset($value['total']) ? $value['total'] : null,
+                isset($value['idbudget_detail']) ? $value['idbudget_detail'] : null,
+                isset($value['budgetheader']['tahun']) ? $value['budgetheader']['tahun'] : null,
+                isset($value['budgetcode']) ? $value['budgetcode'] : null,
+                isset($value['totalbudget']) ? $value['totalbudget'] : null,
             )]);
         }
         return $results;

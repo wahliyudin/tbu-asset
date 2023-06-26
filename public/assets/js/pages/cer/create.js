@@ -94,6 +94,10 @@ var KTModalCersAdd = function () {
                 data: 'kode',
             },
             {
+                name: 'periode',
+                data: 'periode',
+            },
+            {
                 name: 'total',
                 data: 'total',
             },],
@@ -112,6 +116,20 @@ var KTModalCersAdd = function () {
             e.preventDefault();
             modalBudget.show();
         });
+        $('#data_budget').on('click', '.select-budget', function (e) {
+            e.preventDefault();
+            var budget = $(this).data('budget');
+            const parent = e.target.closest('tr');
+            var arrayTd = parent.querySelectorAll('td');
+            populateBudget(arrayTd);
+            modalBudget.hide();
+        });
+    }
+
+    var populateBudget = (arrayTd) => {
+        $('input[name="budget_ref"]').val(arrayTd[1].innerText);
+        $('input[name="budget_periode"]').val(arrayTd[2].innerText);
+        $('input[name="total_budget_idr"]').val(arrayTd[3].innerText);
     }
 
     var initDatatableAsset = () => {
@@ -136,16 +154,16 @@ var KTModalCersAdd = function () {
                 data: 'kode',
             },
             {
-                name: 'asset_description',
-                data: 'asset_description',
+                name: 'description',
+                data: 'description',
             },
             {
-                name: 'asset_model',
-                data: 'asset_model',
+                name: 'model',
+                data: 'model',
             },
             {
-                name: 'umur_asset',
-                data: 'umur_asset',
+                name: 'est_umur',
+                data: 'est_umur',
             },
             {
                 name: 'unit_price',
@@ -214,7 +232,7 @@ var KTModalCersAdd = function () {
                         response.message,
                         'success'
                     ).then(function () {
-                        location.reload();
+                        window.location.href = "/asset-requests";
                     });
                 },
                 error: function (jqXHR, xhr, textStatus, errorThrow, exception) {

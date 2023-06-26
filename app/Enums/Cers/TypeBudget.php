@@ -19,7 +19,7 @@ enum TypeBudget: string
     {
         return match ($this) {
             self::BUDGET => '<span class="badge badge-success">' . self::BUDGET->label() . '</span>',
-            self::UNBUDGET => '<span class="badge badge-primary">' . self::UNBUDGET->label() . '</span>',
+            self::UNBUDGET => '<span class="badge badge-danger">' . self::UNBUDGET->label() . '</span>',
         };
     }
 }

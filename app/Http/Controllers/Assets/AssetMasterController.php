@@ -98,13 +98,13 @@ class AssetMasterController extends Controller
             ->editColumn('kode', function (Asset $asset) {
                 return $asset->kode;
             })
-            ->editColumn('asset_description', function (Asset $asset) {
+            ->editColumn('description', function (Asset $asset) {
                 return $asset->unit?->spesification;
             })
-            ->editColumn('asset_model', function (Asset $asset) {
+            ->editColumn('model', function (Asset $asset) {
                 return $asset->unit?->model;
             })
-            ->editColumn('umur_asset', function (Asset $asset) {
+            ->editColumn('est_umur', function (Asset $asset) {
                 return $asset->depreciation?->umur_asset;
             })
             ->editColumn('unit_price', function (Asset $asset) {

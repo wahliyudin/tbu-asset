@@ -35,7 +35,7 @@ class CerController extends Controller
                 return $cer->type_budget->badge();
             })
             ->editColumn('budget_ref', function (Cer $cer) {
-                return $cer->budget_ref;
+                return $cer->budget_ref ?? '-';
             })
             ->editColumn('peruntukan', function (Cer $cer) {
                 return $cer->peruntukan->badge();
