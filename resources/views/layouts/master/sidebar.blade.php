@@ -198,6 +198,9 @@
                             <i class="ki-duotone ki-check fs-2"></i>
                         </span>
                         <span class="menu-title">Approval</span>
+                        <span class="menu-badge">
+                            <span class="badge badge-success">0</span>
+                        </span>
                         <span class="menu-arrow"></span>
                     </span>
                     <div
@@ -209,6 +212,9 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Cer</span>
+                                <span class="menu-badge">
+                                    <span class="badge badge-success">0</span>
+                                </span>
                             </a>
                         </div>
                         <div class="menu-item">
@@ -218,6 +224,9 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Asset Transfer</span>
+                                <span class="menu-badge">
+                                    <span class="badge badge-success">0</span>
+                                </span>
                             </a>
                         </div>
                         <div class="menu-item">
@@ -227,6 +236,9 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Asset Dispose</span>
+                                <span class="menu-badge">
+                                    <span class="badge badge-success">0</span>
+                                </span>
                             </a>
                         </div>
                     </div>
@@ -243,7 +255,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('settings.approval.index') ? 'hover show' : '' }}">
+                        class="menu-sub menu-sub-accordion {{ request()->routeIs('settings.approval.index') || request()->routeIs('settings.access-permission.index') ? 'hover show' : '' }}">
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('settings.approval.index') ? 'active' : '' }}"
                                 href="{{ route('settings.approval.index') }}">
@@ -251,6 +263,15 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Approval</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('settings.access-permission.index') ? 'active' : '' }}"
+                                href="{{ route('settings.access-permission.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Access Permission</span>
                             </a>
                         </div>
                     </div>

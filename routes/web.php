@@ -16,6 +16,7 @@ use App\Http\Controllers\Masters\LeasingController;
 use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
+use App\Http\Controllers\Settings\AccessPermissionController;
 use App\Http\Controllers\Settings\SettingApprovalController;
 use App\Http\Controllers\SSO\AuthController;
 use App\Http\Controllers\ThirdParty\TXIS\BudgetController;
@@ -130,18 +131,21 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('approvals/cers', [ApprovalCerController::class, 'index'])->name('approvals.cers.index');
     Route::post('approvals/cers/datatable', [ApprovalCerController::class, 'datatable'])->name('approvals.cers.datatable');
-    Route::post('approvals/cers/{cer}/show', [ApprovalCerController::class, 'show'])->name('approvals.cers.show');
+    Route::get('approvals/cers/{cer}/show', [ApprovalCerController::class, 'show'])->name('approvals.cers.show');
 
     Route::get('approvals/transfers', [ApprovalTransferController::class, 'index'])->name('approvals.transfers.index');
     Route::post('approvals/transfers/datatable', [ApprovalTransferController::class, 'datatable'])->name('approvals.transfers.datatable');
-    Route::post('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show');
+    Route::get('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show');
 
     Route::get('approvals/disposes', [ApprovalDisposeController::class, 'index'])->name('approvals.disposes.index');
     Route::post('approvals/disposes/datatable', [ApprovalDisposeController::class, 'datatable'])->name('approvals.disposes.datatable');
-    Route::post('approvals/disposes/{assetDispose}/show', [ApprovalDisposeController::class, 'show'])->name('approvals.disposes.show');
+    Route::get('approvals/disposes/{assetDispose}/show', [ApprovalDisposeController::class, 'show'])->name('approvals.disposes.show');
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store');
+
+    Route::get('settings/access-permission', [AccessPermissionController::class, 'index'])->name('settings.access-permission.index');
+    Route::post('settings/access-permission/datatable', [AccessPermissionController::class, 'datatable'])->name('settings.access-permission.datatable');
 
     Route::post('budgets/datatable', [BudgetController::class, 'datatable'])->name('budgets.datatable');
 });

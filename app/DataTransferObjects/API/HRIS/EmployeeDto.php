@@ -53,4 +53,36 @@ class EmployeeDto
             PositionDto::fromResponseByEmployee($data),
         );
     }
+
+    public static function formResponseMultiple(array $response): array
+    {
+        $data = [];
+        if (isset($response['data'])) {
+            $data = $response['data'];
+        }
+        $results = [];
+        foreach ($data as $key => $value) {
+            $results = array_merge($results, [new self(
+                isset($value['nik']) ? $value['nik'] : null,
+                isset($value['nama_karyawan']) ? $value['nama_karyawan'] : null,
+                isset($value['costing']) ? $value['costing'] : null,
+                isset($value['activity']) ? $value['activity'] : null,
+                isset($value['tipe_kontrak']) ? $value['tipe_kontrak'] : null,
+                isset($value['tgl_bergabung']) ? $value['tgl_bergabung'] : null,
+                isset($value['tgl_pengangkatan']) ? $value['tgl_pengangkatan'] : null,
+                isset($value['resign_date']) ? $value['resign_date'] : null,
+                isset($value['tgl_naik_level']) ? $value['tgl_naik_level'] : null,
+                isset($value['tgl_mcu_terakhir']) ? $value['tgl_mcu_terakhir'] : null,
+                isset($value['email_perusahaan']) ? $value['email_perusahaan'] : null,
+                isset($value['point_of_hire']) ? $value['point_of_hire'] : null,
+                isset($value['point_of_leave']) ? $value['point_of_leave'] : null,
+                isset($value['ring_clasification']) ? $value['ring_clasification'] : null,
+                isset($value['tipe_mess']) ? $value['tipe_mess'] : null,
+                isset($value['martial_status_id']) ? $value['martial_status_id'] : null,
+                isset($value['status']) ? $value['status'] : null,
+                PositionDto::fromResponseByEmployee($value),
+            )]);
+        }
+        return $results;
+    }
 }
