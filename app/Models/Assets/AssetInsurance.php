@@ -11,6 +11,7 @@ class AssetInsurance extends Model
     use HasFactory;
 
     protected $fillable = [
+        'asset_id',
         'jangka_waktu',
         'biaya',
         'legalitas',

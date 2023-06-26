@@ -23,7 +23,7 @@ class AssetService
 
     public function all()
     {
-        return Asset::query()->get();
+        return Asset::query()->with(['leasing', 'insurance'])->get();
     }
 
     public function getByStatus(Status $status)

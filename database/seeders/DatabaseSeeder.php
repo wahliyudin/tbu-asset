@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Assets\Asset;
+use App\Models\Assets\AssetInsurance;
+use App\Models\Assets\AssetLeasing;
 use App\Models\Masters\Catalog;
 use App\Models\Masters\Category;
 use App\Models\Masters\Cluster;
@@ -40,5 +42,7 @@ class DatabaseSeeder extends Seeder
         SubClusterItem::factory(10)->create();
         Unit::factory(10)->create();
         Asset::factory(10)->create();
+        AssetLeasing::factory(10)->create();
+        AssetInsurance::factory(10)->create();
     }
 }

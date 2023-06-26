@@ -11,6 +11,7 @@ class AssetLeasing extends Model
     use HasFactory;
 
     protected $fillable = [
+        'asset_id',
         'dealer_id',
         'leasing_id',
         'harga_beli',

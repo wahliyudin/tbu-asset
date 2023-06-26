@@ -1,4 +1,4 @@
-<div class="modal fade" id="data_asset" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="data_asset" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header" id="data_asset_header">
