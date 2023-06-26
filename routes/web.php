@@ -2,6 +2,7 @@
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Approval\ApprovalCerController;
+use App\Http\Controllers\Approval\ApprovalTransferController;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\Disposes\DisposeController;
@@ -129,6 +130,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('approvals/cers', [ApprovalCerController::class, 'index'])->name('approvals.cers.index');
     Route::post('approvals/cers/datatable', [ApprovalCerController::class, 'datatable'])->name('approvals.cers.datatable');
     Route::post('approvals/cers/{cer}/show', [ApprovalCerController::class, 'show'])->name('approvals.cers.show');
+
+    Route::get('approvals/transfers', [ApprovalTransferController::class, 'index'])->name('approvals.transfers.index');
+    Route::post('approvals/transfers/datatable', [ApprovalTransferController::class, 'datatable'])->name('approvals.transfers.datatable');
+    Route::post('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show');
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store');

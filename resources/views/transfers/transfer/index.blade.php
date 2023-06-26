@@ -52,10 +52,10 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-transfer-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
+                    {{-- <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
                         data-bs-target="#create-transfer">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Transfer
-                    </button>
+                    </button> --}}
                     <a href="{{ route('asset-transfers.create') }}" class="btn btn-primary ps-4">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Transfer
                     </a>
@@ -78,7 +78,7 @@
     </div>
 @endsection
 
-@push('modal')
+{{-- @push('modal')
     <div class="modal fade" id="create-transfer" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -323,7 +323,7 @@
             </div>
         </div>
     </div>
-@endpush
+@endpush --}}
 
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
