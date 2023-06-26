@@ -31,13 +31,28 @@ class CerController extends Controller
     public function datatable()
     {
         return DataTables::of($this->service->all())
-            ->editColumn('name', function (Cer $cer) {
-                return 'example';
+            ->editColumn('type_budget', function (Cer $cer) {
+                return $cer->type_budget->badge();
+            })
+            ->editColumn('budget_ref', function (Cer $cer) {
+                return $cer->budget_ref;
+            })
+            ->editColumn('peruntukan', function (Cer $cer) {
+                return $cer->peruntukan->badge();
+            })
+            ->editColumn('tgl_kebutuhan', function (Cer $cer) {
+                return $cer->tgl_kebutuhan;
+            })
+            ->editColumn('sumber_pendanaan', function (Cer $cer) {
+                return $cer->sumber_pendanaan->badge();
+            })
+            ->editColumn('status', function (Cer $cer) {
+                return $cer->status->badge();
             })
             ->editColumn('action', function (Cer $cer) {
                 return view('cers.cer.action', compact('cer'))->render();
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'type_budget', 'peruntukan', 'sumber_pendanaan', 'status',])
             ->make();
     }
 
@@ -52,7 +67,6 @@ class CerController extends Controller
     public function store(CerRequest $request)
     {
         try {
-            dd($request->all());
             $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'

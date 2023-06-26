@@ -16,12 +16,13 @@ return new class extends Migration
             $table->string('no_cer');
             $table->unsignedBigInteger('nik');
             $table->enum('type_budget', ['budget', 'unbudget']);
-            $table->string('budger_ref')->nullable();
+            $table->string('budget_ref')->nullable();
             $table->string('peruntukan');
             $table->date('tgl_kebutuhan');
             $table->string('justifikasi');
             $table->string('sumber_pendanaan');
             $table->string('cost_analyst');
+            $table->string('status')->default('open');
             $table->timestamps();
         });
     }

@@ -6,7 +6,6 @@ use App\DataTransferObjects\Cers\CerDto;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
-use Illuminate\Http\Request;
 
 class CerService
 {
@@ -22,7 +21,9 @@ class CerService
 
     public function updateOrCreate(CerRequest $request)
     {
-        $cer = $this->cerRepository->updateOrCreate(CerDto::fromRequest($request));
+        $dto = CerDto::fromRequest($request);
+        $cer = $this->cerRepository->updateOrCreate($dto);
+        $cer->items()->sync($dto->itemsToAttach);
     }
 
     public function delete(Cer $cer)

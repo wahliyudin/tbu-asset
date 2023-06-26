@@ -37,9 +37,9 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-cer-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal" data-bs-target="#create-cer">
+                    {{-- <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal" data-bs-target="#create-cer">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Cer
-                    </button>
+                    </button> --}}
                     <a href="{{ route('asset-requests.create') }}" class="btn btn-primary ps-4">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Cer
                     </a>
@@ -50,7 +50,12 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="cer_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="min-w-125px">Name</th>
+                        <th class="min-w-125px">Type Budget</th>
+                        <th class="min-w-125px">Budget Ref</th>
+                        <th class="min-w-125px">Peruntukan</th>
+                        <th class="min-w-125px">Tanggal Kebutuhan</th>
+                        <th class="min-w-125px">Sumber Pendanaan</th>
+                        <th class="min-w-125px">Status</th>
                         <th class="text-end min-w-70px">Actions</th>
                     </tr>
                 </thead>
@@ -62,7 +67,7 @@
     </div>
 @endsection
 
-@push('modal')
+{{-- @push('modal')
     <div class="modal fade" id="create-cer" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
@@ -396,7 +401,7 @@
             </div>
         </div>
     </div>
-@endpush
+@endpush --}}
 
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>

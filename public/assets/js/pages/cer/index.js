@@ -27,8 +27,28 @@ var CersList = function () {
             },
             columns: [
                 {
-                    name: 'name',
-                    data: 'name',
+                    name: 'type_budget',
+                    data: 'type_budget',
+                },
+                {
+                    name: 'budget_ref',
+                    data: 'budget_ref',
+                },
+                {
+                    name: 'peruntukan',
+                    data: 'peruntukan',
+                },
+                {
+                    name: 'tgl_kebutuhan',
+                    data: 'tgl_kebutuhan',
+                },
+                {
+                    name: 'sumber_pendanaan',
+                    data: 'sumber_pendanaan',
+                },
+                {
+                    name: 'status',
+                    data: 'status',
                 },
                 {
                     name: 'action',

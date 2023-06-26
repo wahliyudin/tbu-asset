@@ -45,7 +45,7 @@
                                     <td>
                                         <div class="form-check form-check-custom">
                                             <input class="form-check-input" checked name="peruntukan" type="radio"
-                                                value="penggantian" id="penggantian" />
+                                                value="{{ \App\Enums\Cers\Peruntukan::PENGGANTIAN }}" id="penggantian" />
                                             <label class="form-check-label fs-6 fw-semibold" for="penggantian">
                                                 Penggantian
                                             </label>
@@ -58,7 +58,7 @@
                                     <td>
                                         <div class="form-check form-check-custom">
                                             <input class="form-check-input" name="peruntukan" type="radio"
-                                                value="penambahan" id="penambahan" />
+                                                value="{{ \App\Enums\Cers\Peruntukan::PENAMBAHAN }}" id="penambahan" />
                                             <label class="form-check-label fs-6 fw-semibold" for="penambahan">
                                                 Penambahan
                                             </label>
@@ -70,8 +70,8 @@
                                     <td></td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="peruntukan" type="radio" value="safety"
-                                                id="safety" />
+                                            <input class="form-check-input" name="peruntukan" type="radio"
+                                                value="{{ \App\Enums\Cers\Peruntukan::SAFETY }}" id="safety" />
                                             <label class="form-check-label fs-6 fw-semibold" for="safety">
                                                 Safety
                                             </label>
@@ -89,8 +89,8 @@
                                     <td>:</td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" checked name="status" type="radio"
-                                                value="budgeted" id="budgeted" />
+                                            <input class="form-check-input" checked name="type_budget" type="radio"
+                                                value="{{ \App\Enums\Cers\TypeBudget::BUDGET }}" id="budgeted" />
                                             <label class="form-check-label fs-6 fw-semibold" for="budgeted">
                                                 Budgeted
                                             </label>
@@ -102,8 +102,8 @@
                                     <td></td>
                                     <td>
                                         <div class="form-check form-check-custom">
-                                            <input class="form-check-input" name="status" type="radio"
-                                                value="nonbudgeted" id="nonbudgeted" />
+                                            <input class="form-check-input" name="type_budget" type="radio"
+                                                value="{{ \App\Enums\Cers\TypeBudget::UNBUDGET }}" id="nonbudgeted" />
                                             <label class="form-check-label fs-6 fw-semibold" for="nonbudgeted">
                                                 Non Budgeted
                                             </label>
@@ -149,14 +149,15 @@
                                     <td class="fs-6 fw-semibold">Tanggal Pengajuan</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" name="tanggal_pengajuan" class="form-control date">
+                                        <input type="text" name="tanggal_pengajuan" disabled
+                                            value="{{ now()->format('Y-m-d') }}" class="form-control date">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="fs-6 fw-semibold">Tanggal Kebutuhan</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" name="tanggal_kebutuhan" class="form-control date">
+                                        <input type="text" name="tgl_kebutuhan" class="form-control date">
                                     </td>
                                 </tr>
                             </tbody>
@@ -276,14 +277,14 @@
                             <div class="d-flex align-items-center justify-content-evenly w-100">
                                 <div class="form-check form-check-custom">
                                     <input class="form-check-input" checked name="sumber_pendanaan" type="radio"
-                                        value="" id="leasing" />
+                                        value="{{ \App\Enums\Cers\SumberPendanaan::LEASING }}" id="leasing" />
                                     <label class="form-check-label fs-6 fw-semibold" for="leasing">
                                         Leasing
                                     </label>
                                 </div>
                                 <div class="form-check form-check-custom">
                                     <input class="form-check-input" name="sumber_pendanaan" type="radio"
-                                        value="" id="bukanleasing" />
+                                        value="{{ \App\Enums\Cers\SumberPendanaan::BUKAN_LEASING }}" id="bukanleasing" />
                                     <label class="form-check-label fs-6 fw-semibold" for="bukanleasing">
                                         Bukan Leasing
                                     </label>
@@ -307,7 +308,9 @@
                                 <tbody>
                                     <tr>
                                         <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Ref No</td>
-                                        <td class="w-250px"></td>
+                                        <td class="w-250px">
+                                            <input type="text" class="form-control" readonly name="budget_ref">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
@@ -335,7 +338,7 @@
                     </div>
                     <div class="d-flex flex-column mt-4">
                         <h5>6. Cost & Benefit Analyst</h5>
-                        <textarea name="cost_benefit" class="form-control ms-4"></textarea>
+                        <textarea name="cost_analyst" class="form-control ms-4"></textarea>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">

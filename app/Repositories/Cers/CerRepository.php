@@ -20,7 +20,7 @@ class CerRepository
             'no_cer' => $dto->no_cer,
             'nik' => $dto->nik,
             'type_budget' => $dto->type_budget,
-            'budger_ref' => $dto->budger_ref,
+            'budget_ref' => $dto->budget_ref,
             'peruntukan' => $dto->peruntukan,
             'tgl_kebutuhan' => $dto->tgl_kebutuhan,
             'justifikasi' => $dto->justifikasi,

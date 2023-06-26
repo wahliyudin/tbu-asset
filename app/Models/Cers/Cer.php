@@ -2,6 +2,9 @@
 
 namespace App\Models\Cers;
 
+use App\Enums\Cers\Peruntukan;
+use App\Enums\Cers\Status;
+use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
 use App\Interfaces\ModelWithWorkflowInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,17 +20,26 @@ class Cer extends Model implements ModelWithWorkflowInterface
         'no_cer',
         'nik',
         'type_budget',
-        'budger_ref',
+        'budget_ref',
         'peruntukan',
         'tgl_kebutuhan',
         'justifikasi',
         'sumber_pendanaan',
         'cost_analyst',
+        'status',
     ];
 
     protected $casts = [
-        'type_budget' => TypeBudget::class
+        'type_budget' => TypeBudget::class,
+        'sumber_pendanaan' => SumberPendanaan::class,
+        'peruntukan' => Peruntukan::class,
+        'status' => Status::class,
     ];
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(CerItem::class);
+    }
 
     public function workflow(): HasOne
     {

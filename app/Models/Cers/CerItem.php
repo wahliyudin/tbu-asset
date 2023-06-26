@@ -11,6 +11,7 @@ class CerItem extends Model
     use HasFactory;
 
     protected $fillable = [
+        'cer_id',
         'description',
         'model',
         'est_umur',
