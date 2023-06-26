@@ -17,7 +17,7 @@ var list = function () {
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/approvals/cers/datatable"
+                url: "/approvals/disposes/datatable"
             },
             columns: [
                 {
@@ -58,7 +58,7 @@ var list = function () {
     }
 
     var handleSearchDatatable = () => {
-        const filterSearch = document.querySelector('[data-kt-approval-cer-table-filter="search"]');
+        const filterSearch = document.querySelector('[data-kt-approval-dispose-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             datatable.search(e.target.value).draw();
         });
@@ -71,7 +71,7 @@ var list = function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            table = document.querySelector('#approval_cer_table');
+            table = document.querySelector('#approval_dispose_table');
             if (!table) {
                 return;
             }

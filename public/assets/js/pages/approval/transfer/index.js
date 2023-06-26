@@ -1,10 +1,10 @@
 "use strict";
 
-var CersList = function () {
+var list = function () {
     var datatable;
     var table;
 
-    var initCerList = function () {
+    var initList = function () {
         const tableRows = table.querySelectorAll('tbody tr');
         tableRows.forEach(row => {
             const dateRow = row.querySelectorAll('td');
@@ -75,12 +75,12 @@ var CersList = function () {
             if (!table) {
                 return;
             }
-            initCerList();
+            initList();
             handleSearchDatatable();
         }
     }
 }();
 
 KTUtil.onDOMContentLoaded(function () {
-    CersList.init();
+    list.init();
 });

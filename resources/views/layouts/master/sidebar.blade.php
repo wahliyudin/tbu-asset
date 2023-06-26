@@ -201,7 +201,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('approvals.cers.index') || request()->routeIs('approvals.transfers.index') ? 'hover show' : '' }}">
+                        class="menu-sub menu-sub-accordion {{ request()->routeIs('approvals.cers.index') || request()->routeIs('approvals.transfers.index') || request()->routeIs('approvals.disposes.index') ? 'hover show' : '' }}">
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('approvals.cers.index') ? 'active' : '' }}"
                                 href="{{ route('approvals.cers.index') }}">
@@ -218,6 +218,15 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Asset Transfer</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link {{ request()->routeIs('approvals.disposes.index') ? 'active' : '' }}"
+                                href="{{ route('approvals.disposes.index') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Asset Dispose</span>
                             </a>
                         </div>
                     </div>
