@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\Helper;
+use App\Http\Controllers\Approval\ApprovalCerController;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\Disposes\DisposeController;
@@ -124,6 +125,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-disposes/store', [DisposeController::class, 'store'])->name('asset-disposes.store');
     Route::post('asset-disposes/{assetDispose}/edit', [DisposeController::class, 'edit'])->name('asset-disposes.edit');
     Route::delete('asset-disposes/{assetDispose}/destroy', [DisposeController::class, 'destroy'])->name('asset-disposes.destroy');
+
+    Route::get('approvals/cers', [ApprovalCerController::class, 'index'])->name('approvals.cers.index');
+    Route::post('approvals/cers/datatable', [ApprovalCerController::class, 'datatable'])->name('approvals.cers.datatable');
+    Route::post('approvals/cers/{cer}/show', [ApprovalCerController::class, 'show'])->name('approvals.cers.show');
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store');

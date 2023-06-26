@@ -2,24 +2,28 @@
 
 namespace App\Enums\Cers;
 
-enum SumberPendanaan: string
+use App\Interfaces\EnumInterface;
+
+enum SumberPendanaan: string implements EnumInterface
 {
     case LEASING = 'leasing';
     case BUKAN_LEASING = 'bukan_leasing';
 
-    public function label()
+    public function label(): string
     {
         return match ($this) {
             self::LEASING => 'Leasing',
             self::BUKAN_LEASING => 'Bukan Leasing',
+            default => 'Not Defined',
         };
     }
 
-    public function badge()
+    public function badge(): string
     {
         return match ($this) {
             self::LEASING => '<span class="badge badge-success">' . self::LEASING->label() . '</span>',
             self::BUKAN_LEASING => '<span class="badge badge-primary">' . self::BUKAN_LEASING->label() . '</span>',
+            default => 'Not Defined',
         };
     }
 }

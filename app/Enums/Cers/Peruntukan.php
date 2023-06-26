@@ -2,13 +2,24 @@
 
 namespace App\Enums\Cers;
 
-enum Peruntukan: string
+use App\Interfaces\EnumInterface;
+
+enum Peruntukan: string implements EnumInterface
 {
     case PENGGANTIAN = 'penggantian';
     case PENAMBAHAN = 'penambahan';
     case SAFETY = 'safety';
 
-    public function badge()
+    public function label(): string
+    {
+        return match ($this) {
+            self::PENGGANTIAN => 'Penggantian',
+            self::PENAMBAHAN => 'Penambahan',
+            self::SAFETY => 'Safety',
+        };
+    }
+
+    public function badge(): string
     {
         return match ($this) {
             self::PENGGANTIAN => '<span class="badge badge-primary">' . self::PENGGANTIAN . '</span>',
