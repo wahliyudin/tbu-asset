@@ -2,6 +2,7 @@
 
 namespace App\Services\Cers;
 
+use App\Enums\Cers\Status;
 use App\Enums\Workflows\Module;
 use App\Models\Cers\Cer;
 use App\Services\WorkflowService;
@@ -28,6 +29,9 @@ class CerWorkflowService extends WorkflowService
 
     protected function handleIsLastAndApprov()
     {
+        static::$cer->update([
+            'status' => Status::CLOSE
+        ]);
     }
 
     protected function handleIsNotLastAndApprov()
@@ -36,5 +40,8 @@ class CerWorkflowService extends WorkflowService
 
     protected function handleIsRejected()
     {
+        static::$cer->update([
+            'status' => Status::REJECT
+        ]);
     }
 }
