@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Approval;
 
 use App\DataTransferObjects\Cers\CerDto;
+use App\Enums\Workflows\LastAction;
 use App\Http\Controllers\Controller;
 use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\Cers\CerService;
+use App\Services\Cers\CerWorkflowService;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApprovalCerController extends Controller
@@ -57,5 +59,29 @@ class ApprovalCerController extends Controller
             'cer' => $dto,
             'employee' => $dto->employee,
         ]);
+    }
+
+    public function approv(Cer $cer)
+    {
+        try {
+            CerWorkflowService::setModel($cer)->lastAction(LastAction::APPROV);
+            return response()->json([
+                'message' => 'Berhasil Diverifikasi.'
+            ]);
+        } catch (\Throwable $e) {
+            throw $e;
+        }
+    }
+
+    public function reject(Cer $cer)
+    {
+        try {
+            CerWorkflowService::setModel($cer)->lastAction(LastAction::REJECT);
+            return response()->json([
+                'message' => 'Berhasil Direject.'
+            ]);
+        } catch (\Throwable $e) {
+            throw $e;
+        }
     }
 }

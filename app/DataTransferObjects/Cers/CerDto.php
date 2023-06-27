@@ -15,18 +15,18 @@ use Illuminate\Support\Collection;
 class CerDto
 {
     public function __construct(
-        public readonly string $no_cer,
-        public readonly string $nik,
-        public readonly string|TypeBudget $type_budget,
-        public readonly ?string $budget_ref,
-        public readonly string|Peruntukan $peruntukan,
-        public readonly string $tgl_kebutuhan,
-        public readonly string $justifikasi,
-        public readonly string|SumberPendanaan $sumber_pendanaan,
-        public readonly string $cost_analyst,
+        public readonly ?string $no_cer = null,
+        public readonly ?string $nik = null,
+        public readonly string|TypeBudget|null $type_budget = null,
+        public readonly ?string $budget_ref = null,
+        public readonly string|Peruntukan|null $peruntukan = null,
+        public readonly ?string $tgl_kebutuhan = null,
+        public readonly ?string $justifikasi = null,
+        public readonly string|SumberPendanaan|null $sumber_pendanaan = null,
+        public readonly ?string $cost_analyst = null,
         public readonly mixed $key = null,
-        public readonly ?Collection $items,
-        public readonly ?array $itemsToAttach,
+        public readonly ?Collection $items = null,
+        public readonly ?array $itemsToAttach = null,
         public readonly ?EmployeeDto $employee = null,
         public readonly ?Collection $workflows = null,
     ) {
@@ -52,6 +52,7 @@ class CerDto
 
     public static function fromModel(Cer $cer)
     {
+        $cer->loadMissing(['workflow', 'workflows']);
         return new self(
             $cer->no_cer,
             $cer->nik,

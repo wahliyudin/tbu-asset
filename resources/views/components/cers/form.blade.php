@@ -234,14 +234,14 @@
                     <div class="d-flex flex-column w-150px {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->lastAction == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
                         style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($cer->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
                         <div class="border text-center text-white p-1 d-flex flex-column">
-                            <p class="m-0 fw-bold" style="font-size: 15px;">
+                            <p class="m-0 fw-bold" style="font-size: 12px;">
                                 {{ $workflow->title }}
                                 By
                             </p>
                             <p class="m-0">{{ $workflow?->employee?->nama_karyawan }}</p>
                         </div>
                         <div class="border text-center text-white p-1 d-flex flex-column">
-                            <p class="m-0 fw-bold" style="font-size: 15px;">
+                            <p class="m-0 fw-bold" style="font-size: 12px;">
                                 {{ $workflow->title }}
                                 On
                             </p>
@@ -255,12 +255,36 @@
         </div>
         <div class="col-md-12 d-flex justify-content-start mt-4">
             @permission('asset_request_approv')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} data-cer="{{ $cer->key }}"
-                    class="btn btn-success text-white approv">Approval</button>
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->key }}"
+                    class="btn btn-success ps-4 approv">
+                    <span class="indicator-label">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="ki-duotone ki-check-circle fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                            </i>Approval
+                        </div>
+                    </span>
+                    <span class="indicator-progress">
+                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
             @endpermission
             @permission('asset_request_reject')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} data-cer="{{ $cer->key }}"
-                    class="btn btn-danger text-white ms-2 reject">Reject</button>
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->key }}"
+                    class="btn btn-danger ms-2 ps-4 reject">
+                    <span class="indicator-label">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="ki-duotone ki-cross-circle fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                            </i>Reject
+                        </div>
+                    </span>
+                    <span class="indicator-progress">
+                        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </button>
             @endpermission
         </div>
     </div>
@@ -279,6 +303,128 @@
                         $('input[name="budget_periode"]').val('');
                         $('input[name="total_budget_idr"]').val('');
                     }
+                });
+
+            });
+        </script>
+    @endpush
+@endif
+@if ($type == 'show')
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $('.approv').click(function(e) {
+                    e.preventDefault();
+                    var cer = $(this).data('cer');
+                    var target = this;
+                    $(target).attr("data-kt-indicator", "on");
+                    Swal.fire({
+                        title: 'Apa kamu yakin?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yakin!',
+                        preConfirm: () => {
+                            return new Promise(function(resolve) {
+                                $.ajax({
+                                        type: "POST",
+                                        url: `/approvals/cers/${cer}/approv`,
+                                        dataType: 'JSON',
+                                    })
+                                    .done(function(myAjaxJsonResponse) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        Swal.fire(
+                                            'Verified!',
+                                            myAjaxJsonResponse.message,
+                                            'success'
+                                        ).then(function() {
+                                            location.reload();
+                                        });
+                                    })
+                                    .fail(function(erordata) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        if (erordata.status == 422) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Warning!',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        }
+                                    })
+                            })
+                        },
+                        willClose: () => {
+                            $(target).removeAttr("data-kt-indicator");
+                        }
+                    });
+                });
+                $('.reject').click(function(e) {
+                    e.preventDefault();
+                    var cer = $(this).data('cer');
+                    var target = this;
+                    $(target).attr("data-kt-indicator", "on");
+                    Swal.fire({
+                        title: 'Apa kamu yakin?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yakin!',
+                        preConfirm: () => {
+                            return new Promise(function(resolve) {
+                                $.ajax({
+                                        type: "POST",
+                                        url: `/approvals/cers/${cer}/reject`,
+                                        dataType: 'JSON',
+                                    })
+                                    .done(function(myAjaxJsonResponse) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        Swal.fire(
+                                            'Rejected!',
+                                            myAjaxJsonResponse.message,
+                                            'success'
+                                        ).then(function() {
+                                            location.reload();
+                                        });
+                                    })
+                                    .fail(function(erordata) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        if (erordata.status == 422) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Warning!',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        }
+                                    })
+                            })
+                        },
+                        willClose: () => {
+                            $(target).removeAttr("data-kt-indicator");
+                        }
+                    });
                 });
             });
         </script>

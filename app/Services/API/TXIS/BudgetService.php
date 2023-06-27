@@ -7,7 +7,7 @@ use App\Services\API\TXIS\Contracts\TXISService;
 
 class BudgetService extends TXISService
 {
-    const PREFIX = '/budgetdetails';
+    const PREFIX = '/budgetdept';
 
     public function url(): string
     {

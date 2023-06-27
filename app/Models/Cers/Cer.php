@@ -36,11 +36,6 @@ class Cer extends Model implements ModelWithWorkflowInterface
         'status' => Status::class,
     ];
 
-    protected $with = [
-        'workflow',
-        'workflows',
-    ];
-
     public function items(): HasMany
     {
         return $this->hasMany(CerItem::class);

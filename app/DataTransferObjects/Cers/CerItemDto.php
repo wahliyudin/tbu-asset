@@ -9,12 +9,12 @@ use Illuminate\Support\Collection;
 class CerItemDto
 {
     public function __construct(
-        public readonly string $description,
-        public readonly string $model,
-        public readonly string $est_umur,
-        public readonly string $qty,
-        public readonly int $price,
-        public readonly ?string $uom,
+        public readonly ?string $description = null,
+        public readonly ?string $model = null,
+        public readonly ?string $est_umur = null,
+        public readonly ?string $qty = null,
+        public readonly ?int $price = null,
+        public readonly ?string $uom = null,
         public readonly mixed $key = null,
     ) {
     }

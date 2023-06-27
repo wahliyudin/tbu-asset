@@ -93,7 +93,7 @@ return [
             'child' => [
                 [
                     'title' => 'APPROVAL',
-                    'permissions' => 'r,u,d',
+                    'permissions' => 'c,r,u,d',
                 ],
                 [
                     'title' => 'ACCESS PERMISSION',
