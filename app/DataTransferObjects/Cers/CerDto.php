@@ -4,12 +4,14 @@ namespace App\DataTransferObjects\Cers;
 
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\DataTransferObjects\API\HRIS\WorkflowDto;
+use App\DataTransferObjects\API\TXIS\BudgetDto;
 use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
+use App\Services\API\TXIS\BudgetService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -30,6 +32,7 @@ class CerDto
         public readonly ?array $itemsToAttach = null,
         public readonly ?EmployeeDto $employee = null,
         public readonly ?Collection $workflows = null,
+        public readonly ?BudgetDto $budget = null,
     ) {
     }
 
@@ -68,7 +71,8 @@ class CerDto
             CerItemDto::fromCollection($cer->items),
             null,
             EmployeeDto::fromResponse((new EmployeeService)->getByNik($cer->nik)),
-            WorkflowDto::fromModel($cer)
+            WorkflowDto::fromModel($cer),
+            BudgetDto::formResponse((new BudgetService)->getByCode($cer->budget_ref))
         );
     }
 }

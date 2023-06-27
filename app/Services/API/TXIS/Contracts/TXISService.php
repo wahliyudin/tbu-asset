@@ -20,8 +20,9 @@ abstract class TXISService implements APIInterface
         return $this->url() . "/$extend";
     }
 
-    protected function get($url, $query = null)
+    protected function get($url, array $query = null)
     {
+        $query = http_build_query($query);
         return Http::withHeaders([
             'Accept' => 'application/json'
         ])->get($url, $query);

@@ -12,6 +12,20 @@ class BudgetDto
     ) {
     }
 
+    public static function formResponse(array $response): self
+    {
+        $data = [];
+        if (isset($response['data'])) {
+            $data = $response['data'];
+        }
+        return new self(
+            isset($data['idbudget_detail']) ? $data['idbudget_detail'] : null,
+            isset($data['budgetheader']['tahun']) ? $data['budgetheader']['tahun'] : null,
+            isset($data['budgetcode']) ? $data['budgetcode'] : null,
+            isset($data['totalbudget']) ? $data['totalbudget'] : null,
+        );
+    }
+
     public static function fromResponseMultiple(array $response): array
     {
         $data = [];

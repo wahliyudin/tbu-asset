@@ -180,7 +180,7 @@
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
                             </td>
                             <td class="w-250px">
-                                <input type="text" class="form-control" readonly value=""
+                                <input type="text" class="form-control" readonly value="{{ $cer->budget->periode }}"
                                     name="budget_periode">
                             </td>
                         </tr>
@@ -193,7 +193,8 @@
                         <tr>
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
                             <td class="w-250px">
-                                <input type="text" class="form-control" readonly value=""
+                                <input type="text" class="form-control" readonly
+                                    value="{{ \App\Helpers\Helper::formatRupiah($cer->budget->total) }}"
                                     name="total_budget_idr">
                             </td>
                         </tr>

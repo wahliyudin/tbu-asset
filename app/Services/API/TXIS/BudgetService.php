@@ -8,10 +8,11 @@ use App\Services\API\TXIS\Contracts\TXISService;
 class BudgetService extends TXISService
 {
     const PREFIX = '/budgetdept';
+    const SECOND_PREFIX = '/budgetdetail';
 
-    public function url(): string
+    public function url($prefix = null): string
     {
-        return $this->baseUrl() . self::PREFIX;
+        return $this->baseUrl() . ($prefix ?? self::PREFIX);
     }
 
     public function all()
@@ -21,8 +22,10 @@ class BudgetService extends TXISService
         ])->json());
     }
 
-    public function getById($id)
+    public function getByCode($code)
     {
-        return $this->get($this->extendUrl($id))->json();
+        return $this->get($this->url(self::SECOND_PREFIX), [
+            'budgetcode' => $code
+        ])->json();
     }
 }
