@@ -6,6 +6,7 @@ use App\DataTransferObjects\Cers\CerDto;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
+use Illuminate\Http\Request;
 
 class CerService
 {
@@ -33,5 +34,21 @@ class CerService
     {
         $cer->items()->delete();
         return $cer->delete();
+    }
+
+    public function getListNoCerByUser(Request $request)
+    {
+        return Cer::query()->when($request->nik, function ($query, $nik) {
+            $query->where('nik', $nik);
+        })->when($request->email, function ($query, $email) {
+            $query->whereHas('user', function ($query) use ($email) {
+                $query->where('email', $email);
+            });
+        })->pluck('no_cer');
+    }
+
+    public function findByNo($no)
+    {
+        return Cer::query()->where('no_cer', $no)->firstOrFail();
     }
 }

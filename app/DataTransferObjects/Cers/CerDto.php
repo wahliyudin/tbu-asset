@@ -11,6 +11,7 @@ use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class CerDto
 {
@@ -35,7 +36,7 @@ class CerDto
     public static function fromRequest(CerRequest $request): self
     {
         return new self(
-            'example',
+            Str::random(),
             auth()->user()?->nik,
             $request->get('type_budget'),
             $request->get('budget_ref'),

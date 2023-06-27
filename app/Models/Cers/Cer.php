@@ -7,8 +7,10 @@ use App\Enums\Cers\Status;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
 use App\Interfaces\ModelWithWorkflowInterface;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -49,5 +51,10 @@ class Cer extends Model implements ModelWithWorkflowInterface
     public function workflows(): HasMany
     {
         return $this->hasMany(CerWorkflow::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'nik', 'nik');
     }
 }
