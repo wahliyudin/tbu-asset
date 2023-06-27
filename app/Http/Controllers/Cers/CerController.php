@@ -79,9 +79,10 @@ class CerController extends Controller
     public function edit(Cer $cer)
     {
         try {
+            $dto = CerDto::fromModel($cer);
             return view('cers.cer.edit', [
-                'cer' => $cer,
-                'employee' => CerDto::fromModel($cer)->employee,
+                'cer' => $dto,
+                'employee' => $dto->employee,
             ]);
         } catch (\Throwable $th) {
             throw $th;
