@@ -22,9 +22,9 @@ enum Peruntukan: string implements EnumInterface
     public function badge(): string
     {
         return match ($this) {
-            self::PENGGANTIAN => '<span class="badge badge-primary">' . self::PENGGANTIAN->label() . '</span>',
-            self::PENAMBAHAN => '<span class="badge badge-success">' . self::PENAMBAHAN->label() . '</span>',
-            self::SAFETY => '<span class="badge badge-info">' . self::SAFETY->label() . '</span>',
+            self::PENGGANTIAN => '<span class="badge badge-primary fs-7">' . self::PENGGANTIAN->label() . '</span>',
+            self::PENAMBAHAN => '<span class="badge badge-success fs-7">' . self::PENAMBAHAN->label() . '</span>',
+            self::SAFETY => '<span class="badge badge-info fs-7">' . self::SAFETY->label() . '</span>',
         };
     }
 }

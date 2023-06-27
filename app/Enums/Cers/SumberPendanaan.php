@@ -21,8 +21,8 @@ enum SumberPendanaan: string implements EnumInterface
     public function badge(): string
     {
         return match ($this) {
-            self::LEASING => '<span class="badge badge-success">' . self::LEASING->label() . '</span>',
-            self::BUKAN_LEASING => '<span class="badge badge-primary">' . self::BUKAN_LEASING->label() . '</span>',
+            self::LEASING => '<span class="badge badge-success fs-7">' . self::LEASING->label() . '</span>',
+            self::BUKAN_LEASING => '<span class="badge badge-primary fs-7">' . self::BUKAN_LEASING->label() . '</span>',
             default => 'Not Defined',
         };
     }
