@@ -16,7 +16,6 @@ use App\Models\Masters\SubCluster;
 use App\Models\Masters\SubClusterItem;
 use App\Models\Masters\Unit;
 use App\Models\User;
-use Database\Factories\Masters\CatalogFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -44,5 +43,8 @@ class DatabaseSeeder extends Seeder
         Asset::factory(10)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
+        $this->call([
+            SidebarWithPermissionSeeder::class
+        ]);
     }
 }

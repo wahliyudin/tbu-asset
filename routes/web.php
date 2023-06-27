@@ -146,6 +146,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('settings/access-permission', [AccessPermissionController::class, 'index'])->name('settings.access-permission.index');
     Route::post('settings/access-permission/datatable', [AccessPermissionController::class, 'datatable'])->name('settings.access-permission.datatable');
+    Route::get('settings/access-permission/{user:nik}/edit', [AccessPermissionController::class, 'edit'])->name('settings.access-permission.edit');
+    Route::put('settings/access-permission/{user}/update', [AccessPermissionController::class, 'update'])->name('settings.access-permission.update');
 
     Route::post('budgets/datatable', [BudgetController::class, 'datatable'])->name('budgets.datatable');
 });

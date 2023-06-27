@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\API\TXIS;
+namespace App\Repositories\API\TXIS;
 
 use App\DataTransferObjects\API\TXIS\BudgetDto;
 use App\Services\API\TXIS\Contracts\TXISService;
