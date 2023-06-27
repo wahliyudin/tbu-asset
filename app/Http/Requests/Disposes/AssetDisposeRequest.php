@@ -14,12 +14,12 @@ class AssetDisposeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_dispose' => ['required'],
-            'nik' => ['required'],
+            'asset' => ['required'],
             'nilai_buku' => ['required'],
             'est_harga_pasar' => ['required'],
-            'notes' => ['required'],
+            'notes' => ['nullable'],
             'justifikasi' => ['required'],
+            'pelaksanaan' => ['required'],
             'remark' => ['required'],
         ];
     }

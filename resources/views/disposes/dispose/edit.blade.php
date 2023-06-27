@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Create Asset Dispose')
+@section('title', 'Edit Asset Dispose')
 
 @push('css')
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
@@ -21,7 +21,7 @@
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Create Asset Dispose</li>
+                    <li class="breadcrumb-item text-muted">Edit Asset Dispose</li>
                 </ul>
             </div>
         </div>
@@ -31,7 +31,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-disposes.form :employee="$employee" />
+            <x-disposes.form :assetDispose="$assetDispose" :employee="$employee" />
         </div>
     </div>
 @endsection

@@ -17,12 +17,14 @@ class AssetDisposeRepository
         return $this->model->query()->updateOrCreate([
             'id' => $dto->key
         ], [
+            'asset_id' => $dto->asset_id,
             'no_dispose' => $dto->no_dispose,
             'nik' => $dto->nik,
             'nilai_buku' => $dto->nilai_buku,
             'est_harga_pasar' => $dto->est_harga_pasar,
             'notes' => $dto->notes,
             'justifikasi' => $dto->justifikasi,
+            'pelaksanaan' => $dto->pelaksanaan,
             'remark' => $dto->remark,
         ]);
     }

@@ -19,9 +19,11 @@ return new class extends Migration
             $table->foreignIdFor(Asset::class);
             $table->bigInteger('nilai_buku');
             $table->bigInteger('est_harga_pasar');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->string('justifikasi');
+            $table->string('pelaksanaan');
             $table->string('remark');
+            $table->string('status')->default('open');
             $table->timestamps();
         });
     }

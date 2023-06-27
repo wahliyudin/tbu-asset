@@ -34,6 +34,7 @@ class CerService
     public function delete(Cer $cer)
     {
         $cer->items()->delete();
+        $cer->workflows()->delete();
         return $cer->delete();
     }
 

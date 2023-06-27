@@ -21,11 +21,15 @@ class AssetDisposeService
 
     public function updateOrCreate(AssetDisposeRequest $request)
     {
-        $this->assetDisposeRepository->updateOrCreate(AssetDisposeDto::fromRequest($request));
+        $dto = AssetDisposeDto::fromRequest($request);
+        $assetDispose = $this->assetDisposeRepository->updateOrCreate($dto);
+        $assetDispose->workflows()->delete();
+        DisposeWorkflowService::setModel($assetDispose)->store();
     }
 
     public function delete(AssetDispose $assetDispose)
     {
+        $assetDispose->workflows()->delete();
         return $assetDispose->delete();
     }
 }

@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Cers;
 
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\DataTransferObjects\Cers\CerDto;
+use App\Enums\Asset\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cers\CerRequest;
+use App\Models\Assets\Asset;
 use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\BudgetService;
+use App\Services\Assets\AssetService;
 use App\Services\Cers\CerService;
 use App\Services\Cers\CerWorkflowService;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +23,7 @@ class CerController extends Controller
         private CerService $service,
         private EmployeeService $employeeService,
         private BudgetService $budgetService,
+        private AssetService $assetService,
     ) {
     }
 
@@ -53,6 +57,31 @@ class CerController extends Controller
                 return view('cers.cer.action', compact('cer'))->render();
             })
             ->rawColumns(['action', 'type_budget', 'peruntukan', 'sumber_pendanaan', 'status',])
+            ->make();
+    }
+
+    public function datatableAssetIdle()
+    {
+        return DataTables::of($this->assetService->getByStatus(Status::IDLE))
+            ->editColumn('kode', function (Asset $asset) {
+                return $asset->kode;
+            })
+            ->editColumn('description', function (Asset $asset) {
+                return $asset->unit?->spesification;
+            })
+            ->editColumn('model', function (Asset $asset) {
+                return $asset->unit?->model;
+            })
+            ->editColumn('est_umur', function (Asset $asset) {
+                return $asset->depreciation?->umur_asset;
+            })
+            ->editColumn('unit_price', function (Asset $asset) {
+                return $asset->leasing?->harga_beli;
+            })
+            ->editColumn('action', function (Asset $asset) {
+                return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
+            })
+            ->rawColumns(['action'])
             ->make();
     }
 

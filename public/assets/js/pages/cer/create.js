@@ -144,7 +144,7 @@ var KTModalCersAdd = function () {
             ],
             ajax: {
                 type: "POST",
-                url: "/asset-masters/datatable-asset-idle"
+                url: "/asset-requests/datatable-asset-idle"
             },
             columns: [{
                 name: 'action',

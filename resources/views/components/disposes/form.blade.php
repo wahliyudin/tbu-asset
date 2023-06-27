@@ -8,17 +8,17 @@
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Department</td>
                         <td>:</td>
-                        <td></td>
+                        <td>{{ $employee->position->department->department_name }}</td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Project</td>
                         <td>:</td>
-                        <td></td>
+                        <td>{{ $employee->position->project->project }}</td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Division</td>
                         <td>:</td>
-                        <td></td>
+                        <td>{{ $employee->position->divisi->division_name }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -29,12 +29,18 @@
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Lokasi</td>
                         <td>:</td>
-                        <td></td>
+                        <td>
+                            <input type="text" name="lokasi" class="form-control">
+                        </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Tanggal Pengajuan</td>
                         <td>:</td>
-                        <td></td>
+                        <td>
+                            <input type="text" name="tanggal_pengajuan" disabled
+                                value="{{ isset($assetDispose->created_at) ? $assetDispose->created_at : now()->format('Y-m-d') }}"
+                                class="form-control date">
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +48,15 @@
     </div>
     <div class="row mt-4">
         <div class="col-md-12">
-            <table class="table table-bordered border-gray-300">
+            <div class="d-flex justify-content-end py-2">
+                <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
+                    <i class="ki-duotone ki-search-list fs-2">
+                        <i class="path1"></i>
+                        <i class="path2"></i>
+                        <i class="path3"></i>
+                    </i>Pilih Asset</button>
+            </div>
+            <table class="table table-bordered border-gray-300 table-asset-selected">
                 <thead>
                     <tr class="text-center bg-secondary bg-opacity-50">
                         <th>Deskripsi Asset</th>
@@ -57,14 +71,31 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <input type="hidden" name="asset">
+                            <input type="text" readonly name="description" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="model_spesification" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="serial_no" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="no_asset" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="tahun_buat" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="nilai_buku" class="form-control uang">
+                        </td>
+                        <td>
+                            <input type="text" name="est_harga_pasar" class="form-control uang">
+                        </td>
+                        <td>
+                            <input type="text" name="remark" class="form-control">
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -80,77 +111,74 @@
             </table>
         </div>
     </div>
-    <div class="row mt-4">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-center">
-                <div class="d-flex flex-column bg-success w-200px"
-                    style="border-radius: 10px 0 0 10px; overflow: hidden;">
-                    <div class="border text-center text-white p-1 d-flex flex-column">
-                        <p class="m-0 fw-bold" style="font-size: 15px;">
-                            Title
-                            By
-                        </p>
-                        <p class="m-0">Nama Karyawan</p>
-                    </div>
-                    <div class="border text-center text-white p-1 d-flex flex-column">
-                        <p class="m-0 fw-bold" style="font-size: 15px;">
-                            Title
-                            On
-                        </p>
-                        <p class="m-0">
-                            Tanggal
-                        </p>
-                    </div>
-                </div>
-                <div class="d-flex flex-column bg-success w-200px"
-                    style="border-radius: 0 10px 10px 0; overflow: hidden;">
-                    <div class="border text-center text-white p-1 d-flex flex-column">
-                        <p class="m-0 fw-bold" style="font-size: 15px;">
-                            Title
-                            By
-                        </p>
-                        <p class="m-0">Nama Karyawan</p>
-                    </div>
-                    <div class="border text-center text-white p-1 d-flex flex-column">
-                        <p class="m-0 fw-bold" style="font-size: 15px;">
-                            Title
-                            On
-                        </p>
-                        <p class="m-0">
-                            Tanggal
-                        </p>
-                    </div>
+    @if ($type == 'show')
+        <div class="row mt-8">
+            <div class="col-md-12">
+                <div class="d-flex justify-content-center">
+                    @foreach ($assetDispose->workflows as $workflow)
+                        <div class="d-flex flex-column w-150px {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->lastAction == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
+                            style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($assetDispose->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
+                            <div class="border text-center text-white p-1 d-flex flex-column">
+                                <p class="m-0 fw-bold" style="font-size: 12px;">
+                                    {{ $workflow->title }}
+                                    By
+                                </p>
+                                <p class="m-0">{{ $workflow?->employee?->nama_karyawan }}</p>
+                            </div>
+                            <div class="border text-center text-white p-1 d-flex flex-column">
+                                <p class="m-0 fw-bold" style="font-size: 12px;">
+                                    {{ $workflow->title }}
+                                    On
+                                </p>
+                                <p class="m-0">
+                                    {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->lastActionDate : '-' }}
+                                </p>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
+            <div class="col-md-12 d-flex justify-content-start mt-4">
+                @permission('asset_dispose_approv')
+                    <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
+                        data-asset-dispose="{{ $assetDispose->key }}" class="btn btn-success ps-4 approv">
+                        <span class="indicator-label">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="ki-duotone ki-check-circle fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                </i>Approval
+                            </div>
+                        </span>
+                        <span class="indicator-progress">
+                            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                @endpermission
+                @permission('asset_dispose_reject')
+                    <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
+                        data-asset-dispose="{{ $assetDispose->key }}" class="btn btn-danger ms-2 ps-4 reject">
+                        <span class="indicator-label">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="ki-duotone ki-cross-circle fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                </i>Reject
+                            </div>
+                        </span>
+                        <span class="indicator-progress">
+                            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                @endpermission
+            </div>
         </div>
-    </div>
+    @endif
     <div class="row mt-8">
         <div class="col-md-12">
             <div class="d-flex">
                 <h5>Cara Pelaksanaan Penghapusan Asset Yang Ditentukan :</h5>
-                <div class="d-flex flex-grow-1 align-items-center justify-content-evenly">
-                    <div class="form-check form-check-custom">
-                        <input class="form-check-input" name="pelaksanaan" type="radio" value=""
-                            id="penjualan" />
-                        <label class="form-check-label fs-6 fw-semibold" for="penjualan">
-                            Penjualan
-                        </label>
-                    </div>
-                    <div class="form-check form-check-custom">
-                        <input class="form-check-input" name="pelaksanaan" type="radio" value=""
-                            id="donasi" />
-                        <label class="form-check-label fs-6 fw-semibold" for="donasi">
-                            Donasi
-                        </label>
-                    </div>
-                    <div class="form-check form-check-custom">
-                        <input class="form-check-input" name="pelaksanaan" type="radio" value=""
-                            id="pemusnahan" />
-                        <label class="form-check-label fs-6 fw-semibold" for="pemusnahan">
-                            Pemusnahan
-                        </label>
-                    </div>
-                </div>
+                <x-disposes.pelaksanaan :type="$type" :assetDispose="$assetDispose" />
             </div>
             <div class="d-flex flex-column">
                 <h5>Keterangan :</h5>

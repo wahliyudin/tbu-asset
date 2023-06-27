@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers\Disposes;
 
+use App\DataTransferObjects\API\HRIS\EmployeeDto;
+use App\DataTransferObjects\Disposes\AssetDisposeDto;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
+use App\Models\Assets\Asset;
 use App\Models\Disposes\AssetDispose;
+use App\Services\API\HRIS\EmployeeService;
+use App\Services\Assets\AssetService;
 use App\Services\Disposes\AssetDisposeService;
 use Yajra\DataTables\Facades\DataTables;
 
 class DisposeController extends Controller
 {
     public function __construct(
-        private AssetDisposeService $service
+        private AssetDisposeService $service,
+        private EmployeeService $employeeService,
+        private AssetService $assetService,
     ) {
     }
 
@@ -23,11 +31,48 @@ class DisposeController extends Controller
     public function datatable()
     {
         return DataTables::of($this->service->all())
-            ->editColumn('name', function (AssetDispose $assetDispose) {
-                return 'example';
+            ->editColumn('no_dispose', function (AssetDispose $assetDispose) {
+                return $assetDispose->no_dispose;
+            })
+            ->editColumn('pelaksanaan', function (AssetDispose $assetDispose) {
+                return $assetDispose->pelaksanaan->badge();
+            })
+            ->editColumn('nilai_buku', function (AssetDispose $assetDispose) {
+                return Helper::formatRupiah($assetDispose->nilai_buku);
+            })
+            ->editColumn('est_harga_pasar', function (AssetDispose $assetDispose) {
+                return Helper::formatRupiah($assetDispose->est_harga_pasar);
             })
             ->editColumn('action', function (AssetDispose $assetDispose) {
                 return view('disposes.dispose.action', compact('assetDispose'))->render();
+            })
+            ->rawColumns(['action', 'pelaksanaan'])
+            ->make();
+    }
+
+    public function datatableAsset()
+    {
+        return DataTables::of($this->assetService->all())
+            ->editColumn('description', function (Asset $asset) {
+                return 'example';
+            })
+            ->editColumn('model_spesification', function (Asset $asset) {
+                return 'example';
+            })
+            ->editColumn('serial_no', function (Asset $asset) {
+                return 'example';
+            })
+            ->editColumn('no_asset', function (Asset $asset) {
+                return $asset->kode;
+            })
+            ->editColumn('tahun_buat', function (Asset $asset) {
+                return 'example';
+            })
+            ->editColumn('nilai_buku', function (Asset $asset) {
+                return 100000;
+            })
+            ->editColumn('action', function (Asset $asset) {
+                return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
             ->rawColumns(['action'])
             ->make();
@@ -35,7 +80,10 @@ class DisposeController extends Controller
 
     public function create()
     {
-        return view('disposes.dispose.create');
+        $employee = EmployeeDto::fromResponse($this->employeeService->getByNik(auth()->user()->nik));
+        return view('disposes.dispose.create', [
+            'employee' => $employee
+        ]);
     }
 
     public function store(AssetDisposeRequest $request)
@@ -53,7 +101,11 @@ class DisposeController extends Controller
     public function edit(AssetDispose $assetDispose)
     {
         try {
-            return response()->json($assetDispose);
+            $dto = AssetDisposeDto::fromModel($assetDispose);
+            return view('disposes.dispose.edit', [
+                'assetDispose' => $dto,
+                'employee' => $dto->employee,
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

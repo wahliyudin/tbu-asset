@@ -2,6 +2,7 @@
 
 namespace App\Services\Disposes;
 
+use App\Enums\Disposes\Dispose\Status;
 use App\Enums\Workflows\Module;
 use App\Models\Disposes\AssetDispose;
 use App\Services\WorkflowService;
@@ -13,7 +14,7 @@ class DisposeWorkflowService extends WorkflowService
 
     public function __construct()
     {
-        parent::__construct($this->dispose, Module::DISPOSE);
+        parent::__construct(self::$dispose, Module::DISPOSE);
     }
 
     public static function setModel(Model $model)
@@ -28,6 +29,9 @@ class DisposeWorkflowService extends WorkflowService
 
     protected function handleIsLastAndApprov()
     {
+        static::$dispose->update([
+            'status' => Status::CLOSE
+        ]);
     }
 
     protected function handleIsNotLastAndApprov()
@@ -36,5 +40,8 @@ class DisposeWorkflowService extends WorkflowService
 
     protected function handleIsRejected()
     {
+        static::$dispose->update([
+            'status' => Status::REJECT
+        ]);
     }
 }

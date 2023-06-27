@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Assets;
 
-use App\Enums\Asset\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
@@ -11,7 +10,6 @@ use App\Models\Masters\Leasing;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Services\Assets\AssetService;
-use Yajra\DataTables\Contracts\DataTable;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller
@@ -90,30 +88,5 @@ class AssetMasterController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
-    }
-
-    public function datatableAssetIdle()
-    {
-        return DataTables::of($this->service->getByStatus(Status::IDLE))
-            ->editColumn('kode', function (Asset $asset) {
-                return $asset->kode;
-            })
-            ->editColumn('description', function (Asset $asset) {
-                return $asset->unit?->spesification;
-            })
-            ->editColumn('model', function (Asset $asset) {
-                return $asset->unit?->model;
-            })
-            ->editColumn('est_umur', function (Asset $asset) {
-                return $asset->depreciation?->umur_asset;
-            })
-            ->editColumn('unit_price', function (Asset $asset) {
-                return $asset->leasing?->harga_beli;
-            })
-            ->editColumn('action', function (Asset $asset) {
-                return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
-            })
-            ->rawColumns(['action'])
-            ->make();
     }
 }

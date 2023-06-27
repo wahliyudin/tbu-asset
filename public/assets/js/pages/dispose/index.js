@@ -27,8 +27,20 @@ var DisposesList = function () {
             },
             columns: [
                 {
-                    name: 'name',
-                    data: 'name',
+                    name: 'no_dispose',
+                    data: 'no_dispose',
+                },
+                {
+                    name: 'pelaksanaan',
+                    data: 'pelaksanaan',
+                },
+                {
+                    name: 'nilai_buku',
+                    data: 'nilai_buku',
+                },
+                {
+                    name: 'est_harga_pasar',
+                    data: 'est_harga_pasar',
                 },
                 {
                     name: 'action',
