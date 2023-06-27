@@ -2,18 +2,19 @@
 
 namespace App\View\Components\Cers;
 
-use App\DataTransferObjects\Cers\CerDto;
+use App\DataTransferObjects\Cers\CerItemDto;
+use App\Models\Cers\CerItem;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class TypeBudget extends Component
+class Item extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public ?CerDto $cer,
+        public ?CerItemDto $cerItem,
         public string $type,
     ) {
     }
@@ -23,6 +24,6 @@ class TypeBudget extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cers.type-budget');
+        return view('components.cers.item');
     }
 }

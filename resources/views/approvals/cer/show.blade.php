@@ -28,7 +28,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-cers.form />
+            <x-cers.form :cer="$cer" :employee="$employee" :type="'show'" />
         </div>
     </div>
 @endsection

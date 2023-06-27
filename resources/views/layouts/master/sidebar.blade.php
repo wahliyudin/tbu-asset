@@ -211,7 +211,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Cer</span>
+                                <span class="menu-title">Asset Request</span>
                                 <span class="menu-badge">
                                     <span class="badge badge-success">0</span>
                                 </span>

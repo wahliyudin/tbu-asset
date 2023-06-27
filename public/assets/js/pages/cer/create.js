@@ -8,7 +8,7 @@ var KTModalCersAdd = function () {
     var currentItem;
     var indexItem = 1;
 
-    var iniRepeater = () => {
+    var initRepeater = () => {
         $('.items').repeater({
             initEmpty: false,
             defaultValues: {
@@ -32,6 +32,9 @@ var KTModalCersAdd = function () {
         });
         initPluginsAndEventRepeater();
         currentItem = $('[data-repeater-item]').get(0);
+        if ($($(currentItem).find('.asset-description')).val() != '') {
+            indexItem = 2;
+        }
     }
 
     var initPluginsAndEventRepeater = () => {
@@ -275,9 +278,9 @@ var KTModalCersAdd = function () {
             modalBudget = new bootstrap.Modal(document.querySelector('#data_budget'));
 
             initPlugins();
+            initRepeater();
             initDatatableAsset();
             initDatatableBudget();
-            iniRepeater();
             initForm();
         }
     };

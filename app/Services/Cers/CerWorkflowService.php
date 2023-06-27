@@ -13,7 +13,7 @@ class CerWorkflowService extends WorkflowService
 
     public function __construct()
     {
-        parent::__construct($this->cer, Module::CER);
+        parent::__construct(self::$cer, Module::CER);
     }
 
     public static function setModel(Model $model)

@@ -14,6 +14,21 @@ enum Approval: string
     case GENERAL_MANAGER_OPERATION = 'GENERAL_MANAGER_OPERATION';
     case OTHER = 'OTHER';
 
+    public function valueByHRIS()
+    {
+        return match ($this) {
+            self::ATASAN_LANGSUNG => 1,
+            self::DIRECTOR => 2,
+            self::GENERAL_MANAGER => 3,
+            self::DEPARTMENT_HEAD => 4,
+            self::PROJECT_OWNER => 5,
+            self::FINANCE => 6,
+            self::HCA => 7,
+            self::GENERAL_MANAGER_OPERATION => 8,
+            self::OTHER => 9,
+        };
+    }
+
     public function label()
     {
         return match ($this) {

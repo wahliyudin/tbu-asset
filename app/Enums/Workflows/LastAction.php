@@ -18,4 +18,15 @@ enum LastAction: int
             self::NOTTING => 'Notting',
         };
     }
+
+    public static function getByValue($val): self
+    {
+        return match ($val) {
+            self::NOTTING->value => self::NOTTING,
+            self::SUBMIT->value => self::SUBMIT,
+            self::APPROV->value => self::APPROV,
+            self::REJECT->value => self::REJECT,
+            default => self::NOTTING,
+        };
+    }
 }

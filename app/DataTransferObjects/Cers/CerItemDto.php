@@ -14,7 +14,7 @@ class CerItemDto
         public readonly string $est_umur,
         public readonly string $qty,
         public readonly int $price,
-        public readonly string $uom,
+        public readonly ?string $uom,
         public readonly mixed $key = null,
     ) {
     }
@@ -51,5 +51,22 @@ class CerItemDto
             ]);
         }
         return $results;
+    }
+
+    public static function fromCollection(Collection $items)
+    {
+        $results = [];
+        foreach ($items as $key => $value) {
+            $results = array_merge($results, [new self(
+                isset($value->description) ? $value->description : null,
+                isset($value->model) ? $value->model : null,
+                isset($value->est_umur) ? $value->est_umur : null,
+                isset($value->qty) ? $value->qty : null,
+                isset($value->price) ? $value->price : null,
+                isset($value->uom) ? $value->uom : null,
+                $value->getKey(),
+            )]);
+        }
+        return collect($results);
     }
 }

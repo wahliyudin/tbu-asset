@@ -10,7 +10,7 @@ use App\Repositories\Cers\CerRepository;
 class CerService
 {
     public function __construct(
-        protected CerRepository $cerRepository
+        protected CerRepository $cerRepository,
     ) {
     }
 
@@ -25,6 +25,8 @@ class CerService
         $cer = $this->cerRepository->updateOrCreate($dto);
         $cer->items()->delete();
         $cer->items()->createMany($dto->itemsToAttach);
+        $cer->workflows()->delete();
+        CerWorkflowService::setModel($cer)->store();
     }
 
     public function delete(Cer $cer)

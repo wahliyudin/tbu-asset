@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\API\HRIS\WorkflowDto;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Module;
 use App\Interfaces\ModelWithWorkflowInterface;
+use App\Repositories\API\HRIS\ApprovalRepository as HRISApprovalRepository;
 use App\Repositories\Settings\ApprovalRepository;
 use App\Repositories\WorkflowRepository;
 use Exception;
@@ -26,23 +28,33 @@ abstract class WorkflowService
     public function store()
     {
         $results = [];
-        array_push($results, $this->generatePayload(1, auth()->user()->nik, str("Submitted")->upper(), LastAction::APPROV));
-        $settings = ApprovalRepository::getByModule($this->module);
-        $index = 2;
-        foreach ($settings as $setting) {
-            array_push(
-                $results,
-                $this->generatePayload(
-                    $index,
-                    ApprovalRepository::logicApproval($setting->approval) ?? $setting->nik,
-                    str($setting->title)->upper(),
-                    LastAction::NOTTING
-                )
-            );
-            $index++;
+        foreach ($this->getApprovals() as $workflowDto) {
+            array_push($results, $this->generatePayload(
+                $workflowDto->sequence,
+                $workflowDto->nik,
+                $workflowDto->title,
+                $workflowDto->lastAction,
+            ));
         }
         $this->handleStoreWorkflow();
         return WorkflowRepository::store($this->model, $results);
+    }
+
+    private function getApprovals()
+    {
+        $settings = ApprovalRepository::getByModule($this->module);
+        $data = [];
+        foreach ($settings as $approval) {
+            array_push($data, [
+                'approval' => $approval->approval->valueByHRIS(),
+                'title' => $approval->title
+            ]);
+        }
+        $response = (new HRISApprovalRepository)->getBySubmitted([
+            'submitted' => auth()->user()->nik,
+            'approvals' => $data
+        ]);
+        return WorkflowDto::fromResponseMultiple($response);
     }
 
     private function generatePayload(int $index, $nik, string $title, LastAction $lastAction)

@@ -10,7 +10,11 @@ abstract class HRISService implements APIInterface
 {
     public function baseUrl()
     {
-        return Helper::clearUrl(config('urls.hris') . '/api');
+        $url = config('urls.hris');
+        if (in_array(str($url)->substr(strlen($url) - 1), ['/'])) {
+            return $url . 'api';
+        }
+        return $url . '/api';
     }
 
     public abstract function url();
@@ -27,6 +31,15 @@ abstract class HRISService implements APIInterface
             'Accept' => 'application/json',
             'Authorization' => "Bearer $token",
         ])->get($url, $query);
+    }
+
+    protected function post($url, $data = [], $token = null)
+    {
+        $token = $this->token() ?? $token;
+        return Http::withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer $token",
+        ])->post($url, $data);
     }
 
     private function token()

@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Cers;
 
-use App\Models\Cers\Cer;
+use App\DataTransferObjects\Cers\CerDto;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -13,7 +13,8 @@ class Peruntukan extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?Cer $cer
+        public ?CerDto $cer,
+        public string $type,
     ) {
     }
 

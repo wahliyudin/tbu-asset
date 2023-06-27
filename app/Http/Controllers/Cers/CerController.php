@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Cers;
 
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
-use App\DataTransferObjects\API\TXIS\BudgetDto;
+use App\DataTransferObjects\Cers\CerDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
@@ -79,7 +79,10 @@ class CerController extends Controller
     public function edit(Cer $cer)
     {
         try {
-            return response()->json($cer);
+            return view('cers.cer.edit', [
+                'cer' => $cer,
+                'employee' => CerDto::fromModel($cer)->employee,
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

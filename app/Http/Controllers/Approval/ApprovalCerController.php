@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Approval;
 
+use App\DataTransferObjects\Cers\CerDto;
 use App\Http\Controllers\Controller;
 use App\Models\Cers\Cer;
+use App\Services\API\HRIS\EmployeeService;
 use App\Services\Cers\CerService;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -11,6 +13,7 @@ class ApprovalCerController extends Controller
 {
     public function __construct(
         private CerService $service,
+        private EmployeeService $employeeService,
     ) {
     }
 
@@ -41,7 +44,7 @@ class ApprovalCerController extends Controller
                 return $cer->status->badge();
             })
             ->editColumn('action', function (Cer $cer) {
-                return view('approvals.cers.action', compact('cer'))->render();
+                return view('approvals.cer.action', compact('cer'))->render();
             })
             ->rawColumns(['action', 'type_budget', 'peruntukan', 'sumber_pendanaan', 'status',])
             ->make();
@@ -49,8 +52,10 @@ class ApprovalCerController extends Controller
 
     public function show(Cer $cer)
     {
-        return view('approvals.cers.show', [
-            'cer' => $cer
+        $dto = CerDto::fromModel($cer);
+        return view('approvals.cer.show', [
+            'cer' => $dto,
+            'employee' => $dto->employee,
         ]);
     }
 }
