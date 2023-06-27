@@ -41,10 +41,12 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-sub-cluster-item-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
-                        data-bs-target="#create-sub-cluster-item">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Sub Cluster Item
-                    </button>
+                    @permission('sub_cluster_item_create')
+                        <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
+                            data-bs-target="#create-sub-cluster-item">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Sub Cluster Item
+                        </button>
+                    @endpermission
                 </div>
             </div>
         </div>

@@ -41,10 +41,12 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-leasing-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
-                        data-bs-target="#create-leasing">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Leasing
-                    </button>
+                    @permission('leasing_create')
+                        <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
+                            data-bs-target="#create-leasing">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Leasing
+                        </button>
+                    @endpermission
                 </div>
             </div>
         </div>

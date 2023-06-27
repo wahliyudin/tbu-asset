@@ -41,10 +41,12 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-unit-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
-                        data-bs-target="#create-unit">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Unit
-                    </button>
+                    @permission('unit_create')
+                        <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
+                            data-bs-target="#create-unit">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Unit
+                        </button>
+                    @endpermission
                 </div>
             </div>
         </div>

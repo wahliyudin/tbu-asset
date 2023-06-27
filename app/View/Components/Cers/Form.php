@@ -17,6 +17,7 @@ class Form extends Component
         public ?CerDto $cer,
         public EmployeeDto $employee,
         public string $type = '',
+        public bool $isCurrentWorkflow = false,
     ) {
     }
 

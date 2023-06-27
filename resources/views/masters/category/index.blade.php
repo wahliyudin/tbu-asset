@@ -41,10 +41,12 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-category-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
-                        data-bs-target="#create-category">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Category
-                    </button>
+                    @permission('category_create')
+                        <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
+                            data-bs-target="#create-category">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Category
+                        </button>
+                    @endpermission
                 </div>
             </div>
         </div>

@@ -40,9 +40,11 @@
                     {{-- <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal" data-bs-target="#create-cer">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Cer
                     </button> --}}
-                    <a href="{{ route('asset-requests.create') }}" class="btn btn-primary ps-4">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Cer
-                    </a>
+                    @permission('asset_request_create')
+                        <a href="{{ route('asset-requests.create') }}" class="btn btn-primary ps-4">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Cer
+                        </a>
+                    @endpermission
                 </div>
             </div>
         </div>

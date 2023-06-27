@@ -41,10 +41,12 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-asset-table-toolbar="base">
-                    <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
-                        data-bs-target="#create-asset">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Asset
-                    </button>
+                    @permission('asset_master_create')
+                        <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
+                            data-bs-target="#create-asset">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Asset
+                        </button>
+                    @endpermission
                 </div>
             </div>
         </div>

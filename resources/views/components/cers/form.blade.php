@@ -254,14 +254,14 @@
             </div>
         </div>
         <div class="col-md-12 d-flex justify-content-start mt-4">
-            {{-- @permission('cer_approv')
-            <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} data-cer="{{ $cer->getKey() }}"
-                class="btn btn-success text-white approv">Approval</button>
-        @endpermission
-        @permission('cer_reject')
-            <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} data-cer="{{ $cer->getKey() }}"
-                class="btn btn-danger text-white ms-2 reject">Reject</button>
-        @endpermission --}}
+            @permission('asset_request_approv')
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} data-cer="{{ $cer->key }}"
+                    class="btn btn-success text-white approv">Approval</button>
+            @endpermission
+            @permission('asset_request_reject')
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} data-cer="{{ $cer->key }}"
+                    class="btn btn-danger text-white ms-2 reject">Reject</button>
+            @endpermission
         </div>
     </div>
 @endif

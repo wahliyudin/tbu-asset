@@ -44,27 +44,33 @@
                                     @endforelse
                                 </div>
                             </div>
-                            <div class="form-group mt-3 d-flex align-items-center justify-content-between">
-                                <button type="button" data-repeater-create class="btn btn-sm btn-info text-white">
-                                    <span class="svg-icon svg-icon-2"><svg width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect opacity="0.5" x="11" y="18" width="12" height="2"
-                                                rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
-                                            <rect x="6" y="11" width="12" height="2" rx="1"
-                                                fill="currentColor" />
-                                        </svg></span>
-                                    Add another approval
-                                </button>
-                                <button type="button" class="btn btn-primary simpan-{{ $settingApproval['module'] }}">
-                                    <span class="indicator-label">
-                                        Submit
-                                    </span>
-                                    <span class="indicator-progress">
-                                        Please wait... <span
-                                            class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
-                                </button>
-                            </div>
+                            @permission('approval_create|approval_update')
+                                <div class="form-group mt-3 d-flex align-items-center justify-content-between">
+                                    @permission('approval_create')
+                                        <button type="button" data-repeater-create class="btn btn-sm btn-info text-white">
+                                            <span class="svg-icon svg-icon-2"><svg width="24" height="24" viewBox="0 0 24 24"
+                                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect opacity="0.5" x="11" y="18" width="12" height="2"
+                                                        rx="1" transform="rotate(-90 11 18)" fill="currentColor" />
+                                                    <rect x="6" y="11" width="12" height="2" rx="1"
+                                                        fill="currentColor" />
+                                                </svg></span>
+                                            Add another approval
+                                        </button>
+                                    @endpermission
+                                    @permission('approval_update')
+                                        <button type="button" class="btn btn-primary simpan-{{ $settingApproval['module'] }}">
+                                            <span class="indicator-label">
+                                                Submit
+                                            </span>
+                                            <span class="indicator-progress">
+                                                Please wait... <span
+                                                    class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                            </span>
+                                        </button>
+                                    @endpermission
+                                </div>
+                            @endpermission
                         </form>
                     </div>
                 </div>
