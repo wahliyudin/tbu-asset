@@ -136,9 +136,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('approvals/transfers/datatable', [ApprovalTransferController::class, 'datatable'])->name('approvals.transfers.datatable');
     Route::get('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show');
 
-    Route::get('approvals/disposes', [ApprovalDisposeController::class, 'index'])->name('approvals.disposes.index');
-    Route::post('approvals/disposes/datatable', [ApprovalDisposeController::class, 'datatable'])->name('approvals.disposes.datatable');
-    Route::get('approvals/disposes/{assetDispose}/show', [ApprovalDisposeController::class, 'show'])->name('approvals.disposes.show');
+    Route::get('approvals/disposes', [ApprovalDisposeController::class, 'index'])->name('approvals.disposes.index')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
+    Route::post('approvals/disposes/datatable', [ApprovalDisposeController::class, 'datatable'])->name('approvals.disposes.datatable')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
+    Route::get('approvals/disposes/{assetDispose}/show', [ApprovalDisposeController::class, 'show'])->name('approvals.disposes.show')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
+    Route::post('approvals/disposes/{assetDispose}/approv', [ApprovalDisposeController::class, 'approv'])->name('approvals.disposes.approv')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
+    Route::post('approvals/disposes/{assetDispose}/reject', [ApprovalDisposeController::class, 'reject'])->name('approvals.disposes.reject')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index')->middleware('permission:approval_read');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store')->middleware('permission:approval_update');

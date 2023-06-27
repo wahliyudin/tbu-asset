@@ -4,6 +4,7 @@ namespace App\DataTransferObjects\Disposes;
 
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\DataTransferObjects\API\HRIS\WorkflowDto;
+use App\DataTransferObjects\Assets\AssetDto;
 use App\Enums\Disposes\Dispose\Pelaksanaan;
 use App\Helpers\Helper;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
@@ -25,6 +26,7 @@ class AssetDisposeDto
         public readonly string|null $remark = null,
         public readonly Pelaksanaan|string|null $pelaksanaan = null,
         public readonly mixed $key = null,
+        public readonly ?AssetDto $assetDto = null,
         public readonly ?EmployeeDto $employee = null,
         public readonly ?Collection $workflows = null,
     ) {
@@ -60,6 +62,7 @@ class AssetDisposeDto
             $assetDispose->remark,
             $assetDispose->pelaksanaan,
             $assetDispose->getKey(),
+            AssetDto::fromModel($assetDispose->asset),
             EmployeeDto::fromResponse((new EmployeeService)->getByNik($assetDispose->nik)),
             WorkflowDto::fromModel($assetDispose)
         );

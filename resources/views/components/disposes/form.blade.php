@@ -1,4 +1,5 @@
 <form action="" class="form-dispose">
+    <input type="hidden" name="key" value="{{ $assetDispose?->key }}">
     <x-form-header title="PENGHAPUSAN ASSET" nomor="TBU-FM-AST-002" tanggal="12-04-2023" revisi="00" halaman="1 dari 1" />
     <hr>
     <div class="row">
@@ -72,29 +73,36 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="hidden" name="asset">
-                            <input type="text" readonly name="description" class="form-control">
+                            <input type="hidden" name="asset" value="{{ $assetDispose->assetDto->key }}">
+                            <input type="text" readonly name="description" value="" class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="model_spesification" class="form-control">
+                            <input type="text" readonly name="model_spesification" value=""
+                                class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="serial_no" class="form-control">
+                            <input type="text" readonly name="serial_no" value="" class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="no_asset" class="form-control">
+                            <input type="text" readonly name="no_asset" value="{{ $assetDispose->assetDto->kode }}"
+                                class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="tahun_buat" class="form-control">
+                            <input type="text" readonly name="tahun_buat" value="" class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="nilai_buku" class="form-control uang">
+                            <input type="text" readonly name="nilai_buku"
+                                value="{{ \App\Helpers\Helper::formatRupiah($assetDispose->nilai_buku) }}"
+                                class="form-control uang">
                         </td>
                         <td>
-                            <input type="text" name="est_harga_pasar" class="form-control uang">
+                            <input type="text" name="est_harga_pasar" @readonly($type == 'show')
+                                value="{{ \App\Helpers\Helper::formatRupiah($assetDispose->est_harga_pasar) }}"
+                                class="form-control uang">
                         </td>
                         <td>
-                            <input type="text" name="remark" class="form-control">
+                            <input type="text" name="remark" @readonly($type == 'show') value="{{ $assetDispose->remark }}"
+                                class="form-control">
                         </td>
                     </tr>
                 </tbody>
@@ -104,13 +112,52 @@
                     </tr>
                     <tr>
                         <td colspan="8">
-                            <textarea name="justifikasi" class="form-control"></textarea>
+                            <textarea name="justifikasi" @readonly($type == 'show') class="form-control">{{ $assetDispose->justifikasi }}</textarea>
                         </td>
                     </tr>
                 </tfoot>
             </table>
         </div>
     </div>
+    <div class="row mt-8">
+        <div class="col-md-12">
+            <div class="d-flex">
+                <h5>Cara Pelaksanaan Penghapusan Asset Yang Ditentukan :</h5>
+                <x-disposes.pelaksanaan :type="$type" :assetDispose="$assetDispose" />
+            </div>
+            <div class="d-flex flex-column">
+                <h5>Keterangan :</h5>
+                <ol style="font-style: italic;">
+                    <li>Setelah mendapatkan persetujuan penuh, beri tanda "X" pada kotak (a), (b) atau (c) atas
+                        pengurangan asset yang dimaksud:</li>
+                    <ol type='a'>
+                        <li><span class="fw-bold">Penjualan</span>, bila pengurangan asset tersebut dengan
+                            jalan dijual</li>
+                        <li><span class="fw-bold">Donasi</span>, bila pengurangan asset dengan tujuan
+                            kemanusiaan, pendidikan atau tujuan sosial lainnya</li>
+                        <li><span class="fw-bold">Pemusnahan</span>, bila asset tersebut tidak memiliki nilai
+                            ekonomis atau tidak dapat dijual kembali</li>
+                    </ol>
+                    <li>Sertakan foto-foto atas asset yang akan di-dispose.</li>
+                    <li>Penawaran dari calon pembeli (jika pilihan a) harus dilampirkankan untuk mendapatkan
+                        persetujuan.</li>
+                    <li>Proposal penghapusan asset harus dibuat setelah form ini disetujui.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    @if ($type != 'show')
+        <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-primary simpan-form-dispose">
+                <span class="indicator-label">
+                    Simpan
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+        </div>
+    @endif
     @if ($type == 'show')
         <div class="row mt-8">
             <div class="col-md-12">
@@ -141,7 +188,7 @@
             <div class="col-md-12 d-flex justify-content-start mt-4">
                 @permission('asset_dispose_approv')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
-                        data-asset-dispose="{{ $assetDispose->key }}" class="btn btn-success ps-4 approv">
+                        data-dispose="{{ $assetDispose->key }}" class="btn btn-success ps-4 approv">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-check-circle fs-2">
@@ -157,7 +204,7 @@
                 @endpermission
                 @permission('asset_dispose_reject')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
-                        data-asset-dispose="{{ $assetDispose->key }}" class="btn btn-danger ms-2 ps-4 reject">
+                        data-dispose="{{ $assetDispose->key }}" class="btn btn-danger ms-2 ps-4 reject">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-cross-circle fs-2">
@@ -174,41 +221,125 @@
             </div>
         </div>
     @endif
-    <div class="row mt-8">
-        <div class="col-md-12">
-            <div class="d-flex">
-                <h5>Cara Pelaksanaan Penghapusan Asset Yang Ditentukan :</h5>
-                <x-disposes.pelaksanaan :type="$type" :assetDispose="$assetDispose" />
-            </div>
-            <div class="d-flex flex-column">
-                <h5>Keterangan :</h5>
-                <ol style="font-style: italic;">
-                    <li>Setelah mendapatkan persetujuan penuh, beri tanda "X" pada kotak (a), (b) atau (c) atas
-                        pengurangan asset yang dimaksud:</li>
-                    <ol type='a'>
-                        <li><span class="fw-bold">Penjualan</span>, bila pengurangan asset tersebut dengan
-                            jalan dijual</li>
-                        <li><span class="fw-bold">Donasi</span>, bila pengurangan asset dengan tujuan
-                            kemanusiaan, pendidikan atau tujuan sosial lainnya</li>
-                        <li><span class="fw-bold">Pemusnahan</span>, bila asset tersebut tidak memiliki nilai
-                            ekonomis atau tidak dapat dijual kembali</li>
-                    </ol>
-                    <li>Sertakan foto-foto atas asset yang akan di-dispose.</li>
-                    <li>Penawaran dari calon pembeli (jika pilihan a) harus dilampirkankan untuk mendapatkan
-                        persetujuan.</li>
-                    <li>Proposal penghapusan asset harus dibuat setelah form ini disetujui.</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <div class="d-flex justify-content-end mt-4">
-        <button type="button" class="btn btn-primary simpan-form-dispose">
-            <span class="indicator-label">
-                Simpan
-            </span>
-            <span class="indicator-progress">
-                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-        </button>
-    </div>
 </form>
+@if ($type == 'show')
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $('.approv').click(function(e) {
+                    e.preventDefault();
+                    var dispose = $(this).data('dispose');
+                    var target = this;
+                    $(target).attr("data-kt-indicator", "on");
+                    Swal.fire({
+                        title: 'Apa kamu yakin?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yakin!',
+                        preConfirm: () => {
+                            return new Promise(function(resolve) {
+                                $.ajax({
+                                        type: "POST",
+                                        url: `/approvals/disposes/${dispose}/approv`,
+                                        dataType: 'JSON',
+                                    })
+                                    .done(function(myAjaxJsonResponse) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        Swal.fire(
+                                            'Verified!',
+                                            myAjaxJsonResponse.message,
+                                            'success'
+                                        ).then(function() {
+                                            location.reload();
+                                        });
+                                    })
+                                    .fail(function(erordata) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        if (erordata.status == 422) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Warning!',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        }
+                                    })
+                            })
+                        },
+                        willClose: () => {
+                            $(target).removeAttr("data-kt-indicator");
+                        }
+                    });
+                });
+                $('.reject').click(function(e) {
+                    e.preventDefault();
+                    var dispose = $(this).data('dispose');
+                    var target = this;
+                    $(target).attr("data-kt-indicator", "on");
+                    Swal.fire({
+                        title: 'Apa kamu yakin?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yakin!',
+                        preConfirm: () => {
+                            return new Promise(function(resolve) {
+                                $.ajax({
+                                        type: "POST",
+                                        url: `/approvals/disposes/${dispose}/reject`,
+                                        dataType: 'JSON',
+                                    })
+                                    .done(function(myAjaxJsonResponse) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        Swal.fire(
+                                            'Rejected!',
+                                            myAjaxJsonResponse.message,
+                                            'success'
+                                        ).then(function() {
+                                            location.reload();
+                                        });
+                                    })
+                                    .fail(function(erordata) {
+                                        $(target).removeAttr("data-kt-indicator");
+                                        if (erordata.status == 422) {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Warning!',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Oops...',
+                                                text: erordata.responseJSON
+                                                    .message,
+                                            })
+                                        }
+                                    })
+                            })
+                        },
+                        willClose: () => {
+                            $(target).removeAttr("data-kt-indicator");
+                        }
+                    });
+                });
+            });
+        </script>
+    @endpush
+@endif

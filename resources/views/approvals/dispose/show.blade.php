@@ -12,7 +12,7 @@
                 </h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('approvals.transfers.index') }}" class="text-muted text-hover-primary">
+                        <a href="{{ route('approvals.disposes.index') }}" class="text-muted text-hover-primary">
                             Approval Dispose </a>
                     </li>
                     <li class="breadcrumb-item">
@@ -28,7 +28,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-disposes.form />
+            <x-disposes.form :isCurrentWorkflow="true" :type="'show'" :assetDispose="$assetDispose" :employee="$employee" />
         </div>
     </div>
 @endsection
