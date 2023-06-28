@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums\Cers;
+namespace App\Enums\Workflows;
 
 use App\Interfaces\EnumInterface;
 

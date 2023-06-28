@@ -3,7 +3,7 @@
 namespace App\Models\Disposes;
 
 use App\Enums\Disposes\Dispose\Pelaksanaan;
-use App\Enums\Disposes\Dispose\Status;
+use App\Enums\Workflows\Status;
 use App\Interfaces\ModelWithWorkflowInterface;
 use App\Models\Assets\Asset;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -3,7 +3,7 @@
 namespace App\Services\Cers;
 
 use App\DataTransferObjects\Cers\CerDto;
-use App\Enums\Cers\Status;
+use App\Enums\Workflows\Status;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;

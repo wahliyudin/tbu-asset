@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Enums\Workflows\LastAction;
+use App\Enums\Workflows\Status;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkflowRepository
@@ -25,5 +26,12 @@ class WorkflowRepository
     public static function store(Model $model, array $data)
     {
         return $model->workflows()->createMany($data);
+    }
+
+    public static function updateStatus(Model $model, Status $status)
+    {
+        return $model->update([
+            'status' => $status
+        ]);
     }
 }

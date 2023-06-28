@@ -3,9 +3,9 @@
 namespace App\Models\Cers;
 
 use App\Enums\Cers\Peruntukan;
-use App\Enums\Cers\Status;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
+use App\Enums\Workflows\Status;
 use App\Interfaces\ModelWithWorkflowInterface;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DataTransferObjects\API\HRIS\WorkflowDto;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Module;
+use App\Enums\Workflows\Status;
 use App\Interfaces\ModelWithWorkflowInterface;
 use App\Repositories\API\HRIS\ApprovalRepository as HRISApprovalRepository;
 use App\Repositories\Settings\ApprovalRepository;
@@ -95,12 +96,14 @@ abstract class WorkflowService
             throw ValidationException::withMessages(['Anda tidak berhak melakukan aksi ini']);
         }
         if ($this->isLast() && $lastAction == LastAction::APPROV) {
+            WorkflowRepository::updateStatus($this->model, Status::CLOSE);
             $this->handleIsLastAndApprov();
         }
         if (!($this->isLast()) && $lastAction == LastAction::APPROV) {
             $this->handleIsNotLastAndApprov();
         }
         if ($lastAction == LastAction::REJECT) {
+            WorkflowRepository::updateStatus($this->model, Status::REJECT);
             $this->handleIsRejected();
         }
         return WorkflowRepository::updateLasAction($workflow, $lastAction);
