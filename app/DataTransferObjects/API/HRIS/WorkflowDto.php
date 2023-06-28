@@ -3,8 +3,8 @@
 namespace App\DataTransferObjects\API\HRIS;
 
 use App\Enums\Workflows\LastAction;
-use App\Interfaces\ModelWithWorkflowInterface;
 use App\Services\API\HRIS\EmployeeService;
+use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Support\Collection;
 
 class WorkflowDto
@@ -19,7 +19,7 @@ class WorkflowDto
     ) {
     }
 
-    public static function fromModel(ModelWithWorkflowInterface $model): Collection
+    public static function fromModel(ModelThatHaveWorkflow $model): Collection
     {
         $results = [];
         foreach ($model->workflows as $workflow) {

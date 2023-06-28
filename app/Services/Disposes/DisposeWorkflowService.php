@@ -4,22 +4,13 @@ namespace App\Services\Disposes;
 
 use App\Enums\Workflows\Module;
 use App\Models\Disposes\AssetDispose;
-use App\Services\WorkflowService;
-use Illuminate\Database\Eloquent\Model;
+use App\Services\Workflows\Workflow;
 
-class DisposeWorkflowService extends WorkflowService
+class DisposeWorkflowService extends Workflow
 {
-    protected static AssetDispose $dispose;
-
-    public function __construct()
+    public static function setModel(AssetDispose $assetDispose)
     {
-        parent::__construct(self::$dispose, Module::DISPOSE);
-    }
-
-    public static function setModel(Model $model)
-    {
-        static::$dispose = $model;
-        return new static;
+        return new self($assetDispose, Module::DISPOSE);
     }
 
     protected function handleStoreWorkflow()

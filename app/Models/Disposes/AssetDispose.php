@@ -4,15 +4,15 @@ namespace App\Models\Disposes;
 
 use App\Enums\Disposes\Dispose\Pelaksanaan;
 use App\Enums\Workflows\Status;
-use App\Interfaces\ModelWithWorkflowInterface;
 use App\Models\Assets\Asset;
+use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class AssetDispose extends Model implements ModelWithWorkflowInterface
+class AssetDispose extends Model implements ModelThatHaveWorkflow
 {
     use HasFactory;
 

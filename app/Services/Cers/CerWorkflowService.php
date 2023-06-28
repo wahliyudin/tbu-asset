@@ -4,22 +4,13 @@ namespace App\Services\Cers;
 
 use App\Enums\Workflows\Module;
 use App\Models\Cers\Cer;
-use App\Services\WorkflowService;
-use Illuminate\Database\Eloquent\Model;
+use App\Services\Workflows\Workflow;
 
-class CerWorkflowService extends WorkflowService
+class CerWorkflowService extends Workflow
 {
-    protected static Cer $cer;
-
-    public function __construct()
+    public static function setModel(Cer $cer)
     {
-        parent::__construct(self::$cer, Module::CER);
-    }
-
-    public static function setModel(Model $model)
-    {
-        static::$cer = $model;
-        return new static;
+        return new self($cer, Module::CER);
     }
 
     protected function handleStoreWorkflow()
