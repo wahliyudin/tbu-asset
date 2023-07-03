@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cers;
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\DataTransferObjects\Cers\CerDto;
 use App\Enums\Asset\Status;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Assets\Asset;
@@ -76,7 +77,7 @@ class CerController extends Controller
                 return $asset->depreciation?->umur_asset;
             })
             ->editColumn('unit_price', function (Asset $asset) {
-                return $asset->leasing?->harga_beli;
+                return Helper::formatRupiah($asset->leasing?->harga_beli);
             })
             ->editColumn('action', function (Asset $asset) {
                 return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';

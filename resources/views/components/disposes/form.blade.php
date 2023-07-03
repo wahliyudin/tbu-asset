@@ -31,16 +31,14 @@
                         <td class="fs-6 fw-semibold w-150px">Lokasi</td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="lokasi" class="form-control">
+                            {{ $employee->position->project->location }}
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Tanggal Pengajuan</td>
                         <td>:</td>
                         <td>
-                            <input type="text" name="tanggal_pengajuan" disabled
-                                value="{{ isset($assetDispose->created_at) ? $assetDispose->created_at : now()->format('Y-m-d') }}"
-                                class="form-control date">
+                            {{ isset($assetDispose->created_at) ? $assetDispose->created_at : now()->format('d-m-Y') }}
                         </td>
                     </tr>
                 </tbody>
@@ -49,14 +47,16 @@
     </div>
     <div class="row mt-4">
         <div class="col-md-12">
-            <div class="d-flex justify-content-end py-2">
-                <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
-                    <i class="ki-duotone ki-search-list fs-2">
-                        <i class="path1"></i>
-                        <i class="path2"></i>
-                        <i class="path3"></i>
-                    </i>Pilih Asset</button>
-            </div>
+            @if ($type != 'show')
+                <div class="d-flex justify-content-end py-2">
+                    <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
+                        <i class="ki-duotone ki-search-list fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                            <i class="path3"></i>
+                        </i>Pilih Asset</button>
+                </div>
+            @endif
             <table class="table table-bordered border-gray-300 table-asset-selected">
                 <thead>
                     <tr class="text-center bg-secondary bg-opacity-50">
@@ -73,22 +73,25 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="hidden" name="asset" value="{{ $assetDispose->assetDto->key }}">
-                            <input type="text" readonly name="description" value="" class="form-control">
+                            <input type="hidden" name="asset" value="{{ $assetDispose->assetDto?->key }}">
+                            <input type="text" readonly name="description"
+                                value="{{ $assetDispose->assetDto?->unit?->spesification }}" class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="model_spesification" value=""
+                            <input type="text" readonly name="model_spesification"
+                                value="{{ $assetDispose->assetDto?->unit?->model }}" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="serial_no"
+                                value="{{ $assetDispose->assetDto?->unit?->serial_number }}" class="form-control">
+                        </td>
+                        <td>
+                            <input type="text" readonly name="no_asset" value="{{ $assetDispose->assetDto?->kode }}"
                                 class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="serial_no" value="" class="form-control">
-                        </td>
-                        <td>
-                            <input type="text" readonly name="no_asset" value="{{ $assetDispose->assetDto->kode }}"
-                                class="form-control">
-                        </td>
-                        <td>
-                            <input type="text" readonly name="tahun_buat" value="" class="form-control">
+                            <input type="text" readonly name="tahun_buat"
+                                value="{{ $assetDispose->assetDto?->unit?->tahun_pembuatan }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="nilai_buku"
@@ -101,8 +104,7 @@
                                 class="form-control uang">
                         </td>
                         <td>
-                            <input type="text" name="remark" @readonly($type == 'show') value="{{ $assetDispose->remark }}"
-                                class="form-control">
+                            <textarea name="remark" @readonly($type == 'show') rows="1" class="form-control">{{ $assetDispose->remark }}</textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -224,122 +226,6 @@
 </form>
 @if ($type == 'show')
     @push('js')
-        <script>
-            $(document).ready(function() {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $('.approv').click(function(e) {
-                    e.preventDefault();
-                    var dispose = $(this).data('dispose');
-                    var target = this;
-                    $(target).attr("data-kt-indicator", "on");
-                    Swal.fire({
-                        title: 'Apa kamu yakin?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yakin!',
-                        preConfirm: () => {
-                            return new Promise(function(resolve) {
-                                $.ajax({
-                                        type: "POST",
-                                        url: `/approvals/disposes/${dispose}/approv`,
-                                        dataType: 'JSON',
-                                    })
-                                    .done(function(myAjaxJsonResponse) {
-                                        $(target).removeAttr("data-kt-indicator");
-                                        Swal.fire(
-                                            'Verified!',
-                                            myAjaxJsonResponse.message,
-                                            'success'
-                                        ).then(function() {
-                                            location.reload();
-                                        });
-                                    })
-                                    .fail(function(erordata) {
-                                        $(target).removeAttr("data-kt-indicator");
-                                        if (erordata.status == 422) {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: 'Warning!',
-                                                text: erordata.responseJSON
-                                                    .message,
-                                            })
-                                        } else {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: 'Oops...',
-                                                text: erordata.responseJSON
-                                                    .message,
-                                            })
-                                        }
-                                    })
-                            })
-                        },
-                        willClose: () => {
-                            $(target).removeAttr("data-kt-indicator");
-                        }
-                    });
-                });
-                $('.reject').click(function(e) {
-                    e.preventDefault();
-                    var dispose = $(this).data('dispose');
-                    var target = this;
-                    $(target).attr("data-kt-indicator", "on");
-                    Swal.fire({
-                        title: 'Apa kamu yakin?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yakin!',
-                        preConfirm: () => {
-                            return new Promise(function(resolve) {
-                                $.ajax({
-                                        type: "POST",
-                                        url: `/approvals/disposes/${dispose}/reject`,
-                                        dataType: 'JSON',
-                                    })
-                                    .done(function(myAjaxJsonResponse) {
-                                        $(target).removeAttr("data-kt-indicator");
-                                        Swal.fire(
-                                            'Rejected!',
-                                            myAjaxJsonResponse.message,
-                                            'success'
-                                        ).then(function() {
-                                            location.reload();
-                                        });
-                                    })
-                                    .fail(function(erordata) {
-                                        $(target).removeAttr("data-kt-indicator");
-                                        if (erordata.status == 422) {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: 'Warning!',
-                                                text: erordata.responseJSON
-                                                    .message,
-                                            })
-                                        } else {
-                                            Swal.fire({
-                                                icon: 'error',
-                                                title: 'Oops...',
-                                                text: erordata.responseJSON
-                                                    .message,
-                                            })
-                                        }
-                                    })
-                            })
-                        },
-                        willClose: () => {
-                            $(target).removeAttr("data-kt-indicator");
-                        }
-                    });
-                });
-            });
-        </script>
+        <script src="{{ asset('assets/js/pages/dispose/form.js') }}"></script>
     @endpush
 @endif

@@ -23,7 +23,7 @@ class AssetFactory extends Factory
     public function definition(): array
     {
         return [
-            'kode' => fake()->sentence(1),
+            'kode' => fake()->countryCode(),
             'unit_id' => Unit::factory(),
             'sub_cluster_id' => SubCluster::factory(),
             'member_name' => fake()->sentence(1),

@@ -3,6 +3,7 @@
 namespace App\DataTransferObjects\Masters;
 
 use App\Http\Requests\Masters\UnitRequest;
+use App\Models\Masters\Unit;
 
 class UnitDto
 {
@@ -33,6 +34,22 @@ class UnitDto
             $request->get('spesification'),
             $request->get('tahun_pembuatan'),
             $request->get('key'),
+        );
+    }
+
+    public static function fromModel(Unit $unit): self
+    {
+        return new self(
+            $unit->kode,
+            $unit->model,
+            $unit->type,
+            $unit->seri,
+            $unit->class,
+            $unit->brand,
+            $unit->serial_number,
+            $unit->spesification,
+            $unit->tahun_pembuatan,
+            $unit->getKey(),
         );
     }
 }

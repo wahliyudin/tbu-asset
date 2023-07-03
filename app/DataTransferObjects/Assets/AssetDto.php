@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObjects\Assets;
 
+use App\DataTransferObjects\Masters\UnitDto;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
 
@@ -26,6 +27,7 @@ class AssetDto
         public readonly string $remark,
         public readonly string $status,
         public readonly mixed $key = null,
+        public readonly ?UnitDto $unit = null,
     ) {
     }
 
@@ -74,6 +76,7 @@ class AssetDto
             $asset->remark,
             $asset->status?->value,
             $asset->getKey(),
+            UnitDto::fromModel($asset->unit)
         );
     }
 

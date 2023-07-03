@@ -20,9 +20,10 @@ class Helper
             ->value();
     }
 
-    public static function formatRupiah($val)
+    public static function formatRupiah($val, $withPrefix = false)
     {
-        return number_format($val, 0, ',', '.');
+        $result = number_format($val, 0, ',', '.');
+        return $withPrefix ? "Rp. $result" : $result;
     }
 
     public static function clearUrl(string $url): string
