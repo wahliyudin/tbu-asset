@@ -17,33 +17,33 @@
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nama Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="nama">Example</td>
+                        <td id="nama"></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Merk/Tipe/Model</td>
                         <td style="width: 10px;">:</td>
-                        <td id="merk_tipe_model">Example</td>
+                        <td id="merk_tipe_model"></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Serial Number Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="serial_number">Example</td>
+                        <td id="serial_number"></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nomor Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="nomor_asset">Example</td>
+                        <td id="nomor_asset"></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nilai Akuisisi / Nilai Buku
                         </td>
                         <td style="width: 10px;">:</td>
-                        <td id="niali_buku">Example</td>
+                        <td id="niali_buku"></td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Kelengkapan Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="kelengkapan">Example</td>
+                        <td id="kelengkapan"></td>
                     </tr>
                 </tbody>
             </table>

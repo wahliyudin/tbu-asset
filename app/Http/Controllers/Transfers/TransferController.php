@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Transfers;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Models\Assets\Asset;
@@ -43,19 +44,19 @@ class TransferController extends Controller
                 return 'example';
             })
             ->editColumn('merk_tipe_model', function (Asset $asset) {
-                return 'example';
+                return $asset->unit?->brand;
             })
             ->editColumn('serial_number', function (Asset $asset) {
-                return 'example';
+                return $asset->unit?->serial_number;
             })
             ->editColumn('nomor_asset', function (Asset $asset) {
-                return 'example';
+                return $asset->unit?->kode;
             })
             ->editColumn('niali_buku', function (Asset $asset) {
-                return 'example';
+                return Helper::formatRupiah(100000, true);
             })
             ->editColumn('kelengkapan', function (Asset $asset) {
-                return 'example';
+                return $asset->unit?->spesification;
             })
             ->editColumn('action', function (Asset $asset) {
                 return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';

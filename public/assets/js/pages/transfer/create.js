@@ -82,13 +82,12 @@ var KTModalAdd = function () {
     }
 
     var populateItem = (arrayTd, key) => {
-        $('.table-asset-selected input[name="asset"]').val(key);
-        $('.table-asset-selected input[name="description"]').val(arrayTd[1].innerText);
-        $('.table-asset-selected input[name="model_spesification"]').val(arrayTd[2].innerText);
-        $('.table-asset-selected input[name="serial_no"]').val(arrayTd[3].innerText);
-        $('.table-asset-selected input[name="no_asset"]').val(arrayTd[4].innerText);
-        $('.table-asset-selected input[name="tahun_buat"]').val(arrayTd[5].innerText);
-        $('.table-asset-selected input[name="nilai_buku"]').val(arrayTd[6].innerText).trigger('input');
+        $('#nama').text(arrayTd[1].innerText);
+        $('#merk_tipe_model').text(arrayTd[2].innerText);
+        $('#serial_number').text(arrayTd[3].innerText);
+        $('#nomor_asset').text(arrayTd[4].innerText);
+        $('#niali_buku').text(arrayTd[5].innerText);
+        $('#kelengkapan').text(arrayTd[6].innerText);
     }
 
     var initForm = () => {
