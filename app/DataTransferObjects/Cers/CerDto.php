@@ -12,6 +12,7 @@ use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\BudgetService;
+use App\Services\UserService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -72,6 +73,27 @@ class CerDto
             null,
             EmployeeDto::fromResponse((new EmployeeService)->getByNik($cer->nik)),
             WorkflowDto::fromModel($cer),
+            BudgetDto::formResponse((new BudgetService)->getByCode($cer->budget_ref))
+        );
+    }
+
+    public static function fromModelThroughApi(Cer $cer)
+    {
+        return new self(
+            $cer->no_cer,
+            $cer->nik,
+            $cer->type_budget,
+            $cer->budget_ref,
+            $cer->peruntukan,
+            $cer->tgl_kebutuhan,
+            $cer->justifikasi,
+            $cer->sumber_pendanaan,
+            $cer->cost_analyst,
+            $cer->getKey(),
+            CerItemDto::fromCollection($cer->items),
+            null,
+            EmployeeDto::fromResponse((new EmployeeService)->setToken(UserService::getAdministrator()?->oatuhToken?->access_token)->getByNik($cer->nik)),
+            null,
             BudgetDto::formResponse((new BudgetService)->getByCode($cer->budget_ref))
         );
     }

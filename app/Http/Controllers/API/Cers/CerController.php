@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Cers;
 
+use App\DataTransferObjects\Cers\CerDto;
 use App\Http\Controllers\Controller;
 use App\Services\Cers\CerService;
 use App\Traits\APITrait;

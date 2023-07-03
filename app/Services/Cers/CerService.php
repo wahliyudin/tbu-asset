@@ -2,11 +2,13 @@
 
 namespace App\Services\Cers;
 
+use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\DataTransferObjects\Cers\CerDto;
 use App\Enums\Workflows\Status;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
+use App\Services\API\HRIS\EmployeeService;
 use Illuminate\Http\Request;
 
 class CerService
@@ -51,6 +53,7 @@ class CerService
 
     public function findByNo($no)
     {
-        return Cer::query()->with('items')->where('no_cer', $no)->firstOrFail();
+        $cer = Cer::query()->with('items')->where('no_cer', $no)->firstOrFail();
+        return CerDto::fromModelThroughApi($cer);
     }
 }

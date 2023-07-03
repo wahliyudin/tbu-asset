@@ -4,8 +4,8 @@ namespace App\Enums\Cers;
 
 enum TypeBudget: string
 {
-    case BUDGET = 'budget';
-    case UNBUDGET = 'unbudget';
+    case BUDGET = 'Budget';
+    case UNBUDGET = 'Un-Budget';
 
     public function label()
     {

@@ -9,6 +9,7 @@ class EmployeeService extends HRISService
     const PREFIX = '/employees';
 
     private $query = [];
+    private $token;
 
     public function url(): string
     {
@@ -23,6 +24,12 @@ class EmployeeService extends HRISService
     public function whereIn($field, array $values)
     {
         $this->query = array_merge($this->query, [str($field)->plural()->value() => $values]);
+        return $this;
+    }
+
+    public function setToken($token): self
+    {
+        $this->token = $token;
         return $this;
     }
 
@@ -44,6 +51,6 @@ class EmployeeService extends HRISService
 
     public function getByNik($nik)
     {
-        return $this->get($this->extendUrl($nik), $this->query)->json();
+        return $this->get($this->extendUrl($nik), $this->query, $this->token)->json();
     }
 }

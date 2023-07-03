@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\User;
+
 class UserService
 {
     public function __construct()
@@ -10,5 +12,10 @@ class UserService
 
     public function all()
     {
+    }
+
+    public static function getAdministrator()
+    {
+        return User::query()->where('email', 'administrator@tbu.co.id')->first();
     }
 }

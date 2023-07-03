@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_cer');
             $table->unsignedBigInteger('nik');
-            $table->enum('type_budget', ['budget', 'unbudget']);
+            $table->string('type_budget');
             $table->string('budget_ref')->nullable();
             $table->string('peruntukan');
             $table->date('tgl_kebutuhan');

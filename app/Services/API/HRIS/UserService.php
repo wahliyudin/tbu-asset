@@ -28,7 +28,7 @@ class UserService extends HRISService
             'nik' => $dto->nik,
             'name' => $dto->name,
             'email' => $dto->email,
-            'password' => 'password',
+            'password' => $dto->password,
         ]);
     }
 }

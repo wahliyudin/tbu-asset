@@ -2,9 +2,11 @@
 
 namespace App\DataTransferObjects\Assets;
 
+use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\DataTransferObjects\Masters\UnitDto;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
+use App\Services\API\HRIS\EmployeeService;
 
 class AssetDto
 {
@@ -28,6 +30,7 @@ class AssetDto
         public readonly string $status,
         public readonly mixed $key = null,
         public readonly ?UnitDto $unit = null,
+        public readonly ?EmployeeDto $picDto = null,
     ) {
     }
 
@@ -76,7 +79,8 @@ class AssetDto
             $asset->remark,
             $asset->status?->value,
             $asset->getKey(),
-            UnitDto::fromModel($asset->unit)
+            UnitDto::fromModel($asset->unit),
+            EmployeeDto::fromResponse((new EmployeeService)->getByNik($asset->pic))
         );
     }
 

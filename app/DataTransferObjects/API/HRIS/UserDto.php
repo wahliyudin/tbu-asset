@@ -9,6 +9,7 @@ class UserDto
         public readonly ?int $nik,
         public readonly ?string $name,
         public readonly ?string $email,
+        public readonly ?string $password,
     ) {
     }
 
@@ -23,6 +24,7 @@ class UserDto
             isset($data['nik']) ? $data['nik'] : null,
             isset($data['name']) ? $data['name'] : null,
             isset($data['email']) ? $data['email'] : null,
+            isset($data['password']) ? $data['password'] : null,
         );
     }
 }

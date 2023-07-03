@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Transfers;
 
+use App\DataTransferObjects\Transfers\AssetTransferDto;
 use App\Models\Transfers\AssetTransfer;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -13,7 +14,7 @@ class Form extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?AssetTransfer $assetTransfer
+        public ?AssetTransferDto $assetTransfer
     ) {
     }
 

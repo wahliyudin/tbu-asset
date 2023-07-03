@@ -62,28 +62,28 @@
                 <tbody>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Nama Pemegang Asset</th>
-                        <td>Example dfhsdf jsdf sdfj</td>
-                        <td>Example dfhsdf jsdf sdfj</td>
+                        <td>{{ $assetTransfer->oldPicDto?->nama_karyawan }}</td>
+                        <td>{{ $assetTransfer->newPicDto?->nama_karyawan }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Department</th>
-                        <td>Example dfhsdf jsdf sdfj</td>
-                        <td>Example dfhsdf jsdf sdfj</td>
+                        <td>{{ $assetTransfer->oldPicDto?->position?->department?->department_name }}</td>
+                        <td>{{ $assetTransfer->newPicDto?->position?->department?->department_name }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Division</th>
-                        <td>Example dfhsdf jsdf sdfj</td>
-                        <td>Example dfhsdf jsdf sdfj</td>
+                        <td>{{ $assetTransfer->oldPicDto?->position?->divisi?->division_name }}</td>
+                        <td>{{ $assetTransfer->newPicDto?->position?->divisi?->division_name }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Project</th>
-                        <td>Example dfhsdf jsdf sdfj</td>
-                        <td>Example dfhsdf jsdf sdfj</td>
+                        <td>{{ $assetTransfer->oldPicDto?->position?->project?->project }}</td>
+                        <td>{{ $assetTransfer->newPicDto?->position?->project?->project }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Lokasi</th>
-                        <td>Example dfhsdf jsdf sdfj</td>
-                        <td>Example dfhsdf jsdf sdfj</td>
+                        <td>{{ $assetTransfer->oldPicDto?->position?->project?->location }}</td>
+                        <td>{{ $assetTransfer->newPicDto?->position?->project?->location }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -121,7 +121,7 @@
     </div>
     <div class="row mt-4">
         <h5>Justifikasi/ Alasan Pemindahan (Transfer) Asset, yaitu :</h5>
-        <ol class="bracket">
+        {{-- <ol class="bracket">
             <li class="d-flex align-items-center gap-6">
                 <input type="text" class="form-control mt-1">
             </li>
@@ -131,7 +131,10 @@
             <li class="d-flex align-items-center gap-6">
                 <input type="text" class="form-control mt-1">
             </li>
-        </ol>
+        </ol> --}}
+        <div class="ps-10">
+            <textarea name="justifikasi" id="justifikasi" class="w-100"></textarea>
+        </div>
     </div>
     <div class="row mt-4">
         <h5>Pemindahan (Transfer) Asset Perusahaan : </h5>
@@ -263,4 +266,39 @@
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/custom/mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/transfer/create.js') }}"></script>
+    <script src="{{ asset('assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            ClassicEditor
+                .create(document.querySelector('#justifikasi'), {
+                    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList'],
+                    heading: {
+                        options: [{
+                                model: 'paragraph',
+                                title: 'Paragraph',
+                                class: 'ck-heading_paragraph'
+                            },
+                            {
+                                model: 'heading1',
+                                view: 'h1',
+                                title: 'Heading 1',
+                                class: 'ck-heading_heading1'
+                            },
+                            {
+                                model: 'heading2',
+                                view: 'h2',
+                                title: 'Heading 2',
+                                class: 'ck-heading_heading2'
+                            }
+                        ]
+                    }
+                })
+                .then(editor => {
+                    console.log(editor);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
 @endpush

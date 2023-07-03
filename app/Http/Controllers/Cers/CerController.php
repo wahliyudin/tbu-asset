@@ -37,22 +37,22 @@ class CerController extends Controller
     {
         return DataTables::of($this->service->all())
             ->editColumn('type_budget', function (Cer $cer) {
-                return $cer->type_budget->badge();
+                return $cer->type_budget?->badge();
             })
             ->editColumn('budget_ref', function (Cer $cer) {
                 return $cer->budget_ref ?? '-';
             })
             ->editColumn('peruntukan', function (Cer $cer) {
-                return $cer->peruntukan->badge();
+                return $cer->peruntukan?->badge();
             })
             ->editColumn('tgl_kebutuhan', function (Cer $cer) {
                 return $cer->tgl_kebutuhan;
             })
             ->editColumn('sumber_pendanaan', function (Cer $cer) {
-                return $cer->sumber_pendanaan->badge();
+                return $cer->sumber_pendanaan?->badge();
             })
             ->editColumn('status', function (Cer $cer) {
-                return $cer->status->badge();
+                return $cer->status?->badge();
             })
             ->editColumn('action', function (Cer $cer) {
                 return view('cers.cer.action', compact('cer'))->render();
