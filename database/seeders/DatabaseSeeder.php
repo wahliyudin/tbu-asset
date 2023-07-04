@@ -16,6 +16,7 @@ use App\Models\Masters\SubCluster;
 use App\Models\Masters\SubClusterItem;
 use App\Models\Masters\Unit;
 use App\Models\User;
+use Database\Seeders\Masters\UomSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -32,6 +33,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make(1234567890),
         ]);
+        $this->call([
+            SidebarWithPermissionSeeder::class,
+            UomSeeder::class,
+        ]);
         Catalog::factory(10)->create();
         Category::factory(10)->create();
         Dealer::factory(10)->create();
@@ -43,8 +48,5 @@ class DatabaseSeeder extends Seeder
         Asset::factory(10)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
-        $this->call([
-            SidebarWithPermissionSeeder::class
-        ]);
     }
 }

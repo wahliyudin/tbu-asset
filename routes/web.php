@@ -15,6 +15,7 @@ use App\Http\Controllers\Masters\LeasingController;
 use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
+use App\Http\Controllers\Masters\UomController;
 use App\Http\Controllers\Settings\AccessPermissionController;
 use App\Http\Controllers\Settings\SettingApprovalController;
 use App\Http\Controllers\SSO\AuthController;
@@ -96,6 +97,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/units/store', [UnitController::class, 'store'])->name('masters.units.store')->middleware('permission:unit_create');
     Route::post('master/units/{unit}/edit', [UnitController::class, 'edit'])->name('masters.units.edit')->middleware('permission:unit_update');
     Route::delete('master/units/{unit}/destroy', [UnitController::class, 'destroy'])->name('masters.units.destroy')->middleware('permission:unit_delete');
+
+    Route::get('master/uoms', [UomController::class, 'index'])->name('masters.uoms.index')->middleware('permission:uom_read');
+    Route::post('master/uoms/datatable', [UomController::class, 'datatable'])->name('masters.uoms.datatable')->middleware('permission:uom_read');
+    Route::post('master/uoms/store', [UomController::class, 'store'])->name('masters.uoms.store')->middleware('permission:uom_create');
+    Route::post('master/uoms/{uom}/edit', [UomController::class, 'edit'])->name('masters.uoms.edit')->middleware('permission:uom_update');
+    Route::delete('master/uoms/{uom}/destroy', [UomController::class, 'destroy'])->name('masters.uoms.destroy')->middleware('permission:uom_delete');
 
     Route::get('asset-masters', [AssetMasterController::class, 'index'])->name('asset-masters.index')->middleware('permission:asset_master_read');
     Route::post('asset-masters/datatable', [AssetMasterController::class, 'datatable'])->name('asset-masters.datatable')->middleware('permission:asset_master_read');

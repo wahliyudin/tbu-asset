@@ -50,6 +50,10 @@ return [
                     'title' => 'UNIT',
                     'permissions' => 'c,r,u,d',
                 ],
+                [
+                    'title' => 'UOM',
+                    'permissions' => 'c,r,u,d',
+                ],
             ]
         ],
         [

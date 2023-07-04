@@ -35,7 +35,7 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
-                @permission('category_read|cluster_read|sub_cluster_read|sub_cluster_item_read|catalog_read|dealer_read|leasing_read|unit_read')
+                @permission('category_read|cluster_read|sub_cluster_read|sub_cluster_item_read|catalog_read|dealer_read|leasing_read|unit_read|uom_read')
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
@@ -137,6 +137,17 @@
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Unit</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            @permission('uom_read')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ request()->routeIs('masters.uoms.index') ? 'active' : '' }}"
+                                        href="{{ route('masters.uoms.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Uom</span>
                                     </a>
                                 </div>
                             @endpermission
