@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nik');
             $table->string('title');
             $table->enum('last_action', [1, 2, 3, 4]);
-            $table->dateTime('last_action_date');
+            $table->dateTime('last_action_date')->useCurrent();
             $table->timestamps();
         });
     }

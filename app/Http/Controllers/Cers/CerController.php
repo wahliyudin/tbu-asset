@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers\Cers;
 
-use App\DataTransferObjects\API\HRIS\EmployeeDto;
-use App\DataTransferObjects\Cers\CerDto;
+use App\DataTransferObjects\API\HRIS\EmployeeData;
+use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Asset\Status;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Assets\Asset;
 use App\Models\Cers\Cer;
-use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
 use App\Services\Cers\CerService;
-use App\Services\Cers\CerWorkflowService;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class CerController extends Controller
 {
     public function __construct(
         private CerService $service,
-        private EmployeeService $employeeService,
         private BudgetService $budgetService,
         private AssetService $assetService,
     ) {
@@ -88,16 +84,16 @@ class CerController extends Controller
 
     public function create()
     {
-        $employee = EmployeeDto::fromResponse($this->employeeService->getByNik(Auth::user()->nik));
+        $employee = EmployeeData::from($this->service->getEmployee());
         return view('cers.cer.create', [
             'employee' => $employee
         ]);
     }
 
-    public function store(CerRequest $request)
+    public function store(CerData $data)
     {
         try {
-            $this->service->updateOrCreate($request);
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
@@ -109,10 +105,11 @@ class CerController extends Controller
     public function edit(Cer $cer)
     {
         try {
-            $dto = CerDto::fromModel($cer);
+            $cer->loadMissing(['items', 'workflows']);
+            $data = CerData::from($cer);
             return view('cers.cer.edit', [
-                'cer' => $dto,
-                'employee' => $dto->employee,
+                'cer' => $data,
+                'employee' => $data->employee,
             ]);
         } catch (\Throwable $th) {
             throw $th;

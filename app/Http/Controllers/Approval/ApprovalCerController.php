@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Approval;
 
-use App\DataTransferObjects\Cers\CerDto;
+use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Workflows\LastAction;
 use App\Http\Controllers\Controller;
 use App\Models\Cers\Cer;
@@ -54,10 +54,11 @@ class ApprovalCerController extends Controller
 
     public function show(Cer $cer)
     {
-        $dto = CerDto::fromModel($cer);
+        $cer->loadMissing(['items', 'workflows']);
+        $data = CerData::from($cer)->except('workflows.employee.position');
         return view('approvals.cer.show', [
-            'cer' => $dto,
-            'employee' => $dto->employee,
+            'cer' => $data,
+            'employee' => $data->employee,
         ]);
     }
 

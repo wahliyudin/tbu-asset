@@ -1,5 +1,5 @@
 <form action="" class="form-cer">
-    <input type="hidden" name="key" value="{{ $cer?->key }}">
+    <input type="hidden" name="id" value="{{ $cer?->id }}">
     <x-form-header title="CAPITAL EXPENDITURE REQUEST" nomor="TBU-FM-AST-001" tanggal="12-04-2023" revisi="00"
         halaman="1 dari 1" />
     <hr>
@@ -96,7 +96,7 @@
                         @php
                             $subTotal = 0;
                         @endphp
-                        @forelse ($cer->items as $item)
+                        @forelse ($cer?->items ?? [] as $item)
                             @php
                                 $subTotal += $item->qty * $item->price;
                             @endphp
@@ -232,7 +232,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-center">
                 @foreach ($cer->workflows as $workflow)
-                    <div class="d-flex flex-column w-150px {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->lastAction == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
+                    <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
                         style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($cer->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
                         <div class="border text-center text-white p-1 d-flex flex-column">
                             <p class="m-0 fw-bold" style="font-size: 12px;">
@@ -247,7 +247,7 @@
                                 On
                             </p>
                             <p class="m-0">
-                                {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->lastActionDate : '-' }}
+                                {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->last_action_date : '-' }}
                             </p>
                         </div>
                     </div>
@@ -256,7 +256,7 @@
         </div>
         <div class="col-md-12 d-flex justify-content-start mt-4">
             @permission('asset_request_approv')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->key }}"
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->id }}"
                     class="btn btn-success ps-4 approv">
                     <span class="indicator-label">
                         <div class="d-flex align-items-center gap-2">
@@ -272,7 +272,7 @@
                 </button>
             @endpermission
             @permission('asset_request_reject')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->key }}"
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->id }}"
                     class="btn btn-danger ms-2 ps-4 reject">
                     <span class="indicator-label">
                         <div class="d-flex align-items-center gap-2">

@@ -2,8 +2,7 @@
 
 namespace App\View\Components\Cers;
 
-use App\DataTransferObjects\Cers\CerItemDto;
-use App\Models\Cers\CerItem;
+use App\DataTransferObjects\Cers\CerItemData;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -14,7 +13,7 @@ class Item extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?CerItemDto $cerItem,
+        public ?CerItemData $cerItem,
         public string $type,
     ) {
     }

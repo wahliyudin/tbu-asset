@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -26,14 +27,14 @@ class AccessPermissionController extends Controller
     public function datatable()
     {
         $niks = User::query()->pluck('nik')->toArray();
-        return DataTables::of(EmployeeDto::formResponseMultiple($this->employeeService->whereIn('nik', $niks)->getData()))
-            ->editColumn('nik', function (EmployeeDto $employee) {
+        return DataTables::of(EmployeeData::collection($this->employeeService->whereIn('nik', $niks)->getData()['data'])->toCollection())
+            ->editColumn('nik', function (EmployeeData $employee) {
                 return $employee->nik;
             })
-            ->editColumn('nama_karyawan', function (EmployeeDto $employee) {
+            ->editColumn('nama_karyawan', function (EmployeeData $employee) {
                 return $employee->nama_karyawan;
             })
-            ->editColumn('action', function (EmployeeDto $employee) {
+            ->editColumn('action', function (EmployeeData $employee) {
                 return view('settings.access-permission.action', ['employee' => $employee])->render();
             })
             ->make();

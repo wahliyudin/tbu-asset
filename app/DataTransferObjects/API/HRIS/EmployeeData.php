@@ -1,8 +1,7 @@
 <?php
 
-namespace App\DataTransferObjects\Masters;
+namespace App\DataTransferObjects\API\HRIS;
 
-use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
 class EmployeeData extends Data
@@ -26,6 +25,7 @@ class EmployeeData extends Data
         public ?string $martial_status_id,
         public ?string $status,
         public ?string $key,
+        public ?PositionData $position,
     ) {
     }
 }

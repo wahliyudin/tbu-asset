@@ -2,19 +2,19 @@
 
 namespace App\Services\Cers;
 
-use App\DataTransferObjects\API\HRIS\EmployeeDto;
-use App\DataTransferObjects\Cers\CerDto;
+use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Workflows\Status;
-use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 
 class CerService
 {
     public function __construct(
         protected CerRepository $cerRepository,
+        protected EmployeeService $employeeService,
     ) {
     }
 
@@ -23,12 +23,11 @@ class CerService
         return Cer::query()->get();
     }
 
-    public function updateOrCreate(CerRequest $request)
+    public function updateOrCreate(CerData $data)
     {
-        $dto = CerDto::fromRequest($request);
-        $cer = $this->cerRepository->updateOrCreate($dto);
+        $cer = $this->cerRepository->updateOrCreate($data);
         $cer->items()->delete();
-        $cer->items()->createMany($dto->itemsToAttach);
+        $cer->items()->createMany($data->itemsToAttach());
         $cer->workflows()->delete();
         CerWorkflowService::setModel($cer)->store();
     }
@@ -54,6 +53,14 @@ class CerService
     public function findByNo($no)
     {
         $cer = Cer::query()->with('items')->where('no_cer', $no)->firstOrFail();
-        return CerDto::fromModelThroughApi($cer);
+        return CerData::from($cer);
+    }
+
+    public static function getEmployee($nik = null): array
+    {
+        $token = UserService::getAdministrator()?->oatuhToken?->access_token;
+        $nik = $nik ?? auth()->user()->nik;
+        $employee = (new EmployeeService)->setToken(auth()->check() ? null : $token)->getByNik($nik);
+        return isset($employee['data']) ? $employee['data'] : [];
     }
 }

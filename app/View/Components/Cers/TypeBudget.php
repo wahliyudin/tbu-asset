@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Cers;
 
-use App\DataTransferObjects\Cers\CerDto;
+use App\DataTransferObjects\Cers\CerData;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -13,7 +13,7 @@ class TypeBudget extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?CerDto $cer,
+        public ?CerData $cer,
         public string $type,
     ) {
     }

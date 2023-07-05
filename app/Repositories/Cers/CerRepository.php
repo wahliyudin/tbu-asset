@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Cers;
 
-use App\DataTransferObjects\Cers\CerDto;
+use App\DataTransferObjects\Cers\CerData;
 use App\Models\Cers\Cer;
 
 class CerRepository
@@ -12,20 +12,20 @@ class CerRepository
     ) {
     }
 
-    public function updateOrCreate(CerDto $dto)
+    public function updateOrCreate(CerData $data)
     {
         return $this->model->query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->id
         ], [
-            'no_cer' => $dto->no_cer,
-            'nik' => $dto->nik,
-            'type_budget' => $dto->type_budget,
-            'budget_ref' => $dto->budget_ref,
-            'peruntukan' => $dto->peruntukan,
-            'tgl_kebutuhan' => $dto->tgl_kebutuhan,
-            'justifikasi' => $dto->justifikasi,
-            'sumber_pendanaan' => $dto->sumber_pendanaan,
-            'cost_analyst' => $dto->cost_analyst,
+            'no_cer' => $data->no_cer,
+            'nik' => $data->nik,
+            'type_budget' => $data->type_budget,
+            'budget_ref' => $data->budget_ref,
+            'peruntukan' => $data->peruntukan,
+            'tgl_kebutuhan' => $data->tgl_kebutuhan,
+            'justifikasi' => $data->justifikasi,
+            'sumber_pendanaan' => $data->sumber_pendanaan,
+            'cost_analyst' => $data->cost_analyst,
         ]);
     }
 

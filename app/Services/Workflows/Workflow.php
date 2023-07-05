@@ -3,6 +3,7 @@
 namespace App\Services\Workflows;
 
 use App\DataTransferObjects\API\HRIS\WorkflowDto;
+use App\DataTransferObjects\WorkflowData;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Module;
 use App\Enums\Workflows\Status;
@@ -15,6 +16,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
+use Spatie\LaravelData\DataCollection;
 
 abstract class Workflow extends Checker
 {
@@ -74,38 +76,16 @@ abstract class Workflow extends Checker
         ]);
     }
 
-    private function responseToCollectionsOfWorkflowDto($response)
+    private function responseToCollectionsOfWorkflowDto($response): DataCollection
     {
-        return WorkflowDto::fromResponseMultiple($response);
+        return WorkflowData::collection($response)->except('employee', 'last_action_date');
     }
 
     public function store()
     {
-        $workflowDtos = $this->approvals();
+        $workflowDatas = $this->approvals();
 
-        $results = $this->populateDataToStore($workflowDtos);
-
-        return WorkflowRepository::store($this->model, $results);
-    }
-
-    private function populateDataToStore(Collection $workflowDtos)
-    {
-        $results = [];
-        foreach ($workflowDtos as $workflowDto) {
-            array_push($results, $this->payloadSettingApproval($workflowDto));
-        }
-        return $results;
-    }
-
-    private function payloadSettingApproval(WorkflowDto $workflowDto)
-    {
-        return [
-            'sequence' => $workflowDto->sequence,
-            'nik' => $workflowDto->nik,
-            'title' => $workflowDto->title,
-            'last_action' => $workflowDto->lastAction,
-            'last_action_date' => now(),
-        ];
+        return WorkflowRepository::store($this->model, $workflowDatas->toArray());
     }
 
     public function lastAction(LastAction $lastAction)

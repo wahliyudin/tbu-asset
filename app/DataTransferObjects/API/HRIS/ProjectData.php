@@ -1,10 +1,10 @@
 <?php
 
-namespace App\DataTransferObjects;
+namespace App\DataTransferObjects\API\HRIS;
 
 use Spatie\LaravelData\Data;
 
-class Project extends Data
+class ProjectData extends Data
 {
     public function __construct(
         public ?int $project_id,
