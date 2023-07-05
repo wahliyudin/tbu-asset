@@ -2,7 +2,7 @@
 
 namespace App\DataTransferObjects\Assets;
 
-use App\DataTransferObjects\Masters\EmployeeData;
+use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Masters\UnitData;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;

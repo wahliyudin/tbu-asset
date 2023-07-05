@@ -2,9 +2,8 @@
 
 namespace App\View\Components\Disposes;
 
-use App\DataTransferObjects\API\HRIS\EmployeeDto;
-use App\DataTransferObjects\Disposes\AssetDisposeDto;
-use App\Models\Disposes\AssetDispose;
+use App\DataTransferObjects\API\HRIS\EmployeeData;
+use App\DataTransferObjects\Disposes\AssetDisposeData;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,8 +14,8 @@ class Form extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?AssetDisposeDto $assetDispose,
-        public EmployeeDto $employee,
+        public ?AssetDisposeData $assetDispose,
+        public EmployeeData $employee,
         public string $type = '',
         public bool $isCurrentWorkflow = false,
     ) {

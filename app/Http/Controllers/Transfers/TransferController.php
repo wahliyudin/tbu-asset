@@ -71,9 +71,10 @@ class TransferController extends Controller
         return view('transfers.transfer.create');
     }
 
-    public function store(AssetTransferData $data)
+    public function store(AssetTransferRequest $request)
     {
         try {
+            $data = AssetTransferData::from($request->all());
             $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'

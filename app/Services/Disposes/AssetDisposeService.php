@@ -2,6 +2,7 @@
 
 namespace App\Services\Disposes;
 
+use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\DataTransferObjects\Disposes\AssetDisposeDto;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
 use App\Models\Disposes\AssetDispose;
@@ -21,8 +22,8 @@ class AssetDisposeService
 
     public function updateOrCreate(AssetDisposeRequest $request)
     {
-        $dto = AssetDisposeDto::fromRequest($request);
-        $assetDispose = $this->assetDisposeRepository->updateOrCreate($dto);
+        $data = AssetDisposeData::from($request->all())->except('employee');
+        $assetDispose = $this->assetDisposeRepository->updateOrCreate($data);
         $assetDispose->workflows()->delete();
         DisposeWorkflowService::setModel($assetDispose)->store();
     }

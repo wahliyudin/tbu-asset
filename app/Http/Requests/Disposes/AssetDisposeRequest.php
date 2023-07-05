@@ -14,7 +14,7 @@ class AssetDisposeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'asset' => ['required'],
+            'asset_id' => ['required'],
             'nilai_buku' => ['required'],
             'est_harga_pasar' => ['required'],
             'notes' => ['nullable'],

@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Disposes;
 
+use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\DataTransferObjects\Disposes\AssetDisposeDto;
 use App\Models\Disposes\AssetDispose;
 
@@ -12,20 +13,20 @@ class AssetDisposeRepository
     ) {
     }
 
-    public function updateOrCreate(AssetDisposeDto $dto)
+    public function updateOrCreate(AssetDisposeData $data)
     {
         return $this->model->query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->id
         ], [
-            'asset_id' => $dto->asset_id,
-            'no_dispose' => $dto->no_dispose,
-            'nik' => $dto->nik,
-            'nilai_buku' => $dto->nilai_buku,
-            'est_harga_pasar' => $dto->est_harga_pasar,
-            'notes' => $dto->notes,
-            'justifikasi' => $dto->justifikasi,
-            'pelaksanaan' => $dto->pelaksanaan,
-            'remark' => $dto->remark,
+            'asset_id' => $data->asset_id,
+            'no_dispose' => $data->no_dispose,
+            'nik' => $data->nik,
+            'nilai_buku' => $data->nailaiBukuToInt(),
+            'est_harga_pasar' => $data->estHargaPasarToInt(),
+            'notes' => $data->notes,
+            'justifikasi' => $data->justifikasi,
+            'pelaksanaan' => $data->pelaksanaan,
+            'remark' => $data->remark,
         ]);
     }
 

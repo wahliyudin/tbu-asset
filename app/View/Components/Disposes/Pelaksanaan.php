@@ -2,7 +2,7 @@
 
 namespace App\View\Components\Disposes;
 
-use App\DataTransferObjects\Disposes\AssetDisposeDto;
+use App\DataTransferObjects\Disposes\AssetDisposeData;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -13,7 +13,7 @@ class Pelaksanaan extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?AssetDisposeDto $assetDispose,
+        public ?AssetDisposeData $assetDispose,
         public string $type,
     ) {
     }

@@ -1,6 +1,9 @@
 <form action="" class="form-dispose">
-    <input type="hidden" name="key" value="{{ $assetDispose?->key }}">
-    <x-form-header title="PENGHAPUSAN ASSET" nomor="TBU-FM-AST-002" tanggal="12-04-2023" revisi="00" halaman="1 dari 1" />
+    <input type="hidden" name="id" value="{{ $assetDispose->id }}">
+    <input type="hidden" name="no_dispose" value="{{ $assetDispose->no_dispose }}">
+    <input type="hidden" name="nik" value="{{ $assetDispose->nik }}">
+    <x-form-header title="PENGHAPUSAN ASSET" nomor="TBU-FM-AST-002" tanggal="12-04-2023" revisi="00"
+        halaman="1 dari 1" />
     <hr>
     <div class="row">
         <div class="col-md-6">
@@ -73,25 +76,25 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="hidden" name="asset" value="{{ $assetDispose->assetDto?->key }}">
+                            <input type="hidden" name="asset_id" value="{{ $assetDispose->asset_id }}">
                             <input type="text" readonly name="description"
-                                value="{{ $assetDispose->assetDto?->unit?->spesification }}" class="form-control">
+                                value="{{ $assetDispose->asset?->unit?->spesification }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="model_spesification"
-                                value="{{ $assetDispose->assetDto?->unit?->model }}" class="form-control">
+                                value="{{ $assetDispose->asset?->unit?->model }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="serial_no"
-                                value="{{ $assetDispose->assetDto?->unit?->serial_number }}" class="form-control">
+                                value="{{ $assetDispose->asset?->unit?->serial_number }}" class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="no_asset" value="{{ $assetDispose->assetDto?->kode }}"
+                            <input type="text" readonly name="no_asset" value="{{ $assetDispose->asset?->kode }}"
                                 class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="tahun_buat"
-                                value="{{ $assetDispose->assetDto?->unit?->tahun_pembuatan }}" class="form-control">
+                                value="{{ $assetDispose->asset?->unit?->tahun_pembuatan }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="nilai_buku"
@@ -165,7 +168,7 @@
             <div class="col-md-12">
                 <div class="d-flex justify-content-center">
                     @foreach ($assetDispose->workflows as $workflow)
-                        <div class="d-flex flex-column w-150px {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->lastAction == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
+                        <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
                             style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($assetDispose->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
                             <div class="border text-center text-white p-1 d-flex flex-column">
                                 <p class="m-0 fw-bold" style="font-size: 12px;">
@@ -180,7 +183,7 @@
                                     On
                                 </p>
                                 <p class="m-0">
-                                    {{ $workflow->lastAction == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->lastActionDate : '-' }}
+                                    {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->last_action_date : '-' }}
                                 </p>
                             </div>
                         </div>
@@ -190,7 +193,7 @@
             <div class="col-md-12 d-flex justify-content-start mt-4">
                 @permission('asset_dispose_approv')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
-                        data-dispose="{{ $assetDispose->key }}" class="btn btn-success ps-4 approv">
+                        data-dispose="{{ $assetDispose->id }}" class="btn btn-success ps-4 approv">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-check-circle fs-2">
@@ -206,7 +209,7 @@
                 @endpermission
                 @permission('asset_dispose_reject')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
-                        data-dispose="{{ $assetDispose->key }}" class="btn btn-danger ms-2 ps-4 reject">
+                        data-dispose="{{ $assetDispose->id }}" class="btn btn-danger ms-2 ps-4 reject">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-cross-circle fs-2">

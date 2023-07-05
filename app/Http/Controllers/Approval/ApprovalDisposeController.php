@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Approval;
 
+use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\DataTransferObjects\Disposes\AssetDisposeDto;
 use App\Enums\Workflows\LastAction;
 use App\Helpers\Helper;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Disposes\AssetDispose;
 use App\Services\Disposes\AssetDisposeService;
 use App\Services\Disposes\DisposeWorkflowService;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApprovalDisposeController extends Controller
@@ -48,10 +48,11 @@ class ApprovalDisposeController extends Controller
 
     public function show(AssetDispose $assetDispose)
     {
-        $dto = AssetDisposeDto::fromModel($assetDispose);
+        $assetDispose->loadMissing(['asset.unit', 'workflows']);
+        $data = AssetDisposeData::from($assetDispose);
         return view('approvals.dispose.show', [
-            'assetDispose' => $dto,
-            'employee' => $dto->employee,
+            'assetDispose' => $data,
+            'employee' => $data->employee,
         ]);
     }
 

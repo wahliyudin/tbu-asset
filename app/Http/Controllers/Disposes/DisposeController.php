@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Disposes;
 
-use App\DataTransferObjects\API\HRIS\EmployeeDto;
-use App\DataTransferObjects\Disposes\AssetDisposeDto;
+use App\DataTransferObjects\API\HRIS\EmployeeData;
+use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
@@ -12,6 +12,7 @@ use App\Models\Disposes\AssetDispose;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\Assets\AssetService;
 use App\Services\Disposes\AssetDisposeService;
+use App\Services\GlobalService;
 use Yajra\DataTables\Facades\DataTables;
 
 class DisposeController extends Controller
@@ -80,7 +81,7 @@ class DisposeController extends Controller
 
     public function create()
     {
-        $employee = EmployeeDto::fromResponse($this->employeeService->getByNik(auth()->user()->nik));
+        $employee = EmployeeData::from(GlobalService::getEmployee(null, true));
         return view('disposes.dispose.create', [
             'employee' => $employee
         ]);
@@ -101,10 +102,11 @@ class DisposeController extends Controller
     public function edit(AssetDispose $assetDispose)
     {
         try {
-            $dto = AssetDisposeDto::fromModel($assetDispose);
+            $assetDispose->loadMissing(['asset.unit']);
+            $data = AssetDisposeData::from($assetDispose);
             return view('disposes.dispose.edit', [
-                'assetDispose' => $dto,
-                'employee' => $dto->employee,
+                'assetDispose' => $data,
+                'employee' => $data->employee,
             ]);
         } catch (\Throwable $th) {
             throw $th;

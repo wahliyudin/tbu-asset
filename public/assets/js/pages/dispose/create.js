@@ -82,7 +82,7 @@ var KTModalAdd = function () {
     }
 
     var populateItem = (arrayTd, key) => {
-        $('.table-asset-selected input[name="asset"]').val(key);
+        $('.table-asset-selected input[name="asset_id"]').val(key);
         $('.table-asset-selected input[name="description"]').val(arrayTd[1].innerText);
         $('.table-asset-selected input[name="model_spesification"]').val(arrayTd[2].innerText);
         $('.table-asset-selected input[name="serial_no"]').val(arrayTd[3].innerText);
