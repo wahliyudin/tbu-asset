@@ -8,9 +8,8 @@ use App\DataTransferObjects\WorkflowData;
 use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
-use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\BudgetService;
-use App\Services\Cers\CerService;
+use App\Services\GlobalService;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -37,9 +36,8 @@ class CerData extends Data
         public ?BudgetData $budget,
     ) {
         $this->setDefaultValue();
-        $this->employee = EmployeeData::from(CerService::getEmployee($this->nik));
-        $budget = (new BudgetService)->getByCode($this->budget_ref);
-        $this->budget = BudgetData::fromApi(isset($budget['data']) ? $budget['data'] : []);
+        $this->employee = EmployeeData::from(GlobalService::getEmployee($this->nik, true));
+        $this->budget = BudgetData::fromApi(GlobalService::getBudgetByCode($this->budget_ref));
     }
 
     private function setDefaultValue()

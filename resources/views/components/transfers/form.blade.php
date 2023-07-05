@@ -62,28 +62,28 @@
                 <tbody>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Nama Pemegang Asset</th>
-                        <td>{{ $assetTransfer->oldPicDto?->nama_karyawan }}</td>
-                        <td>{{ $assetTransfer->newPicDto?->nama_karyawan }}</td>
+                        <td>{{ $assetTransfer->oldPic?->nama_karyawan }}</td>
+                        <td>{{ $assetTransfer->newPic?->nama_karyawan }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Department</th>
-                        <td>{{ $assetTransfer->oldPicDto?->position?->department?->department_name }}</td>
-                        <td>{{ $assetTransfer->newPicDto?->position?->department?->department_name }}</td>
+                        <td>{{ $assetTransfer->oldPic?->position?->department?->department_name }}</td>
+                        <td>{{ $assetTransfer->newPic?->position?->department?->department_name }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Division</th>
-                        <td>{{ $assetTransfer->oldPicDto?->position?->divisi?->division_name }}</td>
-                        <td>{{ $assetTransfer->newPicDto?->position?->divisi?->division_name }}</td>
+                        <td>{{ $assetTransfer->oldPic?->position?->divisi?->division_name }}</td>
+                        <td>{{ $assetTransfer->newPic?->position?->divisi?->division_name }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Project</th>
-                        <td>{{ $assetTransfer->oldPicDto?->position?->project?->project }}</td>
-                        <td>{{ $assetTransfer->newPicDto?->position?->project?->project }}</td>
+                        <td>{{ $assetTransfer->oldPic?->position?->project?->project }}</td>
+                        <td>{{ $assetTransfer->newPic?->position?->project?->project }}</td>
                     </tr>
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Lokasi</th>
-                        <td>{{ $assetTransfer->oldPicDto?->position?->project?->location }}</td>
-                        <td>{{ $assetTransfer->newPicDto?->position?->project?->location }}</td>
+                        <td>{{ $assetTransfer->oldPic?->position?->project?->location }}</td>
+                        <td>{{ $assetTransfer->newPic?->position?->project?->location }}</td>
                     </tr>
                 </tbody>
             </table>

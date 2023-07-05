@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Transfers;
 
+use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
@@ -70,10 +71,10 @@ class TransferController extends Controller
         return view('transfers.transfer.create');
     }
 
-    public function store(AssetTransferRequest $request)
+    public function store(AssetTransferData $data)
     {
         try {
-            $this->service->updateOrCreate($request);
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

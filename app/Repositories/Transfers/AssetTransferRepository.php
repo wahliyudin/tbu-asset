@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Transfers;
 
-use App\DataTransferObjects\Transfers\AssetTransferDto;
+use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Models\Transfers\AssetTransfer;
 
 class AssetTransferRepository
@@ -12,25 +12,25 @@ class AssetTransferRepository
     ) {
     }
 
-    public function updateOrCreate(AssetTransferDto $dto)
+    public function updateOrCreate(AssetTransferData $data)
     {
         return $this->model->query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->id
         ], [
-            'no_transaksi' => $dto->no_transaksi,
-            'nik' => $dto->nik,
-            'old_pic' => $dto->old_pic,
-            'old_location' => $dto->old_location,
-            'old_divisi' => $dto->old_divisi,
-            'old_department' => $dto->old_department,
-            'new_pic' => $dto->new_pic,
-            'new_location' => $dto->new_location,
-            'new_divisi' => $dto->new_divisi,
-            'new_department' => $dto->new_department,
-            'request_transfer_date' => $dto->request_transfer_date,
-            'justifikasi' => $dto->justifikasi,
-            'remark' => $dto->remark,
-            'transfer_date' => $dto->transfer_date,
+            'no_transaksi' => $data->no_transaksi,
+            'nik' => $data->nik,
+            'old_pic' => $data->old_pic,
+            'old_location' => $data->old_location,
+            'old_divisi' => $data->old_divisi,
+            'old_department' => $data->old_department,
+            'new_pic' => $data->new_pic,
+            'new_location' => $data->new_location,
+            'new_divisi' => $data->new_divisi,
+            'new_department' => $data->new_department,
+            'request_transfer_date' => $data->request_transfer_date,
+            'justifikasi' => $data->justifikasi,
+            'remark' => $data->remark,
+            'transfer_date' => $data->transfer_date,
         ]);
     }
 
