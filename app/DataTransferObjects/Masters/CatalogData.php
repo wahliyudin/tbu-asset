@@ -20,7 +20,7 @@ class CatalogData extends Data
         public ?string $brand,
         #[Required]
         public ?string $spesification,
-        public ?string $key,
+        public ?string $key = null,
     ) {
     }
 }

@@ -10,7 +10,7 @@ class LeasingData extends Data
     public function __construct(
         #[Required]
         public string $name,
-        public ?string $key,
+        public ?string $key = null,
     ) {
     }
 }

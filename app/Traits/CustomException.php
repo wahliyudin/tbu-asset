@@ -56,10 +56,10 @@ trait CustomException
                 $response['errors'] = $exception->original['errors'];
                 break;
             default:
-                $response['message'] = ($statusCode == 500) ? 'Whoops, looks like something went wrong' : $exception->getMessage();
+                $response['message'] = ($statusCode == 500) ? $exception->getMessage() : $exception->getMessage();
                 break;
         }
-
+        // dd($exception);
         if (config('app.debug')) {
             $response['trace'] = $exception->getTrace();
             $response['code'] = $exception->getCode();

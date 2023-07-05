@@ -26,7 +26,7 @@ class UnitData extends Data
         public string $spesification,
         #[Required]
         public string $tahun_pembuatan,
-        public ?string $key,
+        public ?string $key = null,
     ) {
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Assets;
 
-use App\DataTransferObjects\Assets\AssetInsuranceDto;
+use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetInsurance;
 
@@ -13,14 +13,14 @@ class AssetInsuranceRepository
     ) {
     }
 
-    public function updateOrCreateByAsset(AssetInsuranceDto $dto, Asset $asset)
+    public function updateOrCreateByAsset(AssetInsuranceData $data, Asset $asset)
     {
         return $asset->insurance()->updateOrCreate([
             'asset_id' => $asset->getKey()
         ], [
-            'jangka_waktu' => $dto->jangka_waktu,
-            'biaya' => $dto->intBiaya(),
-            'legalitas' => $dto->legalitas,
+            'jangka_waktu' => $data->jangka_waktu,
+            'biaya' => $data->biayaToInt(),
+            'legalitas' => $data->legalitas,
         ]);
     }
 

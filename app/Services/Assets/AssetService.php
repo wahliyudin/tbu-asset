@@ -2,9 +2,9 @@
 
 namespace App\Services\Assets;
 
-use App\DataTransferObjects\Assets\AssetDto;
-use App\DataTransferObjects\Assets\AssetInsuranceDto;
-use App\DataTransferObjects\Assets\AssetLeasingDto;
+use App\DataTransferObjects\Assets\AssetData;
+use App\DataTransferObjects\Assets\AssetInsuranceData;
+use App\DataTransferObjects\Assets\AssetLeasingData;
 use App\Enums\Asset\Status;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
@@ -33,17 +33,16 @@ class AssetService
 
     public function getDataForEdit(Asset $asset): array
     {
-        $assetDto = AssetDto::fromModel($asset);
-        $leasingDto = AssetLeasingDto::fromAsset($asset);
-        $insuranceDto = AssetInsuranceDto::fromAsset($asset);
-        return array_merge($assetDto->toArray(), $leasingDto->toArray(), $insuranceDto->toArray());
+        $asset->loadMissing(['insurance', 'leasing']);
+        $assetDto = AssetData::from($asset);
+        return $assetDto->toArray();
     }
 
     public function updateOrCreate(AssetRequest $request)
     {
-        $asset = $this->assetRepository->updateOrCreate(AssetDto::fromRequest($request));
-        $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceDto::fromRequest($request), $asset);
-        $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingDto::fromRequest($request), $asset);
+        $asset = $this->assetRepository->updateOrCreate(AssetData::from($request->all()));
+        $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
+        $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
     }
 
     public function delete(Asset $asset)

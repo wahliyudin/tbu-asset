@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Assets;
 
-use App\DataTransferObjects\Assets\AssetDto;
+use App\DataTransferObjects\Assets\AssetData;
 use App\Models\Assets\Asset;
 
 class AssetRepository
@@ -12,28 +12,28 @@ class AssetRepository
     ) {
     }
 
-    public function updateOrCreate(AssetDto $dto)
+    public function updateOrCreate(AssetData $data)
     {
         return $this->model->query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'kode' => $dto->kode,
-            'unit_id' => $dto->unit_id,
-            'sub_cluster_id' => $dto->sub_cluster_id,
-            'member_name' => $dto->member_name,
-            'pic' => $dto->pic,
-            'activity' => $dto->activity,
-            'asset_location' => $dto->asset_location,
-            'kondisi' => $dto->kondisi,
-            'uom' => $dto->uom,
-            'quantity' => $dto->quantity,
-            'tgl_bast' => $dto->tgl_bast,
-            'hm' => $dto->hm,
-            'pr_number' => $dto->pr_number,
-            'po_number' => $dto->po_number,
-            'gr_number' => $dto->gr_number,
-            'remark' => $dto->remark,
-            'status' => $dto->status,
+            'kode' => $data->kode,
+            'unit_id' => $data->unit_id,
+            'sub_cluster_id' => $data->sub_cluster_id,
+            'member_name' => $data->member_name,
+            'pic' => $data->pic,
+            'activity' => $data->activity,
+            'asset_location' => $data->asset_location,
+            'kondisi' => $data->kondisi,
+            'uom' => $data->uom,
+            'quantity' => $data->quantity,
+            'tgl_bast' => $data->tgl_bast,
+            'hm' => $data->hm,
+            'pr_number' => $data->pr_number,
+            'po_number' => $data->po_number,
+            'gr_number' => $data->gr_number,
+            'remark' => $data->remark,
+            'status' => $data->status,
         ]);
     }
 }

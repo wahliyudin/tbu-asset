@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Assets;
 
-use App\DataTransferObjects\Assets\AssetLeasingDto;
+use App\DataTransferObjects\Assets\AssetLeasingData;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetLeasing;
 
@@ -13,17 +13,17 @@ class AssetLeasingRepository
     ) {
     }
 
-    public function updateOrCreateByAsset(AssetLeasingDto $dto, Asset $asset)
+    public function updateOrCreateByAsset(AssetLeasingData $data, Asset $asset)
     {
         return $asset->leasing()->updateOrCreate([
             'asset_id' => $asset->getKey()
         ], [
-            'dealer_id' => $dto->dealer_id,
-            'leasing_id' => $dto->leasing_id,
-            'harga_beli' => $dto->intHargaBeli(),
-            'jangka_waktu_leasing' => $dto->jangka_waktu_leasing,
-            'biaya_leasing' => $dto->intBiaya(),
-            'legalitas' => $dto->legalitas,
+            'dealer_id' => $data->dealer_id,
+            'leasing_id' => $data->leasing_id,
+            'harga_beli' => $data->hargaBeliToInt(),
+            'jangka_waktu_leasing' => $data->jangka_waktu_leasing,
+            'biaya_leasing' => $data->biayaToInt(),
+            'legalitas' => $data->legalitas,
         ]);
     }
 

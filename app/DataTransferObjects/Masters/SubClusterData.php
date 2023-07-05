@@ -12,7 +12,7 @@ class SubClusterData extends Data
         public string $cluster_id,
         #[Required]
         public string $name,
-        public ?string $key,
+        public ?string $key = null,
     ) {
     }
 }

@@ -561,16 +561,16 @@ var AssetsList = function () {
         $($(form).find('input[name="remark"]')).val(json === null ? attributes.remark : json.remark);
         $($(form).find('select[name="status"]')).val(json === null ? attributes.status : json.status).trigger('change');
 
-        $($(form).find('select[name="dealer_id_leasing"]')).val(json === null ? attributes.dealer_id_leasing : json.dealer_id_leasing).trigger('change');
-        $($(form).find('select[name="leasing_id_leasing"]')).val(json === null ? attributes.leasing_id_leasing : json.leasing_id_leasing).trigger('change');
-        $($(form).find('input[name="harga_beli_leasing"]')).val(json === null ? attributes.harga_beli_leasing : json.harga_beli_leasing).trigger('input');
-        $($(form).find('input[name="jangka_waktu_leasing"]')).val(json === null ? attributes.jangka_waktu_leasing : json.jangka_waktu_leasing);
-        $($(form).find('input[name="biaya_leasing"]')).val(json === null ? attributes.biaya_leasing : json.biaya_leasing).trigger('input');
-        $($(form).find('input[name="legalitas_leasing"]')).val(json === null ? attributes.legalitas_leasing : json.legalitas_leasing);
+        $($(form).find('select[name="dealer_id_leasing"]')).val(json === null ? attributes.dealer_id_leasing : json.leasing?.dealer_id).trigger('change');
+        $($(form).find('select[name="leasing_id_leasing"]')).val(json === null ? attributes.leasing_id_leasing : json.leasing?.leasing_id).trigger('change');
+        $($(form).find('input[name="harga_beli_leasing"]')).val(json === null ? attributes.harga_beli_leasing : json.leasing?.harga_beli).trigger('input');
+        $($(form).find('input[name="jangka_waktu_leasing"]')).val(json === null ? attributes.jangka_waktu_leasing : json.leasing?.jangka_waktu);
+        $($(form).find('input[name="biaya_leasing"]')).val(json === null ? attributes.biaya_leasing : json.leasing?.biaya).trigger('input');
+        $($(form).find('input[name="legalitas_leasing"]')).val(json === null ? attributes.legalitas_leasing : json.leasing?.legalitas);
 
-        $($(form).find('input[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.jangka_waktu_insurance);
-        $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.biaya_insurance).trigger('input');
-        $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.legalitas_insurance);
+        $($(form).find('input[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.insurance?.jangka_waktu);
+        $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.insurance?.biaya).trigger('input');
+        $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.insurance?.legalitas);
     }
 
     var handleError = function (jqXHR) {
