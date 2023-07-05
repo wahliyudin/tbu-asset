@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\CategoryDto;
+use App\DataTransferObjects\Masters\CategoryData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\CategoryRequest;
 use App\Models\Masters\Category;
@@ -31,10 +31,10 @@ class CategoryController extends Controller
             ->make();
     }
 
-    public function store(CategoryRequest $request)
+    public function store(CategoryData $data)
     {
         try {
-            $this->service->updateOrCreate(CategoryDto::fromRequest($request));
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

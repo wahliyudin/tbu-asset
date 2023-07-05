@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\UomDto;
+use App\DataTransferObjects\Masters\UomData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Masters\UomRequest;
 use App\Models\Masters\Uom;
 use App\Services\Masters\UomService;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class UomController extends Controller
@@ -32,10 +30,10 @@ class UomController extends Controller
             ->make();
     }
 
-    public function store(UomRequest $request)
+    public function store(UomData $data)
     {
         try {
-            $this->service->updateOrCreate(UomDto::fromRequest($request));
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

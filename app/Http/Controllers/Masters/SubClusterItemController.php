@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\SubClusterItemDto;
+use App\DataTransferObjects\Masters\SubClusterItemData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Masters\SubClusterItemRequest;
 use App\Models\Masters\SubClusterItem;
 use App\Services\Masters\SubClusterItemService;
 use App\Services\Masters\SubClusterService;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubClusterItemController extends Controller
@@ -40,10 +38,10 @@ class SubClusterItemController extends Controller
             ->make();
     }
 
-    public function store(SubClusterItemRequest $request)
+    public function store(SubClusterItemData $data)
     {
         try {
-            $this->service->updateOrCreate(SubClusterItemDto::fromRequest($request));
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

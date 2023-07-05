@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\CategoryDTO;
+use App\DataTransferObjects\Masters\CategoryData;
 use App\Models\Masters\Category;
 
 class CategoryService
@@ -12,12 +12,12 @@ class CategoryService
         return Category::query()->get();
     }
 
-    public function updateOrCreate(CategoryDto $dto)
+    public function updateOrCreate(CategoryData $data)
     {
         return Category::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'name' => $dto->name,
+            'name' => $data->name,
         ]);
     }
 

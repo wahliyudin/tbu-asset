@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\DealerDTO;
+use App\DataTransferObjects\Masters\DealerData;
 use App\Models\Masters\Dealer;
 
 class DealerService
@@ -12,12 +12,12 @@ class DealerService
         return Dealer::query()->get();
     }
 
-    public function updateOrCreate(DealerDto $dto)
+    public function updateOrCreate(DealerData $data)
     {
         return Dealer::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'name' => $dto->name,
+            'name' => $data->name,
         ]);
     }
 

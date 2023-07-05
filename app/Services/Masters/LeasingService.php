@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\LeasingDTO;
+use App\DataTransferObjects\Masters\LeasingData;
 use App\Models\Masters\Leasing;
 
 class LeasingService
@@ -12,12 +12,12 @@ class LeasingService
         return Leasing::query()->get();
     }
 
-    public function updateOrCreate(LeasingDto $dto)
+    public function updateOrCreate(LeasingData $data)
     {
         return Leasing::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'name' => $dto->name,
+            'name' => $data->name,
         ]);
     }
 

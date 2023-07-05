@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\DealerDto;
+use App\DataTransferObjects\Masters\DealerData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Masters\DealerRequest;
 use App\Models\Masters\Dealer;
 use App\Services\Masters\DealerService;
 use Yajra\DataTables\Facades\DataTables;
@@ -31,10 +30,10 @@ class DealerController extends Controller
             ->make();
     }
 
-    public function store(DealerRequest $request)
+    public function store(DealerData $data)
     {
         try {
-            $this->service->updateOrCreate(DealerDto::fromRequest($request));
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

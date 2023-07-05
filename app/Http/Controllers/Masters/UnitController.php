@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\UnitDto;
+use App\DataTransferObjects\Masters\UnitData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Masters\UnitRequest;
 use App\Models\Masters\Unit;
 use App\Services\Masters\UnitService;
 use Yajra\DataTables\Facades\DataTables;
@@ -31,10 +30,10 @@ class UnitController extends Controller
             ->make();
     }
 
-    public function store(UnitRequest $request)
+    public function store(UnitData $data)
     {
         try {
-            $this->service->updateOrCreate(UnitDto::fromRequest($request));
+            $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

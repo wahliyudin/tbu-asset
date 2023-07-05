@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\SubClusterItemDTO;
+use App\DataTransferObjects\Masters\SubClusterItemData;
 use App\Models\Masters\SubClusterItem;
 
 class SubClusterItemService
@@ -12,13 +12,13 @@ class SubClusterItemService
         return SubClusterItem::query()->with('subCluster')->get();
     }
 
-    public function updateOrCreate(SubClusterItemDto $dto)
+    public function updateOrCreate(SubClusterItemData $data)
     {
         return SubClusterItem::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'sub_cluster_id' => $dto->sub_cluster_id,
-            'name' => $dto->name,
+            'sub_cluster_id' => $data->sub_cluster_id,
+            'name' => $data->name,
         ]);
     }
 

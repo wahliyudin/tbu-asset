@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\CatalogDTO;
+use App\DataTransferObjects\Masters\CatalogData;
 use App\Models\Masters\Catalog;
 
 class CatalogService
@@ -12,17 +12,17 @@ class CatalogService
         return Catalog::query()->get();
     }
 
-    public function updateOrCreate(CatalogDto $dto)
+    public function updateOrCreate(CatalogData $data)
     {
         return Catalog::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'unit_model' => $dto->unit_model,
-            'unit_type' => $dto->unit_type,
-            'seri' => $dto->seri,
-            'unit_class' => $dto->unit_class,
-            'brand' => $dto->brand,
-            'spesification' => $dto->spesification,
+            'unit_model' => $data->unit_model,
+            'unit_type' => $data->unit_type,
+            'seri' => $data->seri,
+            'unit_class' => $data->unit_class,
+            'brand' => $data->brand,
+            'spesification' => $data->spesification,
         ]);
     }
 

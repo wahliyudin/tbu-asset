@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\UnitDTO;
+use App\DataTransferObjects\Masters\UnitData;
 use App\Models\Masters\Unit;
 
 class UnitService
@@ -12,20 +12,20 @@ class UnitService
         return Unit::query()->get();
     }
 
-    public function updateOrCreate(UnitDto $dto)
+    public function updateOrCreate(UnitData $data)
     {
         return Unit::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'kode' => $dto->kode,
-            'model' => $dto->model,
-            'type' => $dto->type,
-            'seri' => $dto->seri,
-            'class' => $dto->class,
-            'brand' => $dto->brand,
-            'serial_number' => $dto->serial_number,
-            'spesification' => $dto->spesification,
-            'tahun_pembuatan' => $dto->tahun_pembuatan,
+            'kode' => $data->kode,
+            'model' => $data->model,
+            'type' => $data->type,
+            'seri' => $data->seri,
+            'class' => $data->class,
+            'brand' => $data->brand,
+            'serial_number' => $data->serial_number,
+            'spesification' => $data->spesification,
+            'tahun_pembuatan' => $data->tahun_pembuatan,
         ]);
     }
 

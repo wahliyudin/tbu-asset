@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\UomDTO;
+use App\DataTransferObjects\Masters\UomData;
 use App\Models\Masters\Uom;
 
 class UomService
@@ -12,13 +12,13 @@ class UomService
         return Uom::query()->get();
     }
 
-    public function updateOrCreate(UomDto $dto)
+    public function updateOrCreate(UomData $data)
     {
         return Uom::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'name' => $dto->name,
-            'keterangan' => $dto->keterangan,
+            'name' => $data->name,
+            'keterangan' => $data->keterangan,
         ]);
     }
 

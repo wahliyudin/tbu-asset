@@ -2,7 +2,7 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\ClusterDTO;
+use App\DataTransferObjects\Masters\ClusterData;
 use App\Models\Masters\Cluster;
 
 class ClusterService
@@ -12,13 +12,13 @@ class ClusterService
         return Cluster::query()->with('category')->get();
     }
 
-    public function updateOrCreate(ClusterDto $dto)
+    public function updateOrCreate(ClusterData $data)
     {
         return Cluster::query()->updateOrCreate([
-            'id' => $dto->key
+            'id' => $data->key
         ], [
-            'category_id' => $dto->category_id,
-            'name' => $dto->name,
+            'category_id' => $data->category_id,
+            'name' => $data->name,
         ]);
     }
 
