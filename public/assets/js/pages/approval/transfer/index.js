@@ -21,28 +21,20 @@ var list = function () {
             },
             columns: [
                 {
-                    name: 'type_budget',
-                    data: 'type_budget',
+                    name: 'no_transaksi',
+                    data: 'no_transaksi',
                 },
                 {
-                    name: 'budget_ref',
-                    data: 'budget_ref',
+                    name: 'asset',
+                    data: 'asset',
                 },
                 {
-                    name: 'peruntukan',
-                    data: 'peruntukan',
+                    name: 'old_pic',
+                    data: 'old_pic',
                 },
                 {
-                    name: 'tgl_kebutuhan',
-                    data: 'tgl_kebutuhan',
-                },
-                {
-                    name: 'sumber_pendanaan',
-                    data: 'sumber_pendanaan',
-                },
-                {
-                    name: 'status',
-                    data: 'status',
+                    name: 'new_pic',
+                    data: 'new_pic',
                 },
                 {
                     name: 'action',

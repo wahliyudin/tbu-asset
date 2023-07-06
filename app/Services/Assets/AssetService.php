@@ -26,6 +26,11 @@ class AssetService
         return Asset::query()->with(['leasing', 'insurance'])->get();
     }
 
+    public function getById($id)
+    {
+        return Asset::query()->find($id);
+    }
+
     public function getByStatus(Status $status)
     {
         return Asset::query()->where('status', $status)->get();

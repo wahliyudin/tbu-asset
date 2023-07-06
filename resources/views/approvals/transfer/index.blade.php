@@ -39,12 +39,10 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="approval_transfer_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="min-w-125px">Type Budget</th>
-                        <th class="min-w-125px">Budget Ref</th>
-                        <th class="min-w-125px">Peruntukan</th>
-                        <th class="min-w-125px">Tanggal Kebutuhan</th>
-                        <th class="min-w-125px">Sumber Pendanaan</th>
-                        <th class="min-w-125px">Status</th>
+                        <th class="min-w-125px">No Transfer</th>
+                        <th class="min-w-125px">Asset</th>
+                        <th class="min-w-125px">Old Pic</th>
+                        <th class="min-w-125px">New Pic</th>
                         <th class="text-end min-w-70px">Actions</th>
                     </tr>
                 </thead>

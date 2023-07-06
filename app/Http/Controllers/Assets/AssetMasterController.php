@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Assets;
 
+use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
@@ -9,7 +10,10 @@ use App\Models\Masters\Dealer;
 use App\Models\Masters\Leasing;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
+use App\Services\API\HRIS\EmployeeService;
 use App\Services\Assets\AssetService;
+use App\Services\GlobalService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller
@@ -26,6 +30,7 @@ class AssetMasterController extends Controller
             'subClusters' => SubCluster::query()->get(),
             'dealers' => Dealer::query()->get(),
             'leasings' => Leasing::query()->get(),
+            'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])
         ]);
     }
 

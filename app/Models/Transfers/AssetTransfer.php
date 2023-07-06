@@ -2,17 +2,22 @@
 
 namespace App\Models\Transfers;
 
+use App\Models\Assets\Asset;
+use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class AssetTransfer extends Model
+class AssetTransfer extends Model implements ModelThatHaveWorkflow
 {
     use HasFactory;
 
     protected $fillable = [
         'no_transaksi',
         'nik',
+        'asset_id',
         'old_pic',
         'old_location',
         'old_divisi',
@@ -30,5 +35,15 @@ class AssetTransfer extends Model
     public function asset(): BelongsTo
     {
         return $this->belongsTo(Asset::class);
+    }
+
+    public function workflow(): HasOne
+    {
+        return $this->hasOne(TransferWorkflow::class)->latestOfMany();
+    }
+
+    public function workflows(): HasMany
+    {
+        return $this->hasMany(TransferWorkflow::class);
     }
 }

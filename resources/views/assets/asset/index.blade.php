@@ -141,10 +141,17 @@
                                                 <input type="text" class="form-control form-control-solid"
                                                     placeholder="Member Name" name="member_name" />
                                             </div>
-                                            <div class="col-md-4 fv-row mb-7">
+                                            <div class="col-md-4 fv-row mb-7 pic">
                                                 <label class="required fs-6 fw-semibold mb-2">PIC</label>
-                                                <input type="number" class="form-control form-control-solid"
-                                                    placeholder="PIC" name="pic" />
+                                                <select class="form-select form-select-solid" name="pic"
+                                                    data-control="select2" data-placeholder="PIC"
+                                                    data-dropdown-parent=".pic">
+                                                    <option></option>
+                                                    @foreach ($employees as $employee)
+                                                        <option value="{{ $employee->nik }}">{{ $employee->nama_karyawan }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col-md-4 fv-row mb-7">
                                                 <label class="required fs-6 fw-semibold mb-2">Activity</label>

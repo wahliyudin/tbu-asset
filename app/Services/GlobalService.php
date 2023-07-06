@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\BudgetService;
 
@@ -19,5 +20,10 @@ class GlobalService
     {
         $budget = (new BudgetService)->getByCode($code);
         return isset($budget['data']) ? $budget['data'] : [];
+    }
+
+    public static function getEmployees(array $attributes)
+    {
+        return EmployeeData::collection((new EmployeeService)->getData()['data'])->only(...$attributes);
     }
 }

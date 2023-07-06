@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Create Asset Transfer')
+@section('title', 'Edit Asset Transfer')
 
 @section('toolbar')
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
@@ -17,7 +17,7 @@
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Create Asset Transfer</li>
+                    <li class="breadcrumb-item text-muted">Edit Asset Transfer</li>
                 </ul>
             </div>
         </div>

@@ -3,12 +3,46 @@
 var KTModalAdd = function () {
     var datatableAsset;
     var modalAsset;
+    var justifikasi;
 
     var initPlugins = () => {
         $(".date").flatpickr();
         $('.uang').mask('0.000.000.000', {
             reverse: true
         });
+        initCkEditor();
+    }
+
+    var initCkEditor = () => {
+        ClassicEditor.create(document.querySelector('#justifikasi'), {
+            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList'],
+            heading: {
+                options: [{
+                    model: 'paragraph',
+                    title: 'Paragraph',
+                    class: 'ck-heading_paragraph'
+                },
+                {
+                    model: 'heading1',
+                    view: 'h1',
+                    title: 'Heading 1',
+                    class: 'ck-heading_heading1'
+                },
+                {
+                    model: 'heading2',
+                    view: 'h2',
+                    title: 'Heading 2',
+                    class: 'ck-heading_heading2'
+                }
+                ]
+            }
+        })
+            .then(editor => {
+                justifikasi = editor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
     var initDatatableAsset = () => {
@@ -77,11 +111,36 @@ var KTModalAdd = function () {
             const parent = e.target.closest('tr');
             var arrayTd = parent.querySelectorAll('td');
             populateItem(arrayTd, asset);
+            getEmployeeByAsset(asset);
             modalAsset.hide();
         });
     }
 
+    var getEmployeeByAsset = (asset) => {
+        $.ajax({
+            type: 'GET',
+            url: `/asset-transfers/${asset}/employee`,
+            dataType: "JSON",
+            success: function (response) {
+                populateEmployee(response);
+            },
+            error: function (jqXHR, xhr, textStatus, errorThrow, exception) {
+
+            }
+        });
+    }
+
+    var populateEmployee = (employee) => {
+        $('input[name="old_pic"]').val(employee?.nik ?? '-');
+        $('input[name="old_nama_karyawan"]').val(employee?.nama_karyawan ?? '-');
+        $('input[name="old_department"]').val(employee?.position?.department?.department_name ?? '-');
+        $('input[name="old_divisi"]').val(employee?.position?.divisi?.division_name ?? '-');
+        $('input[name="old_project"]').val(employee?.position?.project?.project ?? '-');
+        $('input[name="old_location"]').val(employee?.position?.project?.location ?? '-');
+    }
+
     var populateItem = (arrayTd, key) => {
+        $('input[name="asset_id"]').val(key);
         $('#nama').text(arrayTd[1].innerText);
         $('#merk_tipe_model').text(arrayTd[2].innerText);
         $('#serial_number').text(arrayTd[3].innerText);
@@ -94,6 +153,7 @@ var KTModalAdd = function () {
         $(`.form-transfer`).on('click', `.simpan-form-transfer`, function (e) {
             e.preventDefault();
             var postData = new FormData($(`.form-transfer`)[0]);
+            postData.append('justifikasi', justifikasi.getData());
             $(`.simpan-form-transfer`).attr("data-kt-indicator", "on");
             $.ajax({
                 type: 'POST',

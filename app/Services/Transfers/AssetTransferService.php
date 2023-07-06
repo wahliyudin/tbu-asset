@@ -16,16 +16,24 @@ class AssetTransferService
 
     public function all()
     {
-        return AssetTransfer::query()->get();
+        return AssetTransfer::query()->with('asset')->get();
     }
 
-    public function updateOrCreate(AssetTransferData $data)
+    public function allToAssetTransferData()
     {
-        $this->assetTransferRepository->updateOrCreate($data);
+        return AssetTransferData::collection($this->all())->toCollection();
+    }
+
+    public function updateOrCreate(AssetTransferRequest $request)
+    {
+        $data = AssetTransferData::from($request->all());
+        $assetTransfer = $this->assetTransferRepository->updateOrCreate($data);
+        TransferWorkflowService::setModel($assetTransfer)->store();
     }
 
     public function delete(AssetTransfer $assetTransfer)
     {
+        $assetTransfer->workflows()->delete();
         return $assetTransfer->delete();
     }
 }

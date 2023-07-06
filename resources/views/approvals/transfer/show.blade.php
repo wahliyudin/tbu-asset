@@ -28,7 +28,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-transfers.form />
+            <x-transfers.form :assetTransfer="$assetTransfer" :type="'show'" />
         </div>
     </div>
 @endsection

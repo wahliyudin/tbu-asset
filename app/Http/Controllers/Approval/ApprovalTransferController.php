@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Approval;
 
+use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Http\Controllers\Controller;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Transfers\AssetTransferService;
@@ -21,19 +22,31 @@ class ApprovalTransferController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('name', function (AssetTransfer $assetTransfer) {
-                return 'example';
+        return DataTables::of($this->service->allToAssetTransferData())
+            ->editColumn('no_transaksi', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->no_transaksi;
             })
-            ->editColumn('action', function (AssetTransfer $assetTransfer) {
+            ->editColumn('asset', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->asset?->kode;
+            })
+            ->editColumn('old_pic', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->oldPic?->nama_karyawan;
+            })
+            ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->newPic?->nama_karyawan;
+            })
+            ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('approvals.transfer.action', compact('assetTransfer'))->render();
             })
             ->rawColumns(['action'])
             ->make();
     }
 
-    public function show()
+    public function show(AssetTransfer $assetTransfer)
     {
-        return view('approvals.transfer.show');
+        $assetTransfer->loadMissing(['asset.unit', 'asset.leasing', 'workflows']);
+        return view('approvals.transfer.show', [
+            'assetTransfer' => AssetTransferData::from($assetTransfer)
+        ]);
     }
 }

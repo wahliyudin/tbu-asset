@@ -123,8 +123,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-transfers/datatable-asset', [TransferController::class, 'datatableAsset'])->name('asset-transfers.datatable-asset');
     Route::get('asset-transfers/create', [TransferController::class, 'create'])->name('asset-transfers.create');
     Route::post('asset-transfers/store', [TransferController::class, 'store'])->name('asset-transfers.store');
-    Route::post('asset-transfers/{assetTransfer}/edit', [TransferController::class, 'edit'])->name('asset-transfers.edit');
+    Route::get('asset-transfers/{assetTransfer}/edit', [TransferController::class, 'edit'])->name('asset-transfers.edit');
     Route::delete('asset-transfers/{assetTransfer}/destroy', [TransferController::class, 'destroy'])->name('asset-transfers.destroy');
+    Route::get('asset-transfers/{asset}/employee', [TransferController::class, 'employeeByAsset'])->name('asset-transfers.employee-by-asset');
 
     Route::get('asset-disposes', [DisposeController::class, 'index'])->name('asset-disposes.index');
     Route::post('asset-disposes/datatable', [DisposeController::class, 'datatable'])->name('asset-disposes.datatable');

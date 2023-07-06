@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Transfers;
 
+use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
@@ -27,11 +28,20 @@ class TransferController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('name', function (AssetTransfer $assetTransfer) {
-                return 'example';
+        return DataTables::of($this->service->allToAssetTransferData())
+            ->editColumn('no_transaksi', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->no_transaksi;
             })
-            ->editColumn('action', function (AssetTransfer $assetTransfer) {
+            ->editColumn('asset', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->asset?->kode;
+            })
+            ->editColumn('old_pic', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->oldPic?->nama_karyawan;
+            })
+            ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->newPic?->nama_karyawan;
+            })
+            ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('transfers.transfer.action', compact('assetTransfer'))->render();
             })
             ->rawColumns(['action'])
@@ -51,10 +61,10 @@ class TransferController extends Controller
                 return $asset->unit?->serial_number;
             })
             ->editColumn('nomor_asset', function (Asset $asset) {
-                return $asset->unit?->kode;
+                return $asset->kode;
             })
             ->editColumn('niali_buku', function (Asset $asset) {
-                return Helper::formatRupiah(100000, true);
+                return Helper::formatRupiah($asset->leasing?->harga_beli, true);
             })
             ->editColumn('kelengkapan', function (Asset $asset) {
                 return $asset->unit?->spesification;
@@ -68,14 +78,17 @@ class TransferController extends Controller
 
     public function create()
     {
-        return view('transfers.transfer.create');
+        return view('transfers.transfer.create', [
+            'assetTransfer' => AssetTransferData::from([
+                'new_pic' => auth()->user()->nik
+            ])
+        ]);
     }
 
     public function store(AssetTransferRequest $request)
     {
         try {
-            $data = AssetTransferData::from($request->all());
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
@@ -87,7 +100,10 @@ class TransferController extends Controller
     public function edit(AssetTransfer $assetTransfer)
     {
         try {
-            return response()->json($assetTransfer);
+            $assetTransfer->loadMissing(['asset.unit', 'asset.leasing']);
+            return view('transfers.transfer.edit', [
+                'assetTransfer' => AssetTransferData::from($assetTransfer)
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -100,6 +116,15 @@ class TransferController extends Controller
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function employeeByAsset($asset)
+    {
+        try {
+            return response()->json(AssetData::from($this->assetService->getById($asset))->employee->toArray());
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -19,6 +19,7 @@ class AssetTransferRepository
         ], [
             'no_transaksi' => $data->no_transaksi,
             'nik' => $data->nik,
+            'asset_id' => $data->asset_id,
             'old_pic' => $data->old_pic,
             'old_location' => $data->old_location,
             'old_divisi' => $data->old_divisi,

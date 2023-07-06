@@ -484,7 +484,7 @@ var AssetsList = function () {
         attributes.unit_id = $($(form).find('select[name="unit_id"]')).val();
         attributes.sub_cluster_id = $($(form).find('select[name="sub_cluster_id"]')).val();
         attributes.member_name = $($(form).find('input[name="member_name"]')).val();
-        attributes.pic = $($(form).find('input[name="pic"]')).val();
+        attributes.pic = $($(form).find('select[name="pic"]')).val();
         attributes.activity = $($(form).find('input[name="activity"]')).val();
         attributes.asset_location = $($(form).find('input[name="asset_location"]')).val();
         attributes.kondisi = $($(form).find('input[name="kondisi"]')).val();
@@ -547,7 +547,7 @@ var AssetsList = function () {
         $($(form).find('select[name="unit_id"]')).val(json === null ? attributes.unit_id : json.unit_id).trigger('change');
         $($(form).find('select[name="sub_cluster_id"]')).val(json === null ? attributes.sub_cluster_id : json.sub_cluster_id).trigger('change');
         $($(form).find('input[name="member_name"]')).val(json === null ? attributes.member_name : json.member_name);
-        $($(form).find('input[name="pic"]')).val(json === null ? attributes.pic : json.pic);
+        $($(form).find('select[name="pic"]')).val(json === null ? attributes.pic : json.pic).trigger('change');
         $($(form).find('input[name="activity"]')).val(json === null ? attributes.activity : json.activity);
         $($(form).find('input[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location);
         $($(form).find('input[name="kondisi"]')).val(json === null ? attributes.kondisi : json.kondisi);

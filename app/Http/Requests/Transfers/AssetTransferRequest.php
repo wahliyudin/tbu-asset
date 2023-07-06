@@ -14,7 +14,8 @@ class AssetTransferRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'no_transaksi' => ['required'],
+            // 'no_transaksi' => ['required'],
+            'asset_id' => ['required'],
             'nik' => ['required'],
             'old_pic' => ['required'],
             'old_location' => ['required'],
@@ -24,10 +25,10 @@ class AssetTransferRequest extends FormRequest
             'new_location' => ['required'],
             'new_divisi' => ['required'],
             'new_department' => ['required'],
-            'request_transfer_date' => ['required'],
+            // 'request_transfer_date' => ['required'],
             'justifikasi' => ['required'],
-            'remark' => ['required'],
-            'transfer_date' => ['required'],
+            // 'remark' => ['required'],
+            // 'transfer_date' => ['required'],
         ];
     }
 }

@@ -27,8 +27,20 @@ var TransfersList = function () {
             },
             columns: [
                 {
-                    name: 'name',
-                    data: 'name',
+                    name: 'no_transaksi',
+                    data: 'no_transaksi',
+                },
+                {
+                    name: 'asset',
+                    data: 'asset',
+                },
+                {
+                    name: 'old_pic',
+                    data: 'old_pic',
+                },
+                {
+                    name: 'new_pic',
+                    data: 'new_pic',
                 },
                 {
                     name: 'action',

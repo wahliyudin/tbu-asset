@@ -18,17 +18,17 @@ return new class extends Migration
             $table->unsignedBigInteger('nik');
             $table->foreignIdFor(Asset::class);
             $table->unsignedBigInteger('old_pic');
-            $table->unsignedBigInteger('old_location');
-            $table->unsignedBigInteger('old_divisi');
-            $table->unsignedBigInteger('old_department');
+            $table->string('old_location');
+            $table->string('old_divisi');
+            $table->string('old_department');
             $table->unsignedBigInteger('new_pic');
-            $table->unsignedBigInteger('new_location');
-            $table->unsignedBigInteger('new_divisi');
-            $table->unsignedBigInteger('new_department');
-            $table->date('request_transfer_date');
+            $table->string('new_location');
+            $table->string('new_divisi');
+            $table->string('new_department');
+            $table->dateTime('request_transfer_date')->useCurrent();
             $table->string('justifikasi');
-            $table->string('remark');
-            $table->date('transfer_date');
+            $table->string('remark')->nullable();
+            $table->date('transfer_date')->nullable();
             $table->timestamps();
         });
     }
