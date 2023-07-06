@@ -30,7 +30,6 @@ class CerController extends Controller
         try {
             return $this->responseSuccess($this->cerService->findByNo($no));
         } catch (\Throwable $th) {
-            dd($th->getTrace());
             throw $th;
         }
     }
