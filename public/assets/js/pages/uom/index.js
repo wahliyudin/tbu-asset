@@ -155,7 +155,7 @@ var UomsList = function () {
                             type: "POST",
                             url: "/master/uoms/store",
                             data: {
-                                key: $(submitButton).data('uom'),
+                                id: $(submitButton).data('uom'),
                                 name: $($(form).find('input[name="name"]')).val(),
                                 keterangan: $($(form).find('textarea[name="keterangan"]')).val(),
                             },

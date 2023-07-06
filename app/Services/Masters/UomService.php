@@ -15,7 +15,7 @@ class UomService
     public function updateOrCreate(UomData $data)
     {
         return Uom::query()->updateOrCreate([
-            'id' => $data->key
+            'id' => $data->id
         ], [
             'name' => $data->name,
             'keterangan' => $data->keterangan,

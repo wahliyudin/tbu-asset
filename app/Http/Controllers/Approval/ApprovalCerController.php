@@ -54,7 +54,7 @@ class ApprovalCerController extends Controller
 
     public function show(Cer $cer)
     {
-        $cer->loadMissing(['items', 'workflows']);
+        $cer->loadMissing(['items.uom', 'workflows']);
         $data = CerData::from($cer)->except('workflows.employee.position');
         return view('approvals.cer.show', [
             'cer' => $data,

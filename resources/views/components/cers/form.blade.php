@@ -84,6 +84,7 @@
                             <th class="fs-6 fw-semibold w-200px">Asset Description</th>
                             <th class="fs-6 fw-semibold w-200px">Asset Model</th>
                             <th class="fs-6 fw-semibold w-200px">Est. Umur Asset</th>
+                            <th class="fs-6 fw-semibold w-150px">Uom</th>
                             <th class="fs-6 fw-semibold w-100px">Asset Qty</th>
                             <th class="fs-6 fw-semibold w-200px">Unit Price</th>
                             <th class="fs-6 fw-semibold w-200px">Sub Total Price</th>
@@ -100,9 +101,9 @@
                             @php
                                 $subTotal += $item->qty * $item->price;
                             @endphp
-                            <x-cers.item :cerItem="$item" :type="$type" />
+                            <x-cers.item :cerItem="$item" :uoms="$uoms" :type="$type" />
                         @empty
-                            <x-cers.item :type="$type" />
+                            <x-cers.item :type="$type" :uoms="$uoms" />
                         @endforelse
                     </tbody>
                     <tfoot style="display: none;">

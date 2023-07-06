@@ -7,6 +7,7 @@ use App\DataTransferObjects\Cers\CerData;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Spatie\LaravelData\DataCollection;
 
 class Form extends Component
 {
@@ -16,6 +17,7 @@ class Form extends Component
     public function __construct(
         public ?CerData $cer,
         public EmployeeData $employee,
+        public ?DataCollection $uoms = null,
         public string $type = '',
         public bool $isCurrentWorkflow = false,
     ) {

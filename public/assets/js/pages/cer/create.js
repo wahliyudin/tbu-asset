@@ -17,7 +17,6 @@ var KTModalCersAdd = function () {
             show: function () {
                 $(this).slideDown();
                 currentItem = this;
-                $(this).find('[data-kt-repeater="select2"]').select2();
                 initPluginsAndEventRepeater();
             },
             hide: function (deleteElement) {
@@ -26,7 +25,6 @@ var KTModalCersAdd = function () {
                 initTotalRepeater(numberFromString($(this).find('.sub-total').val()));
             },
             ready: function () {
-                $(`.items [data-kt-repeater="select2"]`).select2();
             },
             isFirstItemUndeletable: true
         });

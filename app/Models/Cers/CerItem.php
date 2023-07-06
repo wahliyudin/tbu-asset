@@ -2,6 +2,7 @@
 
 namespace App\Models\Cers;
 
+use App\Models\Masters\Uom;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,11 +18,16 @@ class CerItem extends Model
         'est_umur',
         'qty',
         'price',
-        'uom',
+        'uom_id',
     ];
 
     public function cer(): BelongsTo
     {
         return $this->belongsTo(Cer::class);
+    }
+
+    public function uom(): BelongsTo
+    {
+        return $this->belongsTo(Uom::class);
     }
 }

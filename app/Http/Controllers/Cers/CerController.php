@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cers;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Cers\CerData;
+use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,7 @@ use App\Models\Cers\Cer;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
 use App\Services\Cers\CerService;
+use App\Services\Masters\UomService;
 use Yajra\DataTables\Facades\DataTables;
 
 class CerController extends Controller
@@ -84,9 +86,9 @@ class CerController extends Controller
 
     public function create()
     {
-        $employee = EmployeeData::from($this->service->getEmployee());
         return view('cers.cer.create', [
-            'employee' => $employee
+            'employee' => EmployeeData::from($this->service->getEmployee()),
+            'uoms' => UomData::collection((new UomService)->all()),
         ]);
     }
 
@@ -106,11 +108,12 @@ class CerController extends Controller
     public function edit(Cer $cer)
     {
         try {
-            $cer->loadMissing(['items', 'workflows']);
+            $cer->loadMissing(['items.uom', 'workflows']);
             $data = CerData::from($cer);
             return view('cers.cer.edit', [
                 'cer' => $data,
                 'employee' => $data->employee,
+                'uoms' => UomData::collection((new UomService)->all()),
             ]);
         } catch (\Throwable $th) {
             throw $th;

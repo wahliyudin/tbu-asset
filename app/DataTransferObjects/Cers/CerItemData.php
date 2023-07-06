@@ -2,18 +2,20 @@
 
 namespace App\DataTransferObjects\Cers;
 
+use App\DataTransferObjects\Masters\UomData;
 use Spatie\LaravelData\Data;
 
 class CerItemData extends Data
 {
     public function __construct(
-        public ?string $description = null,
-        public ?string $model = null,
-        public ?int $est_umur = null,
-        public ?int $qty = null,
-        public ?int $price = null,
-        public ?string $uom = null,
+        public ?string $description,
+        public ?string $model,
+        public ?int $est_umur,
+        public ?int $qty,
+        public ?int $price,
+        public ?string $uom_id,
         public ?string $key = null,
+        public ?UomData $uom,
     ) {
     }
 }
