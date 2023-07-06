@@ -51,13 +51,18 @@
     <div class="row mt-4">
         <div class="col-md-12">
             @if ($type != 'show')
-                <div class="d-flex justify-content-end py-2">
-                    <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
-                        <i class="ki-duotone ki-search-list fs-2">
-                            <i class="path1"></i>
-                            <i class="path2"></i>
-                            <i class="path3"></i>
-                        </i>Pilih Asset</button>
+                <div class="row justify-content-between py-2">
+                    <div class="col-md-4">
+                        {{-- <input type="file" class="form-control"> --}}
+                    </div>
+                    <div class="col-md-8 text-end">
+                        <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
+                            <i class="ki-duotone ki-search-list fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                                <i class="path3"></i>
+                            </i>Pilih Asset</button>
+                    </div>
                 </div>
             @endif
             <table class="table table-bordered border-gray-300 table-asset-selected">

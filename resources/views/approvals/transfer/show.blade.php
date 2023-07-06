@@ -28,7 +28,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-transfers.form :assetTransfer="$assetTransfer" :type="'show'" />
+            <x-transfers.form :isCurrentWorkflow="$isCurrentWorkflow" :assetTransfer="$assetTransfer" :type="'show'" />
         </div>
     </div>
 @endsection

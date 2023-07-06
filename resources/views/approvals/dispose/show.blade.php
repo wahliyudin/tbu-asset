@@ -28,7 +28,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-disposes.form :isCurrentWorkflow="true" :type="'show'" :assetDispose="$assetDispose" :employee="$employee" />
+            <x-disposes.form :isCurrentWorkflow="$isCurrentWorkflow" :type="'show'" :assetDispose="$assetDispose" :employee="$employee" />
         </div>
     </div>
 @endsection

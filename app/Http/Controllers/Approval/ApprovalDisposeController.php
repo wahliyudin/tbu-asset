@@ -48,11 +48,13 @@ class ApprovalDisposeController extends Controller
 
     public function show(AssetDispose $assetDispose)
     {
-        $assetDispose->loadMissing(['asset.unit', 'workflows']);
+        $isCurrentWorkflow = DisposeWorkflowService::setModel($assetDispose)->isCurrentWorkflow();
+        $assetDispose->load(['asset.unit', 'workflows']);
         $data = AssetDisposeData::from($assetDispose);
         return view('approvals.dispose.show', [
             'assetDispose' => $data,
             'employee' => $data->employee,
+            'isCurrentWorkflow' => $isCurrentWorkflow,
         ]);
     }
 

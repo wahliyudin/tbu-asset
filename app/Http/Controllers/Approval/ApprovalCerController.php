@@ -54,11 +54,13 @@ class ApprovalCerController extends Controller
 
     public function show(Cer $cer)
     {
-        $cer->loadMissing(['items.uom', 'workflows']);
+        $isCurrentWorkflow = CerWorkflowService::setModel($cer)->isCurrentWorkflow();
+        $cer->load(['items.uom', 'workflows']);
         $data = CerData::from($cer)->except('workflows.employee.position');
         return view('approvals.cer.show', [
             'cer' => $data,
             'employee' => $data->employee,
+            'isCurrentWorkflow' => $isCurrentWorkflow,
         ]);
     }
 

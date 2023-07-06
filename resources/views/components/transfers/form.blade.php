@@ -323,3 +323,8 @@
         <script src="{{ asset('assets/js/pages/transfer/create.js') }}"></script>
     @endpush
 @endif
+@if ($type == 'show')
+    @push('js')
+        <script src="{{ asset('assets/js/pages/transfer/form.js') }}"></script>
+    @endpush
+@endif

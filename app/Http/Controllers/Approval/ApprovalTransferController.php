@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Approval;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Enums\Workflows\LastAction;
 use App\Http\Controllers\Controller;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Transfers\AssetTransferService;
+use App\Services\Transfers\TransferWorkflowService;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApprovalTransferController extends Controller
@@ -44,9 +46,35 @@ class ApprovalTransferController extends Controller
 
     public function show(AssetTransfer $assetTransfer)
     {
-        $assetTransfer->loadMissing(['asset.unit', 'asset.leasing', 'workflows']);
+        $isCurrentWorkflow = TransferWorkflowService::setModel($assetTransfer)->isCurrentWorkflow();
+        $assetTransfer->load(['asset.unit', 'asset.leasing', 'workflows']);
         return view('approvals.transfer.show', [
-            'assetTransfer' => AssetTransferData::from($assetTransfer)
+            'assetTransfer' => AssetTransferData::from($assetTransfer),
+            'isCurrentWorkflow' => $isCurrentWorkflow,
         ]);
+    }
+
+    public function approv(AssetTransfer $assetTransfer)
+    {
+        try {
+            TransferWorkflowService::setModel($assetTransfer)->lastAction(LastAction::APPROV);
+            return response()->json([
+                'message' => 'Berhasil Diverifikasi.'
+            ]);
+        } catch (\Throwable $e) {
+            throw $e;
+        }
+    }
+
+    public function reject(AssetTransfer $assetTransfer)
+    {
+        try {
+            TransferWorkflowService::setModel($assetTransfer)->lastAction(LastAction::REJECT);
+            return response()->json([
+                'message' => 'Berhasil Direject.'
+            ]);
+        } catch (\Throwable $e) {
+            throw $e;
+        }
     }
 }
