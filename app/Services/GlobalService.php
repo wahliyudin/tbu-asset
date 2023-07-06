@@ -11,8 +11,8 @@ class GlobalService
     public static function getEmployee($nik = null, $hasDefault = false): array
     {
         $token = UserService::getAdministrator()?->oatuhToken?->access_token;
-        $nik = $hasDefault ? auth()->user()->nik : $nik;
-        $employee = (new EmployeeService)->setToken(auth()->check() ? null : $token)->getByNik($nik);
+        $nik = $hasDefault ? (auth()->user()?->nik ?? $nik) : $nik;
+        $employee = (new EmployeeService)->setToken($token)->getByNik($nik);
         return isset($employee['data']) ? $employee['data'] : [];
     }
 
