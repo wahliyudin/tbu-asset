@@ -37,6 +37,10 @@ var list = function () {
                     data: 'est_harga_pasar',
                 },
                 {
+                    name: 'status',
+                    data: 'status',
+                },
+                {
                     name: 'action',
                     data: 'action',
                     orderable: false,

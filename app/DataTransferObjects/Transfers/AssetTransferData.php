@@ -5,6 +5,7 @@ namespace App\DataTransferObjects\Transfers;
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\WorkflowData;
+use App\Enums\Workflows\Status;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
@@ -29,6 +30,7 @@ class AssetTransferData extends Data
         public ?string $justifikasi,
         public ?string $remark,
         public ?string $transfer_date,
+        public ?Status $status,
         public ?string $id = null,
         public ?EmployeeData $oldPic,
         public ?EmployeeData $newPic,

@@ -37,6 +37,9 @@ class ApprovalTransferController extends Controller
             ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->newPic?->nama_karyawan;
             })
+            ->editColumn('status', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->status->badge();
+            })
             ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('approvals.transfer.action', compact('assetTransfer'))->render();
             })

@@ -30,6 +30,7 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow
         'justifikasi',
         'remark',
         'transfer_date',
+        'status',
     ];
 
     public function asset(): BelongsTo

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('justifikasi');
             $table->string('remark')->nullable();
             $table->date('transfer_date')->nullable();
+            $table->string('status')->default('open');
             $table->timestamps();
         });
     }
