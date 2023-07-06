@@ -3,6 +3,7 @@
 namespace App\DataTransferObjects\SSO;
 
 use Carbon\Carbon;
+use DateTime;
 
 class TokenDto
 {
@@ -26,6 +27,6 @@ class TokenDto
 
     public function expired(): string
     {
-        return Carbon::parse($this->expires_in)->format('Y-m-d H:i:s');
+        return Carbon::now()->addSeconds($this->expires_in)->format('Y-m-d H:i:s');
     }
 }

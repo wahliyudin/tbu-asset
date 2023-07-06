@@ -47,7 +47,7 @@ Route::get('sso/callback', [AuthController::class, 'callback'])->name('sso.callb
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'oauth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::get('master/categories', [CategoryController::class, 'index'])->name('masters.categories.index')->middleware('permission:category_read');
