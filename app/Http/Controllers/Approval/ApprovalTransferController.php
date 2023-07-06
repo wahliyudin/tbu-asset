@@ -43,7 +43,7 @@ class ApprovalTransferController extends Controller
             ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('approvals.transfer.action', compact('assetTransfer'))->render();
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'status'])
             ->make();
     }
 

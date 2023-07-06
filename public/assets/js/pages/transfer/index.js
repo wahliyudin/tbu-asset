@@ -43,6 +43,10 @@ var TransfersList = function () {
                     data: 'new_pic',
                 },
                 {
+                    name: 'status',
+                    data: 'status',
+                },
+                {
                     name: 'action',
                     data: 'action',
                     orderable: false,
