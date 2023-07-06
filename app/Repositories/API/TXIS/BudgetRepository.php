@@ -2,7 +2,7 @@
 
 namespace App\Repositories\API\TXIS;
 
-use App\DataTransferObjects\API\TXIS\BudgetDto;
+use App\DataTransferObjects\API\TXIS\BudgetData;
 use App\Services\API\TXIS\Contracts\TXISService;
 
 class BudgetRepository extends TXISService
@@ -16,9 +16,10 @@ class BudgetRepository extends TXISService
 
     public function all()
     {
-        return BudgetDto::fromResponseMultiple($this->get($this->url(), [
+        $budget = $this->get($this->url(), [
             'deptcode' => 'PNL99'
-        ])->json());
+        ])->json();
+        return BudgetData::collection(isset($budget['data']) ? $budget['data'] : [])->toCollection();
     }
 
     public function getById($id)

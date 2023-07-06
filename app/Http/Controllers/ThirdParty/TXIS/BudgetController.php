@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\ThirdParty\TXIS;
 
-use App\DataTransferObjects\API\TXIS\BudgetDto;
+use App\DataTransferObjects\API\TXIS\BudgetData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\API\TXIS\BudgetService;
@@ -17,18 +17,19 @@ class BudgetController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->budgetService->all())
-            ->editColumn('kode', function (BudgetDto $budgetDto) {
-                return $budgetDto->kode;
+        $budgets = $this->budgetService->all();
+        return DataTables::of(BudgetData::collection(isset($budgets['data']) ? $budgets['data'] : [])->toCollection())
+            ->editColumn('kode', function (BudgetData $budgetData) {
+                return $budgetData->kode;
             })
-            ->editColumn('periode', function (BudgetDto $budgetDto) {
-                return $budgetDto->periode;
+            ->editColumn('periode', function (BudgetData $budgetData) {
+                return $budgetData->periode;
             })
-            ->editColumn('total', function (BudgetDto $budgetDto) {
-                return Helper::formatRupiah($budgetDto->total);
+            ->editColumn('total', function (BudgetData $budgetData) {
+                return Helper::formatRupiah($budgetData->total);
             })
-            ->editColumn('action', function (BudgetDto $budgetDto) {
-                return '<button type="button" data-budget="' . $budgetDto->id . '" class="btn btn-sm btn-primary select-budget">select</button>';
+            ->editColumn('action', function (BudgetData $budgetData) {
+                return '<button type="button" data-budget="' . $budgetData->id . '" class="btn btn-sm btn-primary select-budget">select</button>';
             })
             ->rawColumns(['action'])
             ->make();

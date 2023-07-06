@@ -2,7 +2,6 @@
 
 namespace App\Services\Workflows;
 
-use App\DataTransferObjects\API\HRIS\WorkflowDto;
 use App\DataTransferObjects\WorkflowData;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Module;
@@ -43,7 +42,7 @@ abstract class Workflow extends Checker
 
         $response = $this->patchDataWorkflows($data, auth()->user()->nik);
 
-        return $this->responseToCollectionsOfWorkflowDto($response);
+        return $this->responseToCollectionsOfWorkflowData($response);
     }
 
     private function approvalsByModule(): Collection
@@ -76,7 +75,7 @@ abstract class Workflow extends Checker
         ]);
     }
 
-    private function responseToCollectionsOfWorkflowDto($response): DataCollection
+    private function responseToCollectionsOfWorkflowData($response): DataCollection
     {
         return WorkflowData::collection($response)->except('employee', 'last_action_date');
     }
