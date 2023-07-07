@@ -3,19 +3,13 @@
 namespace App\Repositories\Disposes;
 
 use App\DataTransferObjects\Disposes\AssetDisposeData;
-use App\DataTransferObjects\Disposes\AssetDisposeDto;
 use App\Models\Disposes\AssetDispose;
 
 class AssetDisposeRepository
 {
-    public function __construct(
-        protected AssetDispose $model
-    ) {
-    }
-
     public function updateOrCreate(AssetDisposeData $data)
     {
-        return $this->model->query()->updateOrCreate([
+        return AssetDispose::query()->updateOrCreate([
             'id' => $data->id
         ], [
             'asset_id' => $data->asset_id,

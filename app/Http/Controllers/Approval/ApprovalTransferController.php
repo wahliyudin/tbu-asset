@@ -24,7 +24,7 @@ class ApprovalTransferController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->allToAssetTransferData())
+        return DataTables::of(AssetTransferService::getByCurrentApproval())
             ->editColumn('no_transaksi', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->no_transaksi;
             })

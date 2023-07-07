@@ -26,7 +26,7 @@ class ApprovalDisposeController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
+        return DataTables::of(AssetDisposeService::getByCurrentApproval())
             ->editColumn('no_dispose', function (AssetDispose $assetDispose) {
                 return $assetDispose->no_dispose;
             })

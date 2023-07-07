@@ -4,17 +4,14 @@ namespace App\Services\Disposes;
 
 use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\DataTransferObjects\Disposes\AssetDisposeDto;
+use App\Enums\Workflows\LastAction;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
 use App\Models\Disposes\AssetDispose;
 use App\Repositories\Disposes\AssetDisposeRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 class AssetDisposeService
 {
-    public function __construct(
-        protected AssetDisposeRepository $assetDisposeRepository
-    ) {
-    }
-
     public function all()
     {
         return AssetDispose::query()->get();
@@ -23,7 +20,7 @@ class AssetDisposeService
     public function updateOrCreate(AssetDisposeRequest $request)
     {
         $data = AssetDisposeData::from($request->all())->except('employee');
-        $assetDispose = $this->assetDisposeRepository->updateOrCreate($data);
+        $assetDispose = (new AssetDisposeRepository)->updateOrCreate($data);
         $assetDispose->workflows()->delete();
         DisposeWorkflowService::setModel($assetDispose)->store();
     }
@@ -32,5 +29,13 @@ class AssetDisposeService
     {
         $assetDispose->workflows()->delete();
         return $assetDispose->delete();
+    }
+
+    public static function getByCurrentApproval()
+    {
+        return AssetDispose::query()->whereHas('workflows', function (Builder $query) {
+            $query->where('last_action', LastAction::NOTTING)
+                ->where('nik', auth()->user()?->nik);
+        })->get();
     }
 }

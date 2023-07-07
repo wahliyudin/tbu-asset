@@ -3,9 +3,11 @@
 namespace App\Services\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Enums\Workflows\LastAction;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Models\Transfers\AssetTransfer;
 use App\Repositories\Transfers\AssetTransferRepository;
+use Illuminate\Database\Eloquent\Builder;
 
 class AssetTransferService
 {
@@ -35,5 +37,14 @@ class AssetTransferService
     {
         $assetTransfer->workflows()->delete();
         return $assetTransfer->delete();
+    }
+
+    public static function getByCurrentApproval()
+    {
+        $data = AssetTransfer::query()->whereHas('workflows', function (Builder $query) {
+            $query->where('last_action', LastAction::NOTTING)
+                ->where('nik', auth()->user()?->nik);
+        })->get();
+        return AssetTransferData::collection($data)->toCollection();
     }
 }

@@ -26,7 +26,7 @@ class ApprovalCerController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
+        return DataTables::of(CerService::getByCurrentApproval())
             ->editColumn('type_budget', function (Cer $cer) {
                 return $cer->type_budget->badge();
             })
