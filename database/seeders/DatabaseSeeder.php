@@ -38,14 +38,14 @@ class DatabaseSeeder extends Seeder
             UomSeeder::class,
         ]);
         Catalog::factory(10)->create();
-        Category::factory(10)->create();
         Dealer::factory(10)->create();
         Leasing::factory(10)->create();
+        Category::factory(2)->create();
         Cluster::factory(10)->create();
         SubCluster::factory(10)->create();
         SubClusterItem::factory(10)->create();
         Unit::factory(10)->create();
-        Asset::factory(10)->create();
+        Asset::factory(20)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
     }

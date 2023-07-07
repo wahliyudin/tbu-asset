@@ -50,6 +50,7 @@ Auth::routes();
 
 Route::middleware(['auth', 'oauth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home/charts', [HomeController::class, 'charts'])->name('home.charts');
 
     Route::get('master/categories', [CategoryController::class, 'index'])->name('masters.categories.index')->middleware('permission:category_read');
     Route::post('master/categories/datatable', [CategoryController::class, 'datatable'])->name('masters.categories.datatable')->middleware('permission:category_read');
