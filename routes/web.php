@@ -6,6 +6,7 @@ use App\Http\Controllers\Approval\ApprovalTransferController;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\Disposes\DisposeController;
+use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
@@ -162,4 +163,6 @@ Route::middleware(['auth', 'oauth'])->group(function () {
     Route::put('settings/access-permission/{user}/update', [AccessPermissionController::class, 'update'])->name('settings.access-permission.update');
 
     Route::post('budgets/datatable', [BudgetController::class, 'datatable'])->name('budgets.datatable');
+
+    Route::get('global/total-approvals', [GlobalController::class, 'totalApprovals'])->name('global.total-approvals');
 });

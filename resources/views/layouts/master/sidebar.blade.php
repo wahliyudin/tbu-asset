@@ -237,7 +237,7 @@
                             </span>
                             <span class="menu-title">Approval</span>
                             <span class="menu-badge">
-                                <span class="badge badge-success">0</span>
+                                <span class="badge badge-success" id="grand-total">0</span>
                             </span>
                             <span class="menu-arrow"></span>
                         </span>
@@ -252,7 +252,7 @@
                                         </span>
                                         <span class="menu-title">Asset Request</span>
                                         <span class="menu-badge">
-                                            <span class="badge badge-success">0</span>
+                                            <span class="badge badge-success" id="asset-request">0</span>
                                         </span>
                                     </a>
                                 </div>
@@ -266,7 +266,7 @@
                                         </span>
                                         <span class="menu-title">Asset Transfer</span>
                                         <span class="menu-badge">
-                                            <span class="badge badge-success">0</span>
+                                            <span class="badge badge-success" id="asset-transfer">0</span>
                                         </span>
                                     </a>
                                 </div>
@@ -280,7 +280,7 @@
                                         </span>
                                         <span class="menu-title">Asset Dispose</span>
                                         <span class="menu-badge">
-                                            <span class="badge badge-success">0</span>
+                                            <span class="badge badge-success" id="asset-dispose">0</span>
                                         </span>
                                     </a>
                                 </div>
