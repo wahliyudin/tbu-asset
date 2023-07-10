@@ -30,7 +30,7 @@ class AssetMasterController extends Controller
             'subClusters' => SubCluster::query()->get(),
             'dealers' => Dealer::query()->get(),
             'leasings' => Leasing::query()->get(),
-            'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])
+            'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection()
         ]);
     }
 

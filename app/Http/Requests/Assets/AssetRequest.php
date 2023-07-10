@@ -32,16 +32,16 @@ class AssetRequest extends FormRequest
             'remark' => ['required'],
             'status' => ['required'],
 
-            // 'dealer_id_leasing' => ['required'],
-            // 'leasing_id_leasing' => ['required'],
-            // 'harga_beli_leasing' => ['required'],
-            // 'jangka_waktu_leasing' => ['required'],
-            // 'biaya_leasing' => ['required'],
-            // 'legalitas_leasing' => ['required'],
+            'dealer_id_leasing' => ['required'],
+            'leasing_id_leasing' => ['required'],
+            'harga_beli_leasing' => ['required'],
+            'jangka_waktu_leasing' => ['required'],
+            'biaya_leasing' => ['required'],
+            'legalitas_leasing' => ['required'],
 
-            // 'jangka_waktu_insurance' => ['required'],
-            // 'biaya_insurance' => ['required'],
-            // 'legalitas_insurance' => ['required'],
+            'jangka_waktu_insurance' => ['required'],
+            'biaya_insurance' => ['required'],
+            'legalitas_insurance' => ['required'],
         ];
     }
 }

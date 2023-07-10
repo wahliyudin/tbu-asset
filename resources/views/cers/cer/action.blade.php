@@ -24,4 +24,12 @@
             </span>
         </button>
     @endpermission
+    @if ($cer->status == \App\Enums\Workflows\Status::CLOSE)
+        <a href="{{ route('asset-requests.register', $cer->getKey()) }}" class="btn btn-sm btn-success ps-4 d-flex">
+            <i class="ki-duotone ki-add-files fs-3">
+                <i class="path1"></i>
+                <i class="path2"></i>
+                <i class="path3"></i>
+            </i>Register</a>
+    @endif
 </div>

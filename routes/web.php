@@ -119,6 +119,8 @@ Route::middleware(['auth', 'oauth'])->group(function () {
     Route::post('asset-requests/store', [CerController::class, 'store'])->name('asset-requests.store')->middleware('permission:asset_request_create');
     Route::get('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit')->middleware('permission:asset_request_update');
     Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy')->middleware('permission:asset_request_delete');
+    Route::get('asset-requests/{cer}/register', [CerController::class, 'register'])->name('asset-requests.register');
+    Route::post('asset-requests/{cer}/register', [CerController::class, 'storeRegister'])->name('asset-requests.store-register');
 
     Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index');
     Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable');

@@ -8,6 +8,7 @@ use App\Enums\Workflows\Status;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
+use App\Services\API\TXIS\CerService as TXISCerService;
 use App\Services\UserService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -72,5 +73,11 @@ class CerService
             $query->where('last_action', LastAction::NOTTING)
                 ->where('nik', auth()->user()?->nik);
         })->get();
+    }
+
+    public function getCerTxis($code)
+    {
+        $data = (new TXISCerService)->getByCode('HU0KWXg803BawMQv');
+        return isset($data['data']) ? $data['data'] : [];
     }
 }
