@@ -143,16 +143,9 @@
                 </thead>
                 <tbody>
                     <tr class="text-center">
-                        <td class="p-1 w-50px">2</td>
-                        <td class="p-1 w-50px">8</td>
-                        <td class="p-1 w-50px">-</td>
-                        <td class="p-1 w-50px">0</td>
-                        <td class="p-1 w-50px">6</td>
-                        <td class="p-1 w-50px">-</td>
-                        <td class="p-1 w-50px">2</td>
-                        <td class="p-1 w-50px">0</td>
-                        <td class="p-1 w-50px">2</td>
-                        <td class="p-1 w-50px">3</td>
+                        @foreach (str(\Carbon\Carbon::make($assetTransfer?->created_at ?? now()->format('d-m-Y'))->format('d-m-Y'))->split(1) as $value)
+                            <td class="p-1 w-50px">{{ $value }}</td>
+                        @endforeach
                     </tr>
                 </tbody>
             </table>

@@ -30,6 +30,7 @@ class AssetTransferData extends Data
         public ?string $justifikasi,
         public ?string $remark,
         public ?string $transfer_date,
+        public ?string $created_at,
         public ?Status $status,
         public ?string $id = null,
         public ?EmployeeData $oldPic,
