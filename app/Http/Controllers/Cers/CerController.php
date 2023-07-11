@@ -91,6 +91,16 @@ class CerController extends Controller
             ->make();
     }
 
+    public function show(Cer $cer)
+    {
+        $cer->load(['items.uom']);
+        $data = CerData::from($cer);
+        return view('cers.cer.show', [
+            'cer' => $data,
+            'employee' => $data->employee,
+        ]);
+    }
+
     public function create()
     {
         return view('cers.cer.create', [

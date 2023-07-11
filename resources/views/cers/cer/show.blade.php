@@ -1,7 +1,6 @@
 @extends('layouts.master')
 
-
-@section('title', 'Approval Show Cer')
+@section('title', 'Show Cer')
 
 @section('toolbar')
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
@@ -12,13 +11,13 @@
                 </h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('approvals.cers.index') }}" class="text-muted text-hover-primary">
-                            Approval Cer </a>
+                        <a href="{{ route('asset-requests.index') }}" class="text-muted text-hover-primary">
+                            Cer </a>
                     </li>
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Approval Show Cer</li>
+                    <li class="breadcrumb-item text-muted">Show Cer</li>
                 </ul>
             </div>
         </div>
@@ -28,7 +27,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-cers.form :isCurrentWorkflow="$isCurrentWorkflow" :cer="$cer" :employee="$employee" :type="'show'" :withWorkflow="true" />
+            <x-cers.form :cer="$cer" :employee="$employee" :type="'show'" />
         </div>
     </div>
 @endsection

@@ -19,6 +19,7 @@ class Form extends Component
         public EmployeeData $employee,
         public ?DataCollection $uoms = null,
         public string $type = '',
+        public bool $withWorkflow = false,
         public bool $isCurrentWorkflow = false,
     ) {
     }

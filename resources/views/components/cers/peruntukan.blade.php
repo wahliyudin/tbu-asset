@@ -8,7 +8,7 @@
                     <div class="form-check form-check-custom">
                         <input class="form-check-input" @disabled($type == 'show') @checked(isset($cer->peruntukan) ? $cer->peruntukan == $peruntukan : $loop->iteration == 1)
                             name="peruntukan" type="radio" value="{{ $peruntukan }}" id="{{ $peruntukan }}" />
-                        <label class="form-check-label fs-6 fw-semibold" for="{{ $peruntukan }}">
+                        <label class="form-check-label fs-6 fw-semibold text-black" for="{{ $peruntukan }}">
                             {{ $peruntukan->label() }}
                         </label>
                     </div>
