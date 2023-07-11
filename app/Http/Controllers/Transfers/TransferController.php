@@ -79,6 +79,14 @@ class TransferController extends Controller
             ->make();
     }
 
+    public function show(AssetTransfer $assetTransfer)
+    {
+        $assetTransfer->load(['asset.unit', 'asset.leasing']);
+        return view('transfers.transfer.show', [
+            'assetTransfer' => AssetTransferData::from($assetTransfer),
+        ]);
+    }
+
     public function create()
     {
         return view('transfers.transfer.create', [

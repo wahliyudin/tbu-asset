@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 
-@section('title', 'Approval Show Transfer')
+@section('title', 'Show Transfer')
 
 @section('toolbar')
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
@@ -12,13 +12,13 @@
                 </h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('approvals.transfers.index') }}" class="text-muted text-hover-primary">
-                            Approval Transfer </a>
+                        <a href="{{ route('asset-transfers.index') }}" class="text-muted text-hover-primary">
+                            Transfer </a>
                     </li>
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Approval Show Transfer</li>
+                    <li class="breadcrumb-item text-muted">Show Transfer</li>
                 </ul>
             </div>
         </div>
@@ -28,7 +28,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-transfers.form :isCurrentWorkflow="$isCurrentWorkflow" :assetTransfer="$assetTransfer" :type="'show'" :withWorkflow="true" />
+            <x-transfers.form :assetTransfer="$assetTransfer" :type="'show'" />
         </div>
     </div>
 @endsection

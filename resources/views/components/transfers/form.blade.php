@@ -8,14 +8,16 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
-                    <i class="ki-duotone ki-search-list fs-2">
-                        <i class="path1"></i>
-                        <i class="path2"></i>
-                        <i class="path3"></i>
-                    </i>Pilih Asset</button>
-            </div>
+            @if ($type != 'show')
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
+                        <i class="ki-duotone ki-search-list fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                            <i class="path3"></i>
+                        </i>Pilih Asset</button>
+                </div>
+            @endif
             <h5>Dengan ini mengajukan permintaan pemindahan (transfer) asset dengan data berikut: (*)</h5>
             <table class="w-100 ms-8 mt-4">
                 <tbody>
@@ -210,7 +212,7 @@
             <p class="m-0">(Diisi apabila proses transfer disetujui)</p>
         </div>
     </div>
-    @if ($type == 'show')
+    @if ($type == 'show' && $withWorkflow)
         <div class="row mt-8">
             <div class="col-md-12">
                 <div class="d-flex justify-content-center">
