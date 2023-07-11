@@ -168,7 +168,7 @@
             </button>
         </div>
     @endif
-    @if ($type == 'show')
+    @if ($type == 'show' && $withWorkflow)
         <div class="row mt-8">
             <div class="col-md-12">
                 <div class="d-flex justify-content-center">

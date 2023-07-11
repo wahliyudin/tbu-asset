@@ -138,6 +138,7 @@ Route::middleware(['auth', 'oauth'])->group(function () {
     Route::post('asset-disposes/datatable-asset', [DisposeController::class, 'datatableAsset'])->name('asset-disposes.datatable-asset');
     Route::get('asset-disposes/create', [DisposeController::class, 'create'])->name('asset-disposes.create');
     Route::post('asset-disposes/store', [DisposeController::class, 'store'])->name('asset-disposes.store');
+    Route::get('asset-disposes/{assetDispose}/show', [DisposeController::class, 'show'])->name('asset-disposes.show');
     Route::get('asset-disposes/{assetDispose}/edit', [DisposeController::class, 'edit'])->name('asset-disposes.edit');
     Route::delete('asset-disposes/{assetDispose}/destroy', [DisposeController::class, 'destroy'])->name('asset-disposes.destroy');
 

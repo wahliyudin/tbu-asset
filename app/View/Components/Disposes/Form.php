@@ -17,6 +17,7 @@ class Form extends Component
         public ?AssetDisposeData $assetDispose,
         public EmployeeData $employee,
         public string $type = '',
+        public bool $withWorkflow = false,
         public bool $isCurrentWorkflow = false,
     ) {
     }

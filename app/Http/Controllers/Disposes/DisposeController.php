@@ -82,6 +82,16 @@ class DisposeController extends Controller
             ->make();
     }
 
+    public function show(AssetDispose $assetDispose)
+    {
+        $assetDispose->load(['asset.unit']);
+        $data = AssetDisposeData::from($assetDispose);
+        return view('disposes.dispose.show', [
+            'assetDispose' => $data,
+            'employee' => $data->employee,
+        ]);
+    }
+
     public function create()
     {
         $employee = EmployeeData::from(GlobalService::getEmployee(null, true));
