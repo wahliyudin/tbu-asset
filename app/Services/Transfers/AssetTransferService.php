@@ -18,7 +18,7 @@ class AssetTransferService
 
     public function all()
     {
-        return AssetTransfer::query()->with('asset')->get();
+        return AssetTransfer::query()->where('nik', auth()->user()?->nik)->with('asset')->get();
     }
 
     public function allToAssetTransferData()

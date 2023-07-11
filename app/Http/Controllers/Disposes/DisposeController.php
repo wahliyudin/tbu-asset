@@ -39,10 +39,10 @@ class DisposeController extends Controller
                 return $assetDispose->pelaksanaan->badge();
             })
             ->editColumn('nilai_buku', function (AssetDispose $assetDispose) {
-                return Helper::formatRupiah($assetDispose->nilai_buku);
+                return Helper::formatRupiah($assetDispose->nilai_buku, true);
             })
             ->editColumn('est_harga_pasar', function (AssetDispose $assetDispose) {
-                return Helper::formatRupiah($assetDispose->est_harga_pasar);
+                return Helper::formatRupiah($assetDispose->est_harga_pasar, true);
             })
             ->editColumn('status', function (AssetDispose $assetDispose) {
                 return $assetDispose->status->badge();

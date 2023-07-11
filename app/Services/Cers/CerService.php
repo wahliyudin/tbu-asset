@@ -23,7 +23,7 @@ class CerService
 
     public function all()
     {
-        return Cer::query()->get();
+        return Cer::query()->where('nik', auth()->user()?->nik)->get();
     }
 
     public function updateOrCreate(CerData $data)

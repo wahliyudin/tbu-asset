@@ -14,7 +14,7 @@ class AssetDisposeService
 {
     public function all()
     {
-        return AssetDispose::query()->get();
+        return AssetDispose::query()->where('nik', auth()->user()?->nik)->get();
     }
 
     public function updateOrCreate(AssetDisposeRequest $request)

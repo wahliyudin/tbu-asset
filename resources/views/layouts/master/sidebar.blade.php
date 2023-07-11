@@ -296,6 +296,28 @@
                                 <i class="path2"></i>
                             </i>
                         </span>
+                        <span class="menu-title">Report</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Asset Request</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-setting fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                            </i>
+                        </span>
                         <span class="menu-title">Setting</span>
                         <span class="menu-arrow"></span>
                     </span>

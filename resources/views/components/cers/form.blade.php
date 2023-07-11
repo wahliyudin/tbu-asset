@@ -19,6 +19,8 @@
                         <td class="fs-6 fw-semibold w-150px">Department</td>
                         <td>:</td>
                         <td>
+                            <input type="hidden" name="deptcode"
+                                value="{{ $employee->position->department->budget_dept_code }}">
                             {{ $employee->position->department->department_name }}
                         </td>
                     </tr>
@@ -181,8 +183,8 @@
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
                             </td>
                             <td class="w-250px">
-                                <input type="text" class="form-control" readonly value="{{ $cer->budget?->periode }}"
-                                    name="budget_periode">
+                                <input type="text" class="form-control" readonly
+                                    value="{{ $cer->budget?->periode }}" name="budget_periode">
                             </td>
                         </tr>
                     </tbody>

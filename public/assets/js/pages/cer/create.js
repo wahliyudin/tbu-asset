@@ -82,7 +82,10 @@ var KTModalCersAdd = function () {
             ],
             ajax: {
                 type: "POST",
-                url: "/budgets/datatable"
+                url: "/budgets/datatable",
+                data: {
+                    'deptcode': $('input[name="deptcode"').val()
+                }
             },
             columns: [{
                 name: 'action',

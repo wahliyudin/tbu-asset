@@ -6,6 +6,7 @@ use App\DataTransferObjects\API\TXIS\BudgetData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\API\TXIS\BudgetService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class BudgetController extends Controller
@@ -15,9 +16,9 @@ class BudgetController extends Controller
     ) {
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        $budgets = $this->budgetService->all();
+        $budgets = $this->budgetService->all($request->deptcode);
         return DataTables::of(BudgetData::collection(isset($budgets['data']) ? $budgets['data'] : [])->toCollection())
             ->editColumn('kode', function (BudgetData $budgetData) {
                 return $budgetData->kode;
