@@ -48,7 +48,7 @@
                     <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                         data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                         data-kt-menu-placement="bottom-end">
-                        <img src="../../../assets/media/avatars/300-3.jpg" alt="user" />
+                        <img src="{{ asset('assets/media/avatars/profile.png') }}" alt="user" />
                     </div>
 
                     <!--begin::User account menu-->
@@ -59,7 +59,7 @@
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5">
-                                    <img alt="Logo" src="../../../assets/media/avatars/300-3.jpg" />
+                                    <img alt="Logo" src="{{ asset('assets/media/avatars/profile.png') }}" />
                                 </div>
                                 <!--end::Avatar-->
 
