@@ -15,6 +15,7 @@ use App\Models\Masters\Leasing;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\SubClusterItem;
 use App\Models\Masters\Unit;
+use App\Models\Permission;
 use App\Models\User;
 use Database\Seeders\Masters\UomSeeder;
 use Illuminate\Database\Seeder;
@@ -27,15 +28,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->create([
-            'nik' => 11180627,
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make(1234567890),
-        ]);
         $this->call([
             SidebarWithPermissionSeeder::class,
             UomSeeder::class,
+            ApprovalSeeder::class,
         ]);
         Catalog::factory(10)->create();
         Dealer::factory(10)->create();
@@ -48,5 +44,13 @@ class DatabaseSeeder extends Seeder
         Asset::factory(20)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
+
+        $user = User::query()->create([
+            'nik' => 12345678,
+            'name' => 'Administrator',
+            'email' => 'administrator@tbu.co.id',
+            'password' => Hash::make(1234567890),
+        ]);
+        $user->permissions()->sync(Permission::query()->pluck('id')->toArray());
     }
 }

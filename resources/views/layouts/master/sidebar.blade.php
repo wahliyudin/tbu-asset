@@ -4,7 +4,8 @@
 
     <div class="app-sidebar-logo h-100px px-6" id="kt_app_sidebar_logo">
         <a href="{{ route('home') }}">
-            <img alt="Logo" src="{{ asset('assets/logo.png') }}" class="h-100px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{ asset('assets/media/logos/tbu.png') }}" style="width: 90%;"
+                class=" app-sidebar-logo-default bg-white px-4 py-2 rounded" />
         </a>
 
         <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-sm h-30px w-30px rotate active"
