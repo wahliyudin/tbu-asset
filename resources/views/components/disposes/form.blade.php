@@ -170,31 +170,7 @@
     @endif
     @if ($type == 'show' && $withWorkflow)
         <div class="row mt-8">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-center">
-                    @foreach ($assetDispose->workflows as $workflow)
-                        <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
-                            style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($assetDispose->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
-                            <div class="border text-center text-white p-1 d-flex flex-column">
-                                <p class="m-0 fw-bold" style="font-size: 12px;">
-                                    {{ $workflow->title }}
-                                    By
-                                </p>
-                                <p class="m-0">{{ $workflow?->employee?->nama_karyawan }}</p>
-                            </div>
-                            <div class="border text-center text-white p-1 d-flex flex-column">
-                                <p class="m-0 fw-bold" style="font-size: 12px;">
-                                    {{ $workflow->title }}
-                                    On
-                                </p>
-                                <p class="m-0">
-                                    {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->last_action_date : '-' }}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+            <x-approval :workflows="$assetDispose->workflows" />
             <div class="col-md-12 d-flex justify-content-start mt-4">
                 @permission('asset_dispose_approv')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
