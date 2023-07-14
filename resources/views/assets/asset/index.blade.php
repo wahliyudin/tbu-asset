@@ -34,7 +34,7 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-asset-table-filter="search"
+                    <input type="text" name="search" data-kt-asset-table-filter="search"
                         class="form-control form-control-solid w-250px ps-13" placeholder="Cari Asset" />
                 </div>
             </div>

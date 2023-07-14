@@ -15,7 +15,7 @@ class AssetRepository
     public function updateOrCreate(AssetData $data)
     {
         return $this->model->query()->updateOrCreate([
-            'id' => $data->key
+            'id' => $data->getKey()
         ], [
             'kode' => $data->kode,
             'unit_id' => $data->unit_id,

@@ -2,7 +2,7 @@
 
 namespace App\Elasticsearch\Traits;
 
-use App\Elasticsearch\Contracts\ModelElasticsearchInterface;
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,8 +10,8 @@ trait CheckerTrait
 {
     public function checkModelMustImplementInterface(Model $model)
     {
-        if (!$model instanceof ModelElasticsearchInterface) {
-            throw new Exception("The model must implement " . ModelElasticsearchInterface::class);
+        if (!$model instanceof ElasticsearchInterface) {
+            throw new Exception("The model must implement " . ElasticsearchInterface::class);
         }
     }
 }

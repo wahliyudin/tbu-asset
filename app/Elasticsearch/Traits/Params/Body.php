@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Elasticsearch;
+namespace App\Elasticsearch\Traits\Params;
 
-class BodyBuilder extends QueryBuilder
+trait Body
 {
+    use Setting, Query;
+
     private array $body = [];
 
     protected function setAttributes(array $attributes)
@@ -23,6 +25,7 @@ class BodyBuilder extends QueryBuilder
     protected function getBody(): array
     {
         $this->prepareQuery();
+        $this->prepareSettings();
         return $this->body;
     }
 
@@ -39,6 +42,15 @@ class BodyBuilder extends QueryBuilder
         if (count($this->getQuery()) > 0) {
             $this->body = array_merge($this->body, [
                 'query' => $this->getQuery()
+            ]);
+        }
+    }
+
+    private function prepareSettings()
+    {
+        if (count($this->getSettings()) > 0) {
+            $this->body = array_merge($this->body, [
+                'settings' => $this->getSettings()
             ]);
         }
     }

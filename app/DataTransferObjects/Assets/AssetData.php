@@ -4,11 +4,11 @@ namespace App\DataTransferObjects\Assets;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Masters\UnitData;
+use App\Interfaces\DataInterface;
 use App\Services\GlobalService;
-use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
-class AssetData extends Data
+class AssetData extends Data implements DataInterface
 {
     public function __construct(
         public string $kode,
@@ -29,11 +29,18 @@ class AssetData extends Data
         public string $remark,
         public string $status,
         public ?string $key = null,
+        public ?string $id = null,
         public ?AssetInsuranceData $insurance,
         public ?AssetLeasingData $leasing,
+        public ?DeprecationData $deprecation,
         public ?UnitData $unit,
         public ?EmployeeData $employee,
     ) {
         $this->employee = EmployeeData::from(GlobalService::getEmployee($this->pic));
+    }
+
+    public function getKey(): string|null
+    {
+        return $this?->key ?? $this?->id;
     }
 }

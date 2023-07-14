@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Assets;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
+use App\DataTransferObjects\Assets\AssetData;
+use App\Facades\Elasticsearch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
@@ -34,28 +36,28 @@ class AssetMasterController extends Controller
         ]);
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('kode', function (Asset $asset) {
-                return $asset->kode;
+        return DataTables::collection($this->service->all($request->get('search')))
+            ->editColumn('kode', function ($asset) {
+                return $asset->_source->kode;
             })
-            ->editColumn('kode_unit', function (Asset $asset) {
-                return $asset->unit?->kode;
+            ->editColumn('kode_unit', function ($asset) {
+                return $asset->_source->unit?->kode;
             })
-            ->editColumn('unit_model', function (Asset $asset) {
-                return $asset->unit?->model;
+            ->editColumn('unit_model', function ($asset) {
+                return $asset->_source->unit?->model;
             })
-            ->editColumn('unit_type', function (Asset $asset) {
-                return $asset->unit?->type;
+            ->editColumn('unit_type', function ($asset) {
+                return $asset->_source->unit?->type;
             })
-            ->editColumn('asset_location', function (Asset $asset) {
-                return $asset->asset_location;
+            ->editColumn('asset_location', function ($asset) {
+                return $asset->_source->asset_location;
             })
-            ->editColumn('pic', function (Asset $asset) {
-                return $asset->pic;
+            ->editColumn('pic', function ($asset) {
+                return $asset->_source->employee?->nama_karyawan ?? $asset->_source->pic;
             })
-            ->editColumn('action', function (Asset $asset) {
+            ->editColumn('action', function ($asset) {
                 return view('assets.asset.action', compact('asset'))->render();
             })
             ->rawColumns(['action'])
@@ -74,10 +76,10 @@ class AssetMasterController extends Controller
         }
     }
 
-    public function edit(Asset $asset)
+    public function edit($id)
     {
         try {
-            return response()->json($this->service->getDataForEdit($asset));
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }

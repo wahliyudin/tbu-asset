@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\DataTransferObjects\Assets\AssetData;
+use App\Facades\Elasticsearch;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetInsurance;
 use App\Models\Assets\AssetLeasing;
@@ -41,7 +43,7 @@ class DatabaseSeeder extends Seeder
         SubCluster::factory(10)->create();
         SubClusterItem::factory(10)->create();
         Unit::factory(10)->create();
-        Asset::factory(20)->create();
+        Asset::factory(300)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
 
@@ -52,5 +54,15 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(1234567890),
         ]);
         $user->permissions()->sync(Permission::query()->pluck('id')->toArray());
+
+        $this->command->info('Start Get data asset');
+        $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing'])->get();
+        $this->command->info('End Get data asset');
+        $this->command->info('Start Cleared assets');
+        Elasticsearch::setModel(Asset::class)->cleared();
+        $this->command->info('End Cleared assets');
+        $this->command->info('Start Bulk assets');
+        Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
+        $this->command->info('End Bulk assets');
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Elasticsearch;
+namespace App\Elasticsearch\Traits\Params;
 
-class QueryBuilder
+trait Query
 {
     private array $query = [];
 
@@ -14,7 +14,7 @@ class QueryBuilder
     protected function matchAll(array $query = [])
     {
         $this->query = array_merge($this->query, [
-            'match_all' => $query
+            'match_all' => (object) $query
         ]);
         return $this;
     }

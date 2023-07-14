@@ -2,10 +2,13 @@
 
 namespace App\Elasticsearch;
 
+use App\Elasticsearch\Traits\Params\Body;
 use Illuminate\Support\Arr;
 
-abstract class ParamBuilder extends BodyBuilder
+abstract class ParamBuilder
 {
+    use Body;
+
     private array $params = [];
 
     private array $withouts = [];

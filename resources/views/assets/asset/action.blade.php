@@ -1,6 +1,7 @@
 <div class="d-flex align-items-center gap-2">
     @permission('asset_master_update')
-        <button type="button" data-asset="{{ $asset->getKey() }}" class="btn btn-sm btn-primary ps-4 btn-edit">
+        <button type="button" data-asset="{{ $asset->_source->id ?? $asset->_source->key }}"
+            class="btn btn-sm btn-primary ps-4 btn-edit">
             <span class="indicator-label">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ki-duotone ki-notepad-edit fs-3">
@@ -15,7 +16,8 @@
         </button>
     @endpermission
     @permission('asset_master_delete')
-        <button type="button" data-asset="{{ $asset->getKey() }}" class="btn btn-sm btn-danger ps-4 btn-delete">
+        <button type="button" data-asset="{{ $asset->_source->id ?? $asset->_source->key }}"
+            class="btn btn-sm btn-danger ps-4 btn-delete">
             <span class="indicator-label">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ki-duotone ki-trash fs-3">

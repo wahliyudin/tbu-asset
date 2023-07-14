@@ -2,6 +2,7 @@
 
 namespace App\Models\Assets;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Enums\Asset\Status;
 use App\Models\Assets\AssetInsurance;
 use App\Models\Assets\AssetLeasing;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Asset extends Model
+class Asset extends Model implements ElasticsearchInterface
 {
     use HasFactory;
 
@@ -41,6 +42,11 @@ class Asset extends Model
     protected $casts = [
         'status' => Status::class
     ];
+
+    public function indexName(): string
+    {
+        return 'assets';
+    }
 
     public function unit(): BelongsTo
     {

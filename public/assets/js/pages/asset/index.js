@@ -51,11 +51,14 @@ var AssetsList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/asset-masters/datatable"
+                url: "/asset-masters/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -106,7 +109,8 @@ var AssetsList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            // datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 
@@ -146,7 +150,9 @@ var AssetsList = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: handleError
+                        error: function (jqXHR) {
+                            handleError(jqXHR, target);
+                        }
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -398,7 +404,9 @@ var AssetsList = function () {
                                     }
                                 });
                             },
-                            error: handleError
+                            error: function (jqXHR) {
+                                handleError(jqXHR, submitButton);
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -573,10 +581,10 @@ var AssetsList = function () {
         $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.insurance?.legalitas);
     }
 
-    var handleError = function (jqXHR) {
-        submitButton.removeAttribute('data-kt-indicator');
-        submitButton.disabled = false;
-        if (jqXHR.status == 422) {
+    var handleError = function (jqXHR, target) {
+        $(target).removeAttr("data-kt-indicator");
+        target.disabled = false;
+        if (jqXHR.status == 422 || jqXHR.responseJSON.message.includes("404")) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Peringatan!',
@@ -614,7 +622,9 @@ var AssetsList = function () {
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
-                error: handleError
+                error: function (jqXHR) {
+                    handleError(jqXHR, target);
+                }
             });
         });
     }
