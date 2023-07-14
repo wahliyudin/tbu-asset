@@ -55,7 +55,7 @@
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">Name</th>
-                        <th class="text-end min-w-70px">Actions</th>
+                        <th class="text-end min-w-70px" style="max-width: 300px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">

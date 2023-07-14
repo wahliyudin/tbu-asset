@@ -82,6 +82,7 @@ class Elasticsearch extends ParamBuilder
     public function cleared()
     {
         $this->clientBuilder->deleteByQuery($this->withoutType()->matchAll()->getParams());
+        $this->model->delete();
         return $this;
     }
 

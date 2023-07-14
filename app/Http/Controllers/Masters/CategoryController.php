@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Masters;
 
 use App\DataTransferObjects\Masters\CategoryData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Masters\CategoryRequest;
 use App\Models\Masters\Category;
 use App\Services\Masters\CategoryService;
 use Yajra\DataTables\Facades\DataTables;
@@ -24,7 +23,10 @@ class CategoryController extends Controller
     public function datatable()
     {
         return DataTables::of($this->service->all())
-            ->editColumn('action', function (Category $category) {
+            ->editColumn('name', function ($category) {
+                return $category->_source->name;
+            })
+            ->editColumn('action', function ($category) {
                 return view('masters.category.action', compact('category'))->render();
             })
             ->rawColumns(['action'])
@@ -43,10 +45,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function edit(Category $category)
+    public function edit($id)
     {
         try {
-            return response()->json($category);
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }
