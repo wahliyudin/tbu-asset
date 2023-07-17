@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\CategoryData;
 use App\Http\Controllers\Controller;
 use App\Models\Masters\Category;
 use App\Services\Masters\CategoryService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
@@ -20,9 +21,9 @@ class CategoryController extends Controller
         return view('masters.category.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
+        return DataTables::of($this->service->all($request->get('search')))
             ->editColumn('name', function ($category) {
                 return $category->_source->name;
             })

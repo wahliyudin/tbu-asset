@@ -37,6 +37,7 @@ class CategoryService
 
     private function sendToElasticsearch(Category $category, $key)
     {
+        $category->load(['clusters.subClusters.subClusterItems']);
         if ($key) {
             return Elasticsearch::setModel(Category::class)->updated(CategoryData::from($category));
         }

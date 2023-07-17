@@ -19,6 +19,9 @@ use App\Models\Masters\SubClusterItem;
 use App\Models\Masters\Unit;
 use App\Models\Permission;
 use App\Models\User;
+use Database\Seeders\Assets\AssetSeeder;
+use Database\Seeders\Masters\CategorySeeder;
+use Database\Seeders\Masters\ClusterSeeder;
 use Database\Seeders\Masters\UomSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +46,7 @@ class DatabaseSeeder extends Seeder
         SubCluster::factory(10)->create();
         SubClusterItem::factory(10)->create();
         Unit::factory(10)->create();
-        Asset::factory(300)->create();
+        Asset::factory(50)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
 
@@ -55,14 +58,10 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->permissions()->sync(Permission::query()->pluck('id')->toArray());
 
-        $this->command->info('Start Get data asset');
-        $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing'])->get();
-        $this->command->info('End Get data asset');
-        $this->command->info('Start Cleared assets');
-        Elasticsearch::setModel(Asset::class)->cleared();
-        $this->command->info('End Cleared assets');
-        $this->command->info('Start Bulk assets');
-        Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
-        $this->command->info('End Bulk assets');
+        $this->call([
+            AssetSeeder::class,
+            CategorySeeder::class,
+            ClusterSeeder::class,
+        ]);
     }
 }
