@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Masters;
 
 use App\DataTransferObjects\Masters\ClusterData;
-use App\Facades\Elasticsearch;
 use App\Http\Controllers\Controller;
 use App\Models\Masters\Cluster;
 use App\Services\Masters\CategoryService;
