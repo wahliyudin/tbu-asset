@@ -24,6 +24,7 @@ class GlobalService
 
     public static function getEmployees(array $attributes)
     {
-        return EmployeeData::collection((new EmployeeService)->getData()['data'])->only(...$attributes);
+        $employee = (new EmployeeService)->getData();
+        return EmployeeData::collection(isset($employee['data']) ? $employee['data'] : [])->only(...$attributes);
     }
 }

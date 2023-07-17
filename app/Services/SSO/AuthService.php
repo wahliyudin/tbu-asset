@@ -2,7 +2,7 @@
 
 namespace App\Services\SSO;
 
-use App\DataTransferObjects\API\HRIS\UserDto;
+use App\DataTransferObjects\API\HRIS\UserData;
 use App\DataTransferObjects\SSO\TokenDto;
 use App\Repositories\SSO\OauthTokenRepository;
 use App\Services\API\HRIS\UserService;
@@ -56,7 +56,8 @@ class AuthService
             ]
         );
         $tokenDto = TokenDto::fromJson($response->json());
-        $user = $this->userService->storeToUserModel(UserDto::fromResponse($this->userService->first($tokenDto->access_token)));
+        $res = $this->userService->first($tokenDto->access_token);
+        $user = $this->userService->storeToUserModel(UserData::from(isset($res['data']) ? $res['data'] : []));
         $this->oauthTokenRepository->store($tokenDto, $user->getKey());
         Auth::login($user);
         return $user;

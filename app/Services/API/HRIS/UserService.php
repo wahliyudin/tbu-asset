@@ -2,7 +2,7 @@
 
 namespace App\Services\API\HRIS;
 
-use App\DataTransferObjects\API\HRIS\UserDto;
+use App\DataTransferObjects\API\HRIS\UserData;
 use App\Models\User;
 use App\Services\API\HRIS\Contracts\HRISService;
 
@@ -20,15 +20,15 @@ class UserService extends HRISService
         return $this->get($this->url(), token: $token)->json();
     }
 
-    public function storeToUserModel(UserDto $dto)
+    public function storeToUserModel(UserData $data)
     {
         return User::query()->updateOrCreate([
-            'nik' => $dto->nik,
+            'nik' => $data->nik,
         ], [
-            'nik' => $dto->nik,
-            'name' => $dto->name,
-            'email' => $dto->email,
-            'password' => $dto->password,
+            'nik' => $data->nik,
+            'name' => $data->employee?->nama_karyawan,
+            'email' => $data->email,
+            'password' => $data->password,
         ]);
     }
 }

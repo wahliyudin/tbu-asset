@@ -629,6 +629,39 @@ var AssetsList = function () {
         });
     }
 
+    var formImport = () => {
+        $('#import-asset_submit').click(function (e) {
+            e.preventDefault();
+            var submitBtn = $('#import-asset_submit');
+            var postData = new FormData($(`#import-asset`)[0]);
+            submitBtn.attr("data-kt-indicator", "on");
+            $.ajax({
+                type: 'POST',
+                url: "/asset-masters/import",
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function (response) {
+                    submitBtn.removeAttribute('data-kt-indicator');
+                    Swal.fire({
+                        text: "Form has been successfully submitted!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    }).then(function (result) {
+                        datatable.ajax.reload();
+                    });
+                },
+                error: function (jqXHR) {
+                    handleError(jqXHR, submitBtn);
+                }
+            });
+        });
+    }
+
     return {
         init: function () {
             $.ajaxSetup({
