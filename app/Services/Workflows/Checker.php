@@ -38,4 +38,10 @@ class Checker
     {
         return count($this->model->workflows) == 1;
     }
+
+    public function nextWorkflow()
+    {
+        $this->load();
+        return $this->currentWorkflow();
+    }
 }

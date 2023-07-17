@@ -85,7 +85,7 @@ abstract class Workflow extends Checker
     public function store()
     {
         $workflowDatas = $this->approvals();
-
+        $this->handleStoreWorkflow();
         return WorkflowRepository::store($this->model, $workflowDatas->toArray());
     }
 

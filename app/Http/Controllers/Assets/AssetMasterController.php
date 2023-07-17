@@ -7,6 +7,7 @@ use App\DataTransferObjects\Assets\AssetData;
 use App\Facades\Elasticsearch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
+use App\Http\Requests\Assets\ImportRequest;
 use App\Models\Assets\Asset;
 use App\Models\Masters\Dealer;
 use App\Models\Masters\Leasing;
@@ -91,6 +92,18 @@ class AssetMasterController extends Controller
             $this->service->delete($asset);
             return response()->json([
                 'message' => 'Berhasil dihapus'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function import(ImportRequest $request)
+    {
+        try {
+            $this->service->import($request);
+            return response()->json([
+                'message' => 'Successfully Imported'
             ]);
         } catch (\Throwable $th) {
             throw $th;
