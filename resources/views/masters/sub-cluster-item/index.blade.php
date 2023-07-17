@@ -34,7 +34,7 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-sub-cluster-item-table-filter="search"
+                    <input type="text" name="search" data-kt-sub-cluster-item-table-filter="search"
                         class="form-control form-control-solid w-250px ps-13" placeholder="Cari Sub Cluster Item" />
                 </div>
             </div>
@@ -88,7 +88,7 @@
                                 data-placeholder="Sub Cluster" data-dropdown-parent="#create-sub-cluster-item">
                                 <option></option>
                                 @foreach ($subClusters as $subCluster)
-                                    <option value="{{ $subCluster->getKey() }}">{{ $subCluster->name }}</option>
+                                    <option value="{{ $subCluster->_id }}">{{ $subCluster->_source->name }}</option>
                                 @endforeach
                             </select>
                         </div>

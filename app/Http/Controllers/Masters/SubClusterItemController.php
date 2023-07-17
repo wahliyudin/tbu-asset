@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Masters\SubClusterItem;
 use App\Services\Masters\SubClusterItemService;
 use App\Services\Masters\SubClusterService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class SubClusterItemController extends Controller
@@ -25,13 +26,16 @@ class SubClusterItemController extends Controller
         ]);
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('sub_cluster', function (SubClusterItem $subClusterItem) {
-                return $subClusterItem->subCluster?->name;
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('sub_cluster', function ($subClusterItem) {
+                return $subClusterItem->_source->sub_cluster?->name;
             })
-            ->editColumn('action', function (SubClusterItem $subClusterItem) {
+            ->editColumn('name', function ($subClusterItem) {
+                return $subClusterItem->_source->name;
+            })
+            ->editColumn('action', function ($subClusterItem) {
                 return view('masters.sub-cluster-item.action', compact('subClusterItem'))->render();
             })
             ->rawColumns(['action'])
@@ -50,10 +54,10 @@ class SubClusterItemController extends Controller
         }
     }
 
-    public function edit(SubClusterItem $subClusterItem)
+    public function edit($id)
     {
         try {
-            return response()->json($subClusterItem);
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }
