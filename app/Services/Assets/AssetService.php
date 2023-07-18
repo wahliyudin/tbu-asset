@@ -8,13 +8,10 @@ use App\DataTransferObjects\Assets\AssetLeasingData;
 use App\Enums\Asset\Status;
 use App\Facades\Elasticsearch;
 use App\Http\Requests\Assets\AssetRequest;
-use App\Http\Requests\Assets\ImportRequest;
-use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
-use Maatwebsite\Excel\Facades\Excel;
 
 class AssetService
 {
@@ -64,17 +61,18 @@ class AssetService
         return $asset->delete();
     }
 
-    public function import(ImportRequest $request)
+    public function import(array $data)
     {
         Elasticsearch::setModel(Asset::class)->cleared();
-        Excel::import(new AssetImport(), $request->file('file'));
-        return $this->bulk();
+        Asset::query()->delete();
+        Asset::query()->upsert($data, 'id');
+        $this->bulk();
     }
 
     public function bulk()
     {
         $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing'])->get();
-        return Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
+        Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
     }
 
     private function sendToElasticsearch(Asset $asset, $key)

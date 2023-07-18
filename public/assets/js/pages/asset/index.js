@@ -633,7 +633,7 @@ var AssetsList = function () {
         $('#import-asset_submit').click(function (e) {
             e.preventDefault();
             var submitBtn = $('#import-asset_submit');
-            var postData = new FormData($(`#import-asset`)[0]);
+            var postData = new FormData($(`#import-asset_form`)[0]);
             submitBtn.attr("data-kt-indicator", "on");
             $.ajax({
                 type: 'POST',
@@ -642,7 +642,7 @@ var AssetsList = function () {
                 contentType: false,
                 data: postData,
                 success: function (response) {
-                    submitBtn.removeAttribute('data-kt-indicator');
+                    submitBtn.removeAttr('data-kt-indicator');
                     Swal.fire({
                         text: "Form has been successfully submitted!",
                         icon: "success",
@@ -653,6 +653,7 @@ var AssetsList = function () {
                         }
                     }).then(function (result) {
                         datatable.ajax.reload();
+                        $('#import-asset').modal('hide');
                     });
                 },
                 error: function (jqXHR) {
@@ -689,6 +690,7 @@ var AssetsList = function () {
             buttonCreate();
             buttonEdit();
             initPlugins();
+            formImport();
         }
     }
 }();

@@ -42,7 +42,8 @@
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-asset-table-toolbar="base">
                     @permission('asset_master_create')
-                        <button type="button" class="btn btn-secondary ps-4 me-4" data-bs-toggle="modal"
+                        <a href="{{ route('asset-masters.format') }}" class="btn btn-secondary me-4">Download Format</a>
+                        <button type="button" class="btn btn-info ps-4 me-4" data-bs-toggle="modal"
                             data-bs-target="#import-asset">
                             <i class="ki-duotone ki-cloud-download fs-2">
                                 <i class="path1"></i>
@@ -127,7 +128,7 @@
                 </div>
                 <div class="modal-body px-lg-17">
                     <form class="form" action="#" id="import-asset_form">
-                        <input type="file" class="form-control"
+                        <input type="file" name="file" class="form-control"
                             accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
                     </form>
                 </div>

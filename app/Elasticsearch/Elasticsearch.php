@@ -7,8 +7,6 @@ use App\Interfaces\DataInterface;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 
 class Elasticsearch extends ParamBuilder
@@ -49,8 +47,10 @@ class Elasticsearch extends ParamBuilder
 
             $params['body'][] = $record->toArray();
         }
+        if (count(isset($params['body']) ? $params['body'] : []) <= 0) {
+            return;
+        }
         $this->clientBuilder->bulk($params);
-        return $this;
     }
 
     public function find($id)

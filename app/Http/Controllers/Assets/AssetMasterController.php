@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Assets;
 
-use App\DataTransferObjects\API\HRIS\EmployeeData;
-use App\DataTransferObjects\Assets\AssetData;
-use App\Facades\Elasticsearch;
+use App\Excels\Assets\Asset as AssetsAsset;
+use App\Exports\Assets\AssetExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Assets\ImportRequest;
+use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
 use App\Models\Masters\Dealer;
 use App\Models\Masters\Leasing;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
-use App\Services\API\HRIS\EmployeeService;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller
@@ -101,12 +101,17 @@ class AssetMasterController extends Controller
     public function import(ImportRequest $request)
     {
         try {
-            $this->service->import($request);
+            Excel::import(new AssetImport(), $request->file('file'));
             return response()->json([
                 'message' => 'Successfully Imported'
             ]);
         } catch (\Throwable $th) {
             throw $th;
         }
+    }
+
+    public function format()
+    {
+        return response()->download((new AssetsAsset)->generate());
     }
 }
