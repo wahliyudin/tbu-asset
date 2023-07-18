@@ -7,6 +7,7 @@ use App\Facades\Assets\AssetService;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Models\Masters\Uom;
+use App\Services\GlobalService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
@@ -36,6 +37,7 @@ class AssetImport implements ToArray, WithHeadingRow
             $val['uom'] = Uom::query()->where('name', $val['uom'])->first()?->getKey();
             $val['status'] = Status::from($val['status']);
             $val['tgl_bast'] = Carbon::instance(Date::excelToDateTimeObject($val['tgl_bast']))->format('Y-m-d');
+            $val['pic'] = GlobalService::getEmployeeByNamaKaryawan($val['pic'])->nik;
             unset($val['unit']);
             unset($val['sub_cluster']);
             array_push($results, $val);
