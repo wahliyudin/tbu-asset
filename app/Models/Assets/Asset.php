@@ -9,6 +9,7 @@ use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
+use App\Models\Masters\Uom;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,12 +24,11 @@ class Asset extends Model implements ElasticsearchInterface
         'kode',
         'unit_id',
         'sub_cluster_id',
-        'member_name',
         'pic',
         'activity',
         'asset_location',
         'kondisi',
-        'uom',
+        'uom_id',
         'quantity',
         'tgl_bast',
         'hm',
@@ -76,5 +76,10 @@ class Asset extends Model implements ElasticsearchInterface
     public function leasing()
     {
         return $this->hasOne(AssetLeasing::class);
+    }
+
+    public function uom()
+    {
+        return $this->belongsTo(Uom::class);
     }
 }

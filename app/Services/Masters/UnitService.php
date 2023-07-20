@@ -32,6 +32,28 @@ class UnitService
         return $unit;
     }
 
+
+    public static function store(UnitData $data)
+    {
+        if ($unit = Unit::query()
+            ->where('kode', 'like', $data->kode)
+            ->orWhere('model', 'like', $data->model)
+            ->first()) {
+            return $unit;
+        }
+        return Unit::query()->create([
+            'kode' => $data->kode,
+            'model' => $data->model,
+            'type' => $data->type,
+            'seri' => $data->seri,
+            'class' => $data->class,
+            'brand' => $data->brand,
+            'serial_number' => $data->serial_number,
+            'spesification' => $data->spesification,
+            'tahun_pembuatan' => $data->tahun_pembuatan,
+        ]);
+    }
+
     public function delete(Unit $unit)
     {
         Elasticsearch::setModel(Unit::class)->deleted(UnitData::from($unit));

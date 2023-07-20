@@ -2,6 +2,7 @@
 
 namespace App\Models\Cers;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Cer extends Model implements ModelThatHaveWorkflow
+class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
 {
     use HasFactory;
 
@@ -37,6 +38,11 @@ class Cer extends Model implements ModelThatHaveWorkflow
         'peruntukan' => Peruntukan::class,
         'status' => Status::class,
     ];
+
+    public function indexName(): string
+    {
+        return 'tbu_asset_cers';
+    }
 
     public function items(): HasMany
     {

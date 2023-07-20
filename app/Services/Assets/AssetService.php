@@ -5,6 +5,11 @@ namespace App\Services\Assets;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
+use App\DataTransferObjects\Masters\CategoryData;
+use App\DataTransferObjects\Masters\ClusterData;
+use App\DataTransferObjects\Masters\SubClusterData;
+use App\DataTransferObjects\Masters\UnitData;
+use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
 use App\Facades\Elasticsearch;
 use App\Http\Requests\Assets\AssetRequest;
@@ -12,6 +17,14 @@ use App\Models\Assets\Asset;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
+use App\Services\Masters\CategoryService;
+use App\Services\Masters\ClusterService;
+use App\Services\Masters\SubClusterService;
+use App\Services\Masters\UnitService;
+use App\Services\Masters\UomService;
+use Illuminate\Support\Arr;
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class AssetService
 {
@@ -20,6 +33,26 @@ class AssetService
         protected AssetInsuranceRepository $assetInsuranceRepository,
         protected AssetLeasingRepository $assetLeasingRepository,
     ) {
+    }
+
+    public function coba()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Category');
+        $sheet->setCellValue('B1', 'Value');
+
+        $sheet->setCellValue('A2', 'Category 1');
+        $sheet->setCellValue('B2', 30);
+
+        $sheet->setCellValue('A3', 'Category 2');
+        $sheet->setCellValue('B3', 50);
+
+        $sheet->setCellValue('A4', 'Category 3');
+        $sheet->setCellValue('B4', 20);
+
+        $chart = new Chart('PieChart', null, null, null, true);
     }
 
     public function all($search = null)
@@ -49,7 +82,7 @@ class AssetService
         $asset = $this->assetRepository->updateOrCreate($data);
         $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
         $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
-        $asset->load(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing']);
+        $asset->load(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
         $this->sendToElasticsearch($asset, $data->getKey());
     }
 
@@ -65,13 +98,40 @@ class AssetService
     {
         Elasticsearch::setModel(Asset::class)->cleared();
         Asset::query()->delete();
-        Asset::query()->upsert($data, 'id');
+
+        $assets = [];
+        foreach ($data as $val) {
+            $category = CategoryService::store(CategoryData::from(Arr::only($val, ['asset_category'])));
+            $cluster = ClusterService::store(ClusterData::from(array_merge(Arr::only($val, ['asset_cluster']), ['category_id' => $category->getKey()])));
+            $subCluster = SubClusterService::store(SubClusterData::from(array_merge(Arr::only($val, ['asset_sub_cluster']), ['cluster_id' => $cluster->getKey()])));
+            $unit = UnitService::store(UnitData::fromImport($val));
+
+            array_push($assets, [
+                'kode' => $val['kode'],
+                'unit_id' => $unit->getKey(),
+                'sub_cluster_id' => $subCluster->getKey(),
+                'pic' => $val['pic'],
+                'activity' => $val['activity'],
+                'asset_location' => '',
+                'kondisi' => $val['kondisi'],
+                'uom' => '',
+                'quantity' => $val['jumlah'],
+                'tgl_bast' => $val['tgl_bast'],
+                'hm' => '',
+                'pr_number' => $val['pr'],
+                'po_number' => $val['po'],
+                'gr_number' => $val['gr'],
+                'remark' => $val['keterangan'],
+                'status' => '',
+            ]);
+        }
+        Asset::query()->upsert($assets, 'id');
         $this->bulk();
     }
 
     public function bulk()
     {
-        $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing'])->get();
+        $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom'])->get();
         Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
     }
 

@@ -25,6 +25,17 @@ class ClusterService
         return $cluster;
     }
 
+    public static function store(ClusterData $data)
+    {
+        if ($cluster = Cluster::query()->where('name', 'like', $data->name)->first()) {
+            return $cluster;
+        }
+        return Cluster::query()->create([
+            'category_id' => $data->category_id,
+            'name' => $data->name,
+        ]);
+    }
+
     public function delete(Cluster $cluster)
     {
         Elasticsearch::setModel(Cluster::class)->deleted(ClusterData::from($cluster));

@@ -25,6 +25,17 @@ class SubClusterService
         return $subCluster;
     }
 
+    public static function store(SubClusterData $data)
+    {
+        if ($subCluster = SubCluster::query()->where('name', 'like', $data->name)->first()) {
+            return $subCluster;
+        }
+        return SubCluster::query()->create([
+            'cluster_id' => $data->cluster_id,
+            'name' => $data->name,
+        ]);
+    }
+
     public function delete(SubCluster $subCluster)
     {
         Elasticsearch::setModel(SubCluster::class)->deleted(SubClusterData::from($subCluster));

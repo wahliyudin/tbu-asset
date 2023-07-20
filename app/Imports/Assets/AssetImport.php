@@ -36,8 +36,8 @@ class AssetImport implements ToArray, WithHeadingRow
             $val['sub_cluster_id'] = SubCluster::query()->where('name', $val['sub_cluster'])->first()?->getKey();
             $val['uom'] = Uom::query()->where('name', $val['uom'])->first()?->getKey();
             $val['status'] = Status::from($val['status']);
-            $val['tgl_bast'] = Carbon::instance(Date::excelToDateTimeObject($val['tgl_bast']))->format('Y-m-d');
-            $val['pic'] = GlobalService::getEmployeeByNamaKaryawan($val['pic'])->nik;
+            $val['tanggal_bast'] = Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d');
+            $val['pic'] = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c'])->nik;
             unset($val['unit']);
             unset($val['sub_cluster']);
             array_push($results, $val);
@@ -50,7 +50,6 @@ class AssetImport implements ToArray, WithHeadingRow
         $rules = [
             '*.unit' => ['required', 'exists:units,model'],
             '*.sub_cluster' => ['required', 'exists:sub_clusters,name'],
-            '*.member_name' => 'required',
             '*.pic' => 'required',
             '*.activity' => 'required',
             '*.asset_location' => 'required',
@@ -82,5 +81,68 @@ class AssetImport implements ToArray, WithHeadingRow
             ]]);
         }
         return $results;
+    }
+
+    private function umur_pakai_on_hire_bulan($tglBast = null)
+    {
+        // [
+        //     "no" => 1,
+        //     "asset_category" => "EQUIPMENT",
+
+        //     "asset_cluster" => "MAIN EQUIPMENT",
+
+        //     "asset_sub_cluster" => "DIGGER",
+
+        //     "id_asset_existing" => "10-18-PLT-EX-2009",
+        //     "new_id_asset" => "10-18-ENG-EX-2009",
+
+        //     "id_unit" => "EX-2009",
+        //     "unit_model" => "EXCAVATOR",
+        //     "unit_type" => 330,
+        //     "seri" => "D2L",
+        //     "unit_class" => "30 TON",
+        //     "unit_merk_brand" => "CATERPILLAR",
+        //     "serial_number" => "SZK10972",
+        //     "detail_spesifikasi" => "Engine C7.1 Hyd. Excavator Cap. 30 Ton ",
+        //     "tahun_pembuatan" => 2018,
+
+        //     "nilai_perolehan_harga_beli" => 337500000,
+        //     "vendor_leasing" => "PT. Wargi santosa",
+        //     "jangka_waktu_leasing_sewa" => 44374,
+        //     "biaya_leasing_sewa_perbulan" => 0,
+        //     "legalitas" => "Invoice & faktur",
+
+        //     "p_i_c" => "Tulis Hari S",
+        //     "lokasi_asset" => "Ex. TBU-BEL, TBU-TAI",
+        //     "kondisi" => "RFU",
+        //     "uom" => "Unit",
+        //     "activity" => "COAL",
+        //     "jumlah" => 1,
+        //     "tanggal_bast" => 43279,
+        //     "gr" => null,
+        //     "pr" => null,
+        //     "po" => null,
+        //     "keterangan" => "Sudah dibeli TBU 100%",
+        //     "status" => "OWNED", // status_asset
+
+        //     "masa_pakai_asset_bulan" => 36,
+        //     "umur_asset" => '=IFERROR(IF(R2="","",DATEDIF(R2,TODAY(),"M")+1),0)',
+        //     "umur_pakai_on_hire_bulan" => '=IFERROR(IF(V2="","",DATEDIF(V2,TODAY(),"M")+1),0)',
+        //     "depresiasi" => '=IFERROR(S2/$AL2,"")',
+        //     "nilai_sisa" => "=IF(AK2>=AL2,0,(AL2-AK2)*AM2)",
+
+        //     "suplier_dealer_toko" => "PT TRAKINDO UTAMA",
+
+        //     "kelengkapan_tambahan" => "SKAT",
+        //     "tanggal_perolehan" => 43272,
+        //     "tanggal_bast_2" => 44552,
+        //     "hours_meter_kilo_meter" => null,
+        //     "departemen" => "PRODUCTION",
+        // ];
+        // IF(tanggal_bast="","",DATEDIF(tanggal_bast,TODAY(),"M")+1)
+        if (!$tglBast) {
+            return null;
+        }
+        return Carbon::make($tglBast)->diffInMonths(now()) + 1;
     }
 }

@@ -24,6 +24,13 @@ class LeasingService
         return $leasing;
     }
 
+    public static function store(LeasingData $data)
+    {
+        return Leasing::query()->create([
+            'name' => $data->name,
+        ]);
+    }
+
     public function delete(Leasing $leasing)
     {
         Elasticsearch::setModel(Leasing::class)->deleted(LeasingData::from($leasing));

@@ -15,12 +15,11 @@ var AssetsList = function () {
         kode: '',
         unit_id: '',
         sub_cluster_id: '',
-        member_name: '',
         pic: '',
         activity: '',
         asset_location: '',
         kondisi: '',
-        uom: '',
+        uom_id: '',
         quantity: '',
         tgl_bast: '',
         hm: '',
@@ -198,13 +197,6 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'member_name': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Member Name is required'
-                            }
-                        }
-                    },
                     'pic': {
                         validators: {
                             notEmpty: {
@@ -233,7 +225,7 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'uom': {
+                    'uom_id': {
                         validators: {
                             notEmpty: {
                                 message: 'UOM is required'
@@ -491,12 +483,11 @@ var AssetsList = function () {
         attributes.kode = $($(form).find('input[name="kode"]')).val();
         attributes.unit_id = $($(form).find('select[name="unit_id"]')).val();
         attributes.sub_cluster_id = $($(form).find('select[name="sub_cluster_id"]')).val();
-        attributes.member_name = $($(form).find('input[name="member_name"]')).val();
         attributes.pic = $($(form).find('select[name="pic"]')).val();
         attributes.activity = $($(form).find('input[name="activity"]')).val();
         attributes.asset_location = $($(form).find('input[name="asset_location"]')).val();
         attributes.kondisi = $($(form).find('input[name="kondisi"]')).val();
-        attributes.uom = $($(form).find('input[name="uom"]')).val();
+        attributes.uom_id = $($(form).find('input[name="uom_id"]')).val();
         attributes.quantity = $($(form).find('input[name="quantity"]')).val();
         attributes.tgl_bast = $($(form).find('input[name="tgl_bast"]')).val();
         attributes.hm = $($(form).find('input[name="hm"]')).val();
@@ -523,12 +514,11 @@ var AssetsList = function () {
         attributes.kode = '';
         attributes.unit_id = '';
         attributes.sub_cluster_id = '';
-        attributes.member_name = '';
         attributes.pic = '';
         attributes.activity = '';
         attributes.asset_location = '';
         attributes.kondisi = '';
-        attributes.uom = '';
+        attributes.uom_id = '';
         attributes.quantity = '';
         attributes.tgl_bast = '';
         attributes.hm = '';
@@ -554,12 +544,11 @@ var AssetsList = function () {
         $($(form).find('input[name="kode"]')).val(json === null ? attributes.kode : json.kode);
         $($(form).find('select[name="unit_id"]')).val(json === null ? attributes.unit_id : json.unit_id).trigger('change');
         $($(form).find('select[name="sub_cluster_id"]')).val(json === null ? attributes.sub_cluster_id : json.sub_cluster_id).trigger('change');
-        $($(form).find('input[name="member_name"]')).val(json === null ? attributes.member_name : json.member_name);
         $($(form).find('select[name="pic"]')).val(json === null ? attributes.pic : json.pic).trigger('change');
         $($(form).find('input[name="activity"]')).val(json === null ? attributes.activity : json.activity);
         $($(form).find('input[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location);
         $($(form).find('input[name="kondisi"]')).val(json === null ? attributes.kondisi : json.kondisi);
-        $($(form).find('input[name="uom"]')).val(json === null ? attributes.uom : json.uom);
+        $($(form).find('input[name="uom_id"]')).val(json === null ? attributes.uom_id : json.uom_id);
         $($(form).find('input[name="quantity"]')).val(json === null ? attributes.quantity : json.quantity);
         $($(form).find('input[name="tgl_bast"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);
         $($(form).find('input[name="hm"]')).val(json === null ? attributes.hm : json.hm);

@@ -21,6 +21,17 @@ class CategoryService
             'name' => $data->name,
         ]);
         $this->sendToElasticsearch($category, $data->getKey());
+        return $category;
+    }
+
+    public static function store(CategoryData $data)
+    {
+        if ($category = Category::query()->where('name', 'like', $data->name)->first()) {
+            return $category;
+        }
+        return Category::query()->create([
+            'name' => $data->name
+        ]);
     }
 
     public function delete(Category $category)

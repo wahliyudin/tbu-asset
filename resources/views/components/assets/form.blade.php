@@ -46,11 +46,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Member Name</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Member Name"
-                            name="member_name" />
-                    </div>
                     <div class="col-md-4 fv-row mb-7 pic">
                         <label class="required fs-6 fw-semibold mb-2">PIC</label>
                         <select class="form-select form-select-solid" name="pic" data-control="select2"
@@ -80,7 +75,7 @@
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">UOM</label>
                         <input type="text" class="form-control form-control-solid" placeholder="UOM"
-                            name="uom" />
+                            name="uom_id" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Quantity</label>

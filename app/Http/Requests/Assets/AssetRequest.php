@@ -17,7 +17,6 @@ class AssetRequest extends FormRequest
             'kode' => ['required'],
             'unit_id' => ['required', 'exists:units,id'],
             'sub_cluster_id' => ['required', 'exists:sub_clusters,id'],
-            'member_name' => ['required'],
             'pic' => ['required'],
             'activity' => ['required'],
             'asset_location' => ['required', 'integer'],

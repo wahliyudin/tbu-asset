@@ -36,4 +36,19 @@ class UnitData extends Data implements DataInterface
     {
         return $this->key ?? $this->id;
     }
+
+    public static function fromImport(array $data)
+    {
+        return self::from([
+            'kode' => isset($data['id_unit']) ? $data['id_unit'] : null,
+            'model' => isset($data['unit_model']) ? $data['unit_model'] : null,
+            'type' => isset($data['unit_type']) ? $data['unit_type'] : null,
+            'seri' => isset($data['seri']) ? $data['seri'] : null,
+            'class' => isset($data['unit_class']) ? $data['unit_class'] : null,
+            'brand' => isset($data['unit_merk_brand']) ? $data['unit_merk_brand'] : null,
+            'serial_number' => isset($data['serial_number']) ? $data['serial_number'] : null,
+            'spesification' => isset($data['detail_spesifikasi']) ? $data['detail_spesifikasi'] : null,
+            'tahun_pembuatan' => isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
+        ]);
+    }
 }
