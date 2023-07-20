@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\CatalogData;
 use App\Http\Controllers\Controller;
 use App\Models\Masters\Catalog;
 use App\Services\Masters\CatalogService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CatalogController extends Controller
@@ -20,10 +21,28 @@ class CatalogController extends Controller
         return view('masters.catalog.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('action', function (Catalog $catalog) {
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('unit_model', function ($catalog) {
+                return $catalog->_source->unit_model;
+            })
+            ->editColumn('unit_type', function ($catalog) {
+                return $catalog->_source->unit_type;
+            })
+            ->editColumn('seri', function ($catalog) {
+                return $catalog->_source->seri;
+            })
+            ->editColumn('unit_class', function ($catalog) {
+                return $catalog->_source->unit_class;
+            })
+            ->editColumn('brand', function ($catalog) {
+                return $catalog->_source->brand;
+            })
+            ->editColumn('spesification', function ($catalog) {
+                return $catalog->_source->spesification;
+            })
+            ->editColumn('action', function ($catalog) {
                 return view('masters.catalog.action', compact('catalog'))->render();
             })
             ->rawColumns(['action'])
@@ -42,10 +61,10 @@ class CatalogController extends Controller
         }
     }
 
-    public function edit(Catalog $catalog)
+    public function edit($id)
     {
         try {
-            return response()->json($catalog);
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -2,12 +2,13 @@
 
 namespace App\Models\Masters;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use Database\Factories\Masters\CatalogFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Catalog extends Model
+class Catalog extends Model implements ElasticsearchInterface
 {
     use HasFactory;
 
@@ -19,6 +20,11 @@ class Catalog extends Model
         'brand',
         'spesification',
     ];
+
+    public function indexName(): string
+    {
+        return 'tbu_asset_catalogs';
+    }
 
     protected static function newFactory(): Factory
     {
