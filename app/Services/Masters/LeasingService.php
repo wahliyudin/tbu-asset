@@ -3,26 +3,44 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\LeasingData;
+use App\Facades\Elasticsearch;
 use App\Models\Masters\Leasing;
 
 class LeasingService
 {
-    public function all()
+    public function all($search = null)
     {
-        return Leasing::query()->get();
+        return Elasticsearch::setModel(Leasing::class)->searchQueryString($search, 50)->all();
     }
 
     public function updateOrCreate(LeasingData $data)
     {
-        return Leasing::query()->updateOrCreate([
+        $leasing = Leasing::query()->updateOrCreate([
             'id' => $data->key
         ], [
             'name' => $data->name,
         ]);
+        $this->sendToElasticsearch($leasing, $data->getKey());
+        return $leasing;
     }
 
-    public function delete(Leasing $category)
+    public function delete(Leasing $leasing)
     {
-        return $category->delete();
+        Elasticsearch::setModel(Leasing::class)->deleted(LeasingData::from($leasing));
+        return $leasing->delete();
+    }
+
+    public function getDataForEdit($id): array
+    {
+        $asset = Elasticsearch::setModel(Leasing::class)->find($id)->asArray();
+        return $asset['_source'];
+    }
+
+    private function sendToElasticsearch(Leasing $cluster, $key)
+    {
+        if ($key) {
+            return Elasticsearch::setModel(Leasing::class)->updated(LeasingData::from($cluster));
+        }
+        return Elasticsearch::setModel(Leasing::class)->created(LeasingData::from($cluster));
     }
 }
