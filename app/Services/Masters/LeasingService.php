@@ -16,7 +16,7 @@ class LeasingService
     public function updateOrCreate(LeasingData $data)
     {
         $leasing = Leasing::query()->updateOrCreate([
-            'id' => $data->key
+            'id' => $data->getKey()
         ], [
             'name' => $data->name,
         ]);

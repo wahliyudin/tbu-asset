@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center gap-2">
     @permission('unit_update')
-        <button type="button" data-unit="{{ $unit->getKey() }}" class="btn btn-sm btn-primary ps-4 btn-edit">
+        <button type="button" data-unit="{{ $unit->_id }}" class="btn btn-sm btn-primary ps-4 btn-edit">
             <span class="indicator-label">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ki-duotone ki-notepad-edit fs-3">
@@ -15,7 +15,7 @@
         </button>
     @endpermission
     @permission('unit_delete')
-        <button type="button" data-unit="{{ $unit->getKey() }}" class="btn btn-sm btn-danger ps-4 btn-delete">
+        <button type="button" data-unit="{{ $unit->_id }}" class="btn btn-sm btn-danger ps-4 btn-delete">
             <span class="indicator-label">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ki-duotone ki-trash fs-3">

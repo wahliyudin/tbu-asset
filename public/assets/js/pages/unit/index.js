@@ -19,11 +19,14 @@ var CategorysList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/units/datatable"
+                url: "/master/units/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -140,6 +143,13 @@ var CategorysList = function () {
             form,
             {
                 fields: {
+                    'kode': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kode is required'
+                            }
+                        }
+                    },
                     'model': {
                         validators: {
                             notEmpty: {
@@ -220,6 +230,7 @@ var CategorysList = function () {
                             url: "/master/units/store",
                             data: {
                                 key: $(submitButton).data('unit'),
+                                kode: $($(form).find('input[name="kode"]')).val(),
                                 model: $($(form).find('input[name="model"]')).val(),
                                 type: $($(form).find('input[name="type"]')).val(),
                                 seri: $($(form).find('input[name="seri"]')).val(),
@@ -348,6 +359,7 @@ var CategorysList = function () {
 
     var buttonCreate = () => {
         $('[data-bs-target="#create-unit"]').on('click', function () {
+            $($(form).find('input[name="kode"]')).val('');
             $($(form).find('input[name="model"]')).val('');
             $($(form).find('input[name="type"]')).val('');
             $($(form).find('input[name="seri"]')).val('');
@@ -371,6 +383,7 @@ var CategorysList = function () {
                 url: `/master/units/${unit}/edit`,
                 dataType: "JSON",
                 success: function (response) {
+                    $($(form).find('input[name="kode"]')).val(response.kode);
                     $($(form).find('input[name="model"]')).val(response.model);
                     $($(form).find('input[name="type"]')).val(response.type);
                     $($(form).find('input[name="seri"]')).val(response.seri);

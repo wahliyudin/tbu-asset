@@ -27,6 +27,7 @@ use Database\Seeders\Masters\DealerSeeder;
 use Database\Seeders\Masters\LeasingSeeder;
 use Database\Seeders\Masters\SubClusterItemSeeder;
 use Database\Seeders\Masters\SubClusterSeeder;
+use Database\Seeders\Masters\UnitSeeder;
 use Database\Seeders\Masters\UomSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -72,6 +73,7 @@ class DatabaseSeeder extends Seeder
             CatalogSeeder::class,
             DealerSeeder::class,
             LeasingSeeder::class,
+            UnitSeeder::class,
         ]);
     }
 }

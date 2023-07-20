@@ -2,12 +2,13 @@
 
 namespace App\Models\Masters;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use Database\Factories\Masters\UnitFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Unit extends Model
+class Unit extends Model implements ElasticsearchInterface
 {
     use HasFactory;
 
@@ -22,6 +23,11 @@ class Unit extends Model
         'spesification',
         'tahun_pembuatan',
     ];
+
+    public function indexName(): string
+    {
+        return 'tbu_asset_units';
+    }
 
     protected static function newFactory(): Factory
     {

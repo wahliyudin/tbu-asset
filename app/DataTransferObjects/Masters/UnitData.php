@@ -2,10 +2,11 @@
 
 namespace App\DataTransferObjects\Masters;
 
+use App\Interfaces\DataInterface;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
-class UnitData extends Data
+class UnitData extends Data implements DataInterface
 {
     public function __construct(
         #[Required]
@@ -27,6 +28,12 @@ class UnitData extends Data
         #[Required]
         public string $tahun_pembuatan,
         public ?string $key = null,
+        public ?string $id = null,
     ) {
+    }
+
+    public function getKey(): string|null
+    {
+        return $this->key ?? $this->id;
     }
 }

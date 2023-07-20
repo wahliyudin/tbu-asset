@@ -3,19 +3,20 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\UnitData;
+use App\Facades\Elasticsearch;
 use App\Models\Masters\Unit;
 
 class UnitService
 {
-    public function all()
+    public function all($search = null)
     {
-        return Unit::query()->get();
+        return Elasticsearch::setModel(Unit::class)->searchQueryString($search, 50)->all();
     }
 
     public function updateOrCreate(UnitData $data)
     {
-        return Unit::query()->updateOrCreate([
-            'id' => $data->key
+        $unit = Unit::query()->updateOrCreate([
+            'id' => $data->getKey()
         ], [
             'kode' => $data->kode,
             'model' => $data->model,
@@ -27,10 +28,27 @@ class UnitService
             'spesification' => $data->spesification,
             'tahun_pembuatan' => $data->tahun_pembuatan,
         ]);
+        $this->sendToElasticsearch($unit, $data->getKey());
+        return $unit;
     }
 
-    public function delete(Unit $category)
+    public function delete(Unit $unit)
     {
-        return $category->delete();
+        Elasticsearch::setModel(Unit::class)->deleted(UnitData::from($unit));
+        return $unit->delete();
+    }
+
+    public function getDataForEdit($id): array
+    {
+        $asset = Elasticsearch::setModel(Unit::class)->find($id)->asArray();
+        return $asset['_source'];
+    }
+
+    private function sendToElasticsearch(Unit $unit, $key)
+    {
+        if ($key) {
+            return Elasticsearch::setModel(Unit::class)->updated(UnitData::from($unit));
+        }
+        return Elasticsearch::setModel(Unit::class)->created(UnitData::from($unit));
     }
 }
