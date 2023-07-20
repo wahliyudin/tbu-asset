@@ -23,6 +23,7 @@ use Database\Seeders\Assets\AssetSeeder;
 use Database\Seeders\Masters\CatalogSeeder;
 use Database\Seeders\Masters\CategorySeeder;
 use Database\Seeders\Masters\ClusterSeeder;
+use Database\Seeders\Masters\DealerSeeder;
 use Database\Seeders\Masters\SubClusterItemSeeder;
 use Database\Seeders\Masters\SubClusterSeeder;
 use Database\Seeders\Masters\UomSeeder;
@@ -68,6 +69,7 @@ class DatabaseSeeder extends Seeder
             SubClusterSeeder::class,
             SubClusterItemSeeder::class,
             CatalogSeeder::class,
+            DealerSeeder::class,
         ]);
     }
 }
