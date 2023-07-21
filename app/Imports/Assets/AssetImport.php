@@ -2,13 +2,22 @@
 
 namespace App\Imports\Assets;
 
+use App\DataTransferObjects\Masters\CategoryData;
+use App\DataTransferObjects\Masters\ClusterData;
+use App\DataTransferObjects\Masters\SubClusterData;
+use App\DataTransferObjects\Masters\UnitData;
 use App\Enums\Asset\Status;
 use App\Facades\Assets\AssetService;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Models\Masters\Uom;
 use App\Services\GlobalService;
+use App\Services\Masters\CategoryService;
+use App\Services\Masters\ClusterService;
+use App\Services\Masters\SubClusterService;
+use App\Services\Masters\UnitService;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
@@ -25,22 +34,34 @@ class AssetImport implements ToArray, WithHeadingRow
     public function array(array $data)
     {
         foreach ($data as $i => $val) {
-            if ($val['unit'] == null) {
+            if ($val['id_asset_existing'] == null) {
                 unset($data[$i]);
             }
         }
         $results = [];
-        foreach ($this->validate($data) as $val) {
-            $val['kode'] = Str::random();
-            $val['unit_id'] = Unit::query()->where('model', $val['unit'])->first()?->getKey();
-            $val['sub_cluster_id'] = SubCluster::query()->where('name', $val['sub_cluster'])->first()?->getKey();
-            $val['uom'] = Uom::query()->where('name', $val['uom'])->first()?->getKey();
-            $val['status'] = Status::from($val['status']);
-            $val['tanggal_bast'] = Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d');
-            $val['pic'] = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c'])->nik;
-            unset($val['unit']);
-            unset($val['sub_cluster']);
-            array_push($results, $val);
+        foreach ($data as $val) {
+            $category = CategoryService::store(CategoryData::from(['name' => $val['asset_category']]));
+            $cluster = ClusterService::store(ClusterData::from(['name' => $val['asset_cluster'], 'category_id' => $category->getKey()]));
+            $subCluster = SubClusterService::store(SubClusterData::from(['name' => $val['asset_sub_cluster'], 'cluster_id' => $cluster->getKey()]));
+            $unit = UnitService::store(UnitData::fromImport($val));
+            array_push($results, [
+                'kode' => Str::random(),
+                'unit_id' => $unit->getKey(),
+                'sub_cluster_id' => $subCluster->getKey(),
+                'pic' => GlobalService::getEmployeeByNamaKaryawan($val['p_i_c'])?->nik,
+                'activity' => $val['activity'],
+                'asset_location' => null,
+                'kondisi' => $val['kondisi'],
+                'uom_id' => null,
+                'quantity' => $val['jumlah'],
+                'tgl_bast' => Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d'),
+                'hm' => null,
+                'pr_number' => $val['pr'],
+                'po_number' => $val['po'],
+                'gr_number' => $val['gr'],
+                'remark' => $val['keterangan'],
+                'status' => null,
+            ]);
         }
         AssetService::import($results);
     }

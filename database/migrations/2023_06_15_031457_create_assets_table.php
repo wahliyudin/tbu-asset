@@ -16,22 +16,22 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
-            $table->string('kode');
-            $table->foreignIdFor(Unit::class);
-            $table->foreignIdFor(SubCluster::class);
-            $table->unsignedBigInteger('pic');
-            $table->string('activity');
-            $table->unsignedBigInteger('asset_location');
-            $table->string('kondisi');
-            $table->foreignIdFor(Uom::class);
-            $table->integer('quantity');
-            $table->date('tgl_bast');
+            $table->string('kode')->nullable();
+            $table->foreignIdFor(Unit::class)->nullable();
+            $table->foreignIdFor(SubCluster::class)->nullable();
+            $table->unsignedBigInteger('pic')->nullable();
+            $table->string('activity')->nullable();
+            $table->string('asset_location')->nullable();
+            $table->string('kondisi')->nullable();
+            $table->foreignIdFor(Uom::class)->nullable();
+            $table->integer('quantity')->nullable();
+            $table->date('tgl_bast')->nullable();
             $table->string('hm')->nullable();
             $table->string('pr_number')->nullable();
             $table->string('po_number')->nullable();
             $table->string('gr_number')->nullable();
-            $table->string('remark');
-            $table->string('status');
+            $table->string('remark')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

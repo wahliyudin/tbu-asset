@@ -28,7 +28,7 @@ class GlobalService
         return EmployeeData::collection(isset($employee['data']) ? $employee['data'] : [])->only(...$attributes);
     }
 
-    public static function getEmployeeByNamaKaryawan(string $namaKaryawan): EmployeeData
+    public static function getEmployeeByNamaKaryawan(?string $namaKaryawan): EmployeeData
     {
         $employee = (new EmployeeService)->whereIn('nama_karyawan', [$namaKaryawan])->first();
         return EmployeeData::from(isset($employee['data']) ? $employee['data'] : []);

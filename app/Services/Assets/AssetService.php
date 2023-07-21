@@ -98,34 +98,7 @@ class AssetService
     {
         Elasticsearch::setModel(Asset::class)->cleared();
         Asset::query()->delete();
-
-        $assets = [];
-        foreach ($data as $val) {
-            $category = CategoryService::store(CategoryData::from(Arr::only($val, ['asset_category'])));
-            $cluster = ClusterService::store(ClusterData::from(array_merge(Arr::only($val, ['asset_cluster']), ['category_id' => $category->getKey()])));
-            $subCluster = SubClusterService::store(SubClusterData::from(array_merge(Arr::only($val, ['asset_sub_cluster']), ['cluster_id' => $cluster->getKey()])));
-            $unit = UnitService::store(UnitData::fromImport($val));
-
-            array_push($assets, [
-                'kode' => $val['kode'],
-                'unit_id' => $unit->getKey(),
-                'sub_cluster_id' => $subCluster->getKey(),
-                'pic' => $val['pic'],
-                'activity' => $val['activity'],
-                'asset_location' => '',
-                'kondisi' => $val['kondisi'],
-                'uom' => '',
-                'quantity' => $val['jumlah'],
-                'tgl_bast' => $val['tgl_bast'],
-                'hm' => '',
-                'pr_number' => $val['pr'],
-                'po_number' => $val['po'],
-                'gr_number' => $val['gr'],
-                'remark' => $val['keterangan'],
-                'status' => '',
-            ]);
-        }
-        Asset::query()->upsert($assets, 'id');
+        Asset::query()->upsert($data, 'id');
         $this->bulk();
     }
 
