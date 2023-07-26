@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Assets;
 
+use App\Events\ImportEvent;
 use App\Excels\Assets\Asset as AssetsAsset;
-use App\Exports\Assets\AssetExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Assets\ImportRequest;
-use App\Imports\Assets\AssetImport;
+use App\Jobs\Assets\ImportJob;
 use App\Models\Assets\Asset;
 use App\Models\Masters\Dealer;
 use App\Models\Masters\Leasing;
@@ -16,7 +16,6 @@ use App\Models\Masters\Unit;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller
@@ -101,7 +100,13 @@ class AssetMasterController extends Controller
     public function import(ImportRequest $request)
     {
         try {
-            Excel::import(new AssetImport(), $request->file('file'));
+            $fileName = $request->file('file')->store('public');
+            event(new ImportEvent([
+                'status' => 200,
+                'title' => 'Import started',
+                'message' => 'Import started'
+            ]));
+            ImportJob::dispatch($fileName);
             return response()->json([
                 'message' => 'Successfully Imported'
             ]);

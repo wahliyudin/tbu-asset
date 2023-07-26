@@ -151,6 +151,7 @@
 @endpush
 
 @push('js')
+    @vite('resources/js/app.js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/asset/index.js') }}"></script>

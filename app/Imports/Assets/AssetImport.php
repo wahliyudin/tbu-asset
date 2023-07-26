@@ -7,17 +7,14 @@ use App\DataTransferObjects\Masters\ClusterData;
 use App\DataTransferObjects\Masters\SubClusterData;
 use App\DataTransferObjects\Masters\UnitData;
 use App\Enums\Asset\Status;
+use App\Events\ImportEvent;
 use App\Facades\Assets\AssetService;
-use App\Models\Masters\SubCluster;
-use App\Models\Masters\Unit;
-use App\Models\Masters\Uom;
 use App\Services\GlobalService;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
@@ -38,19 +35,21 @@ class AssetImport implements ToArray, WithHeadingRow
                 unset($data[$i]);
             }
         }
+
         $results = [];
-        foreach ($data as $val) {
+        foreach ($data as $i => $val) {
             $category = CategoryService::store(CategoryData::from(['name' => $val['asset_category']]));
             $cluster = ClusterService::store(ClusterData::from(['name' => $val['asset_cluster'], 'category_id' => $category->getKey()]));
             $subCluster = SubClusterService::store(SubClusterData::from(['name' => $val['asset_sub_cluster'], 'cluster_id' => $cluster->getKey()]));
             $unit = UnitService::store(UnitData::fromImport($val));
+            $pic = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c']);
             array_push($results, [
                 'kode' => Str::random(),
                 'unit_id' => $unit->getKey(),
                 'sub_cluster_id' => $subCluster->getKey(),
-                'pic' => GlobalService::getEmployeeByNamaKaryawan($val['p_i_c'])?->nik,
+                'pic' => $pic?->nik,
                 'activity' => $val['activity'],
-                'asset_location' => null,
+                'asset_location' => $pic?->position?->project?->project,
                 'kondisi' => $val['kondisi'],
                 'uom_id' => null,
                 'quantity' => $val['jumlah'],

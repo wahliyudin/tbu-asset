@@ -9,6 +9,7 @@ var AssetsList = function () {
     var validator;
     var form;
     var modal;
+    var modalImport;
 
     var attributes = {
         key: '',
@@ -641,8 +642,8 @@ var AssetsList = function () {
                             confirmButton: "btn btn-primary"
                         }
                     }).then(function (result) {
+                        modalImport.hide();
                         datatable.ajax.reload();
-                        $('#import-asset').modal('hide');
                     });
                 },
                 error: function (jqXHR) {
@@ -650,6 +651,43 @@ var AssetsList = function () {
                 }
             });
         });
+    }
+
+    var toast = (code, title, message) => {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "10000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        switch (code) {
+            case 200:
+                toastr.success(title, message);
+                break;
+
+            default:
+                toastr.error(title, message);
+                break;
+        }
+    }
+
+    var initEvent = () => {
+        window.Echo.channel('coba-channel')
+            .listen('ImportEvent', (e) => {
+                toast(e.status, e.title, e.message);
+            });
     }
 
     return {
@@ -669,7 +707,9 @@ var AssetsList = function () {
 
 
             var modalElement = document.querySelector('#create-asset');
+            var modalImportElemnt = document.querySelector('#import-asset');
             modal = new bootstrap.Modal(modalElement);
+            modalImport = new bootstrap.Modal(modalImportElemnt);
             form = document.querySelector('#create-asset_form');
             submitButton = modalElement.querySelector('#create-asset_submit');
             cancelButton = modalElement.querySelector('#create-asset_cancel');
@@ -680,6 +720,12 @@ var AssetsList = function () {
             buttonEdit();
             initPlugins();
             formImport();
+            initEvent();
+
+            $('#import-asset').on('hidden.bs.modal', function (e) {
+                console.log('wah');
+                $('.modal-backdrop').remove(); // Menghapus backdrop secara manual
+            });
         }
     }
 }();
