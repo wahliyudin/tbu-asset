@@ -21,7 +21,7 @@ class AssetRequest extends FormRequest
             'activity' => ['required'],
             'asset_location' => ['required', 'integer'],
             'kondisi' => ['required'],
-            'uom' => ['required'],
+            'uom_id' => ['required'],
             'quantity' => ['required', 'integer'],
             'tgl_bast' => ['required', 'date'],
             'hm' => ['required'],

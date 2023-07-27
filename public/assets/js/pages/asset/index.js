@@ -391,7 +391,6 @@ var AssetsList = function () {
                                     }
                                 }).then(function (result) {
                                     if (result.isConfirmed) {
-                                        modal.hide();
                                         submitButton.disabled = false;
                                         datatable.ajax.reload();
                                     }
@@ -432,7 +431,6 @@ var AssetsList = function () {
             }).then(function (result) {
                 if (result.value) {
                     form.reset();
-                    modal.hide();
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -463,7 +461,6 @@ var AssetsList = function () {
             }).then(function (result) {
                 if (result.value) {
                     form.reset();
-                    modal.hide();
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -486,9 +483,9 @@ var AssetsList = function () {
         attributes.sub_cluster_id = $($(form).find('select[name="sub_cluster_id"]')).val();
         attributes.pic = $($(form).find('select[name="pic"]')).val();
         attributes.activity = $($(form).find('input[name="activity"]')).val();
-        attributes.asset_location = $($(form).find('input[name="asset_location"]')).val();
+        attributes.asset_location = $($(form).find('select[name="asset_location"]')).val();
         attributes.kondisi = $($(form).find('input[name="kondisi"]')).val();
-        attributes.uom_id = $($(form).find('input[name="uom_id"]')).val();
+        attributes.uom_id = $($(form).find('select[name="uom_id"]')).val();
         attributes.quantity = $($(form).find('input[name="quantity"]')).val();
         attributes.tgl_bast = $($(form).find('input[name="tgl_bast"]')).val();
         attributes.hm = $($(form).find('input[name="hm"]')).val();
@@ -547,9 +544,9 @@ var AssetsList = function () {
         $($(form).find('select[name="sub_cluster_id"]')).val(json === null ? attributes.sub_cluster_id : json.sub_cluster_id).trigger('change');
         $($(form).find('select[name="pic"]')).val(json === null ? attributes.pic : json.pic).trigger('change');
         $($(form).find('input[name="activity"]')).val(json === null ? attributes.activity : json.activity);
-        $($(form).find('input[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location);
+        $($(form).find('select[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location).trigger('change');
         $($(form).find('input[name="kondisi"]')).val(json === null ? attributes.kondisi : json.kondisi);
-        $($(form).find('input[name="uom_id"]')).val(json === null ? attributes.uom_id : json.uom_id);
+        $($(form).find('select[name="uom_id"]')).val(json === null ? attributes.uom_id : json.uom_id).trigger('change');
         $($(form).find('input[name="quantity"]')).val(json === null ? attributes.quantity : json.quantity);
         $($(form).find('input[name="tgl_bast"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);
         $($(form).find('input[name="hm"]')).val(json === null ? attributes.hm : json.hm);
@@ -664,7 +661,7 @@ var AssetsList = function () {
             "onclick": null,
             "showDuration": "300",
             "hideDuration": "1000",
-            "timeOut": "10000",
+            "timeOut": "1000000",
             "extendedTimeOut": "1000",
             "showEasing": "swing",
             "hideEasing": "linear",
@@ -723,7 +720,6 @@ var AssetsList = function () {
             initEvent();
 
             $('#import-asset').on('hidden.bs.modal', function (e) {
-                console.log('wah');
                 $('.modal-backdrop').remove(); // Menghapus backdrop secara manual
             });
         }

@@ -3,6 +3,7 @@
 namespace App\DataTransferObjects\Assets;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
+use App\DataTransferObjects\API\HRIS\ProjectData;
 use App\DataTransferObjects\Masters\UnitData;
 use App\DataTransferObjects\Masters\UomData;
 use App\Interfaces\DataInterface;
@@ -35,9 +36,11 @@ class AssetData extends Data implements DataInterface
         public ?DeprecationData $deprecation,
         public ?UnitData $unit,
         public ?UomData $uom,
+        public ?ProjectData $project,
         public ?EmployeeData $employee,
     ) {
         $this->employee = EmployeeData::from(GlobalService::getEmployee($this->pic));
+        $this->project = ProjectData::from(GlobalService::getProject($this->asset_location));
     }
 
     public function getKey(): string|null

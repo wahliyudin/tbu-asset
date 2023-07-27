@@ -62,20 +62,32 @@
                         <input type="text" class="form-control form-control-solid" placeholder="Activity"
                             name="activity" />
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-4 fv-row mb-7 asset_location">
                         <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
-                        <input type="number" class="form-control form-control-solid" placeholder="Asset Location"
-                            name="asset_location" />
+                        <select class="form-select form-select-solid" name="asset_location" data-control="select2"
+                            data-placeholder="Asset Location" data-dropdown-parent=".asset_location">
+                            <option></option>
+                            @foreach ($projects as $project)
+                                <option value="{{ $project->project_id }}">{{ $project->project }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Kondisi</label>
                         <input type="text" class="form-control form-control-solid" placeholder="Kondisi"
                             name="kondisi" />
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-4 fv-row mb-7 uom">
                         <label class="required fs-6 fw-semibold mb-2">UOM</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="UOM"
-                            name="uom_id" />
+                        <select class="form-select form-select-solid" name="uom_id" data-control="select2"
+                            data-placeholder="UOM" data-dropdown-parent=".uom">
+                            <option></option>
+                            @foreach ($uoms as $uom)
+                                <option value="{{ $uom->getKey() }}">{{ $uom->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Quantity</label>

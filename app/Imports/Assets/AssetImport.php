@@ -44,7 +44,7 @@ class AssetImport implements ToArray, WithHeadingRow
             $unit = UnitService::store(UnitData::fromImport($val));
             $pic = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c']);
             array_push($results, [
-                'kode' => Str::random(),
+                'kode' => $val['id_asset_existing'],
                 'unit_id' => $unit->getKey(),
                 'sub_cluster_id' => $subCluster->getKey(),
                 'pic' => $pic?->nik,
