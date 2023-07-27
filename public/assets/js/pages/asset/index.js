@@ -682,7 +682,7 @@ var AssetsList = function () {
 
     var initEvent = () => {
         window.Echo.channel('coba-channel')
-            .listen('ImportEvent', (e) => {
+            .listen('.import-event', (e) => {
                 toast(e.status, e.title, e.message);
             });
     }

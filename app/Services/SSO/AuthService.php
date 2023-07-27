@@ -55,6 +55,9 @@ class AuthService
                 'code' => $request->code
             ]
         );
+        if ($response->json() == null) {
+            return to_route('login');
+        }
         $tokenDto = TokenDto::fromJson($response->json());
         $res = $this->userService->first($tokenDto->access_token);
         $user = $this->userService->storeToUserModel(UserData::from(isset($res['data']) ? $res['data'] : []));

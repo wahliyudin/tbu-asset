@@ -35,6 +35,11 @@ class ImportEvent implements ShouldBroadcast
         ];
     }
 
+    public function broadcastAs()
+    {
+        return 'import-event';
+    }
+
     public function broadcastWith()
     {
         return $this->data;
