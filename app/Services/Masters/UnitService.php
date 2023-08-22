@@ -3,6 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\UnitData;
+use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Models\Masters\Unit;
 
 class UnitService
@@ -12,21 +13,12 @@ class UnitService
         return Unit::query()->get();
     }
 
-    public function updateOrCreate(UnitData $data)
+    public function updateOrCreate(UnitStoreRequest $request)
     {
+        $data = UnitData::from($request->all());
         return Unit::query()->updateOrCreate([
             'id' => $data->key
-        ], [
-            'kode' => $data->kode,
-            'model' => $data->model,
-            'type' => $data->type,
-            'seri' => $data->seri,
-            'class' => $data->class,
-            'brand' => $data->brand,
-            'serial_number' => $data->serial_number,
-            'spesification' => $data->spesification,
-            'tahun_pembuatan' => $data->tahun_pembuatan,
-        ]);
+        ], $data->toArray());
     }
 
     public function delete(Unit $category)

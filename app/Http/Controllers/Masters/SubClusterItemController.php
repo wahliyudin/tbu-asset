@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\SubClusterItemData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\SubClusterItemStoreRequest;
 use App\Models\Masters\SubClusterItem;
