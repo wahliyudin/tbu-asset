@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\CategoryData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Masters\CategoryRequest;
+use App\Http\Requests\Masters\CategoryStoreRequest;
 use App\Models\Masters\Category;
 use App\Services\Masters\CategoryService;
 use Yajra\DataTables\Facades\DataTables;
@@ -31,10 +30,10 @@ class CategoryController extends Controller
             ->make();
     }
 
-    public function store(CategoryData $data)
+    public function store(CategoryStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
