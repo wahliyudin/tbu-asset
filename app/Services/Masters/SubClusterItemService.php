@@ -3,6 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\SubClusterItemData;
+use App\Http\Requests\Masters\SubClusterItemStoreRequest;
 use App\Models\Masters\SubClusterItem;
 
 class SubClusterItemService
@@ -12,14 +13,12 @@ class SubClusterItemService
         return SubClusterItem::query()->with('subCluster')->get();
     }
 
-    public function updateOrCreate(SubClusterItemData $data)
+    public function updateOrCreate(SubClusterItemStoreRequest $request)
     {
+        $data = SubClusterItemData::from($request->all());
         return SubClusterItem::query()->updateOrCreate([
             'id' => $data->key
-        ], [
-            'sub_cluster_id' => $data->sub_cluster_id,
-            'name' => $data->name,
-        ]);
+        ], $data->toArray());
     }
 
     public function delete(SubClusterItem $subClusterItem)

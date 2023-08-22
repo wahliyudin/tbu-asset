@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Masters;
 
 use App\DataTransferObjects\Masters\SubClusterItemData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Masters\SubClusterItemStoreRequest;
 use App\Models\Masters\SubClusterItem;
 use App\Services\Masters\SubClusterItemService;
 use App\Services\Masters\SubClusterService;
@@ -19,9 +20,8 @@ class SubClusterItemController extends Controller
 
     public function index()
     {
-        $subClusters = $this->subClusterService->all();
         return view('masters.sub-cluster-item.index', [
-            'subClusters' => $subClusters
+            'subClusters' => $this->subClusterService->all()
         ]);
     }
 
@@ -38,10 +38,10 @@ class SubClusterItemController extends Controller
             ->make();
     }
 
-    public function store(SubClusterItemData $data)
+    public function store(SubClusterItemStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
