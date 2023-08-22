@@ -3,6 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\UomData;
+use App\Http\Requests\Masters\UomStoreRequest;
 use App\Models\Masters\Uom;
 
 class UomService
@@ -12,14 +13,12 @@ class UomService
         return Uom::query()->get();
     }
 
-    public function updateOrCreate(UomData $data)
+    public function updateOrCreate(UomStoreRequest $request)
     {
+        $data = UomData::from($request->all());
         return Uom::query()->updateOrCreate([
             'id' => $data->key
-        ], [
-            'name' => $data->name,
-            'keterangan' => $data->keterangan,
-        ]);
+        ], $data->toArray());
     }
 
     public function delete(Uom $uom)
