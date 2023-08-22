@@ -1,7 +1,7 @@
 <form action="" class="form-dispose">
-    <input type="hidden" name="id" value="{{ $assetDispose->id }}">
-    <input type="hidden" name="no_dispose" value="{{ $assetDispose->no_dispose }}">
-    <input type="hidden" name="nik" value="{{ $assetDispose->nik }}">
+    <input type="hidden" name="id" value="{{ $assetDispose?->id }}">
+    <input type="hidden" name="no_dispose" value="{{ $assetDispose?->no_dispose }}">
+    <input type="hidden" name="nik" value="{{ $assetDispose?->nik }}">
     <x-form-header title="PENGHAPUSAN ASSET" nomor="TBU-FM-AST-002" tanggal="12-04-2023" revisi="00"
         halaman="1 dari 1" />
     <hr>
@@ -12,17 +12,17 @@
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Department</td>
                         <td>:</td>
-                        <td>{{ $employee->position->department->department_name }}</td>
+                        <td>{{ $employee->position?->department?->department_name }}</td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Project</td>
                         <td>:</td>
-                        <td>{{ $employee->position->project->project }}</td>
+                        <td>{{ $employee->position?->project?->project }}</td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Division</td>
                         <td>:</td>
-                        <td>{{ $employee->position->divisi->division_name }}</td>
+                        <td>{{ $employee->position?->divisi->division_name }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -34,14 +34,14 @@
                         <td class="fs-6 fw-semibold w-150px">Lokasi</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position->project->location }}
+                            {{ $employee->position?->project?->location }}
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Tanggal Pengajuan</td>
                         <td>:</td>
                         <td>
-                            {{ isset($assetDispose->created_at) ? $assetDispose->created_at : now()->format('d-m-Y') }}
+                            {{ isset($assetDispose?->created_at) ? $assetDispose?->created_at : now()->format('d-m-Y') }}
                         </td>
                     </tr>
                 </tbody>
@@ -76,38 +76,38 @@
                 <tbody>
                     <tr>
                         <td>
-                            <input type="hidden" name="asset_id" value="{{ $assetDispose->asset_id }}">
+                            <input type="hidden" name="asset_id" value="{{ $assetDispose?->asset_id }}">
                             <input type="text" readonly name="description"
-                                value="{{ $assetDispose->asset?->unit?->spesification }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->unit?->spesification }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="model_spesification"
-                                value="{{ $assetDispose->asset?->unit?->model }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->unit?->model }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="serial_no"
-                                value="{{ $assetDispose->asset?->unit?->serial_number }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->unit?->serial_number }}" class="form-control">
                         </td>
                         <td>
-                            <input type="text" readonly name="no_asset" value="{{ $assetDispose->asset?->kode }}"
+                            <input type="text" readonly name="no_asset" value="{{ $assetDispose?->asset?->kode }}"
                                 class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="tahun_buat"
-                                value="{{ $assetDispose->asset?->unit?->tahun_pembuatan }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->unit?->tahun_pembuatan }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="nilai_buku"
-                                value="{{ \App\Helpers\Helper::formatRupiah($assetDispose->nilai_buku) }}"
+                                value="{{ \App\Helpers\Helper::formatRupiah($assetDispose?->nilai_buku) }}"
                                 class="form-control uang">
                         </td>
                         <td>
                             <input type="text" name="est_harga_pasar" @readonly($type == 'show')
-                                value="{{ \App\Helpers\Helper::formatRupiah($assetDispose->est_harga_pasar) }}"
+                                value="{{ \App\Helpers\Helper::formatRupiah($assetDispose?->est_harga_pasar) }}"
                                 class="form-control uang">
                         </td>
                         <td>
-                            <textarea name="remark" @readonly($type == 'show') rows="1" class="form-control">{{ $assetDispose->remark }}</textarea>
+                            <textarea name="remark" @readonly($type == 'show') rows="1" class="form-control">{{ $assetDispose?->remark }}</textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -117,7 +117,7 @@
                     </tr>
                     <tr>
                         <td colspan="8">
-                            <textarea name="justifikasi" @readonly($type == 'show') class="form-control">{{ $assetDispose->justifikasi }}</textarea>
+                            <textarea name="justifikasi" @readonly($type == 'show') class="form-control">{{ $assetDispose?->justifikasi }}</textarea>
                         </td>
                     </tr>
                 </tfoot>
@@ -167,9 +167,9 @@
         <div class="row mt-8">
             <div class="col-md-12">
                 <div class="d-flex justify-content-center">
-                    @foreach ($assetDispose->workflows as $workflow)
+                    @foreach ($assetDispose?->workflows as $workflow)
                         <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
-                            style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($assetDispose->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
+                            style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($assetDispose?->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
                             <div class="border text-center text-white p-1 d-flex flex-column">
                                 <p class="m-0 fw-bold" style="font-size: 12px;">
                                     {{ $workflow->title }}
@@ -193,7 +193,7 @@
             <div class="col-md-12 d-flex justify-content-start mt-4">
                 @permission('asset_dispose_approv')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
-                        data-dispose="{{ $assetDispose->id }}" class="btn btn-success ps-4 approv">
+                        data-dispose="{{ $assetDispose?->id }}" class="btn btn-success ps-4 approv">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-check-circle fs-2">
@@ -209,7 +209,7 @@
                 @endpermission
                 @permission('asset_dispose_reject')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
-                        data-dispose="{{ $assetDispose->id }}" class="btn btn-danger ms-2 ps-4 reject">
+                        data-dispose="{{ $assetDispose?->id }}" class="btn btn-danger ms-2 ps-4 reject">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-cross-circle fs-2">

@@ -19,21 +19,21 @@
                         <td class="fs-6 fw-semibold w-150px">Department</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position->department->department_name }}
+                            {{ $employee->position?->department?->department_name }}
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Project</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position->project->project }}
+                            {{ $employee->position?->project?->project }}
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Lokasi</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position->project->location }}
+                            {{ $employee->position?->project?->location }}
                         </td>
                     </tr>
                 </tbody>
@@ -47,7 +47,7 @@
                         <td>:</td>
                         <td>
                             <input type="text" name="tanggal_pengajuan" disabled
-                                value="{{ isset($cer->created_at) ? $cer->created_at : now()->format('Y-m-d') }}"
+                                value="{{ isset($cer?->created_at) ? $cer?->created_at : now()->format('Y-m-d') }}"
                                 class="form-control date">
                         </td>
                     </tr>
@@ -55,9 +55,9 @@
                         <td class="fs-6 fw-semibold">Tanggal Kebutuhan</td>
                         <td>:</td>
                         <td>
-                            <input type="text" @readonly(isset($cer->tgl_kebutuhan))
-                                value="{{ isset($cer->tgl_kebutuhan) ? $cer->tgl_kebutuhan : '' }}" name="tgl_kebutuhan"
-                                class="form-control date">
+                            <input type="text" @readonly(isset($cer?->tgl_kebutuhan))
+                                value="{{ isset($cer?->tgl_kebutuhan) ? $cer?->tgl_kebutuhan : '' }}"
+                                name="tgl_kebutuhan" class="form-control date">
                         </td>
                     </tr>
                 </tbody>
@@ -67,7 +67,7 @@
     <div class="d-flex flex-column mt-4 me-4">
         <div class="d-flex flex-column">
             <h5>1. Justifikasi / alasan pengadaan</h5>
-            <textarea name="justifikasi" @readonly($type == 'show') class="form-control ms-4">{{ isset($cer->justifikasi) ? $cer->justifikasi : '' }}</textarea>
+            <textarea name="justifikasi" @readonly($type == 'show') class="form-control ms-4">{{ isset($cer?->justifikasi) ? $cer?->justifikasi : '' }}</textarea>
         </div>
         <div class="d-flex flex-column mt-4">
             <h5>2. Items</h5>
@@ -172,7 +172,7 @@
                         <tr>
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Ref No</td>
                             <td class="w-250px">
-                                <input type="text" class="form-control" readonly value="{{ $cer->budget_ref }}"
+                                <input type="text" class="form-control" readonly value="{{ $cer?->budget_ref }}"
                                     name="budget_ref">
                             </td>
                         </tr>
@@ -180,8 +180,8 @@
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
                             </td>
                             <td class="w-250px">
-                                <input type="text" class="form-control" readonly value="{{ $cer->budget?->periode }}"
-                                    name="budget_periode">
+                                <input type="text" class="form-control" readonly
+                                    value="{{ $cer?->budget?->periode }}" name="budget_periode">
                             </td>
                         </tr>
                     </tbody>
@@ -194,7 +194,7 @@
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
-                                    value="{{ \App\Helpers\Helper::formatRupiah($cer->budget?->total) }}"
+                                    value="{{ \App\Helpers\Helper::formatRupiah($cer?->budget?->total) }}"
                                     name="total_budget_idr">
                             </td>
                         </tr>
@@ -211,7 +211,7 @@
         </div>
         <div class="d-flex flex-column mt-4">
             <h5>6. Cost & Benefit Analyst</h5>
-            <textarea name="cost_analyst" @readonly($type == 'show') class="form-control ms-4">{{ isset($cer->cost_analyst) ? $cer->cost_analyst : '' }}</textarea>
+            <textarea name="cost_analyst" @readonly($type == 'show') class="form-control ms-4">{{ isset($cer?->cost_analyst) ? $cer?->cost_analyst : '' }}</textarea>
         </div>
     </div>
     @if ($type != 'show')
@@ -231,9 +231,9 @@
     <div class="row mt-8">
         <div class="col-md-12">
             <div class="d-flex justify-content-center">
-                @foreach ($cer->workflows as $workflow)
+                @foreach ($cer?->workflows as $workflow)
                     <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
-                        style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($cer->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
+                        style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($cer?->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
                         <div class="border text-center text-white p-1 d-flex flex-column">
                             <p class="m-0 fw-bold" style="font-size: 12px;">
                                 {{ $workflow->title }}
@@ -256,7 +256,7 @@
         </div>
         <div class="col-md-12 d-flex justify-content-start mt-4">
             @permission('asset_request_approv')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->id }}"
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer?->id }}"
                     class="btn btn-success ps-4 approv">
                     <span class="indicator-label">
                         <div class="d-flex align-items-center gap-2">
@@ -272,7 +272,7 @@
                 </button>
             @endpermission
             @permission('asset_request_reject')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer->id }}"
+                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer?->id }}"
                     class="btn btn-danger ms-2 ps-4 reject">
                     <span class="indicator-label">
                         <div class="d-flex align-items-center gap-2">

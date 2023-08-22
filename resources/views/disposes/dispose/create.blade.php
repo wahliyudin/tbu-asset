@@ -31,7 +31,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-disposes.form :employee="$employee" />
+            <x-disposes.form :assetDispose="null" :employee="$employee" />
         </div>
     </div>
 @endsection
