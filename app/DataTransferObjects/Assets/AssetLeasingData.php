@@ -34,11 +34,11 @@ class AssetLeasingData extends Data
 
     public function hargaBeliToInt(): int
     {
-        return Helper::resetRupiah($this->harga_beli);
+        return is_int($this->harga_beli) ? $this->harga_beli : Helper::resetRupiah($this->harga_beli);
     }
 
     public function biayaToInt(): int
     {
-        return Helper::resetRupiah($this->biaya_leasing);
+        return is_int($this->biaya_leasing) ? $this->biaya_leasing : Helper::resetRupiah($this->biaya_leasing);
     }
 }

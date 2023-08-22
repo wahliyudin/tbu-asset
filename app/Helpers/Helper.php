@@ -12,7 +12,7 @@ class Helper
             ->value();
     }
 
-    public static function resetRupiah(string $val): int
+    public static function resetRupiah(?string $val): int
     {
         return (int) str($val)
             ->replace('Rp. ', '')

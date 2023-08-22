@@ -27,6 +27,6 @@ class AssetInsuranceData extends Data
 
     public function biayaToInt(): int
     {
-        return Helper::resetRupiah($this->biaya);
+        return is_int($this->biaya) ? $this->biaya : Helper::resetRupiah($this->biaya);
     }
 }
