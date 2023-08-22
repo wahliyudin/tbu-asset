@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\ClusterData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\ClusterStoreRequest;
 use App\Models\Masters\Cluster;

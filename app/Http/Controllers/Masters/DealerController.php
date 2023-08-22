@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\DealerData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\DealerStoreRequest;
 use App\Models\Masters\Dealer;

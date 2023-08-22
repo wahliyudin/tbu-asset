@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\LeasingData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Masters\LeasingStoreRequest;
 use App\Models\Masters\Leasing;
 use App\Services\Masters\LeasingService;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,10 +30,10 @@ class LeasingController extends Controller
             ->make();
     }
 
-    public function store(LeasingData $data)
+    public function store(LeasingStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
