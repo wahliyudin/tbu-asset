@@ -13,6 +13,11 @@ class ClusterService
         return Cluster::query()->with('category')->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return Cluster::select(array_merge(['id', 'name'], $others))->get();
+    }
+
     public function updateOrCreate(ClusterStoreRequest $request)
     {
         $data = ClusterData::from($request->all());

@@ -84,9 +84,8 @@ class CerController extends Controller
 
     public function create()
     {
-        $employee = EmployeeData::from($this->service->getEmployee());
         return view('cers.cer.create', [
-            'employee' => $employee
+            'employee' => EmployeeData::from($this->service->getEmployee())
         ]);
     }
 

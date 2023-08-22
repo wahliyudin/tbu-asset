@@ -13,6 +13,11 @@ class UnitService
         return Unit::query()->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return Unit::select(array_merge(['id', 'model'], $others))->get();
+    }
+
     public function updateOrCreate(UnitStoreRequest $request)
     {
         $data = UnitData::from($request->all());

@@ -13,15 +13,13 @@ class ClusterController extends Controller
 {
     public function __construct(
         private ClusterService $service,
-        private CategoryService $categoryService,
     ) {
     }
 
     public function index()
     {
-        $categories = $this->categoryService->all();
         return view('masters.cluster.index', [
-            'categories' => $categories
+            'categories' => CategoryService::dataForSelect()
         ]);
     }
 

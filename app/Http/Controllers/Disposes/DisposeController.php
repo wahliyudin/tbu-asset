@@ -81,9 +81,8 @@ class DisposeController extends Controller
 
     public function create()
     {
-        $employee = EmployeeData::from(GlobalService::getEmployee(null, true));
         return view('disposes.dispose.create', [
-            'employee' => $employee
+            'employee' => EmployeeData::from(GlobalService::getEmployee(null, true))
         ]);
     }
 

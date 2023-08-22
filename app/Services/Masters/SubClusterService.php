@@ -13,6 +13,11 @@ class SubClusterService
         return SubCluster::query()->with('cluster')->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return SubCluster::select(array_merge(['id', 'name'], $others))->get();
+    }
+
     public function updateOrCreate(SubClusterStoreRequest $request)
     {
         $data = SubClusterData::from($request->all());

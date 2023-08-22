@@ -13,6 +13,11 @@ class CategoryService
         return Category::query()->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return Category::select(array_merge(['id', 'name'], $others))->get();
+    }
+
     public function updateOrCreate(CategoryStoreRequest $request)
     {
         $data = CategoryData::from($request->all());

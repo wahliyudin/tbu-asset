@@ -13,6 +13,11 @@ class DealerService
         return Dealer::query()->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return Dealer::select(array_merge(['id', 'name'], $others))->get();
+    }
+
     public function updateOrCreate(DealerStoreRequest $request)
     {
         $data = DealerData::from($request->all());

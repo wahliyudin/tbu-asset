@@ -13,14 +13,13 @@ class SubClusterController extends Controller
 {
     public function __construct(
         private SubClusterService $service,
-        private ClusterService $clusterService,
     ) {
     }
 
     public function index()
     {
         return view('masters.sub-cluster.index', [
-            'clusters' => $this->clusterService->all()
+            'clusters' => ClusterService::dataForSelect()
         ]);
     }
 

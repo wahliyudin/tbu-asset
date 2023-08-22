@@ -13,6 +13,11 @@ class LeasingService
         return Leasing::query()->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return Leasing::select(array_merge(['id', 'name'], $others))->get();
+    }
+
     public function updateOrCreate(LeasingStoreRequest $request)
     {
         $data = LeasingData::from($request->all());

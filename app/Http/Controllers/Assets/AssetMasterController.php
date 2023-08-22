@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Assets;
 
-use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
-use App\Models\Masters\Dealer;
-use App\Models\Masters\Leasing;
-use App\Models\Masters\SubCluster;
-use App\Models\Masters\Unit;
-use App\Services\API\HRIS\EmployeeService;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
-use Illuminate\Http\Request;
+use App\Services\Masters\DealerService;
+use App\Services\Masters\LeasingService;
+use App\Services\Masters\SubClusterService;
+use App\Services\Masters\UnitService;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller
@@ -26,10 +23,10 @@ class AssetMasterController extends Controller
     public function index()
     {
         return view('assets.asset.index', [
-            'units' => Unit::query()->get(),
-            'subClusters' => SubCluster::query()->get(),
-            'dealers' => Dealer::query()->get(),
-            'leasings' => Leasing::query()->get(),
+            'units' => UnitService::dataForSelect(),
+            'subClusters' => SubClusterService::dataForSelect(),
+            'dealers' => DealerService::dataForSelect(),
+            'leasings' => LeasingService::dataForSelect(),
             'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])
         ]);
     }
