@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\SubClusterData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Masters\SubClusterStoreRequest;
 use App\Models\Masters\SubCluster;
 use App\Services\Masters\ClusterService;
 use App\Services\Masters\SubClusterService;
@@ -19,9 +19,8 @@ class SubClusterController extends Controller
 
     public function index()
     {
-        $clusters = $this->clusterService->all();
         return view('masters.sub-cluster.index', [
-            'clusters' => $clusters
+            'clusters' => $this->clusterService->all()
         ]);
     }
 
@@ -38,10 +37,10 @@ class SubClusterController extends Controller
             ->make();
     }
 
-    public function store(SubClusterData $data)
+    public function store(SubClusterStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
