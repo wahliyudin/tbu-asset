@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Masters;
 
 use App\DataTransferObjects\Masters\ClusterData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Masters\ClusterStoreRequest;
 use App\Models\Masters\Cluster;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
@@ -38,10 +39,10 @@ class ClusterController extends Controller
             ->make();
     }
 
-    public function store(ClusterData $data)
+    public function store(ClusterStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
