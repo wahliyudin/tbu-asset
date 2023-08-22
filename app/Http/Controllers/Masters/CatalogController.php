@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\CatalogData;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Masters\CatalogStoreRequest;
 use App\Models\Masters\Catalog;
 use App\Services\Masters\CatalogService;
 use Yajra\DataTables\Facades\DataTables;
@@ -30,10 +30,10 @@ class CatalogController extends Controller
             ->make();
     }
 
-    public function store(CatalogData $data)
+    public function store(CatalogStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);

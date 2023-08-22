@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Settings;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
-use App\DataTransferObjects\API\HRIS\EmployeeDto;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\API\HRIS\EmployeeService;
 use App\Services\Settings\AccessPermissionService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -14,7 +12,6 @@ use Yajra\DataTables\Facades\DataTables;
 class AccessPermissionController extends Controller
 {
     public function __construct(
-        protected EmployeeService $employeeService,
         protected AccessPermissionService $accessPermissionService,
     ) {
     }
@@ -26,8 +23,7 @@ class AccessPermissionController extends Controller
 
     public function datatable()
     {
-        $niks = User::query()->pluck('nik')->toArray();
-        return DataTables::of(EmployeeData::collection($this->employeeService->whereIn('nik', $niks)->getData()['data'])->toCollection())
+        return DataTables::of($this->accessPermissionService->datatable())
             ->editColumn('nik', function (EmployeeData $employee) {
                 return $employee->nik;
             })

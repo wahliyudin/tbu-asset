@@ -28,9 +28,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::query()->create([
-            'nik' => 11180627,
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
+            'nik' => 12345678,
+            'name' => 'Administrator',
+            'email' => 'administrator@.co.id',
             'password' => Hash::make(1234567890),
         ]);
         $this->call([

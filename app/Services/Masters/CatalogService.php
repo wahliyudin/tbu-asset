@@ -3,6 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\CatalogData;
+use App\Http\Requests\Masters\CatalogStoreRequest;
 use App\Models\Masters\Catalog;
 
 class CatalogService
@@ -12,18 +13,12 @@ class CatalogService
         return Catalog::query()->get();
     }
 
-    public function updateOrCreate(CatalogData $data)
+    public function updateOrCreate(CatalogStoreRequest $request)
     {
+        $data = CatalogData::from($request->all());
         return Catalog::query()->updateOrCreate([
             'id' => $data->key
-        ], [
-            'unit_model' => $data->unit_model,
-            'unit_type' => $data->unit_type,
-            'seri' => $data->seri,
-            'unit_class' => $data->unit_class,
-            'brand' => $data->brand,
-            'spesification' => $data->spesification,
-        ]);
+        ], $data->toArray());
     }
 
     public function delete(Catalog $catalog)
