@@ -3,6 +3,7 @@
 namespace App\Services\Masters;
 
 use App\DataTransferObjects\Masters\DealerData;
+use App\Http\Requests\Masters\DealerStoreRequest;
 use App\Models\Masters\Dealer;
 
 class DealerService
@@ -12,13 +13,12 @@ class DealerService
         return Dealer::query()->get();
     }
 
-    public function updateOrCreate(DealerData $data)
+    public function updateOrCreate(DealerStoreRequest $request)
     {
+        $data = DealerData::from($request->all());
         return Dealer::query()->updateOrCreate([
             'id' => $data->key
-        ], [
-            'name' => $data->name,
-        ]);
+        ], $data->toArray());
     }
 
     public function delete(Dealer $category)
