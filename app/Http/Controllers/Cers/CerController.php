@@ -12,15 +12,14 @@ use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Assets\Asset;
 use App\Models\Cers\Cer;
-use App\Models\Masters\Dealer;
-use App\Models\Masters\Leasing;
-use App\Models\Masters\SubCluster;
-use App\Models\Masters\Unit;
 use App\Services\API\TXIS\BudgetService;
-use App\Services\API\TXIS\CerService as TXISCerService;
 use App\Services\Assets\AssetService;
 use App\Services\Cers\CerService;
 use App\Services\GlobalService;
+use App\Services\Masters\DealerService;
+use App\Services\Masters\LeasingService;
+use App\Services\Masters\SubClusterService;
+use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -157,10 +156,10 @@ class CerController extends Controller
         return view('cers.cer.register', [
             'cer' => $data,
             'cerTxis' => $cerTxis,
-            'units' => Unit::query()->get(),
-            'subClusters' => SubCluster::query()->get(),
-            'dealers' => Dealer::query()->get(),
-            'leasings' => Leasing::query()->get(),
+            'units' => UnitService::dataForSelect(),
+            'subClusters' => SubClusterService::dataForSelect(),
+            'dealers' => DealerService::dataForSelect(),
+            'leasings' => LeasingService::dataForSelect(),
             'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection()
         ]);
     }

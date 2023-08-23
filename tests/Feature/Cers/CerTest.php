@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Cers;
 
+use App\Enums\Asset\Status;
+use App\Models\Assets\Asset;
 use App\Models\Cers\Cer;
 use App\Models\User;
 use Database\Seeders\SidebarWithPermissionSeeder;
@@ -64,52 +66,38 @@ class CerTest extends TestCase
         $this->assertSame(5, $data['recordsTotal']);
     }
 
-    // public function test_can_create_one_data()
-    // {
-    //     $cer = Cer::factory()->make();
-    //     $this->user->givePermission('asset_request_create');
-    //     $response = $this->actingAs($this->user)
-    //         ->post(route('asset-requests.store'), $cer->toArray());
+    public function test_can_access_datatable_asset_status_idle()
+    {
+        Asset::factory()->create([
+            'status' => Status::IDLE
+        ]);
+        $response = $this->actingAs($this->user)
+            ->post(route('asset-requests.datatable-asset-idle'));
 
-    //     $response->assertOk()
-    //         ->assertJson([
-    //             'message' => 'Berhasil disimpan'
-    //         ]);
-    //     $this->assertDatabaseCount(Cer::class, 1);
-    // }
+        $data = $response->json();
+        $response->assertOk();
+        $this->assertSame(1, $data['recordsTotal']);
+    }
 
-    // public function test_create_asset_request_with_invalid_data()
-    // {
-    //     $cer = Cer::factory()->make([
-    //         'no_cer' => null
-    //     ]);
-    //     $this->user->givePermission('asset_request_create');
-    //     $response = $this->actingAs($this->user)
-    //         ->post(route('asset-requests.store'), $cer->toArray());
+    public function test_access_method_show()
+    {
+        $cer = Cer::factory()->create();
 
-    //     $response->assertInvalid();
-    //     $this->assertDatabaseEmpty(Cer::class);
-    // }
+        $this->user->givePermission('asset_request_read');
+        $response = $this->actingAs($this->user)
+            ->get(route('asset-requests.show', $cer->getKey()));
 
-    // public function test_can_edit_data()
-    // {
-    //     $cer = Cer::factory()->create();
-    //     $this->user->givePermission('asset_request_update');
-    //     $response = $this->actingAs($this->user)
-    //         ->post(route('asset-requests.edit', $cer->getKey()));
+        $response->assertSeeText('Data Show Cer');
+    }
 
-    //     $response->assertOk();
-    //     $response->assertJson($cer->toArray());
-    // }
+    public function test_access_method_create()
+    {
+        $this->user->givePermission('asset_request_create');
+        $response = $this->actingAs($this->user)
+            ->get(route('asset-requests.create'));
 
-    // public function test_access_edit_data_not_found()
-    // {
-    //     $this->user->givePermission('asset_request_update');
-    //     $response = $this->actingAs($this->user)
-    //         ->post(route('asset-requests.edit', 1));
-
-    //     $response->assertNotFound();
-    // }
+        $response->assertSeeText('Create Cer');
+    }
 
     public function test_can_delete_data()
     {
