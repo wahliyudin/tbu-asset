@@ -52,7 +52,9 @@ class CerTest extends TestCase
 
     public function test_can_access_and_with_data_datatable()
     {
-        Cer::factory(5)->create();
+        Cer::factory(5)->create([
+            'nik' => $this->user->nik
+        ]);
         $this->user->givePermission('asset_request_read');
         $response = $this->actingAs($this->user)
             ->post(route('asset-requests.datatable'));

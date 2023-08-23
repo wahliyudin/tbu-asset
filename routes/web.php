@@ -48,7 +48,7 @@ Route::get('sso/callback', [AuthController::class, 'callback'])->name('sso.callb
 
 Auth::routes();
 
-Route::middleware(['auth', 'oauth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/home/charts', [HomeController::class, 'charts'])->name('home.charts');
 
