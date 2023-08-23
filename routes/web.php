@@ -123,14 +123,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('asset-requests/{cer}/register', [CerController::class, 'register'])->name('asset-requests.register');
     Route::post('asset-requests/{cer}/register', [CerController::class, 'storeRegister'])->name('asset-requests.store-register');
 
-    Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index');
-    Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable');
+    Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index')->middleware('permission:asset_transfer_read');
+    Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable')->middleware('permission:asset_transfer_read');
     Route::post('asset-transfers/datatable-asset', [TransferController::class, 'datatableAsset'])->name('asset-transfers.datatable-asset');
-    Route::get('asset-transfers/create', [TransferController::class, 'create'])->name('asset-transfers.create');
-    Route::post('asset-transfers/store', [TransferController::class, 'store'])->name('asset-transfers.store');
-    Route::get('asset-transfers/{assetTransfer}/show', [TransferController::class, 'show'])->name('asset-transfers.show');
-    Route::get('asset-transfers/{assetTransfer}/edit', [TransferController::class, 'edit'])->name('asset-transfers.edit');
-    Route::delete('asset-transfers/{assetTransfer}/destroy', [TransferController::class, 'destroy'])->name('asset-transfers.destroy');
+    Route::get('asset-transfers/create', [TransferController::class, 'create'])->name('asset-transfers.create')->middleware('permission:asset_transfer_create');
+    Route::post('asset-transfers/store', [TransferController::class, 'store'])->name('asset-transfers.store')->middleware('permission:asset_transfer_create');
+    Route::get('asset-transfers/{assetTransfer}/show', [TransferController::class, 'show'])->name('asset-transfers.show')->middleware('permission:asset_transfer_read');
+    Route::get('asset-transfers/{assetTransfer}/edit', [TransferController::class, 'edit'])->name('asset-transfers.edit')->middleware('permission:asset_transfer_update');
+    Route::delete('asset-transfers/{assetTransfer}/destroy', [TransferController::class, 'destroy'])->name('asset-transfers.destroy')->middleware('permission:asset_transfer_delete');
     Route::get('asset-transfers/{asset}/employee', [TransferController::class, 'employeeByAsset'])->name('asset-transfers.employee-by-asset');
 
     Route::get('asset-disposes', [DisposeController::class, 'index'])->name('asset-disposes.index');
