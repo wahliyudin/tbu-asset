@@ -13,6 +13,7 @@ class CerWorkflow extends Model
 
     protected $fillable = [
         'sequence',
+        'cer_id',
         'nik',
         'title',
         'last_action',
