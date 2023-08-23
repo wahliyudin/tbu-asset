@@ -13,6 +13,7 @@ class DisposeWorkflow extends Model
 
     protected $fillable = [
         'sequence',
+        'asset_dispose_id',
         'nik',
         'title',
         'last_action',
