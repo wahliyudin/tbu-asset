@@ -19,7 +19,7 @@ class WorkflowRepository
     public static function loadWorkflows(Model $model)
     {
         return $model->loadMissing(['workflow', 'workflows' => function ($query) {
-            $query->where('last_action', LastAction::NOTTING);
+            $query->where('last_action', LastAction::NOTTING)->orderBy('sequence', 'ASC');
         }]);
     }
 

@@ -55,6 +55,7 @@
                         <th class="min-w-125px">Pelaksanaan</th>
                         <th class="min-w-125px">Nilai Buku</th>
                         <th class="min-w-125px">Estimasi Harga Pasar</th>
+                        <th class="min-w-125px">Status</th>
                         <th class="text-end min-w-70px">Actions</th>
                     </tr>
                 </thead>

@@ -14,10 +14,10 @@ class BudgetService extends TXISService
         return $this->baseUrl() . ($prefix ?? self::PREFIX);
     }
 
-    public function all()
+    public function all($deptcode = null)
     {
         return $this->get($this->url(), [
-            'deptcode' => 'PNL99'
+            'deptcode' => $deptcode
         ])->json();
     }
 

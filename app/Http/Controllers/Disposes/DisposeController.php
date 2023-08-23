@@ -39,15 +39,18 @@ class DisposeController extends Controller
                 return $assetDispose->pelaksanaan->badge();
             })
             ->editColumn('nilai_buku', function (AssetDispose $assetDispose) {
-                return Helper::formatRupiah($assetDispose->nilai_buku);
+                return Helper::formatRupiah($assetDispose->nilai_buku, true);
             })
             ->editColumn('est_harga_pasar', function (AssetDispose $assetDispose) {
-                return Helper::formatRupiah($assetDispose->est_harga_pasar);
+                return Helper::formatRupiah($assetDispose->est_harga_pasar, true);
+            })
+            ->editColumn('status', function (AssetDispose $assetDispose) {
+                return $assetDispose->status->badge();
             })
             ->editColumn('action', function (AssetDispose $assetDispose) {
                 return view('disposes.dispose.action', compact('assetDispose'))->render();
             })
-            ->rawColumns(['action', 'pelaksanaan'])
+            ->rawColumns(['action', 'pelaksanaan', 'status'])
             ->make();
     }
 
@@ -70,13 +73,23 @@ class DisposeController extends Controller
                 return $asset->unit?->tahun_pembuatan;
             })
             ->editColumn('nilai_buku', function (Asset $asset) {
-                return Helper::formatRupiah(100000);
+                return Helper::formatRupiah($asset->leasing?->harga_beli);
             })
             ->editColumn('action', function (Asset $asset) {
                 return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
             ->rawColumns(['action'])
             ->make();
+    }
+
+    public function show(AssetDispose $assetDispose)
+    {
+        $assetDispose->load(['asset.unit']);
+        $data = AssetDisposeData::from($assetDispose);
+        return view('disposes.dispose.show', [
+            'assetDispose' => $data,
+            'employee' => $data->employee,
+        ]);
     }
 
     public function create()

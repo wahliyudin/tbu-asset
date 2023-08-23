@@ -21,7 +21,7 @@ class SubClusterFactory extends Factory
     public function definition(): array
     {
         return [
-            'cluster_id' => Cluster::factory(),
+            'cluster_id' => fake()->randomElement(Cluster::query()->pluck('id')->toArray()),
             'name' => fake()->sentence(2),
         ];
     }

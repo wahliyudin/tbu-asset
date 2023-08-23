@@ -4,7 +4,8 @@
 
     <div class="app-sidebar-logo h-100px px-6" id="kt_app_sidebar_logo">
         <a href="{{ route('home') }}">
-            <img alt="Logo" src="{{ asset('assets/logo.png') }}" class="h-100px app-sidebar-logo-default" />
+            <img alt="Logo" src="{{ asset('assets/media/logos/tbu.png') }}" style="width: 90%;"
+                class=" app-sidebar-logo-default bg-white px-4 py-2 rounded" />
         </a>
 
         <div id="kt_app_sidebar_toggle" class="app-sidebar-toggle btn btn-icon btn-sm h-30px w-30px rotate active"
@@ -237,7 +238,7 @@
                             </span>
                             <span class="menu-title">Approval</span>
                             <span class="menu-badge">
-                                <span class="badge badge-success">0</span>
+                                <span class="badge badge-success" id="grand-total">0</span>
                             </span>
                             <span class="menu-arrow"></span>
                         </span>
@@ -252,7 +253,7 @@
                                         </span>
                                         <span class="menu-title">Asset Request</span>
                                         <span class="menu-badge">
-                                            <span class="badge badge-success">0</span>
+                                            <span class="badge badge-success" id="asset-request">0</span>
                                         </span>
                                     </a>
                                 </div>
@@ -266,7 +267,7 @@
                                         </span>
                                         <span class="menu-title">Asset Transfer</span>
                                         <span class="menu-badge">
-                                            <span class="badge badge-success">0</span>
+                                            <span class="badge badge-success" id="asset-transfer">0</span>
                                         </span>
                                     </a>
                                 </div>
@@ -280,7 +281,7 @@
                                         </span>
                                         <span class="menu-title">Asset Dispose</span>
                                         <span class="menu-badge">
-                                            <span class="badge badge-success">0</span>
+                                            <span class="badge badge-success" id="asset-dispose">0</span>
                                         </span>
                                     </a>
                                 </div>
@@ -288,6 +289,28 @@
                         </div>
                     </div>
                 @endpermission
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <i class="ki-duotone ki-setting fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                            </i>
+                        </span>
+                        <span class="menu-title">Report</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-item">
+                            <a class="menu-link" href="">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Asset Request</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">

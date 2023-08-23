@@ -25,7 +25,7 @@ class AssetFactory extends Factory
         return [
             'kode' => fake()->countryCode(),
             'unit_id' => Unit::factory(),
-            'sub_cluster_id' => SubCluster::factory(),
+            'sub_cluster_id' => fake()->randomElement(SubCluster::query()->pluck('id')->toArray()),
             'member_name' => fake()->sentence(1),
             'pic' => fake()->numberBetween(1000, 9999),
             'activity' => fake()->sentence(1),

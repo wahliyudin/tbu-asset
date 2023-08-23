@@ -26,7 +26,7 @@ class ApprovalCerController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
+        return DataTables::of(CerService::getByCurrentApproval())
             ->editColumn('type_budget', function (Cer $cer) {
                 return $cer->type_budget->badge();
             })
@@ -54,11 +54,15 @@ class ApprovalCerController extends Controller
 
     public function show(Cer $cer)
     {
-        $cer->loadMissing(['items', 'workflows']);
+        $isCurrentWorkflow = CerWorkflowService::setModel($cer)->isCurrentWorkflow();
+        $cer->load(['items.uom', 'workflows' => function ($query) {
+            $query->orderBy('sequence', 'ASC');
+        }]);
         $data = CerData::from($cer)->except('workflows.employee.position');
         return view('approvals.cer.show', [
             'cer' => $data,
             'employee' => $data->employee,
+            'isCurrentWorkflow' => $isCurrentWorkflow,
         ]);
     }
 

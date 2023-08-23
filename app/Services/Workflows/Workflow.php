@@ -3,6 +3,7 @@
 namespace App\Services\Workflows;
 
 use App\DataTransferObjects\WorkflowData;
+use App\Enums\Settings\Approval;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Module;
 use App\Enums\Workflows\Status;
@@ -53,16 +54,17 @@ abstract class Workflow extends Checker
     private function prepareApprovals(Collection $approvals): array
     {
         $data = [];
-        foreach ($approvals as $approval) {
-            array_push($data, $this->payloadApproval($approval));
+        foreach ($approvals as $key => $approval) {
+            array_push($data, $this->payloadApprovalForHRIS($approval));
         }
         return $data;
     }
 
-    private function payloadApproval(SettingApproval $approval): array
+    private function payloadApprovalForHRIS(SettingApproval $approval): array
     {
         return [
             'approval' => $approval->approval->valueByHRIS(),
+            'nik' => $approval->nik,
             'title' => $approval->title
         ];
     }

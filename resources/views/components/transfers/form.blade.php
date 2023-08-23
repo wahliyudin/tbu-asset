@@ -8,14 +8,16 @@
     <hr>
     <div class="row">
         <div class="col-md-12">
-            <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
-                    <i class="ki-duotone ki-search-list fs-2">
-                        <i class="path1"></i>
-                        <i class="path2"></i>
-                        <i class="path3"></i>
-                    </i>Pilih Asset</button>
-            </div>
+            @if ($type != 'show')
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm btn-primary ps-3 btn-select-asset">
+                        <i class="ki-duotone ki-search-list fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                            <i class="path3"></i>
+                        </i>Pilih Asset</button>
+                </div>
+            @endif
             <h5>Dengan ini mengajukan permintaan pemindahan (transfer) asset dengan data berikut: (*)</h5>
             <table class="w-100 ms-8 mt-4">
                 <tbody>
@@ -143,16 +145,9 @@
                 </thead>
                 <tbody>
                     <tr class="text-center">
-                        <td class="p-1 w-50px">2</td>
-                        <td class="p-1 w-50px">8</td>
-                        <td class="p-1 w-50px">-</td>
-                        <td class="p-1 w-50px">0</td>
-                        <td class="p-1 w-50px">6</td>
-                        <td class="p-1 w-50px">-</td>
-                        <td class="p-1 w-50px">2</td>
-                        <td class="p-1 w-50px">0</td>
-                        <td class="p-1 w-50px">2</td>
-                        <td class="p-1 w-50px">3</td>
+                        @foreach (str(\Carbon\Carbon::make($assetTransfer?->created_at ?? now()->format('d-m-Y'))->format('d-m-Y'))->split(1) as $value)
+                            <td class="p-1 w-50px">{{ $value }}</td>
+                        @endforeach
                     </tr>
                 </tbody>
             </table>
@@ -217,33 +212,9 @@
             <p class="m-0">(Diisi apabila proses transfer disetujui)</p>
         </div>
     </div>
-    @if ($type == 'show')
+    @if ($type == 'show' && $withWorkflow)
         <div class="row mt-8">
-            <div class="col-md-12">
-                <div class="d-flex justify-content-center">
-                    @foreach ($assetTransfer->workflows as $workflow)
-                        <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
-                            style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($assetTransfer->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
-                            <div class="border text-center text-white p-1 d-flex flex-column">
-                                <p class="m-0 fw-bold" style="font-size: 12px;">
-                                    {{ $workflow->title }}
-                                    By
-                                </p>
-                                <p class="m-0">{{ $workflow?->employee?->nama_karyawan }}</p>
-                            </div>
-                            <div class="border text-center text-white p-1 d-flex flex-column">
-                                <p class="m-0 fw-bold" style="font-size: 12px;">
-                                    {{ $workflow->title }}
-                                    On
-                                </p>
-                                <p class="m-0">
-                                    {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->last_action_date : '-' }}
-                                </p>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
+            <x-approval :workflows="$assetTransfer->workflows" />
             <div class="col-md-12 d-flex justify-content-start mt-4">
                 @permission('asset_transfer_approv')
                     <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button"
@@ -321,5 +292,10 @@
         <script src="{{ asset('assets/plugins/custom/mask/jquery.mask.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
         <script src="{{ asset('assets/js/pages/transfer/create.js') }}"></script>
+    @endpush
+@endif
+@if ($type == 'show')
+    @push('js')
+        <script src="{{ asset('assets/js/pages/transfer/form.js') }}"></script>
     @endpush
 @endif

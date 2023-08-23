@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('est_umur');
             $table->integer('qty');
             $table->bigInteger('price');
-            $table->string('uom')->nullable();
+            $table->unsignedBigInteger('uom_id')->nullable();
             $table->timestamps();
         });
     }

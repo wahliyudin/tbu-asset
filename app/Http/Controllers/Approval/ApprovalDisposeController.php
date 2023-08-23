@@ -26,7 +26,7 @@ class ApprovalDisposeController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
+        return DataTables::of(AssetDisposeService::getByCurrentApproval())
             ->editColumn('no_dispose', function (AssetDispose $assetDispose) {
                 return $assetDispose->no_dispose;
             })
@@ -39,20 +39,25 @@ class ApprovalDisposeController extends Controller
             ->editColumn('est_harga_pasar', function (AssetDispose $assetDispose) {
                 return Helper::formatRupiah($assetDispose->est_harga_pasar);
             })
+            ->editColumn('status', function (AssetDispose $assetDispose) {
+                return $assetDispose->status->badge();
+            })
             ->editColumn('action', function (AssetDispose $assetDispose) {
                 return view('approvals.dispose.action', compact('assetDispose'))->render();
             })
-            ->rawColumns(['action', 'pelaksanaan'])
+            ->rawColumns(['action', 'pelaksanaan', 'status'])
             ->make();
     }
 
     public function show(AssetDispose $assetDispose)
     {
-        $assetDispose->loadMissing(['asset.unit', 'workflows']);
+        $isCurrentWorkflow = DisposeWorkflowService::setModel($assetDispose)->isCurrentWorkflow();
+        $assetDispose->load(['asset.unit', 'workflows']);
         $data = AssetDisposeData::from($assetDispose);
         return view('approvals.dispose.show', [
             'assetDispose' => $data,
             'employee' => $data->employee,
+            'isCurrentWorkflow' => $isCurrentWorkflow,
         ]);
     }
 

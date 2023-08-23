@@ -14,6 +14,18 @@
             <span class="input-group-text">Bulan</span>
         </div>
     </td>
+    <td id="uom">
+        <select @disabled($type == 'show') class="form-select" name="uom_id">
+            <option value="">-Select-</option>
+            @if ($type == 'show')
+                <option selected>{{ $cerItem->uom?->name }}</option>
+            @else
+                @foreach ($uoms as $uom)
+                    <option @selected($cerItem->uom_id == $uom->id) value="{{ $uom->id }}">{{ $uom->name }}</option>
+                @endforeach
+            @endif
+        </select>
+    </td>
     <td>
         <input type="number" @readonly($type == 'show') value="{{ $cerItem->qty ?? 1 }}" name="qty" min="1"
             class="form-control qty">

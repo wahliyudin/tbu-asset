@@ -6,6 +6,7 @@ use App\Http\Controllers\Approval\ApprovalTransferController;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\Disposes\DisposeController;
+use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
@@ -47,8 +48,9 @@ Route::get('sso/callback', [AuthController::class, 'callback'])->name('sso.callb
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'oauth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/home/charts', [HomeController::class, 'charts'])->name('home.charts');
 
     Route::get('master/categories', [CategoryController::class, 'index'])->name('masters.categories.index')->middleware('permission:category_read');
     Route::post('master/categories/datatable', [CategoryController::class, 'datatable'])->name('masters.categories.datatable')->middleware('permission:category_read');
@@ -115,14 +117,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-requests/datatable-asset-idle', [CerController::class, 'datatableAssetIdle'])->name('asset-requests.datatable-asset-idle');
     Route::get('asset-requests/create', [CerController::class, 'create'])->name('asset-requests.create')->middleware('permission:asset_request_create');
     Route::post('asset-requests/store', [CerController::class, 'store'])->name('asset-requests.store')->middleware('permission:asset_request_create');
+    Route::get('asset-requests/{cer}/show', [CerController::class, 'show'])->name('asset-requests.show')->middleware('permission:asset_request_read');
     Route::get('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit')->middleware('permission:asset_request_update');
     Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy')->middleware('permission:asset_request_delete');
+    Route::get('asset-requests/{cer}/register', [CerController::class, 'register'])->name('asset-requests.register');
+    Route::post('asset-requests/{cer}/register', [CerController::class, 'storeRegister'])->name('asset-requests.store-register');
 
     Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index');
     Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable');
     Route::post('asset-transfers/datatable-asset', [TransferController::class, 'datatableAsset'])->name('asset-transfers.datatable-asset');
     Route::get('asset-transfers/create', [TransferController::class, 'create'])->name('asset-transfers.create');
     Route::post('asset-transfers/store', [TransferController::class, 'store'])->name('asset-transfers.store');
+    Route::get('asset-transfers/{assetTransfer}/show', [TransferController::class, 'show'])->name('asset-transfers.show');
     Route::get('asset-transfers/{assetTransfer}/edit', [TransferController::class, 'edit'])->name('asset-transfers.edit');
     Route::delete('asset-transfers/{assetTransfer}/destroy', [TransferController::class, 'destroy'])->name('asset-transfers.destroy');
     Route::get('asset-transfers/{asset}/employee', [TransferController::class, 'employeeByAsset'])->name('asset-transfers.employee-by-asset');
@@ -132,6 +138,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-disposes/datatable-asset', [DisposeController::class, 'datatableAsset'])->name('asset-disposes.datatable-asset');
     Route::get('asset-disposes/create', [DisposeController::class, 'create'])->name('asset-disposes.create');
     Route::post('asset-disposes/store', [DisposeController::class, 'store'])->name('asset-disposes.store');
+    Route::get('asset-disposes/{assetDispose}/show', [DisposeController::class, 'show'])->name('asset-disposes.show');
     Route::get('asset-disposes/{assetDispose}/edit', [DisposeController::class, 'edit'])->name('asset-disposes.edit');
     Route::delete('asset-disposes/{assetDispose}/destroy', [DisposeController::class, 'destroy'])->name('asset-disposes.destroy');
 
@@ -144,6 +151,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('approvals/transfers', [ApprovalTransferController::class, 'index'])->name('approvals.transfers.index');
     Route::post('approvals/transfers/datatable', [ApprovalTransferController::class, 'datatable'])->name('approvals.transfers.datatable');
     Route::get('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show');
+    Route::post('approvals/transfers/{assetTransfer}/approv', [ApprovalTransferController::class, 'approv'])->name('approvals.transfers.approv')->middleware('permission:asset_request_approv|asset_request_reject');
+    Route::post('approvals/transfers/{assetTransfer}/reject', [ApprovalTransferController::class, 'reject'])->name('approvals.transfers.reject')->middleware('permission:asset_request_approv|asset_request_reject');
 
     Route::get('approvals/disposes', [ApprovalDisposeController::class, 'index'])->name('approvals.disposes.index')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
     Route::post('approvals/disposes/datatable', [ApprovalDisposeController::class, 'datatable'])->name('approvals.disposes.datatable')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
@@ -160,4 +169,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('settings/access-permission/{user}/update', [AccessPermissionController::class, 'update'])->name('settings.access-permission.update');
 
     Route::post('budgets/datatable', [BudgetController::class, 'datatable'])->name('budgets.datatable');
+
+    Route::get('global/total-approvals', [GlobalController::class, 'totalApprovals'])->name('global.total-approvals');
 });

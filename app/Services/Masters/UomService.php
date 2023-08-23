@@ -17,7 +17,7 @@ class UomService
     {
         $data = UomData::from($request->all());
         return Uom::query()->updateOrCreate([
-            'id' => $data->key
+            'id' => $data->id
         ], $data->toArray());
     }
 

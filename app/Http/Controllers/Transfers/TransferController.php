@@ -41,10 +41,13 @@ class TransferController extends Controller
             ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->newPic?->nama_karyawan;
             })
+            ->editColumn('status', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->status->badge();
+            })
             ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('transfers.transfer.action', compact('assetTransfer'))->render();
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'status'])
             ->make();
     }
 
@@ -74,6 +77,14 @@ class TransferController extends Controller
             })
             ->rawColumns(['action'])
             ->make();
+    }
+
+    public function show(AssetTransfer $assetTransfer)
+    {
+        $assetTransfer->load(['asset.unit', 'asset.leasing']);
+        return view('transfers.transfer.show', [
+            'assetTransfer' => AssetTransferData::from($assetTransfer),
+        ]);
     }
 
     public function create()

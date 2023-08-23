@@ -21,7 +21,7 @@ class ClusterFactory extends Factory
     public function definition(): array
     {
         return [
-            'category_id' => Category::factory(),
+            'category_id' => fake()->randomElement(Category::query()->pluck('id')->toArray()),
             'name' => fake()->sentence(2),
         ];
     }

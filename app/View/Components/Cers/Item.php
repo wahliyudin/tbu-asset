@@ -6,6 +6,7 @@ use App\DataTransferObjects\Cers\CerItemData;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Spatie\LaravelData\DataCollection;
 
 class Item extends Component
 {
@@ -14,6 +15,7 @@ class Item extends Component
      */
     public function __construct(
         public ?CerItemData $cerItem,
+        public ?DataCollection $uoms = null,
         public string $type,
     ) {
     }

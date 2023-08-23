@@ -11,7 +11,7 @@ class UomData extends Data
         #[Required]
         public string $name,
         public ?string $keterangan,
-        public ?string $key = null,
+        public ?string $id = null,
     ) {
     }
 }

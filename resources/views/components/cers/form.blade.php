@@ -19,21 +19,23 @@
                         <td class="fs-6 fw-semibold w-150px">Department</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position?->department?->department_name }}
+                            <input type="hidden" name="deptcode"
+                                value="{{ $employee?->position?->department?->budget_dept_code }}">
+                            {{ $employee?->position?->department?->department_name }}
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Project</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position?->project?->project }}
+                            {{ $employee?->position?->project?->project }}
                         </td>
                     </tr>
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Lokasi</td>
                         <td>:</td>
                         <td>
-                            {{ $employee->position?->project?->location }}
+                            {{ $employee?->position?->project?->location }}
                         </td>
                     </tr>
                 </tbody>
@@ -84,6 +86,7 @@
                             <th class="fs-6 fw-semibold w-200px">Asset Description</th>
                             <th class="fs-6 fw-semibold w-200px">Asset Model</th>
                             <th class="fs-6 fw-semibold w-200px">Est. Umur Asset</th>
+                            <th class="fs-6 fw-semibold w-150px">Uom</th>
                             <th class="fs-6 fw-semibold w-100px">Asset Qty</th>
                             <th class="fs-6 fw-semibold w-200px">Unit Price</th>
                             <th class="fs-6 fw-semibold w-200px">Sub Total Price</th>
@@ -100,9 +103,9 @@
                             @php
                                 $subTotal += $item->qty * $item->price;
                             @endphp
-                            <x-cers.item :cerItem="$item" :type="$type" />
+                            <x-cers.item :cerItem="$item" :uoms="$uoms" :type="$type" />
                         @empty
-                            <x-cers.item :type="$type" />
+                            <x-cers.item :type="$type" :uoms="$uoms" />
                         @endforelse
                     </tbody>
                     <tfoot style="display: none;">
@@ -181,7 +184,7 @@
                             </td>
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
-                                    value="{{ $cer?->budget?->periode }}" name="budget_periode">
+                                    value="{{ $cer->budget?->periode }}" name="budget_periode">
                             </td>
                         </tr>
                     </tbody>
@@ -227,33 +230,9 @@
         </div>
     @endif
 </form>
-@if ($type == 'show')
+@if ($type == 'show' && $withWorkflow)
     <div class="row mt-8">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-center">
-                @foreach ($cer?->workflows as $workflow)
-                    <div class="d-flex flex-column w-150px {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? 'bg-success' : ($workflow->last_action == \App\Enums\Workflows\LastAction::REJECT ? 'bg-danger' : 'bg-warning') }}"
-                        style="border-radius: {{ $workflow->sequence == 1 ? '10px 0 0 10px' : ($workflow->sequence == count($cer?->workflows) ? '0 10px 10px 0' : '0 0 0 0') }}; overflow: hidden;">
-                        <div class="border text-center text-white p-1 d-flex flex-column">
-                            <p class="m-0 fw-bold" style="font-size: 12px;">
-                                {{ $workflow->title }}
-                                By
-                            </p>
-                            <p class="m-0">{{ $workflow?->employee?->nama_karyawan }}</p>
-                        </div>
-                        <div class="border text-center text-white p-1 d-flex flex-column">
-                            <p class="m-0 fw-bold" style="font-size: 12px;">
-                                {{ $workflow->title }}
-                                On
-                            </p>
-                            <p class="m-0">
-                                {{ $workflow->last_action == \App\Enums\Workflows\LastAction::APPROV ? $workflow?->last_action_date : '-' }}
-                            </p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
+        <x-approval :workflows="$cer->workflows" />
         <div class="col-md-12 d-flex justify-content-start mt-4">
             @permission('asset_request_approv')
                 <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer?->id }}"
