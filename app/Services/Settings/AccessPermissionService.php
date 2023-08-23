@@ -16,11 +16,12 @@ class AccessPermissionService
 
     public function datatable()
     {
-        $niks = User::query()->pluck('nik')->toArray();
-        $data = EmployeeData::collection($this->employeeService->whereIn('nik', $niks)->getData()['data'])->toCollection();
+        $users = User::select(['nik', 'name'])->get();
+        $data = EmployeeData::collection($this->employeeService->whereIn('nik', $users->pluck('nik')->toArray())->getData()['data'])->toCollection();
+        $user = $users->where('nik', 12345678)->first();
         $data->add(EmployeeData::from([
-            'nik' => 12345678,
-            'nama_karyawan' => 'Administrator'
+            'nik' => $user->nik,
+            'nama_karyawan' => $user->name
         ]));
         return $data;
     }

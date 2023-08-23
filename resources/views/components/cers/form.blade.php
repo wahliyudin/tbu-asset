@@ -184,7 +184,7 @@
                             </td>
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
-                                    value="{{ $cer->budget?->periode }}" name="budget_periode">
+                                    value="{{ $cer?->budget?->periode }}" name="budget_periode">
                             </td>
                         </tr>
                     </tbody>
@@ -232,7 +232,7 @@
 </form>
 @if ($type == 'show' && $withWorkflow)
     <div class="row mt-8">
-        <x-approval :workflows="$cer->workflows" />
+        <x-approval :workflows="$cer?->workflows" />
         <div class="col-md-12 d-flex justify-content-start mt-4">
             @permission('asset_request_approv')
                 <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer?->id }}"
