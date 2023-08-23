@@ -148,11 +148,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('approvals/cers/{cer}/approv', [ApprovalCerController::class, 'approv'])->name('approvals.cers.approv')->middleware('permission:asset_request_approv|asset_request_reject');
     Route::post('approvals/cers/{cer}/reject', [ApprovalCerController::class, 'reject'])->name('approvals.cers.reject')->middleware('permission:asset_request_approv|asset_request_reject');
 
-    Route::get('approvals/transfers', [ApprovalTransferController::class, 'index'])->name('approvals.transfers.index');
-    Route::post('approvals/transfers/datatable', [ApprovalTransferController::class, 'datatable'])->name('approvals.transfers.datatable');
-    Route::get('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show');
-    Route::post('approvals/transfers/{assetTransfer}/approv', [ApprovalTransferController::class, 'approv'])->name('approvals.transfers.approv')->middleware('permission:asset_request_approv|asset_request_reject');
-    Route::post('approvals/transfers/{assetTransfer}/reject', [ApprovalTransferController::class, 'reject'])->name('approvals.transfers.reject')->middleware('permission:asset_request_approv|asset_request_reject');
+    Route::get('approvals/transfers', [ApprovalTransferController::class, 'index'])->name('approvals.transfers.index')->middleware('permission:asset_transfer_approv|asset_transfer_reject');
+    Route::post('approvals/transfers/datatable', [ApprovalTransferController::class, 'datatable'])->name('approvals.transfers.datatable')->middleware('permission:asset_transfer_approv|asset_transfer_reject');
+    Route::get('approvals/transfers/{assetTransfer}/show', [ApprovalTransferController::class, 'show'])->name('approvals.transfers.show')->middleware('permission:asset_transfer_approv|asset_transfer_reject');
+    Route::post('approvals/transfers/{assetTransfer}/approv', [ApprovalTransferController::class, 'approv'])->name('approvals.transfers.approv')->middleware('permission:asset_transfer_approv|asset_transfer_reject');
+    Route::post('approvals/transfers/{assetTransfer}/reject', [ApprovalTransferController::class, 'reject'])->name('approvals.transfers.reject')->middleware('permission:asset_transfer_approv|asset_transfer_reject');
 
     Route::get('approvals/disposes', [ApprovalDisposeController::class, 'index'])->name('approvals.disposes.index')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
     Route::post('approvals/disposes/datatable', [ApprovalDisposeController::class, 'datatable'])->name('approvals.disposes.datatable')->middleware('permission:asset_dispose_approv|asset_dispose_reject');

@@ -13,6 +13,7 @@ class TransferWorkflow extends Model
 
     protected $fillable = [
         'sequence',
+        'asset_transfer_id',
         'nik',
         'title',
         'last_action',
