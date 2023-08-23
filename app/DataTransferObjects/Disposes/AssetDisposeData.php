@@ -45,11 +45,11 @@ class AssetDisposeData extends Data
 
     public function nailaiBukuToInt()
     {
-        return Helper::resetRupiah($this->nilai_buku);
+        return is_string($this->nilai_buku) ? Helper::resetRupiah($this->nilai_buku) : $this->nilai_buku;
     }
 
     public function estHargaPasarToInt()
     {
-        return Helper::resetRupiah($this->est_harga_pasar);
+        return is_string($this->est_harga_pasar) ? Helper::resetRupiah($this->est_harga_pasar) : $this->est_harga_pasar;
     }
 }
