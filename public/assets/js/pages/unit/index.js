@@ -140,6 +140,13 @@ var CategorysList = function () {
             form,
             {
                 fields: {
+                    'kode': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Model is required'
+                            }
+                        }
+                    },
                     'model': {
                         validators: {
                             notEmpty: {
@@ -220,6 +227,7 @@ var CategorysList = function () {
                             url: "/master/units/store",
                             data: {
                                 key: $(submitButton).data('unit'),
+                                kode: $($(form).find('input[name="kode"]')).val(),
                                 model: $($(form).find('input[name="model"]')).val(),
                                 type: $($(form).find('input[name="type"]')).val(),
                                 seri: $($(form).find('input[name="seri"]')).val(),
@@ -348,6 +356,7 @@ var CategorysList = function () {
 
     var buttonCreate = () => {
         $('[data-bs-target="#create-unit"]').on('click', function () {
+            $($(form).find('input[name="kode"]')).val('');
             $($(form).find('input[name="model"]')).val('');
             $($(form).find('input[name="type"]')).val('');
             $($(form).find('input[name="seri"]')).val('');
@@ -356,6 +365,7 @@ var CategorysList = function () {
             $($(form).find('input[name="serial_number"]')).val('');
             $($(form).find('input[name="spesification"]')).val('');
             $($(form).find('input[name="tahun_pembuatan"]')).val('');
+            $('#create-unit .title').text('Tambah Unit');
             $(submitButton).data('unit', '');
         });
     }
@@ -364,6 +374,7 @@ var CategorysList = function () {
         $('#unit_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-unit .title').text('Edit Unit');
             var unit = $(this).data('unit');
             $(submitButton).data('unit', unit);
             $.ajax({
@@ -371,6 +382,7 @@ var CategorysList = function () {
                 url: `/master/units/${unit}/edit`,
                 dataType: "JSON",
                 success: function (response) {
+                    $($(form).find('input[name="kode"]')).val(response.kode);
                     $($(form).find('input[name="model"]')).val(response.model);
                     $($(form).find('input[name="type"]')).val(response.type);
                     $($(form).find('input[name="seri"]')).val(response.seri);
