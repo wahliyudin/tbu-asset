@@ -265,6 +265,7 @@ var LeasingsList = function () {
     var buttonCreate = () => {
         $('[data-bs-target="#create-leasing"]').on('click', function () {
             $($(form).find('input[name="name"]')).val('');
+            $('#create-leasing .title').text('Tambah Leasing');
             $(submitButton).data('leasing', '');
         });
     }
@@ -273,6 +274,7 @@ var LeasingsList = function () {
         $('#leasing_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-leasing .title').text('Edit Leasing');
             var leasing = $(this).data('leasing');
             $(submitButton).data('leasing', leasing);
             $.ajax({
