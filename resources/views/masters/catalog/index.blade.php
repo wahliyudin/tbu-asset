@@ -77,7 +77,7 @@
             <div class="modal-content">
                 <form class="form" action="#" id="create-catalog_form">
                     <div class="modal-header" id="create-catalog_header">
-                        <h2 class="fw-bold">Tambah Catalog</h2>
+                        <h2 class="fw-bold title">Tambah Catalog</h2>
                         <div id="create-catalog_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                             <i class="ki-duotone ki-cross fs-1">
                                 <span class="path1"></span>

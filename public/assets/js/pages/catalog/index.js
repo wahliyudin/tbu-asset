@@ -336,6 +336,7 @@ var CatalogsList = function () {
             $($(form).find('input[name="unit_class"]')).val('');
             $($(form).find('input[name="brand"]')).val('');
             $($(form).find('input[name="spesification"]')).val('');
+            $('#create-catalog .title').text('Tambah Catalog');
             $(submitButton).data('catalog', '');
         });
     }
@@ -344,6 +345,7 @@ var CatalogsList = function () {
         $('#catalog_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-catalog .title').text('Edit Catalog');
             var catalog = $(this).data('catalog');
             $(submitButton).data('catalog', catalog);
             $.ajax({
