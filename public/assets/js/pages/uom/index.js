@@ -280,6 +280,7 @@ var UomsList = function () {
         $('[data-bs-target="#create-uom"]').on('click', function () {
             $($(form).find('input[name="name"]')).val('');
             $($(form).find('textarea[name="keterangan"]')).val('');
+            $('#create-uom .title').text('Tambah Uom');
             $(submitButton).data('uom', '');
         });
     }
@@ -288,6 +289,7 @@ var UomsList = function () {
         $('#uom_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-uom .title').text('Edit Uom');
             var uom = $(this).data('uom');
             $(submitButton).data('uom', uom);
             $.ajax({
