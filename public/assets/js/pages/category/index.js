@@ -265,6 +265,7 @@ var CategorysList = function () {
     var buttonCreate = () => {
         $('[data-bs-target="#create-category"]').on('click', function () {
             $($(form).find('input[name="name"]')).val('');
+            $('#create-category .title').text('Tambah Category');
             $(submitButton).data('category', '');
         });
     }
@@ -273,6 +274,7 @@ var CategorysList = function () {
         $('#category_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-category .title').text('Edit Category');
             var category = $(this).data('category');
             $(submitButton).data('category', category);
             $.ajax({

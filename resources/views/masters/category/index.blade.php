@@ -72,7 +72,7 @@
             <div class="modal-content">
                 <form class="form" action="#" id="create-category_form">
                     <div class="modal-header" id="create-category_header">
-                        <h2 class="fw-bold">Tambah Category</h2>
+                        <h2 class="fw-bold title">Tambah Category</h2>
                         <div id="create-category_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                             <i class="ki-duotone ki-cross fs-1">
                                 <span class="path1"></span>

@@ -24,6 +24,7 @@ class UserService extends HRISService
     {
         return User::query()->updateOrCreate([
             'nik' => $dto->nik,
+            'email' => $dto->email,
         ], [
             'nik' => $dto->nik,
             'name' => $dto->name,
