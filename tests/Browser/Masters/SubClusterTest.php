@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
-class SubSubClusterTest extends DuskTestCase
+class SubClusterTest extends DuskTestCase
 {
     protected User $user;
 
