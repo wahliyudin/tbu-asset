@@ -277,6 +277,7 @@ var SubClustersList = function () {
     var buttonCreate = () => {
         $('[data-bs-target="#create-sub-cluster"]').on('click', function () {
             $($(form).find('input[name="name"]')).val('');
+            $('#create-sub-cluster .title').text('Tambah Sub Cluster');
             $($(form).find('select[name="cluster_id"]')).val('').trigger('change');
             $(submitButton).data('sub-cluster', '');
         });
@@ -286,6 +287,7 @@ var SubClustersList = function () {
         $('#sub-cluster_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-sub-cluster .title').text('Edit Sub Cluster');
             var subCluster = $(this).data('sub-cluster');
             $(submitButton).data('sub-cluster', subCluster);
             $.ajax({
