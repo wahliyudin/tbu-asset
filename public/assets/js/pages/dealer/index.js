@@ -265,6 +265,7 @@ var DealersList = function () {
     var buttonCreate = () => {
         $('[data-bs-target="#create-dealer"]').on('click', function () {
             $($(form).find('input[name="name"]')).val('');
+            $('#create-dealer .title').text('Tambah Dealer');
             $(submitButton).data('dealer', '');
         });
     }
@@ -273,6 +274,7 @@ var DealersList = function () {
         $('#dealer_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-dealer .title').text('Edit Dealer');
             var dealer = $(this).data('dealer');
             $(submitButton).data('dealer', dealer);
             $.ajax({
