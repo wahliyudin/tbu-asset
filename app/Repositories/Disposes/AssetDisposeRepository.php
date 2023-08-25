@@ -21,6 +21,7 @@ class AssetDisposeRepository
             'justifikasi' => $data->justifikasi,
             'pelaksanaan' => $data->pelaksanaan,
             'remark' => $data->remark,
+            'status' => $data->status,
         ]);
     }
 

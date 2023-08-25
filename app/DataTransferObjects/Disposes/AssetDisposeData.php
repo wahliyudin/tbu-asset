@@ -6,6 +6,7 @@ use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\WorkflowData;
 use App\Enums\Disposes\Dispose\Pelaksanaan;
+use App\Enums\Workflows\Status;
 use App\Helpers\Helper;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
@@ -25,6 +26,7 @@ class AssetDisposeData extends Data
         public string|null $justifikasi,
         public string|null $remark,
         public Pelaksanaan|string|null $pelaksanaan,
+        public Status $status,
         public ?string $id = null,
         public ?AssetData $asset,
         public ?EmployeeData $employee,
