@@ -7,14 +7,9 @@ use App\Models\Transfers\AssetTransfer;
 
 class AssetTransferRepository
 {
-    public function __construct(
-        protected AssetTransfer $model
-    ) {
-    }
-
     public function updateOrCreate(AssetTransferData $data)
     {
-        return $this->model->query()->updateOrCreate([
+        return AssetTransfer::query()->updateOrCreate([
             'id' => $data->id
         ], [
             'no_transaksi' => $data->no_transaksi,
@@ -32,6 +27,7 @@ class AssetTransferRepository
             'justifikasi' => $data->justifikasi,
             'remark' => $data->remark,
             'transfer_date' => $data->transfer_date,
+            'status' => $data->status,
         ]);
     }
 
