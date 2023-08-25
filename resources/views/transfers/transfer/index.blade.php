@@ -37,9 +37,11 @@
 
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-transfer-table-toolbar="base">
-                    <a href="{{ route('asset-transfers.create') }}" class="btn btn-primary ps-4">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Transfer
-                    </a>
+                    @permission('asset_transfer_create')
+                        <a href="{{ route('asset-transfers.create') }}" class="btn btn-primary ps-4">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Transfer
+                        </a>
+                    @endpermission
                 </div>
             </div>
         </div>
