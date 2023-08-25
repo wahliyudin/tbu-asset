@@ -83,7 +83,9 @@ class AssetMasterTest extends TestCase
     {
         $asset = Asset::factory()->make();
 
-        $insurance = AssetInsurance::factory()->make();
+        $insurance = AssetInsurance::factory()->make([
+            'asset_id' => $asset->getKey()
+        ]);
         $insurance = [
             'jangka_waktu_insurance' => $insurance->jangka_waktu,
             'biaya_insurance' => $insurance->biaya,

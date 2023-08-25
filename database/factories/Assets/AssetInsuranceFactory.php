@@ -18,7 +18,7 @@ class AssetInsuranceFactory extends Factory
     public function definition(): array
     {
         return [
-            'asset_id' => fake()->randomElement(Asset::query()->pluck('id')->toArray()),
+            'asset_id' => Asset::factory(),
             'jangka_waktu' => fake()->numberBetween(1, 10),
             'biaya' => fake()->randomElement([100_000, 1_000_000]),
             'legalitas' => fake()->sentence(),

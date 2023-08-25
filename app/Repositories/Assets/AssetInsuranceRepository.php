@@ -8,11 +8,6 @@ use App\Models\Assets\AssetInsurance;
 
 class AssetInsuranceRepository
 {
-    public function __construct(
-        protected AssetInsurance $model
-    ) {
-    }
-
     public function updateOrCreateByAsset(AssetInsuranceData $data, Asset $asset)
     {
         return $asset->insurance()->updateOrCreate([
