@@ -199,13 +199,13 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'pic': {
-                        validators: {
-                            notEmpty: {
-                                message: 'PIC is required'
-                            }
-                        }
-                    },
+                    // 'pic': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'PIC is required'
+                    //         }
+                    //     }
+                    // },
                     'activity': {
                         validators: {
                             notEmpty: {
@@ -595,6 +595,7 @@ var AssetsList = function () {
         $('[data-bs-target="#create-asset"]').on('click', function () {
             resetAttributes();
             populateForm();
+            $('#create-asset .title').text('Tambah Asset');
             $(submitButton).data('asset', '');
         });
     }
@@ -603,6 +604,7 @@ var AssetsList = function () {
         $('#asset_table').on('click', '.btn-edit', function () {
             var target = this;
             $(target).attr("data-kt-indicator", "on");
+            $('#create-asset .title').text('Edit Asset');
             var asset = $(this).data('asset');
             $(submitButton).data('asset', asset);
             $.ajax({

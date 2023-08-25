@@ -15,7 +15,7 @@ class AssetData extends Data
         public string $unit_id,
         public string $sub_cluster_id,
         public string $member_name,
-        public string $pic,
+        public ?string $pic,
         public string $activity,
         public string $asset_location,
         public string $kondisi,

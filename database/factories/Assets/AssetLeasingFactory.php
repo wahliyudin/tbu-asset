@@ -23,9 +23,9 @@ class AssetLeasingFactory extends Factory
             'asset_id' => fake()->randomElement(Asset::query()->pluck('id')->toArray()),
             'dealer_id' => Dealer::factory(),
             'leasing_id' => Leasing::factory(),
-            'harga_beli' => fake()->numberBetween(100_000, 1_000_000),
+            'harga_beli' => fake()->randomElement([100_000, 1_000_000]),
             'jangka_waktu_leasing' => fake()->numberBetween(1, 10),
-            'biaya_leasing' => fake()->numberBetween(100_000, 1_000_000),
+            'biaya_leasing' => fake()->randomElement([100_000, 1_000_000]),
             'legalitas' => fake()->sentence(),
         ];
     }

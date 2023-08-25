@@ -76,7 +76,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header" id="create-asset_header">
-                    <h2 class="fw-bold">Tambah Asset</h2>
+                    <h2 class="fw-bold title">Tambah Asset</h2>
                     <div id="create-asset_close" class="btn btn-icon btn-sm btn-active-icon-primary">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>

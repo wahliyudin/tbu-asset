@@ -20,7 +20,7 @@ class AssetInsuranceFactory extends Factory
         return [
             'asset_id' => fake()->randomElement(Asset::query()->pluck('id')->toArray()),
             'jangka_waktu' => fake()->numberBetween(1, 10),
-            'biaya' => fake()->numberBetween(100_000, 1_000_000),
+            'biaya' => fake()->randomElement([100_000, 1_000_000]),
             'legalitas' => fake()->sentence(),
         ];
     }

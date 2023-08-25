@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Unit::class);
             $table->foreignIdFor(SubCluster::class);
             $table->string('member_name');
-            $table->unsignedBigInteger('pic');
+            $table->unsignedBigInteger('pic')->nullable();
             $table->string('activity');
             $table->unsignedBigInteger('asset_location');
             $table->string('kondisi');
