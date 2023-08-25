@@ -26,8 +26,8 @@ class AssetMasterTest extends DuskTestCase
     {
         parent::setUp();
 
-        $this->artisan('migrate:fresh');
-        $this->seed(SidebarWithPermissionSeeder::class);
+        $this->artisan('migrate:fresh', ['--seed' => true]);
+        // $this->seed(SidebarWithPermissionSeeder::class);
         $this->user = User::factory()->create();
     }
 
@@ -43,7 +43,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index()
     {
-        $this->user->givePermission('asset_master_read');
+        $this->user->syncPermissions(['asset_master_read']);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user->getKey())
                 ->visitRoute('asset-masters.index')
@@ -54,7 +54,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index_but_dosnt_have_permission_create()
     {
-        $this->user->givePermission('asset_master_read');
+        $this->user->syncPermissions(['asset_master_read']);
         $this->browse(function (Browser $browser) {
             Asset::factory()->create();
 
@@ -68,7 +68,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index_and_have_permission_create()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_create']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_create']);
         $this->browse(function (Browser $browser) {
             Asset::factory()->create();
 
@@ -82,7 +82,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index_but_dosnt_have_permission_edit()
     {
-        $this->user->givePermission('asset_master_read');
+        $this->user->syncPermissions(['asset_master_read']);
         $this->browse(function (Browser $browser) {
             Asset::factory()->create();
 
@@ -97,7 +97,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index_and_have_permission_edit()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_update']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_update']);
         $this->browse(function (Browser $browser) {
             Asset::factory()->create();
 
@@ -112,7 +112,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index_but_dosnt_have_permission_delete()
     {
-        $this->user->givePermission('asset_master_read');
+        $this->user->syncPermissions(['asset_master_read']);
         $this->browse(function (Browser $browser) {
             Asset::factory()->create();
 
@@ -127,7 +127,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_can_access_index_and_have_permission_delete()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_delete']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_delete']);
         $this->browse(function (Browser $browser) {
             Asset::factory()->create();
 
@@ -142,7 +142,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_click_button_add_asset_master_and_then_modal_present()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_create']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_create']);
         $this->browse(function (Browser $browser) {
             $browser->loginAs($this->user->getKey())
                 ->visitRoute('asset-masters.index')
@@ -154,7 +154,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_adding_data_via_modal()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_create']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_create']);
 
         $this->browse(function (Browser $browser) {
             $unit = Unit::factory()->create();
@@ -289,7 +289,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_edit_data_via_modal()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_update']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_update']);
         $this->browse(function (Browser $browser) {
             $assetMaster = Asset::factory()->create([
                 'kode' => 'Code Edit'
@@ -350,7 +350,7 @@ class AssetMasterTest extends DuskTestCase
 
     public function test_delete_data()
     {
-        $this->user->givePermissions(['asset_master_read', 'asset_master_delete']);
+        $this->user->syncPermissions(['asset_master_read', 'asset_master_delete']);
         $this->browse(function (Browser $browser) {
             $assetMaster = Asset::factory()->create([
                 'kode' => 'Code Delete'
