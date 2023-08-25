@@ -92,7 +92,9 @@ class AssetMasterTest extends TestCase
             'legalitas_insurance' => $insurance->legalitas,
         ];
 
-        $leasing = AssetLeasing::factory()->make();
+        $leasing = AssetLeasing::factory()->make([
+            'asset_id' => $asset->getKey()
+        ]);
         $leasing = [
             'dealer_id_leasing' => $leasing->dealer_id,
             'leasing_id_leasing' => $leasing->leasing_id,

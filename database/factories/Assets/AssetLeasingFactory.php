@@ -20,7 +20,7 @@ class AssetLeasingFactory extends Factory
     public function definition(): array
     {
         return [
-            'asset_id' => fake()->randomElement(Asset::query()->pluck('id')->toArray()),
+            'asset_id' => Asset::factory(),
             'dealer_id' => Dealer::factory(),
             'leasing_id' => Leasing::factory(),
             'harga_beli' => fake()->randomElement([100_000, 1_000_000]),

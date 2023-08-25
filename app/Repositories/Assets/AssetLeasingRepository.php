@@ -8,11 +8,6 @@ use App\Models\Assets\AssetLeasing;
 
 class AssetLeasingRepository
 {
-    public function __construct(
-        protected AssetLeasing $model
-    ) {
-    }
-
     public function updateOrCreateByAsset(AssetLeasingData $data, Asset $asset)
     {
         return $asset->leasing()->updateOrCreate([
