@@ -41,9 +41,11 @@
                         data-bs-target="#create-dispose">
                         <i class="ki-duotone ki-plus fs-2"></i>Tambah Dispose
                     </button> --}}
-                    <a href="{{ route('asset-disposes.create') }}" class="btn btn-primary ps-4">
-                        <i class="ki-duotone ki-plus fs-2"></i>Tambah Dispose
-                    </a>
+                    @permission('asset_dispose_create')
+                        <a href="{{ route('asset-disposes.create') }}" class="btn btn-primary ps-4">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah Dispose
+                        </a>
+                    @endpermission
                 </div>
             </div>
         </div>
