@@ -6,6 +6,7 @@ use App\Enums\Asset\Status;
 use App\Models\Assets\Asset;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
+use App\Models\Masters\Uom;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -31,7 +32,7 @@ class AssetFactory extends Factory
             'activity' => fake()->sentence(1),
             'asset_location' => fake()->numberBetween(1000, 9999),
             'kondisi' => fake()->sentence(1),
-            'uom' => fake()->sentence(1),
+            'uom_id' => fake()->randomElement(Uom::query()->pluck('id')->toArray()),
             'quantity' => fake()->numberBetween(1, 10),
             'tgl_bast' => fake()->date(),
             'hm' => fake()->sentence(1),

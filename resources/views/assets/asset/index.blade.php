@@ -34,7 +34,7 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-asset-table-filter="search"
+                    <input type="text" name="search" data-kt-asset-table-filter="search"
                         class="form-control form-control-solid w-250px ps-13" placeholder="Cari Asset" />
                 </div>
             </div>
@@ -42,6 +42,14 @@
             <div class="card-toolbar">
                 <div class="d-flex justify-content-end" data-kt-asset-table-toolbar="base">
                     @permission('asset_master_create')
+                        <a href="{{ route('asset-masters.format') }}" class="btn btn-secondary me-4">Download Format</a>
+                        <button type="button" class="btn btn-info ps-4 me-4" data-bs-toggle="modal"
+                            data-bs-target="#import-asset">
+                            <i class="ki-duotone ki-cloud-download fs-2">
+                                <i class="path1"></i>
+                                <i class="path2"></i>
+                            </i>Import Asset
+                        </button>
                         <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal"
                             data-bs-target="#create-asset">
                             <i class="ki-duotone ki-plus fs-2"></i>Tambah Asset
@@ -86,8 +94,8 @@
                 </div>
                 <div class="modal-body px-lg-17" style="min-height: 761px;">
                     <form class="form" action="#" id="create-asset_form">
-                        <x-assets.form :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers"
-                            :leasings="$leasings" />
+                        <x-assets.form :projects="$projects" :uoms="$uoms" :units="$units" :subClusters="$subClusters"
+                            :employees="$employees" :dealers="$dealers" :leasings="$leasings" />
                     </form>
                 </div>
                 <div class="modal-footer flex-center">
@@ -106,10 +114,45 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="import-asset" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-top">
+            <div class="modal-content">
+                <div class="modal-header" id="import-asset_header">
+                    <h2 class="fw-bold">Import Asset</h2>
+                    <div id="import-asset_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body px-lg-17">
+                    <form class="form" action="#" id="import-asset_form">
+                        <input type="file" name="file" class="form-control"
+                            accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    </form>
+                </div>
+                <div class="modal-footer flex-center">
+                    <button type="reset" id="import-asset_cancel" class="btn btn-light me-3">
+                        Discard
+                    </button>
+                    <button type="button" id="import-asset_submit" class="btn btn-primary">
+                        <span class="indicator-label">
+                            Submit
+                        </span>
+                        <span class="indicator-progress">
+                            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endpush
 
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
+    {{-- @vite('resources/js/app.js') --}}
     <script src="{{ asset('assets/js/pages/asset/index.js') }}"></script>
 @endpush

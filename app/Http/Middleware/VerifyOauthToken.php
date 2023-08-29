@@ -28,11 +28,11 @@ class VerifyOauthToken
                     Auth::logout();
                     return redirect(RouteServiceProvider::HOME);
                 } else {
-                    $auth = (new UserService)->first($user->oatuhToken?->access_token);
-                    if (!$auth['status']) {
-                        Auth::logout();
-                        return redirect(RouteServiceProvider::HOME);
-                    }
+                    // $auth = (new UserService)->first($user->oatuhToken?->access_token);
+                    // if (!$auth['status']) {
+                    //     Auth::logout();
+                    //     return redirect(RouteServiceProvider::HOME);
+                    // }
                 }
             }
         }

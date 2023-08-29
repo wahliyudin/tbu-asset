@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->string('kode');
-            $table->string('model');
-            $table->string('type');
-            $table->string('seri');
-            $table->string('class');
-            $table->string('brand');
-            $table->string('serial_number');
-            $table->string('spesification');
-            $table->year('tahun_pembuatan');
+            $table->string('kode')->nullable();
+            $table->string('model')->nullable();
+            $table->string('type')->nullable();
+            $table->string('seri')->nullable();
+            $table->string('class')->nullable();
+            $table->string('brand')->nullable();
+            $table->string('serial_number')->nullable();
+            $table->string('spesification')->nullable();
+            $table->year('tahun_pembuatan')->nullable();
             $table->timestamps();
         });
     }

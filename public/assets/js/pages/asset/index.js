@@ -9,18 +9,18 @@ var AssetsList = function () {
     var validator;
     var form;
     var modal;
+    var modalImport;
 
     var attributes = {
         key: '',
         kode: '',
         unit_id: '',
         sub_cluster_id: '',
-        member_name: '',
         pic: '',
         activity: '',
         asset_location: '',
         kondisi: '',
-        uom: '',
+        uom_id: '',
         quantity: '',
         tgl_bast: '',
         hm: '',
@@ -51,11 +51,14 @@ var AssetsList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/asset-masters/datatable"
+                url: "/asset-masters/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -106,7 +109,8 @@ var AssetsList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            // datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 
@@ -146,7 +150,9 @@ var AssetsList = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: handleError
+                        error: function (jqXHR) {
+                            handleError(jqXHR, target);
+                        }
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -227,7 +233,7 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'uom': {
+                    'uom_id': {
                         validators: {
                             notEmpty: {
                                 message: 'UOM is required'
@@ -392,13 +398,14 @@ var AssetsList = function () {
                                     }
                                 }).then(function (result) {
                                     if (result.isConfirmed) {
-                                        modal.hide();
                                         submitButton.disabled = false;
                                         datatable.ajax.reload();
                                     }
                                 });
                             },
-                            error: handleError
+                            error: function (jqXHR) {
+                                handleError(jqXHR, submitButton);
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -431,7 +438,6 @@ var AssetsList = function () {
             }).then(function (result) {
                 if (result.value) {
                     form.reset();
-                    modal.hide();
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -462,7 +468,6 @@ var AssetsList = function () {
             }).then(function (result) {
                 if (result.value) {
                     form.reset();
-                    modal.hide();
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -483,12 +488,11 @@ var AssetsList = function () {
         attributes.kode = $($(form).find('input[name="kode"]')).val();
         attributes.unit_id = $($(form).find('select[name="unit_id"]')).val();
         attributes.sub_cluster_id = $($(form).find('select[name="sub_cluster_id"]')).val();
-        attributes.member_name = $($(form).find('input[name="member_name"]')).val();
         attributes.pic = $($(form).find('select[name="pic"]')).val();
         attributes.activity = $($(form).find('input[name="activity"]')).val();
-        attributes.asset_location = $($(form).find('input[name="asset_location"]')).val();
+        attributes.asset_location = $($(form).find('select[name="asset_location"]')).val();
         attributes.kondisi = $($(form).find('input[name="kondisi"]')).val();
-        attributes.uom = $($(form).find('input[name="uom"]')).val();
+        attributes.uom_id = $($(form).find('select[name="uom_id"]')).val();
         attributes.quantity = $($(form).find('input[name="quantity"]')).val();
         attributes.tgl_bast = $($(form).find('input[name="tgl_bast"]')).val();
         attributes.hm = $($(form).find('input[name="hm"]')).val();
@@ -515,12 +519,11 @@ var AssetsList = function () {
         attributes.kode = '';
         attributes.unit_id = '';
         attributes.sub_cluster_id = '';
-        attributes.member_name = '';
         attributes.pic = '';
         attributes.activity = '';
         attributes.asset_location = '';
         attributes.kondisi = '';
-        attributes.uom = '';
+        attributes.uom_id = '';
         attributes.quantity = '';
         attributes.tgl_bast = '';
         attributes.hm = '';
@@ -546,12 +549,11 @@ var AssetsList = function () {
         $($(form).find('input[name="kode"]')).val(json === null ? attributes.kode : json.kode);
         $($(form).find('select[name="unit_id"]')).val(json === null ? attributes.unit_id : json.unit_id).trigger('change');
         $($(form).find('select[name="sub_cluster_id"]')).val(json === null ? attributes.sub_cluster_id : json.sub_cluster_id).trigger('change');
-        $($(form).find('input[name="member_name"]')).val(json === null ? attributes.member_name : json.member_name);
         $($(form).find('select[name="pic"]')).val(json === null ? attributes.pic : json.pic).trigger('change');
         $($(form).find('input[name="activity"]')).val(json === null ? attributes.activity : json.activity);
-        $($(form).find('input[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location);
+        $($(form).find('select[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location).trigger('change');
         $($(form).find('input[name="kondisi"]')).val(json === null ? attributes.kondisi : json.kondisi);
-        $($(form).find('input[name="uom"]')).val(json === null ? attributes.uom : json.uom);
+        $($(form).find('select[name="uom_id"]')).val(json === null ? attributes.uom_id : json.uom_id).trigger('change');
         $($(form).find('input[name="quantity"]')).val(json === null ? attributes.quantity : json.quantity);
         $($(form).find('input[name="tgl_bast"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);
         $($(form).find('input[name="hm"]')).val(json === null ? attributes.hm : json.hm);
@@ -573,10 +575,10 @@ var AssetsList = function () {
         $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.insurance?.legalitas);
     }
 
-    var handleError = function (jqXHR) {
-        submitButton.removeAttribute('data-kt-indicator');
-        submitButton.disabled = false;
-        if (jqXHR.status == 422) {
+    var handleError = function (jqXHR, target) {
+        $(target).removeAttr("data-kt-indicator");
+        target.disabled = false;
+        if (jqXHR.status == 422 || jqXHR.responseJSON.message.includes("404")) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Peringatan!',
@@ -616,9 +618,82 @@ var AssetsList = function () {
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
-                error: handleError
+                error: function (jqXHR) {
+                    handleError(jqXHR, target);
+                }
             });
         });
+    }
+
+    var formImport = () => {
+        $('#import-asset_submit').click(function (e) {
+            e.preventDefault();
+            var submitBtn = $('#import-asset_submit');
+            var postData = new FormData($(`#import-asset_form`)[0]);
+            submitBtn.attr("data-kt-indicator", "on");
+            $.ajax({
+                type: 'POST',
+                url: "/asset-masters/import",
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function (response) {
+                    submitBtn.removeAttr('data-kt-indicator');
+                    Swal.fire({
+                        text: "Form has been successfully submitted!",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok, got it!",
+                        customClass: {
+                            confirmButton: "btn btn-primary"
+                        }
+                    }).then(function (result) {
+                        modalImport.hide();
+                        datatable.ajax.reload();
+                    });
+                },
+                error: function (jqXHR) {
+                    handleError(jqXHR, submitBtn);
+                }
+            });
+        });
+    }
+
+    var toast = (code, title, message) => {
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1000000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+
+        switch (code) {
+            case 200:
+                toastr.success(title, message);
+                break;
+
+            default:
+                toastr.error(title, message);
+                break;
+        }
+    }
+
+    var initEvent = () => {
+        window.Echo.channel('coba-channel')
+            .listen('.import-event', (e) => {
+                toast(e.status, e.title, e.message);
+            });
     }
 
     return {
@@ -638,7 +713,9 @@ var AssetsList = function () {
 
 
             var modalElement = document.querySelector('#create-asset');
+            var modalImportElemnt = document.querySelector('#import-asset');
             modal = new bootstrap.Modal(modalElement);
+            modalImport = new bootstrap.Modal(modalImportElemnt);
             form = document.querySelector('#create-asset_form');
             submitButton = modalElement.querySelector('#create-asset_submit');
             cancelButton = modalElement.querySelector('#create-asset_cancel');
@@ -648,6 +725,12 @@ var AssetsList = function () {
             buttonCreate();
             buttonEdit();
             initPlugins();
+            formImport();
+            initEvent();
+
+            $('#import-asset').on('hidden.bs.modal', function (e) {
+                $('.modal-backdrop').remove(); // Menghapus backdrop secara manual
+            });
         }
     }
 }();

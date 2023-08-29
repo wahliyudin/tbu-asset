@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\LeasingStoreRequest;
 use App\Models\Masters\Leasing;
 use App\Services\Masters\LeasingService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class LeasingController extends Controller
@@ -20,10 +21,13 @@ class LeasingController extends Controller
         return view('masters.leasing.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('action', function (Leasing $leasing) {
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('name', function ($leasing) {
+                return $leasing->_source->name;
+            })
+            ->editColumn('action', function ($leasing) {
                 return view('masters.leasing.action', compact('leasing'))->render();
             })
             ->rawColumns(['action'])
@@ -42,10 +46,10 @@ class LeasingController extends Controller
         }
     }
 
-    public function edit(Leasing $leasing)
+    public function edit($id)
     {
         try {
-            return response()->json($leasing);
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }

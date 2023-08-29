@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Masters;
 
+use App\DataTransferObjects\Masters\UnitData;
+use App\Facades\Elasticsearch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Models\Masters\Unit;
 use App\Services\Masters\UnitService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class UnitController extends Controller
@@ -20,10 +23,34 @@ class UnitController extends Controller
         return view('masters.unit.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('action', function (Unit $unit) {
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('model', function ($unit) {
+                return $unit->_source->model;
+            })
+            ->editColumn('type', function ($unit) {
+                return $unit->_source->type;
+            })
+            ->editColumn('seri', function ($unit) {
+                return $unit->_source->seri;
+            })
+            ->editColumn('class', function ($unit) {
+                return $unit->_source->class;
+            })
+            ->editColumn('brand', function ($unit) {
+                return $unit->_source->brand;
+            })
+            ->editColumn('serial_number', function ($unit) {
+                return $unit->_source->serial_number;
+            })
+            ->editColumn('spesification', function ($unit) {
+                return $unit->_source->spesification;
+            })
+            ->editColumn('tahun_pembuatan', function ($unit) {
+                return $unit->_source->tahun_pembuatan;
+            })
+            ->editColumn('action', function ($unit) {
                 return view('masters.unit.action', compact('unit'))->render();
             })
             ->rawColumns(['action'])
@@ -42,10 +69,10 @@ class UnitController extends Controller
         }
     }
 
-    public function edit(Unit $unit)
+    public function edit($id)
     {
         try {
-            return response()->json($unit);
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }

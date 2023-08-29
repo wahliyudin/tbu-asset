@@ -57,7 +57,6 @@
             $('input[name="kode"]').val('');
             $('select[name="unit_id"]').val('').trigger('change');
             $('select[name="sub_cluster_id"]').val('').trigger('change');
-            $('input[name="member_name"]').val('');
             $('select[name="pic"]').val('').trigger('change');
             $('input[name="activity"]').val('');
             $('input[name="asset_location"]').val('');

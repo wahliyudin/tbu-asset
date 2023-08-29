@@ -19,11 +19,14 @@ var CategorysList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/units/datatable"
+                url: "/master/units/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -143,7 +146,7 @@ var CategorysList = function () {
                     'kode': {
                         validators: {
                             notEmpty: {
-                                message: 'Model is required'
+                                message: 'Kode is required'
                             }
                         }
                     },

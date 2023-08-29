@@ -34,7 +34,7 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-category-table-filter="search"
+                    <input type="text" name="search" data-kt-category-table-filter="search"
                         class="form-control form-control-solid w-250px ps-13" placeholder="Cari Category" />
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
                         <th class="min-w-125px">Name</th>
-                        <th class="text-end min-w-70px">Actions</th>
+                        <th class="text-end min-w-70px" style="max-width: 300px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">

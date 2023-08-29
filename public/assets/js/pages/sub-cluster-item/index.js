@@ -19,11 +19,14 @@ var SubClusterItemsList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/sub-cluster-items/datatable"
+                url: "/master/sub-cluster-items/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -51,7 +54,7 @@ var SubClusterItemsList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-sub-cluster-item-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 

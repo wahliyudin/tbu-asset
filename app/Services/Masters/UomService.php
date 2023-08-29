@@ -13,6 +13,11 @@ class UomService
         return Uom::query()->get();
     }
 
+    public static function dataForSelect(...$others)
+    {
+        return Uom::select(array_merge(['id', 'name'], $others))->get();
+    }
+
     public function updateOrCreate(UomStoreRequest $request)
     {
         $data = UomData::from($request->all());

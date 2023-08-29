@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\DataTransferObjects\Assets\AssetData;
+use App\Facades\Elasticsearch;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetInsurance;
 use App\Models\Assets\AssetLeasing;
@@ -17,6 +19,15 @@ use App\Models\Masters\SubClusterItem;
 use App\Models\Masters\Unit;
 use App\Models\Permission;
 use App\Models\User;
+use Database\Seeders\Assets\AssetSeeder;
+use Database\Seeders\Masters\CatalogSeeder;
+use Database\Seeders\Masters\CategorySeeder;
+use Database\Seeders\Masters\ClusterSeeder;
+use Database\Seeders\Masters\DealerSeeder;
+use Database\Seeders\Masters\LeasingSeeder;
+use Database\Seeders\Masters\SubClusterItemSeeder;
+use Database\Seeders\Masters\SubClusterSeeder;
+use Database\Seeders\Masters\UnitSeeder;
 use Database\Seeders\Masters\UomSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -28,12 +39,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::query()->create([
-            'nik' => 12345678,
-            'name' => 'Administrator',
-            'email' => 'administrator@.co.id',
-            'password' => Hash::make(1234567890),
-        ]);
+        // User::query()->create([
+        //     'nik' => 12345678,
+        //     'name' => 'Administrator',
+        //     'email' => 'administrator@.co.id',
+        //     'password' => Hash::make(1234567890),
+        // ]);
         $this->call([
             SidebarWithPermissionSeeder::class,
             UomSeeder::class,
@@ -47,7 +58,7 @@ class DatabaseSeeder extends Seeder
         SubCluster::factory(10)->create();
         SubClusterItem::factory(10)->create();
         Unit::factory(10)->create();
-        Asset::factory(20)->create();
+        Asset::factory(50)->create();
         AssetLeasing::factory(10)->create();
         AssetInsurance::factory(10)->create();
 
@@ -58,5 +69,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make(1234567890),
         ]);
         $user->permissions()->sync(Permission::query()->pluck('id')->toArray());
+
+        $this->call([
+            AssetSeeder::class,
+            CategorySeeder::class,
+            ClusterSeeder::class,
+            SubClusterSeeder::class,
+            SubClusterItemSeeder::class,
+            CatalogSeeder::class,
+            DealerSeeder::class,
+            LeasingSeeder::class,
+            UnitSeeder::class,
+        ]);
     }
 }

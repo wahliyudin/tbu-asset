@@ -13,7 +13,9 @@ class Form extends Component
      * Create a new component instance.
      */
     public function __construct(
+        public Collection $projects,
         public Collection $units,
+        public Collection $uoms,
         public Collection $subClusters,
         public Collection $employees,
         public Collection $dealers,

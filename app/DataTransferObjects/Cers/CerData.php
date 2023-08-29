@@ -8,6 +8,7 @@ use App\DataTransferObjects\WorkflowData;
 use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
+use App\Interfaces\DataInterface;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
@@ -15,7 +16,7 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
 use Illuminate\Support\Str;
 
-class CerData extends Data
+class CerData extends Data implements DataInterface
 {
     public function __construct(
         public ?string $no_cer = null,
@@ -53,5 +54,10 @@ class CerData extends Data
     public function itemsToAttach(): array
     {
         return $this->items->toArray();
+    }
+
+    public function getKey(): string|null
+    {
+        return $this->id;
     }
 }

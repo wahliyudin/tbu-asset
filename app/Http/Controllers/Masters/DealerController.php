@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\DealerStoreRequest;
 use App\Models\Masters\Dealer;
 use App\Services\Masters\DealerService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class DealerController extends Controller
@@ -20,10 +21,13 @@ class DealerController extends Controller
         return view('masters.dealer.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('action', function (Dealer $dealer) {
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('name', function ($dealer) {
+                return $dealer->_source->name;
+            })
+            ->editColumn('action', function ($dealer) {
                 return view('masters.dealer.action', compact('dealer'))->render();
             })
             ->rawColumns(['action'])
@@ -42,10 +46,10 @@ class DealerController extends Controller
         }
     }
 
-    public function edit(Dealer $dealer)
+    public function edit($id)
     {
         try {
-            return response()->json($dealer);
+            return response()->json($this->service->getDataForEdit($id));
         } catch (\Throwable $th) {
             throw $th;
         }

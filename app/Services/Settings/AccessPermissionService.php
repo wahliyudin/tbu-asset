@@ -17,7 +17,8 @@ class AccessPermissionService
     public function datatable()
     {
         $users = User::select(['nik', 'name'])->get();
-        $data = EmployeeData::collection($this->employeeService->whereIn('nik', $users->pluck('nik')->toArray())->getData()['data'])->toCollection();
+        $result = $this->employeeService->whereIn('nik', $users->pluck('nik')->toArray())->getData();
+        $data = EmployeeData::collection(isset($result['data']) ? $result['data'] : [])->toCollection();
         $user = $users->where('nik', 12345678)->first();
         $data->add(EmployeeData::from([
             'nik' => $user->nik,

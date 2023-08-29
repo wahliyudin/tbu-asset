@@ -2,10 +2,11 @@
 
 namespace App\DataTransferObjects\Masters;
 
+use App\Interfaces\DataInterface;
 use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
-class CatalogData extends Data
+class CatalogData extends Data implements DataInterface
 {
     public function __construct(
         #[Required]
@@ -21,6 +22,12 @@ class CatalogData extends Data
         #[Required]
         public ?string $spesification,
         public ?string $key = null,
+        public ?string $id = null,
     ) {
+    }
+
+    public function getKey(): string|null
+    {
+        return $this->key ?? $this->id;
     }
 }

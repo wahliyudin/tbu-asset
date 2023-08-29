@@ -2,19 +2,21 @@
 
 namespace App\Models\Assets;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Enums\Asset\Status;
 use App\Models\Assets\AssetInsurance;
 use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
+use App\Models\Masters\Uom;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Asset extends Model
+class Asset extends Model implements ElasticsearchInterface
 {
     use HasFactory;
 
@@ -22,12 +24,11 @@ class Asset extends Model
         'kode',
         'unit_id',
         'sub_cluster_id',
-        'member_name',
         'pic',
         'activity',
         'asset_location',
         'kondisi',
-        'uom',
+        'uom_id',
         'quantity',
         'tgl_bast',
         'hm',
@@ -41,6 +42,11 @@ class Asset extends Model
     protected $casts = [
         'status' => Status::class
     ];
+
+    public function indexName(): string
+    {
+        return 'tbu_asset_assets';
+    }
 
     public function unit(): BelongsTo
     {
@@ -70,5 +76,10 @@ class Asset extends Model
     public function leasing()
     {
         return $this->hasOne(AssetLeasing::class);
+    }
+
+    public function uom()
+    {
+        return $this->belongsTo(Uom::class);
     }
 }

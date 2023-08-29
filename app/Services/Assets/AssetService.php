@@ -5,12 +5,26 @@ namespace App\Services\Assets;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
+use App\DataTransferObjects\Masters\CategoryData;
+use App\DataTransferObjects\Masters\ClusterData;
+use App\DataTransferObjects\Masters\SubClusterData;
+use App\DataTransferObjects\Masters\UnitData;
+use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
+use App\Facades\Elasticsearch;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Assets\Asset;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
+use App\Services\Masters\CategoryService;
+use App\Services\Masters\ClusterService;
+use App\Services\Masters\SubClusterService;
+use App\Services\Masters\UnitService;
+use App\Services\Masters\UomService;
+use Illuminate\Support\Arr;
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class AssetService
 {
@@ -21,9 +35,14 @@ class AssetService
     ) {
     }
 
-    public function all()
+    public function coba()
     {
         return Asset::query()->with(['unit', 'leasing', 'insurance'])->get();
+    }
+
+    public function all($search = null)
+    {
+        return Elasticsearch::setModel(Asset::class)->searchQueryString($search, 50)->all();
     }
 
     public function getById($id)
@@ -36,24 +55,49 @@ class AssetService
         return Asset::query()->where('status', $status)->get();
     }
 
-    public function getDataForEdit(Asset $asset): array
+    public function getDataForEdit($id): array
     {
-        $asset->loadMissing(['insurance', 'leasing']);
-        $assetDto = AssetData::from($asset);
-        return $assetDto->toArray();
+        $asset = Elasticsearch::setModel(Asset::class)->find($id)->asArray();
+        return $asset['_source'];
     }
 
     public function updateOrCreate(AssetRequest $request)
     {
-        $asset = $this->assetRepository->updateOrCreate(AssetData::from($request->all()));
+        $data = AssetData::from($request->all());
+        $asset = $this->assetRepository->updateOrCreate($data);
         $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
         $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
+        $asset->load(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
+        $this->sendToElasticsearch($asset, $data->getKey());
     }
 
     public function delete(Asset $asset)
     {
         $this->assetInsuranceRepository->delete($asset->insurance);
         $this->assetLeasingRepository->delete($asset->leasing);
+        Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
         return $asset->delete();
+    }
+
+    public function import(array $data)
+    {
+        Elasticsearch::setModel(Asset::class)->cleared();
+        Asset::query()->delete();
+        Asset::query()->upsert($data, 'id');
+        $this->bulk();
+    }
+
+    public function bulk()
+    {
+        $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom'])->get();
+        Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
+    }
+
+    private function sendToElasticsearch(Asset $asset, $key)
+    {
+        if ($key) {
+            return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
+        }
+        return Elasticsearch::setModel(Asset::class)->created(AssetData::from($asset));
     }
 }

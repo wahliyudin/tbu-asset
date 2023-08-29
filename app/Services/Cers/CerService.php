@@ -5,6 +5,7 @@ namespace App\Services\Cers;
 use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
+use App\Facades\Elasticsearch;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
@@ -21,8 +22,9 @@ class CerService
     ) {
     }
 
-    public function all()
+    public function all($search = null)
     {
+        return Elasticsearch::setModel(Cer::class)->searchQueryString($search, 50)->all();
         return Cer::query()->where('nik', auth()->user()?->nik)->get();
     }
 
@@ -79,5 +81,13 @@ class CerService
     {
         $data = (new TXISCerService)->getByCode('HU0KWXg803BawMQv');
         return isset($data['data']) ? $data['data'] : [];
+    }
+
+    private function sendToElasticsearch(Cer $cer, $key)
+    {
+        if ($key) {
+            return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
+        }
+        return Elasticsearch::setModel(Cer::class)->created(CerData::from($cer));
     }
 }
