@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Database\Seeders\SidebarWithPermissionSeeder;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Components\FlatPicker;
+use Tests\Browser\Components\Select2;
 use Tests\DuskTestCase;
 
 class AssetMasterTest extends DuskTestCase
@@ -175,30 +177,19 @@ class AssetMasterTest extends DuskTestCase
                 'asset_id' => $assetMaster->getKey()
             ]);
 
-            $browser->macro('select2SearchAndSelect', function ($selector, $searchText) {
-                return $this->click("$selector ~ span.select2.select2-container")
-                    ->waitFor("$selector ~ span.select2-container span.select2-dropdown")
-                    ->type("$selector ~ span.select2-container input.select2-search__field", $searchText)
-                    ->waitFor("$selector ~ span.select2-container .select2-results__options")
-                    ->click("$selector ~ span.select2-container li.select2-results__option:first-child")
-                    ->assertSeeIn("$selector ~ span.select2-container span.select2-selection__rendered", $searchText);
-            });
-            $browser->macro('flatPickr', function ($selector, $date) {
-                return $this->click($selector)
-                    ->waitFor('.flatpickr-calendar')
-                    ->click('.flatpickr-days .flatpickr-day[aria-label="' . $date . '"]')
-                    ->assertPresent('.flatpickr-days .flatpickr-day[aria-label="' . $date . '"].selected');
-            });
-
-            $r = $browser->loginAs($this->user->getKey())
+            $browser->loginAs($this->user->getKey())
                 ->visitRoute('asset-masters.index')
                 ->click('button[data-bs-target="#create-asset"]')
                 ->waitFor('#create-asset')
                 ->assertSee('Tambah Asset')
 
                 ->type('input[name="kode"]', $assetMaster->kode)
-                ->select2SearchAndSelect('select[name="unit_id"]', $unit->model)
-                ->select2SearchAndSelect('select[name="sub_cluster_id"]', $subCluster->name)
+                ->within(new Select2('select[name="unit_id"]'), function (Browser $browser) use ($unit) {
+                    $browser->select2Select($unit->model);
+                })
+                ->within(new Select2('select[name="sub_cluster_id"]'), function (Browser $browser) use ($subCluster) {
+                    $browser->select2Select($subCluster->name);
+                })
                 ->type('input[name="member_name"]', $assetMaster->member_name)
                 ->assertValue('input[name="member_name"]', $assetMaster->member_name)
                 // ->select2SearchAndSelect('select[name="pic"]', 'MUHAMMAD NUR')
@@ -212,7 +203,9 @@ class AssetMasterTest extends DuskTestCase
                 ->assertValue('input[name="uom"]', $assetMaster->uom)
                 ->type('input[name="quantity"]', $assetMaster->quantity)
                 ->assertValue('input[name="quantity"]', $assetMaster->quantity)
-                ->flatPickr('input[name="tgl_bast"]', $tglBast)
+                ->within(new FlatPicker('input[name="tgl_bast"]'), function (Browser $browser) use ($tglBast) {
+                    $browser->selectDate($tglBast);
+                })
                 ->type('input[name="hm"]', $assetMaster->hm)
                 ->assertValue('input[name="hm"]', $assetMaster->hm)
                 ->type('input[name="pr_number"]', $assetMaster->pr_number)
@@ -223,12 +216,18 @@ class AssetMasterTest extends DuskTestCase
                 ->assertValue('input[name="gr_number"]', $assetMaster->gr_number)
                 ->type('input[name="remark"]', $assetMaster->remark)
                 ->assertValue('input[name="remark"]', $assetMaster->remark)
-                ->select2SearchAndSelect('select[name="status"]', Status::ACTIVE->label())
+                ->within(new Select2('select[name="status"]'), function (Browser $browser) {
+                    $browser->select2Select(Status::ACTIVE->label());
+                })
 
                 ->click('ul.nav.nav-tabs li a[href="#leasing"]')
                 ->assertPresent('select[name="dealer_id_leasing"]')
-                ->select2SearchAndSelect('select[name="dealer_id_leasing"]', $dealer->name)
-                ->select2SearchAndSelect('select[name="leasing_id_leasing"]', $leasing->name)
+                ->within(new Select2('select[name="dealer_id_leasing"]'), function (Browser $browser) use ($dealer) {
+                    $browser->select2Select($dealer->name);
+                })
+                ->within(new Select2('select[name="leasing_id_leasing"]'), function (Browser $browser) use ($leasing) {
+                    $browser->select2Select($leasing->name);
+                })
                 ->type('input[name="harga_beli_leasing"]', $assetLeasing->harga_beli)
                 ->assertValue('input[name="harga_beli_leasing"]', Helper::formatRupiah($assetLeasing->harga_beli))
                 ->type('input[name="jangka_waktu_leasing"]', $assetLeasing->jangka_waktu_leasing)
