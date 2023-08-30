@@ -11,6 +11,7 @@ use App\Models\Assets\Asset;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Assets\AssetService;
 use App\Services\Transfers\AssetTransferService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransferController extends Controller
@@ -51,29 +52,29 @@ class TransferController extends Controller
             ->make();
     }
 
-    public function datatableAsset()
+    public function datatableAsset(Request $request)
     {
-        return DataTables::of($this->assetService->all())
-            ->editColumn('nama', function (Asset $asset) {
+        return DataTables::of($this->assetService->all($request->get('search')))
+            ->editColumn('nama', function ($asset) {
                 return 'example';
             })
-            ->editColumn('merk_tipe_model', function (Asset $asset) {
-                return $asset->unit?->brand;
+            ->editColumn('merk_tipe_model', function ($asset) {
+                return $asset->_source->unit?->brand;
             })
-            ->editColumn('serial_number', function (Asset $asset) {
-                return $asset->unit?->serial_number;
+            ->editColumn('serial_number', function ($asset) {
+                return $asset->_source->unit?->serial_number;
             })
-            ->editColumn('nomor_asset', function (Asset $asset) {
-                return $asset->kode;
+            ->editColumn('nomor_asset', function ($asset) {
+                return $asset->_source->kode;
             })
-            ->editColumn('niali_buku', function (Asset $asset) {
-                return Helper::formatRupiah($asset->leasing?->harga_beli, true);
+            ->editColumn('niali_buku', function ($asset) {
+                return Helper::formatRupiah($asset->_source->leasing?->harga_beli, true);
             })
-            ->editColumn('kelengkapan', function (Asset $asset) {
-                return $asset->unit?->spesification;
+            ->editColumn('kelengkapan', function ($asset) {
+                return $asset->_source->unit?->spesification;
             })
-            ->editColumn('action', function (Asset $asset) {
-                return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
+            ->editColumn('action', function ($asset) {
+                return '<button type="button" data-asset="' . $asset->_id . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
             ->rawColumns(['action'])
             ->make();
@@ -81,7 +82,7 @@ class TransferController extends Controller
 
     public function show(AssetTransfer $assetTransfer)
     {
-        $assetTransfer->load(['asset.unit', 'asset.leasing']);
+        $assetTransfer->load(['asset.unit', 'asset.leasing', 'workflows']);
         return view('transfers.transfer.show', [
             'assetTransfer' => AssetTransferData::from($assetTransfer),
         ]);

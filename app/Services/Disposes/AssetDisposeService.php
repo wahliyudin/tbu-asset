@@ -5,6 +5,7 @@ namespace App\Services\Disposes;
 use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\DataTransferObjects\Disposes\AssetDisposeDto;
 use App\Enums\Workflows\LastAction;
+use App\Enums\Workflows\Status;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
 use App\Models\Disposes\AssetDispose;
 use App\Repositories\Disposes\AssetDisposeRepository;
@@ -19,7 +20,7 @@ class AssetDisposeService
 
     public function updateOrCreate(AssetDisposeRequest $request)
     {
-        $data = AssetDisposeData::from($request->all())->except('employee');
+        $data = AssetDisposeData::from(array_merge($request->all(), ['status' => Status::OPEN]))->except('employee');
         $assetDispose = (new AssetDisposeRepository)->updateOrCreate($data);
         $assetDispose->workflows()->delete();
         DisposeWorkflowService::setModel($assetDispose)->store();

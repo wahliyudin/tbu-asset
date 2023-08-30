@@ -14,13 +14,16 @@ var KTModalAdd = function () {
     var initDatatableAsset = () => {
         datatableAsset = $('#data-asset_table').DataTable({
             processing: true,
-            serverSide: true,
             order: [
                 [1, 'asc']
             ],
             ajax: {
                 type: "POST",
-                url: "/asset-disposes/datatable-asset"
+                url: "/asset-disposes/datatable-asset",
+                data: function (d) {
+                    d.search = $('#data-asset_table input[name="search"]').val();
+                }
+
             },
             columns: [{
                 name: 'action',

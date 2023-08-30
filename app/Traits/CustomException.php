@@ -6,10 +6,11 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 trait CustomException
 {
-    private function handleApiException($request, Exception $exception)
+    private function handleApiException($request, Throwable $exception)
     {
         $exception = $this->prepareException($exception);
 

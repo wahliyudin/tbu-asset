@@ -13,6 +13,7 @@ use App\Services\API\HRIS\EmployeeService;
 use App\Services\Assets\AssetService;
 use App\Services\Disposes\AssetDisposeService;
 use App\Services\GlobalService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class DisposeController extends Controller
@@ -54,29 +55,29 @@ class DisposeController extends Controller
             ->make();
     }
 
-    public function datatableAsset()
+    public function datatableAsset(Request $request)
     {
-        return DataTables::of($this->assetService->all())
-            ->editColumn('description', function (Asset $asset) {
-                return $asset->unit?->spesification;
+        return DataTables::of($this->assetService->all($request->get('search')))
+            ->editColumn('description', function ($asset) {
+                return $asset->_source->unit?->spesification;
             })
-            ->editColumn('model_spesification', function (Asset $asset) {
-                return $asset->unit?->model;
+            ->editColumn('model_spesification', function ($asset) {
+                return $asset->_source->unit?->model;
             })
-            ->editColumn('serial_no', function (Asset $asset) {
-                return $asset->unit?->serial_number;
+            ->editColumn('serial_no', function ($asset) {
+                return $asset->_source->unit?->serial_number;
             })
-            ->editColumn('no_asset', function (Asset $asset) {
-                return $asset->kode;
+            ->editColumn('no_asset', function ($asset) {
+                return $asset->_source->kode;
             })
-            ->editColumn('tahun_buat', function (Asset $asset) {
-                return $asset->unit?->tahun_pembuatan;
+            ->editColumn('tahun_buat', function ($asset) {
+                return $asset->_source->unit?->tahun_pembuatan;
             })
-            ->editColumn('nilai_buku', function (Asset $asset) {
-                return Helper::formatRupiah($asset->leasing?->harga_beli);
+            ->editColumn('nilai_buku', function ($asset) {
+                return Helper::formatRupiah($asset->_source->leasing?->harga_beli);
             })
-            ->editColumn('action', function (Asset $asset) {
-                return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
+            ->editColumn('action', function ($asset) {
+                return '<button type="button" data-asset="' . $asset->_id . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
             ->rawColumns(['action'])
             ->make();
@@ -84,7 +85,7 @@ class DisposeController extends Controller
 
     public function show(AssetDispose $assetDispose)
     {
-        $assetDispose->load(['asset.unit']);
+        $assetDispose->load(['asset.unit', 'workflows']);
         $data = AssetDisposeData::from($assetDispose);
         return view('disposes.dispose.show', [
             'assetDispose' => $data,

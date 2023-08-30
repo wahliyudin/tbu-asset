@@ -48,13 +48,15 @@ var KTModalAdd = function () {
     var initDatatableAsset = () => {
         datatableAsset = $('#data-asset_table').DataTable({
             processing: true,
-            serverSide: true,
             order: [
                 [1, 'asc']
             ],
             ajax: {
                 type: "POST",
-                url: "/asset-transfers/datatable-asset"
+                url: "/asset-transfers/datatable-asset",
+                data: function (d) {
+                    d.search = $('#data_asset input[name="search"]').val();
+                }
             },
             columns: [{
                 name: 'action',
@@ -90,7 +92,7 @@ var KTModalAdd = function () {
 
         const filterSearch = document.querySelector('[data-kt-data-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatableAsset.search(e.target.value).draw();
+            datatableAsset.ajax.reload();
         });
 
         initActionAsset();

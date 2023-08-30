@@ -19,7 +19,7 @@
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
-                                <input type="text" data-kt-data-asset-table-filter="search"
+                                <input type="text" data-kt-data-asset-table-filter="search" name="search"
                                     class="form-control form-control-solid w-250px ps-13" placeholder="Cari Asset" />
                             </div>
                         </div>

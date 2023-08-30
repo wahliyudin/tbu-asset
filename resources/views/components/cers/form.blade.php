@@ -235,8 +235,8 @@
         <x-approval :workflows="$cer?->workflows" />
         <div class="col-md-12 d-flex justify-content-start mt-4">
             @permission('asset_request_approv')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer?->id }}"
-                    class="btn btn-success ps-4 approv">
+                <button type="button" data-cer="{{ $cer?->id }}"
+                    class="btn btn-success ps-4 approv {{ !$isCurrentWorkflow ? 'd-none' : '' }}">
                     <span class="indicator-label">
                         <div class="d-flex align-items-center gap-2">
                             <i class="ki-duotone ki-check-circle fs-2">
@@ -251,8 +251,8 @@
                 </button>
             @endpermission
             @permission('asset_request_reject')
-                <button {{ !$isCurrentWorkflow ? 'disabled' : '' }} type="button" data-cer="{{ $cer?->id }}"
-                    class="btn btn-danger ms-2 ps-4 reject">
+                <button type="button" data-cer="{{ $cer?->id }}"
+                    class="btn btn-danger ms-2 ps-4 reject  {{ !$isCurrentWorkflow ? 'd-none' : '' }}">
                     <span class="indicator-label">
                         <div class="d-flex align-items-center gap-2">
                             <i class="ki-duotone ki-cross-circle fs-2">

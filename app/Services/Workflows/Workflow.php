@@ -98,12 +98,14 @@ abstract class Workflow extends Checker
         if ($this->isLast() && $lastAction == LastAction::APPROV) {
             WorkflowRepository::updateStatus($this->model, Status::CLOSE);
             $this->handleIsLastAndApprov();
+            $this->changeStatus($this->model, Status::CLOSE);
         }
         if (!($this->isLast()) && $lastAction == LastAction::APPROV) {
             $this->handleIsNotLastAndApprov();
         }
         if ($lastAction == LastAction::REJECT) {
             WorkflowRepository::updateStatus($this->model, Status::REJECT);
+            $this->changeStatus($this->model, Status::REJECT);
             $this->handleIsRejected();
         }
         return WorkflowRepository::updateLasAction($workflow, $lastAction);
@@ -116,4 +118,6 @@ abstract class Workflow extends Checker
     protected abstract function handleIsNotLastAndApprov();
 
     protected abstract function handleIsRejected();
+
+    protected abstract function changeStatus(Model $model, Status $status);
 }

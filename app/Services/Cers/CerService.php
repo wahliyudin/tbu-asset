@@ -26,7 +26,7 @@ class CerService
     public function all($search = null)
     {
         $data = Elasticsearch::setModel(Cer::class)->searchMultiMatch($search, 50)->all();
-        return CerData::collection(Arr::pluck($data, '_source'))->toCollection();
+        return CerData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', auth()->user()->nik);
     }
 
     public function updateOrCreate(CerData $data)

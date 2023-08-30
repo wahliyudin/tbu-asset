@@ -4,6 +4,7 @@ namespace App\Services\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Enums\Workflows\LastAction;
+use App\Enums\Workflows\Status;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Models\Transfers\AssetTransfer;
 use App\Repositories\Transfers\AssetTransferRepository;
@@ -28,7 +29,7 @@ class AssetTransferService
 
     public function updateOrCreate(AssetTransferRequest $request)
     {
-        $data = AssetTransferData::from($request->all());
+        $data = AssetTransferData::from(array_merge($request->all(), ['status' => Status::OPEN]));
         $assetTransfer = $this->assetTransferRepository->updateOrCreate($data);
         TransferWorkflowService::setModel($assetTransfer)->store();
     }

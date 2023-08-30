@@ -32,7 +32,7 @@ class AssetService
 
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Asset::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(Asset::class)->searchMultiMatch($search, 50)->all();
     }
 
     public function getById($id)

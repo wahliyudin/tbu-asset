@@ -3,8 +3,10 @@
 namespace App\Services\Disposes;
 
 use App\Enums\Workflows\Module;
+use App\Enums\Workflows\Status;
 use App\Models\Disposes\AssetDispose;
 use App\Services\Workflows\Workflow;
+use Illuminate\Database\Eloquent\Model;
 
 class DisposeWorkflowService extends Workflow
 {
@@ -26,6 +28,10 @@ class DisposeWorkflowService extends Workflow
     }
 
     protected function handleIsRejected()
+    {
+    }
+
+    protected function changeStatus(Model $dispose, Status $status)
     {
     }
 }
