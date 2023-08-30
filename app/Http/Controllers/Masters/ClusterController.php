@@ -26,7 +26,7 @@ class ClusterController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
             ->editColumn('category', function ($cluster) {
                 return $cluster->_source->category?->name;
             })

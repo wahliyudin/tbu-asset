@@ -26,6 +26,7 @@ var CategorysList = function () {
                 url: "/master/units/datatable",
                 data: function (d) {
                     d.search = $('input[name="search"]').val();
+                    d.length = $('select[name="unit_table_length"]').val();
                 }
             },
             columns: [
@@ -79,6 +80,13 @@ var CategorysList = function () {
         const filterSearch = document.querySelector('[data-kt-unit-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             datatable.ajax.reload();
+        });
+
+        $('select[name="unit_table_length"]').change(function (e) {
+            e.preventDefault();
+            if (datatable.data().count() < $(this).val()) {
+                datatable.ajax.reload();
+            }
         });
     }
 

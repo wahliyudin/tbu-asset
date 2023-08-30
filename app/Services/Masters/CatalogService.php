@@ -9,9 +9,9 @@ use App\Models\Masters\Catalog;
 
 class CatalogService
 {
-    public function all($search = null)
+    public function all($search = null, $length = 50)
     {
-        return Elasticsearch::setModel(Catalog::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(Catalog::class)->searchMultiMatch($search, $length)->all();
     }
 
     public function updateOrCreate(CatalogStoreRequest $request)

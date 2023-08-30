@@ -23,7 +23,7 @@ class DealerController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
             ->editColumn('name', function ($dealer) {
                 return $dealer->_source->name;
             })

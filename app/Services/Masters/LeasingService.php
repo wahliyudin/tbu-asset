@@ -9,9 +9,9 @@ use App\Models\Masters\Leasing;
 
 class LeasingService
 {
-    public function all($search = null)
+    public function all($search = null, $length = 50)
     {
-        return Elasticsearch::setModel(Leasing::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(Leasing::class)->searchMultiMatch($search, $length)->all();
     }
 
     public static function dataForSelect(...$others)

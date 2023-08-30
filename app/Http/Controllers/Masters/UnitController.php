@@ -25,7 +25,7 @@ class UnitController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
             ->editColumn('model', function ($unit) {
                 return $unit->_source->model;
             })

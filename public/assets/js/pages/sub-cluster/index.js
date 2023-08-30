@@ -26,6 +26,7 @@ var SubClustersList = function () {
                 url: "/master/sub-clusters/datatable",
                 data: function (d) {
                     d.search = $('input[name="search"]').val();
+                    d.length = $('select[name="sub-cluster_table_length"]').val();
                 }
             },
             columns: [
@@ -55,6 +56,14 @@ var SubClustersList = function () {
         const filterSearch = document.querySelector('[data-kt-sub-cluster-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             datatable.ajax.reload();
+        });
+
+
+        $('select[name="sub-cluster_table_length"]').change(function (e) {
+            e.preventDefault();
+            if (datatable.data().count() < $(this).val()) {
+                datatable.ajax.reload();
+            }
         });
     }
 

@@ -9,9 +9,9 @@ use App\Models\Masters\SubClusterItem;
 
 class SubClusterItemService
 {
-    public function all($search = null)
+    public function all($search = null, $length = 50)
     {
-        return Elasticsearch::setModel(SubClusterItem::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(SubClusterItem::class)->searchMultiMatch($search, $length)->all();
     }
 
     public function updateOrCreate(SubClusterItemStoreRequest $request)

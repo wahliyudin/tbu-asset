@@ -26,6 +26,7 @@ var CatalogsList = function () {
                 url: "/master/catalogs/datatable",
                 data: function (d) {
                     d.search = $('input[name="search"]').val();
+                    d.length = $('select[name="catalog_table_length"]').val();
                 }
             },
             columns: [
@@ -71,6 +72,13 @@ var CatalogsList = function () {
         const filterSearch = document.querySelector('[data-kt-catalog-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             datatable.ajax.reload();
+        });
+
+        $('select[name="catalog_table_length"]').change(function (e) {
+            e.preventDefault();
+            if (datatable.data().count() < $(this).val()) {
+                datatable.ajax.reload();
+            }
         });
     }
 

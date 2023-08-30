@@ -9,9 +9,9 @@ use App\Models\Masters\SubCluster;
 
 class SubClusterService
 {
-    public function all($search = null)
+    public function all($search = null, $length = 50)
     {
-        return Elasticsearch::setModel(SubCluster::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(SubCluster::class)->searchMultiMatch($search, $length)->all();
     }
 
     public static function dataForSelect(...$others)

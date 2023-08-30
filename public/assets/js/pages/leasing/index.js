@@ -26,6 +26,7 @@ var LeasingsList = function () {
                 url: "/master/leasings/datatable",
                 data: function (d) {
                     d.search = $('input[name="search"]').val();
+                    d.length = $('select[name="leasing_table_length"]').val();
                 }
             },
             columns: [
@@ -51,6 +52,13 @@ var LeasingsList = function () {
         const filterSearch = document.querySelector('[data-kt-leasing-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             datatable.ajax.reload();
+        });
+
+        $('select[name="leasing_table_length"]').change(function (e) {
+            e.preventDefault();
+            if (datatable.data().count() < $(this).val()) {
+                datatable.ajax.reload();
+            }
         });
     }
 

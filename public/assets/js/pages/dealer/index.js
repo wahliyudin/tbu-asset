@@ -26,6 +26,7 @@ var DealersList = function () {
                 url: "/master/dealers/datatable",
                 data: function (d) {
                     d.search = $('input[name="search"]').val();
+                    d.length = $('select[name="dealer_table_length"]').val();
                 }
             },
             columns: [
@@ -47,10 +48,17 @@ var DealersList = function () {
         });
     }
 
-    var handleSearchDatatable = () => {
+    var handleEventsDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-dealer-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             datatable.ajax.reload();
+        });
+
+        $('select[name="dealer_table_length"]').change(function (e) {
+            e.preventDefault();
+            if (datatable.data().count() < $(this).val()) {
+                datatable.ajax.reload();
+            }
         });
     }
 
@@ -306,7 +314,7 @@ var DealersList = function () {
                 return;
             }
             initCategoryList();
-            handleSearchDatatable();
+            handleEventsDatatable();
             handleDeleteRow();
 
 

@@ -26,7 +26,7 @@ class SubClusterController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
             ->editColumn('cluster', function ($subCluster) {
                 return $subCluster->_source->cluster?->name;
             })

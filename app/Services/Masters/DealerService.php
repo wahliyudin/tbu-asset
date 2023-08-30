@@ -9,9 +9,9 @@ use App\Models\Masters\Dealer;
 
 class DealerService
 {
-    public function all($search = null)
+    public function all($search = null, $length = 50)
     {
-        return Elasticsearch::setModel(Dealer::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(Dealer::class)->searchMultiMatch($search, $length)->all();
     }
 
     public static function dataForSelect(...$others)

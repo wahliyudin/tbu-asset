@@ -23,7 +23,7 @@ class CatalogController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
             ->editColumn('unit_model', function ($catalog) {
                 return $catalog->_source->unit_model;
             })

@@ -24,7 +24,7 @@ class UomController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
             ->editColumn('name', function ($uom) {
                 return $uom->_source->name;
             })

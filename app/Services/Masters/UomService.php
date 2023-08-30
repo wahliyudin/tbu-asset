@@ -9,9 +9,9 @@ use App\Models\Masters\Uom;
 
 class UomService
 {
-    public function all($search)
+    public function all($search = null, $length = 50)
     {
-        return Elasticsearch::setModel(Uom::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(Uom::class)->searchMultiMatch($search, $length)->all();
     }
 
     public static function dataForSelect(...$others)
