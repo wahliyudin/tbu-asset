@@ -2,6 +2,8 @@
 
 namespace Database\Seeders\Masters;
 
+use App\DataTransferObjects\Masters\UomData;
+use App\Facades\Elasticsearch;
 use App\Models\Masters\Uom;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -102,5 +104,15 @@ class UomSeeder extends Seeder
             ['name' => 'CM3', 'keterangan' => null],
         ];
         Uom::query()->upsert($uoms, 'id');
+
+        $this->command->info('Start Get data uoms');
+        $uoms = Uom::query()->get();
+        $this->command->info('End Get data uoms');
+        $this->command->info('Start Cleared uoms');
+        Elasticsearch::setModel(Uom::class)->cleared();
+        $this->command->info('End Cleared uoms');
+        $this->command->info('Start Bulk uoms');
+        Elasticsearch::setModel(Uom::class)->bulk(UomData::collection($uoms));
+        $this->command->info('End Bulk uoms');
     }
 }

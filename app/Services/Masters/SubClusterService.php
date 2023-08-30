@@ -11,7 +11,7 @@ class SubClusterService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(SubCluster::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(SubCluster::class)->searchMultiMatch($search, 50)->all();
     }
 
     public static function dataForSelect(...$others)

@@ -11,7 +11,7 @@ class DealerService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Dealer::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(Dealer::class)->searchMultiMatch($search, 50)->all();
     }
 
     public static function dataForSelect(...$others)

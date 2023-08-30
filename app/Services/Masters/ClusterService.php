@@ -11,7 +11,7 @@ class ClusterService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Cluster::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(Cluster::class)->searchMultiMatch($search, 50)->all();
     }
 
     public static function dataForSelect(...$others)

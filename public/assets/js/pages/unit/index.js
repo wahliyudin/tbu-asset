@@ -78,7 +78,7 @@ var CategorysList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-unit-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 

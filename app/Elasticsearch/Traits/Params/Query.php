@@ -28,4 +28,16 @@ trait Query
         ]);
         return $this;
     }
+
+    protected function multiMatch($keyword)
+    {
+        $this->query = array_merge($this->query, [
+            'multi_match' => [
+                'query' => $keyword,
+                'fields' => ['*'], // Mencari di semua atribut
+                'operator' => 'and'
+            ]
+        ]);
+        return $this;
+    }
 }

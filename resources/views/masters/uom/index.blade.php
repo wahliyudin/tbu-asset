@@ -34,7 +34,7 @@
                         <span class="path1"></span>
                         <span class="path2"></span>
                     </i>
-                    <input type="text" data-kt-uom-table-filter="search"
+                    <input type="text" data-kt-uom-table-filter="search" name="search"
                         class="form-control form-control-solid w-250px ps-13" placeholder="Cari Uom" />
                 </div>
             </div>
@@ -88,7 +88,7 @@
                                     name="name" />
                             </div>
                             <div class="col-md-12 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Unit Type</label>
+                                <label class="required fs-6 fw-semibold mb-2">Keterangan</label>
                                 <textarea name="keterangan" class="form-control form-control-solid" placeholder="Keterangan"></textarea>
                             </div>
                         </div>

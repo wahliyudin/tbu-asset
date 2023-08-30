@@ -11,7 +11,7 @@ class SubClusterItemService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(SubClusterItem::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(SubClusterItem::class)->searchMultiMatch($search, 50)->all();
     }
 
     public function updateOrCreate(SubClusterItemStoreRequest $request)

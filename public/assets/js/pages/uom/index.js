@@ -19,11 +19,14 @@ var UomsList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/uoms/datatable"
+                url: "/master/uoms/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -51,7 +54,7 @@ var UomsList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-uom-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 

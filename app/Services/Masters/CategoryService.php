@@ -11,7 +11,7 @@ class CategoryService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Category::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(Category::class)->searchMultiMatch($search, 50)->all();
     }
 
     public static function dataForSelect(...$others)

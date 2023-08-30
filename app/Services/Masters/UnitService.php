@@ -11,7 +11,7 @@ class UnitService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Unit::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(Unit::class)->searchMultiMatch($search, 50)->all();
     }
 
     public static function dataForSelect(...$others)

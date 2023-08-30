@@ -11,7 +11,7 @@ class CatalogService
 {
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Catalog::class)->searchQueryString($search, 50)->all();
+        return Elasticsearch::setModel(Catalog::class)->searchMultiMatch($search, 50)->all();
     }
 
     public function updateOrCreate(CatalogStoreRequest $request)

@@ -112,6 +112,16 @@ class Elasticsearch extends ParamBuilder
         return $this;
     }
 
+    public function searchMultiMatch($keyword = null, int $size = 10)
+    {
+        $params = $this->withoutType()->size($size)->getParams();
+        if ($keyword) {
+            $params = array_merge($params, $this->multiMatch($keyword)->getParams());
+        }
+        $this->response = $this->clientBuilder->search($params)->asObject();
+        return $this;
+    }
+
     public function all(): array
     {
         return $this->response?->hits?->hits ?? [];
