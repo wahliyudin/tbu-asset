@@ -8,9 +8,12 @@ use App\DataTransferObjects\WorkflowData;
 use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
+use App\Enums\Workflows\Status;
+use App\Helpers\Helper;
 use App\Interfaces\DataInterface;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\GlobalService;
+use Illuminate\Http\Request;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -21,13 +24,15 @@ class CerData extends Data implements DataInterface
     public function __construct(
         public ?string $no_cer = null,
         public ?string $nik = null,
-        public string|TypeBudget|null $type_budget = null,
+        public TypeBudget|null $type_budget = null,
         public ?string $budget_ref = null,
-        public string|Peruntukan|null $peruntukan = null,
+        public Peruntukan|null $peruntukan = null,
         public ?string $tgl_kebutuhan = null,
         public ?string $justifikasi = null,
-        public string|SumberPendanaan|null $sumber_pendanaan = null,
+        public SumberPendanaan|null $sumber_pendanaan = null,
         public ?string $cost_analyst = null,
+        public ?string $deptcode = null,
+        public ?Status $status = null,
         public ?string $id = null,
         #[DataCollectionOf(CerItemData::class)]
         public ?DataCollection $items,
@@ -49,6 +54,23 @@ class CerData extends Data implements DataInterface
         if (is_null($this->nik)) {
             $this->nik = auth()->user()->nik;
         }
+    }
+
+    public static function fromRequest(Request $request)
+    {
+        $items = [];
+        for ($i = 0; $i < count($request->items); $i++) {
+            $items[] = [
+                'description' => $request->items[$i]['description'],
+                'model' => $request->items[$i]['model'],
+                'est_umur' => $request->items[$i]['est_umur'],
+                'qty' => $request->items[$i]['qty'],
+                'price' => Helper::resetRupiah($request->items[$i]['price']),
+                'uom_id' => $request->items[$i]['uom_id'],
+            ];
+        }
+
+        return self::from(array_merge($request->toArray(), ['items' => $items, 'status' => Status::OPEN]));
     }
 
     public function itemsToAttach(): array

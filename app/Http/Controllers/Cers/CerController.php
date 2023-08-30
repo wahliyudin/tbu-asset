@@ -21,6 +21,7 @@ use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CerController extends Controller
@@ -37,28 +38,28 @@ class CerController extends Controller
         return view('cers.cer.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('type_budget', function (Cer $cer) {
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('type_budget', function ($cer) {
                 return $cer->type_budget?->badge();
             })
-            ->editColumn('budget_ref', function (Cer $cer) {
+            ->editColumn('budget_ref', function ($cer) {
                 return $cer->budget_ref ?? '-';
             })
-            ->editColumn('peruntukan', function (Cer $cer) {
+            ->editColumn('peruntukan', function ($cer) {
                 return $cer->peruntukan?->badge();
             })
-            ->editColumn('tgl_kebutuhan', function (Cer $cer) {
+            ->editColumn('tgl_kebutuhan', function ($cer) {
                 return $cer->tgl_kebutuhan;
             })
-            ->editColumn('sumber_pendanaan', function (Cer $cer) {
+            ->editColumn('sumber_pendanaan', function ($cer) {
                 return $cer->sumber_pendanaan?->badge();
             })
-            ->editColumn('status', function (Cer $cer) {
+            ->editColumn('status', function ($cer) {
                 return $cer->status?->badge();
             })
-            ->editColumn('action', function (Cer $cer) {
+            ->editColumn('action', function ($cer) {
                 return view('cers.cer.action', compact('cer'))->render();
             })
             ->rawColumns(['action', 'type_budget', 'peruntukan', 'sumber_pendanaan', 'status',])
@@ -104,14 +105,14 @@ class CerController extends Controller
     {
         return view('cers.cer.create', [
             'employee' => EmployeeData::from($this->service->getEmployee()),
-            'uoms' => UomData::collection((new UomService)->all()),
+            'uoms' => UomData::collection(UomService::dataForSelect()),
         ]);
     }
 
     public function store(CerRequest $request)
     {
         try {
-            $data = CerData::from($request->all());
+            $data = CerData::fromRequest($request);
             $this->service->updateOrCreate($data);
             return response()->json([
                 'message' => 'Berhasil disimpan'

@@ -19,11 +19,13 @@ var CersList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/asset-requests/datatable"
+                url: "/asset-requests/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -67,7 +69,7 @@ var CersList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-cer-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 

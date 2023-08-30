@@ -13,6 +13,7 @@ use App\Services\API\TXIS\CerService as TXISCerService;
 use App\Services\UserService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class CerService
 {
@@ -24,8 +25,8 @@ class CerService
 
     public function all($search = null)
     {
-        return Elasticsearch::setModel(Cer::class)->searchQueryString($search, 50)->all();
-        return Cer::query()->where('nik', auth()->user()?->nik)->get();
+        $data = Elasticsearch::setModel(Cer::class)->searchMultiMatch($search, 50)->all();
+        return CerData::collection(Arr::pluck($data, '_source'))->toCollection();
     }
 
     public function updateOrCreate(CerData $data)
@@ -35,12 +36,15 @@ class CerService
         $cer->items()->createMany($data->itemsToAttach());
         $cer->workflows()->delete();
         CerWorkflowService::setModel($cer)->store();
+        $this->sendToElasticsearch($cer, $data->getKey());
+        return $cer;
     }
 
     public function delete(Cer $cer)
     {
         $cer->items()->delete();
         $cer->workflows()->delete();
+        Elasticsearch::setModel(Cer::class)->deleted(CerData::from($cer));
         return $cer->delete();
     }
 
