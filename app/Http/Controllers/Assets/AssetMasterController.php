@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Assets;
 
-use App\Events\ImportEvent;
 use App\Excels\Assets\Asset as AssetsAsset;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Assets\ImportRequest;
-use App\Jobs\Assets\ImportJob;
+use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
@@ -17,6 +16,8 @@ use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class AssetMasterController extends Controller
@@ -103,17 +104,28 @@ class AssetMasterController extends Controller
     public function import(ImportRequest $request)
     {
         try {
-            $fileName = $request->file('file')->store('public');
-            event(new ImportEvent([
-                'status' => 200,
-                'title' => 'Import started',
-                'message' => 'Import started'
-            ]));
-            // Excel::import(new AssetImport, $request->file('file'));
-            ImportJob::dispatch($fileName);
-            return response()->json([
-                'message' => 'Successfully Imported'
-            ]);
+            $results = Excel::toArray(new AssetImport, $request->file('file'));
+            $batch = $this->service->import(isset($results[0]) ? $results[0] : []);
+            return response()->json($batch);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function batch(Request $request)
+    {
+        try {
+            $batch = Bus::findBatch($request->id);
+            return $batch;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function bulk()
+    {
+        try {
+            return $this->service->startBulk();
         } catch (\Throwable $th) {
             throw $th;
         }

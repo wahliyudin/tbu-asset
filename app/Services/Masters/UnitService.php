@@ -30,25 +30,28 @@ class UnitService
     }
 
 
-    public static function store(UnitData $data)
+    public static function store(array $data)
     {
+        if (!isset($data['kode']) || !isset($data['model'])) {
+            return null;
+        }
         if ($unit = Unit::query()
-            ->where('kode', 'like', $data->kode)
-            ->orWhere('model', 'like', $data->model)
+            ->where('kode', trim(isset($data['kode']) ? $data['kode'] : null))
+            ->orWhere('model', trim(isset($data['model']) ? $data['model'] : null))
             ->first()
         ) {
             return $unit;
         }
         return Unit::query()->create([
-            'kode' => $data->kode,
-            'model' => $data->model,
-            'type' => $data->type,
-            'seri' => $data->seri,
-            'class' => $data->class,
-            'brand' => $data->brand,
-            'serial_number' => $data->serial_number,
-            'spesification' => $data->spesification,
-            'tahun_pembuatan' => $data->tahun_pembuatan,
+            'kode' => isset($data['kode']) ? $data['kode'] : null,
+            'model' => isset($data['model']) ? $data['model'] : null,
+            'type' => isset($data['type']) ? $data['type'] : null,
+            'seri' => isset($data['seri']) ? $data['seri'] : null,
+            'class' => isset($data['class']) ? $data['class'] : null,
+            'brand' => isset($data['brand']) ? $data['brand'] : null,
+            'serial_number' => isset($data['serial_number']) ? $data['serial_number'] : null,
+            'spesification' => isset($data['spesification']) ? $data['spesification'] : null,
+            'tahun_pembuatan' => isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
         ]);
     }
 

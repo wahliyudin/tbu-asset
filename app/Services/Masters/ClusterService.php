@@ -29,14 +29,17 @@ class ClusterService
         return $cluster;
     }
 
-    public static function store(ClusterData $data)
+    public static function store($name, $category_id)
     {
-        if ($cluster = Cluster::query()->where('name', 'like', $data->name)->first()) {
+        if (!$name || !$category_id) {
+            return null;
+        }
+        if ($cluster = Cluster::query()->where('name', trim($name))->first()) {
             return $cluster;
         }
         return Cluster::query()->create([
-            'category_id' => $data->category_id,
-            'name' => $data->name,
+            'category_id' => $category_id,
+            'name' => $name,
         ]);
     }
 

@@ -577,7 +577,9 @@ var AssetsList = function () {
 
     var handleError = function (jqXHR, target) {
         $(target).removeAttr("data-kt-indicator");
-        target.disabled = false;
+        if (target) {
+            target.disabled = false;
+        }
         if (jqXHR.status == 422 || jqXHR.responseJSON.message.includes("404")) {
             Swal.fire({
                 icon: 'warning',
@@ -639,24 +641,113 @@ var AssetsList = function () {
                 data: postData,
                 success: function (response) {
                     submitBtn.removeAttr('data-kt-indicator');
-                    Swal.fire({
-                        text: "Form has been successfully submitted!",
-                        icon: "success",
-                        buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
-                        customClass: {
-                            confirmButton: "btn btn-primary"
-                        }
-                    }).then(function (result) {
-                        modalImport.hide();
-                        datatable.ajax.reload();
-                    });
+                    $('input[name="file"]').val('');
+                    modalImport.hide();
+                    $('.notif-progress').removeClass('d-none');
+                    localStorage.setItem('message_asset', 'Successfully imported');
+                    $('.notif-progress #title').text('Uploading...');
+                    localStorage.setItem('is_bulk', 0);
+                    localStorage.setItem('batch_asset', response.id);
                 },
                 error: function (jqXHR) {
                     handleError(jqXHR, submitBtn);
                 }
             });
         });
+    }
+
+    var initInterval = () => {
+        setInterval(() => {
+            var batch_asset = localStorage.getItem('batch_asset');
+            if (batch_asset) {
+                if ($('.notif-progress').hasClass('d-none')) {
+                    $('.notif-progress').removeClass('d-none');
+                }
+                fetchBatch(batch_asset)
+                    .then(function (response) {
+                        $('.notif-progress-line').width(response.progress + '%');
+                        $('.notif-progress-line').text(response.progress + '%');
+                        if (response.progress == 100) {
+                            $('.notif-progress-line').width('0%');
+                            $('.notif-progress-line').text('0%');
+                            datatable.ajax.reload();
+                            $('.notif-progress').addClass('d-none');
+                            localStorage.removeItem('batch_asset');
+                            toastr.options.closeButton = true;
+                            toastr.options.timeOut = 1000000;
+                            toastr.options.extendedTimeOut = 1000000;
+                            toastr.success(localStorage.getItem('message_asset'), 'Completed!');
+
+                            if (localStorage.getItem('is_bulk') == 0 && !localStorage.getItem('batch_asset')) {
+                                localStorage.setItem('is_bulk', 1);
+                                bulkProcess();
+                            }
+                        }
+                        if (response.failedJobs > 0) {
+                            $('.notif-progress-line').width('0%');
+                            $('.notif-progress-line').text('0%');
+                            datatable.ajax.reload();
+                            $('.notif-progress').addClass('d-none');
+                            localStorage.removeItem('batch_asset');
+                            toastr.options.closeButton = true;
+                            toastr.options.timeOut = 1000000;
+                            toastr.options.extendedTimeOut = 1000000;
+                            var message = "Jumlah Job gagal: " + response.failedJobs + "<br> Jumlah Job sukses: " + response.processedJobs + "<br> dari " + response.totalJobs + " Job";
+                            toastr.error(message, 'Gagal!');
+                        }
+                    })
+                    .catch(function (error) {
+                        handleError(error);
+                    });
+            }
+        }, 1000);
+    }
+
+    var fetchBatch = (batch_asset) => {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                type: "POST",
+                url: "/asset-masters/batch",
+                data: {
+                    id: batch_asset
+                },
+                dataType: "JSON",
+                success: function (response) {
+                    resolve(response);
+                },
+                error: function (error) {
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    var fetchBulk = () => {
+        return new Promise(function (resolve, reject) {
+            $.ajax({
+                type: "POST",
+                url: "/asset-masters/bulk",
+                dataType: "JSON",
+                success: function (response) {
+                    resolve(response);
+                },
+                error: function (error) {
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    var bulkProcess = () => {
+        fetchBulk()
+            .then(function (response) {
+                $('.notif-progress #title').text('Synchronize...');
+                localStorage.setItem('batch_asset', response.id);
+                localStorage.setItem('message_asset', "Successfully synchronize");
+            })
+            .catch(function (error) {
+                handleError(error);
+            });
     }
 
     var toast = (code, title, message) => {
@@ -689,12 +780,12 @@ var AssetsList = function () {
         }
     }
 
-    var initEvent = () => {
-        window.Echo.channel('coba-channel')
-            .listen('.import-event', (e) => {
-                toast(e.status, e.title, e.message);
-            });
-    }
+    // var initEvent = () => {
+    //     window.Echo.channel('coba-channel')
+    //         .listen('.import-event', (e) => {
+    //             toast(e.status, e.title, e.message);
+    //         });
+    // }
 
     return {
         init: function () {
@@ -726,11 +817,13 @@ var AssetsList = function () {
             buttonEdit();
             initPlugins();
             formImport();
-            initEvent();
+            // initEvent();
 
             $('#import-asset').on('hidden.bs.modal', function (e) {
                 $('.modal-backdrop').remove(); // Menghapus backdrop secara manual
             });
+
+            initInterval();
         }
     }
 }();

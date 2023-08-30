@@ -5,26 +5,16 @@ namespace App\Services\Assets;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
-use App\DataTransferObjects\Masters\CategoryData;
-use App\DataTransferObjects\Masters\ClusterData;
-use App\DataTransferObjects\Masters\SubClusterData;
-use App\DataTransferObjects\Masters\UnitData;
-use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
 use App\Facades\Elasticsearch;
 use App\Http\Requests\Assets\AssetRequest;
+use App\Jobs\Assets\BulkJob;
+use App\Jobs\Assets\ImportJob;
 use App\Models\Assets\Asset;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
-use App\Services\Masters\CategoryService;
-use App\Services\Masters\ClusterService;
-use App\Services\Masters\SubClusterService;
-use App\Services\Masters\UnitService;
-use App\Services\Masters\UomService;
-use Illuminate\Support\Arr;
-use PhpOffice\PhpSpreadsheet\Chart\Chart;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Illuminate\Support\Facades\Bus;
 
 class AssetService
 {
@@ -81,16 +71,34 @@ class AssetService
 
     public function import(array $data)
     {
+        Asset::truncate();
         Elasticsearch::setModel(Asset::class)->cleared();
-        Asset::query()->delete();
-        Asset::query()->upsert($data, 'id');
-        $this->bulk();
+        $batch = Bus::batch([])->dispatch();
+        foreach (array_chunk($data, 10) as $assets) {
+            $batch->add(new ImportJob($assets));
+        }
+        return $batch;
     }
 
-    public function bulk()
+    public function startBulk()
     {
-        $assets = Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom'])->get();
+        $batch = Bus::batch([])->dispatch();
+        $assets = $this->getDataBulk()?->toArray();
+        foreach (array_chunk($assets, 10) as $assets) {
+            $batch->add(new BulkJob($assets));
+        }
+        return $batch;
+    }
+
+    public static function bulk(array $assets = [])
+    {
+        $assets = count($assets) > 0 ? $assets : self::getDataBulk();
         Elasticsearch::setModel(Asset::class)->bulk(AssetData::collection($assets));
+    }
+
+    private static function getDataBulk()
+    {
+        return Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom'])->get();
     }
 
     private function sendToElasticsearch(Asset $asset, $key)

@@ -77,6 +77,18 @@
             </table>
         </div>
     </div>
+    <div style="position: fixed; bottom: 10px; right: 10px; width: 400px; z-index: 99999;" class="notif-progress d-none">
+        <div class="card">
+            <div class="card-body">
+                <span id="title">Uploading...</span>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success notif-progress-line"
+                        role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        0%</div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('modal')

@@ -29,14 +29,17 @@ class SubClusterService
         return $subCluster;
     }
 
-    public static function store(SubClusterData $data)
+    public static function store($name, $cluster_id)
     {
-        if ($subCluster = SubCluster::query()->where('name', 'like', $data->name)->first()) {
+        if (!$name || !$cluster_id) {
+            return null;
+        }
+        if ($subCluster = SubCluster::query()->where('name', trim($name))->first()) {
             return $subCluster;
         }
         return SubCluster::query()->create([
-            'cluster_id' => $data->cluster_id,
-            'name' => $data->name,
+            'cluster_id' => $cluster_id,
+            'name' => $name,
         ]);
     }
 

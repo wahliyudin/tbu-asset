@@ -30,39 +30,39 @@ class AssetImport implements ToArray, WithHeadingRow
      */
     public function array(array $data)
     {
-        foreach ($data as $i => $val) {
-            if ($val['id_asset_existing'] == null) {
-                unset($data[$i]);
-            }
-        }
+        // foreach ($data as $i => $val) {
+        //     if ($val['id_asset_existing'] == null) {
+        //         unset($data[$i]);
+        //     }
+        // }
 
-        $results = [];
-        foreach ($data as $i => $val) {
-            $category = CategoryService::store(CategoryData::from(['name' => $val['asset_category']]));
-            $cluster = ClusterService::store(ClusterData::from(['name' => $val['asset_cluster'], 'category_id' => $category->getKey()]));
-            $subCluster = SubClusterService::store(SubClusterData::from(['name' => $val['asset_sub_cluster'], 'cluster_id' => $cluster->getKey()]));
-            $unit = UnitService::store(UnitData::fromImport($val));
-            $pic = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c']);
-            array_push($results, [
-                'kode' => $val['id_asset_existing'],
-                'unit_id' => $unit->getKey(),
-                'sub_cluster_id' => $subCluster->getKey(),
-                'pic' => $pic?->nik,
-                'activity' => $val['activity'],
-                'asset_location' => $pic?->position?->project?->project,
-                'kondisi' => $val['kondisi'],
-                'uom_id' => null,
-                'quantity' => $val['jumlah'],
-                'tgl_bast' => Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d'),
-                'hm' => null,
-                'pr_number' => $val['pr'],
-                'po_number' => $val['po'],
-                'gr_number' => $val['gr'],
-                'remark' => $val['keterangan'],
-                'status' => null,
-            ]);
-        }
-        AssetService::import($results);
+        // $results = [];
+        // foreach ($data as $i => $val) {
+        //     $category = CategoryService::store(CategoryData::from(['name' => $val['asset_category']]));
+        //     $cluster = ClusterService::store(ClusterData::from(['name' => $val['asset_cluster'], 'category_id' => $category->getKey()]));
+        //     $subCluster = SubClusterService::store(SubClusterData::from(['name' => $val['asset_sub_cluster'], 'cluster_id' => $cluster->getKey()]));
+        //     $unit = UnitService::store(UnitData::fromImport($val));
+        //     $pic = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c']);
+        //     array_push($results, [
+        //         'kode' => $val['id_asset_existing'],
+        //         'unit_id' => $unit->getKey(),
+        //         'sub_cluster_id' => $subCluster->getKey(),
+        //         'pic' => $pic?->nik,
+        //         'activity' => $val['activity'],
+        //         'asset_location' => $pic?->position?->project?->project,
+        //         'kondisi' => $val['kondisi'],
+        //         'uom_id' => null,
+        //         'quantity' => $val['jumlah'],
+        //         'tgl_bast' => Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d'),
+        //         'hm' => null,
+        //         'pr_number' => $val['pr'],
+        //         'po_number' => $val['po'],
+        //         'gr_number' => $val['gr'],
+        //         'remark' => $val['keterangan'],
+        //         'status' => null,
+        //     ]);
+        // }
+        // AssetService::import($results);
     }
 
     private function validate($data)

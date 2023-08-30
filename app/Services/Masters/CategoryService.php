@@ -29,13 +29,16 @@ class CategoryService
         return $category;
     }
 
-    public static function store(CategoryData $data)
+    public static function store(?string $name)
     {
-        if ($category = Category::query()->where('name', 'like', $data->name)->first()) {
+        if (!$name) {
+            return null;
+        }
+        if ($category = Category::query()->where('name', trim($name))->first()) {
             return $category;
         }
         return Category::query()->create([
-            'name' => $data->name
+            'name' => $name
         ]);
     }
 

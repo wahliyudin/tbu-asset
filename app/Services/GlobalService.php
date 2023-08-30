@@ -32,7 +32,7 @@ class GlobalService
 
     public static function getEmployeeByNamaKaryawan(?string $namaKaryawan): EmployeeData
     {
-        $employee = (new EmployeeService)->whereIn('nama_karyawan', [$namaKaryawan])->first();
+        $employee = (new EmployeeService)->whereIn('nama_karyawan', [trim($namaKaryawan)])->first();
         return EmployeeData::from(isset($employee['data']) ? $employee['data'] : []);
     }
 

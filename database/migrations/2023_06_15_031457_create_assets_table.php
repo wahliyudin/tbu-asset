@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('kode')->nullable();
             $table->foreignIdFor(Unit::class)->nullable();
             $table->foreignIdFor(SubCluster::class)->nullable();
-            $table->string('member_name');
+            $table->string('member_name')->nullable();
             $table->unsignedBigInteger('pic')->nullable();
             $table->string('activity')->nullable();
             $table->string('asset_location')->nullable();
