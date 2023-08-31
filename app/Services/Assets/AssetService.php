@@ -38,7 +38,21 @@ class AssetService
 
     public function getById($id)
     {
-        return Asset::query()->find($id);
+        return Asset::query()->with([
+            'unit',
+            'subCluster',
+            'insurance',
+            'leasing',
+            'uom',
+        ])->find($id);
+    }
+
+    public function getByKode($kode)
+    {
+        return Asset::query()
+            ->with(['unit', 'subCluster', 'insurance', 'leasing', 'uom'])
+            ->where('kode', $kode)
+            ->firstOrFail();
     }
 
     public function getByStatus(Status $status)

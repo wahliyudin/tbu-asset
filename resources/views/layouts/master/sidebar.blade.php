@@ -52,7 +52,7 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div
-                            class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index') || request()->routeIs('masters.clusters.index') || request()->routeIs('masters.sub-clusters.index') || request()->routeIs('masters.sub-cluster-items.index') || request()->routeIs('masters.catalogs.index') || request()->routeIs('masters.dealers.index') || request()->routeIs('masters.leasings.index') || request()->routeIs('masters.units.index') ? 'hover show' : '' }}">
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index', 'masters.clusters.index', 'masters.sub-clusters.index', 'masters.sub-cluster-items.index', 'masters.catalogs.index', 'masters.dealers.index', 'masters.leasings.index', 'masters.units.index') ? 'hover show' : '' }}">
                             @permission('category_read')
                                 <div class="menu-item">
                                     <a class="menu-link {{ request()->routeIs('masters.categories.index') ? 'active' : '' }}"
@@ -157,7 +157,7 @@
                 @endpermission
                 @permission('asset_master_read')
                     <div class="menu-item">
-                        <a class="menu-link {{ request()->routeIs('asset-masters.index') ? 'active' : '' }}"
+                        <a class="menu-link {{ request()->routeIs('asset-masters.index', 'asset-masters.show') ? 'active' : '' }}"
                             href="{{ route('asset-masters.index') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-lots-shopping fs-2">
@@ -177,7 +177,7 @@
                 @endpermission
                 @permission('asset_request_read')
                     <div class="menu-item">
-                        <a class="menu-link {{ request()->routeIs('asset-requests.index') ? 'active' : '' }}"
+                        <a class="menu-link {{ request()->routeIs('asset-requests.index', 'asset-requests.create', 'asset-requests.show', 'asset-requests.edit') ? 'active' : '' }}"
                             href="{{ route('asset-requests.index') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-call fs-2">
@@ -197,7 +197,7 @@
                 @endpermission
                 @permission('asset_transfer_read')
                     <div class="menu-item">
-                        <a class="menu-link {{ request()->routeIs('asset-transfers.index') ? 'active' : '' }}"
+                        <a class="menu-link {{ request()->routeIs('asset-transfers.index', 'asset-transfers.create', 'asset-transfers.show', 'asset-transfers.edit') ? 'active' : '' }}"
                             href="{{ route('asset-transfers.index') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-share fs-2">
@@ -215,7 +215,7 @@
                 @endpermission
                 @permission('asset_dispose_read')
                     <div class="menu-item">
-                        <a class="menu-link {{ request()->routeIs('asset-disposes.index') ? 'active' : '' }}"
+                        <a class="menu-link {{ request()->routeIs('asset-disposes.index', 'asset-disposes.create', 'asset-disposes.show', 'asset-disposes.edit') ? 'active' : '' }}"
                             href="{{ route('asset-disposes.index') }}">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-disconnect fs-2">
@@ -243,10 +243,10 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div
-                            class="menu-sub menu-sub-accordion {{ request()->routeIs('approvals.cers.index') || request()->routeIs('approvals.transfers.index') || request()->routeIs('approvals.disposes.index') ? 'hover show' : '' }}">
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs('approvals.cers.index', 'approvals.cers.show', 'approvals.transfers.index', 'approvals.transfers.show', 'approvals.disposes.index', 'approvals.disposes.show') ? 'hover show' : '' }}">
                             @permission('asset_request_approv|asset_request_reject')
                                 <div class="menu-item">
-                                    <a class="menu-link {{ request()->routeIs('approvals.cers.index') ? 'active' : '' }}"
+                                    <a class="menu-link {{ request()->routeIs('approvals.cers.index', 'approvals.cers.show') ? 'active' : '' }}"
                                         href="{{ route('approvals.cers.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
@@ -260,7 +260,7 @@
                             @endpermission
                             @permission('asset_transfer_approv|asset_transfer_reject')
                                 <div class="menu-item">
-                                    <a class="menu-link {{ request()->routeIs('approvals.transfers.index') ? 'active' : '' }}"
+                                    <a class="menu-link {{ request()->routeIs('approvals.transfers.index', 'approvals.transfers.show') ? 'active' : '' }}"
                                         href="{{ route('approvals.transfers.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
@@ -274,7 +274,7 @@
                             @endpermission
                             @permission('asset_dispose_approv|asset_dispose_reject')
                                 <div class="menu-item">
-                                    <a class="menu-link {{ request()->routeIs('approvals.disposes.index') ? 'active' : '' }}"
+                                    <a class="menu-link {{ request()->routeIs('approvals.disposes.index', 'approvals.disposes.show') ? 'active' : '' }}"
                                         href="{{ route('approvals.disposes.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
@@ -343,7 +343,7 @@
                         <span class="menu-arrow"></span>
                     </span>
                     <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('settings.approval.index') || request()->routeIs('settings.access-permission.index') ? 'hover show' : '' }}">
+                        class="menu-sub menu-sub-accordion {{ request()->routeIs('settings.approval.index', 'settings.access-permission.index') ? 'hover show' : '' }}">
                         @permission('approval_read')
                             <div class="menu-item">
                                 <a class="menu-link {{ request()->routeIs('settings.approval.index') ? 'active' : '' }}"

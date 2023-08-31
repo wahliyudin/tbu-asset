@@ -20,8 +20,12 @@ class GlobalService
 
     public static function getBudgetByCode($code): array
     {
-        $budget = (new BudgetService)->getByCode($code);
-        return isset($budget['data']) ? $budget['data'] : [];
+        try {
+            $budget = (new BudgetService)->getByCode($code);
+            return isset($budget['data']) ? $budget['data'] : [];
+        } catch (\Throwable $th) {
+            return [];
+        }
     }
 
     public static function getEmployees(array $attributes)

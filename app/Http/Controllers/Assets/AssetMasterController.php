@@ -68,6 +68,13 @@ class AssetMasterController extends Controller
             ->make();
     }
 
+    public function show($kode)
+    {
+        return view('assets.asset.show', [
+            'asset' => $this->service->getByKode($kode)
+        ]);
+    }
+
     public function store(AssetRequest $request)
     {
         try {

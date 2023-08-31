@@ -132,7 +132,7 @@ class CerController extends Controller
             return view('cers.cer.edit', [
                 'cer' => $data,
                 'employee' => $data->employee,
-                'uoms' => UomData::collection((new UomService)->all()),
+                'uoms' => UomData::collection(UomService::dataForSelect()),
             ]);
         } catch (\Throwable $th) {
             throw $th;
