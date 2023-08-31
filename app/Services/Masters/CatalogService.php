@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\CatalogData;
 use App\Http\Requests\Masters\CatalogStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\Catalog;
+use Illuminate\Support\Facades\DB;
 
 class CatalogService
 {
@@ -17,17 +18,21 @@ class CatalogService
     public function updateOrCreate(CatalogStoreRequest $request)
     {
         $data = CatalogData::from($request->all());
-        $catalog = Catalog::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($catalog, $data->getKey());
-        return $catalog;
+        return DB::transaction(function () use ($data) {
+            $catalog = Catalog::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($catalog, $data->getKey());
+            return $catalog;
+        });
     }
 
     public function delete(Catalog $catalog)
     {
-        Elasticsearch::setModel(Catalog::class)->deleted(CatalogData::from($catalog));
-        return $catalog->delete();
+        return DB::transaction(function () use ($catalog) {
+            Elasticsearch::setModel(Catalog::class)->deleted(CatalogData::from($catalog));
+            return $catalog->delete();
+        });
     }
 
     public function getDataForEdit($id): array

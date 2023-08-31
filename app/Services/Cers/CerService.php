@@ -14,6 +14,7 @@ use App\Services\UserService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class CerService
 {
@@ -31,21 +32,25 @@ class CerService
 
     public function updateOrCreate(CerData $data)
     {
-        $cer = $this->cerRepository->updateOrCreate($data);
-        $cer->items()->delete();
-        $cer->items()->createMany($data->itemsToAttach());
-        $cer->workflows()->delete();
-        CerWorkflowService::setModel($cer)->store();
-        $this->sendToElasticsearch($cer, $data->getKey());
-        return $cer;
+        return DB::transaction(function () use ($data) {
+            $cer = $this->cerRepository->updateOrCreate($data);
+            $cer->items()->delete();
+            $cer->items()->createMany($data->itemsToAttach());
+            $cer->workflows()->delete();
+            CerWorkflowService::setModel($cer)->store();
+            $this->sendToElasticsearch($cer, $data->getKey());
+            return $cer;
+        });
     }
 
     public function delete(Cer $cer)
     {
-        $cer->items()->delete();
-        $cer->workflows()->delete();
-        Elasticsearch::setModel(Cer::class)->deleted(CerData::from($cer));
-        return $cer->delete();
+        return DB::transaction(function () use ($cer) {
+            $cer->items()->delete();
+            $cer->workflows()->delete();
+            Elasticsearch::setModel(Cer::class)->deleted(CerData::from($cer));
+            return $cer->delete();
+        });
     }
 
     public function getListNoCerByUser(Request $request)
@@ -89,6 +94,7 @@ class CerService
 
     private function sendToElasticsearch(Cer $cer, $key)
     {
+        $cer->load(['items', 'workflows']);
         if ($key) {
             return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
         }

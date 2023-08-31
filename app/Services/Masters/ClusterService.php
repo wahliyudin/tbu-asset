@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\ClusterData;
 use App\Http\Requests\Masters\ClusterStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\Cluster;
+use Illuminate\Support\Facades\DB;
 
 class ClusterService
 {
@@ -22,11 +23,13 @@ class ClusterService
     public function updateOrCreate(ClusterStoreRequest $request)
     {
         $data = ClusterData::from($request->all());
-        $cluster = Cluster::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($cluster, $data->getKey());
-        return $cluster;
+        return DB::transaction(function () use ($data) {
+            $cluster = Cluster::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($cluster, $data->getKey());
+            return $cluster;
+        });
     }
 
     public static function store($name, $category_id)
@@ -45,8 +48,10 @@ class ClusterService
 
     public function delete(Cluster $cluster)
     {
-        Elasticsearch::setModel(Cluster::class)->deleted(ClusterData::from($cluster));
-        return $cluster->delete();
+        return DB::transaction(function () use ($cluster) {
+            Elasticsearch::setModel(Cluster::class)->deleted(ClusterData::from($cluster));
+            return $cluster->delete();
+        });
     }
 
     public function getDataForEdit($id): array

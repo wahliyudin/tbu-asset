@@ -15,6 +15,7 @@ use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\DB;
 
 class AssetService
 {
@@ -54,19 +55,22 @@ class AssetService
     public function updateOrCreate(AssetRequest $request)
     {
         $data = AssetData::from($request->all());
-        $asset = $this->assetRepository->updateOrCreate($data);
-        $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
-        $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
-        $asset->load(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
-        $this->sendToElasticsearch($asset, $data->getKey());
+        DB::transaction(function () use ($data, $request) {
+            $asset = $this->assetRepository->updateOrCreate($data);
+            $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
+            $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
+            $this->sendToElasticsearch($asset, $data->getKey());
+        });
     }
 
     public function delete(Asset $asset)
     {
-        $this->assetInsuranceRepository->delete($asset->insurance);
-        $this->assetLeasingRepository->delete($asset->leasing);
-        Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
-        return $asset->delete();
+        return DB::transaction(function () use ($asset) {
+            $this->assetInsuranceRepository->delete($asset->insurance);
+            $this->assetLeasingRepository->delete($asset->leasing);
+            Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
+            return $asset->delete();
+        });
     }
 
     public function import(array $data)
@@ -103,6 +107,7 @@ class AssetService
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
+        $asset->load(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }

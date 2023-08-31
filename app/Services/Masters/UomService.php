@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\UomData;
 use App\Facades\Elasticsearch;
 use App\Http\Requests\Masters\UomStoreRequest;
 use App\Models\Masters\Uom;
+use Illuminate\Support\Facades\DB;
 
 class UomService
 {
@@ -22,17 +23,21 @@ class UomService
     public function updateOrCreate(UomStoreRequest $request)
     {
         $data = UomData::from($request->all());
-        $uom = Uom::query()->updateOrCreate([
-            'id' => $data->id
-        ], $data->toArray());
-        $this->sendToElasticsearch($uom, $data->getKey());
-        return $uom;
+        return DB::transaction(function () use ($data) {
+            $uom = Uom::query()->updateOrCreate([
+                'id' => $data->id
+            ], $data->toArray());
+            $this->sendToElasticsearch($uom, $data->getKey());
+            return $uom;
+        });
     }
 
     public function delete(Uom $uom)
     {
-        Elasticsearch::setModel(Uom::class)->deleted(UomData::from($uom));
-        return $uom->delete();
+        return DB::transaction(function () use ($uom) {
+            Elasticsearch::setModel(Uom::class)->deleted(UomData::from($uom));
+            return $uom->delete();
+        });
     }
 
     public function getDataForEdit($id): array

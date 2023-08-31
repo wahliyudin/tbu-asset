@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\DealerData;
 use App\Http\Requests\Masters\DealerStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\Dealer;
+use Illuminate\Support\Facades\DB;
 
 class DealerService
 {
@@ -22,17 +23,21 @@ class DealerService
     public function updateOrCreate(DealerStoreRequest $request)
     {
         $data = DealerData::from($request->all());
-        $dealer = Dealer::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($dealer, $data->getKey());
-        return $dealer;
+        return DB::transaction(function () use ($data) {
+            $dealer = Dealer::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($dealer, $data->getKey());
+            return $dealer;
+        });
     }
 
     public function delete(Dealer $dealer)
     {
-        Elasticsearch::setModel(Dealer::class)->deleted(DealerData::from($dealer));
-        return $dealer->delete();
+        return DB::transaction(function () use ($dealer) {
+            Elasticsearch::setModel(Dealer::class)->deleted(DealerData::from($dealer));
+            return $dealer->delete();
+        });
     }
 
     public function getDataForEdit($id): array

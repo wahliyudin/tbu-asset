@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\SubClusterData;
 use App\Http\Requests\Masters\SubClusterStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\SubCluster;
+use Illuminate\Support\Facades\DB;
 
 class SubClusterService
 {
@@ -22,11 +23,13 @@ class SubClusterService
     public function updateOrCreate(SubClusterStoreRequest $request)
     {
         $data = SubClusterData::from($request->all());
-        $subCluster = SubCluster::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($subCluster, $data->getKey());
-        return $subCluster;
+        return DB::transaction(function () use ($data) {
+            $subCluster = SubCluster::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($subCluster, $data->getKey());
+            return $subCluster;
+        });
     }
 
     public static function store($name, $cluster_id)
@@ -45,8 +48,10 @@ class SubClusterService
 
     public function delete(SubCluster $subCluster)
     {
-        Elasticsearch::setModel(SubCluster::class)->deleted(SubClusterData::from($subCluster));
-        return $subCluster->delete();
+        return DB::transaction(function () use ($subCluster) {
+            Elasticsearch::setModel(SubCluster::class)->deleted(SubClusterData::from($subCluster));
+            return $subCluster->delete();
+        });
     }
 
     public function getDataForEdit($id): array

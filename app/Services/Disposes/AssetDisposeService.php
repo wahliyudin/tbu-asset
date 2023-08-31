@@ -3,13 +3,13 @@
 namespace App\Services\Disposes;
 
 use App\DataTransferObjects\Disposes\AssetDisposeData;
-use App\DataTransferObjects\Disposes\AssetDisposeDto;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
 use App\Models\Disposes\AssetDispose;
 use App\Repositories\Disposes\AssetDisposeRepository;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class AssetDisposeService
 {
@@ -21,15 +21,19 @@ class AssetDisposeService
     public function updateOrCreate(AssetDisposeRequest $request)
     {
         $data = AssetDisposeData::from(array_merge($request->all(), ['status' => Status::OPEN]))->except('employee');
-        $assetDispose = (new AssetDisposeRepository)->updateOrCreate($data);
-        $assetDispose->workflows()->delete();
-        DisposeWorkflowService::setModel($assetDispose)->store();
+        DB::transaction(function () use ($data) {
+            $assetDispose = (new AssetDisposeRepository)->updateOrCreate($data);
+            $assetDispose->workflows()->delete();
+            DisposeWorkflowService::setModel($assetDispose)->store();
+        });
     }
 
     public function delete(AssetDispose $assetDispose)
     {
-        $assetDispose->workflows()->delete();
-        return $assetDispose->delete();
+        return DB::transaction(function () use ($assetDispose) {
+            $assetDispose->workflows()->delete();
+            return $assetDispose->delete();
+        });
     }
 
     public static function getByCurrentApproval()

@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\LeasingData;
 use App\Http\Requests\Masters\LeasingStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\Leasing;
+use Illuminate\Support\Facades\DB;
 
 class LeasingService
 {
@@ -22,11 +23,13 @@ class LeasingService
     public function updateOrCreate(LeasingStoreRequest $request)
     {
         $data = LeasingData::from($request->all());
-        $leasing = Leasing::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($leasing, $data->getKey());
-        return $leasing;
+        return DB::transaction(function () use ($data) {
+            $leasing = Leasing::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($leasing, $data->getKey());
+            return $leasing;
+        });
     }
 
     public static function store(LeasingData $data)
@@ -38,8 +41,10 @@ class LeasingService
 
     public function delete(Leasing $leasing)
     {
-        Elasticsearch::setModel(Leasing::class)->deleted(LeasingData::from($leasing));
-        return $leasing->delete();
+        return DB::transaction(function () use ($leasing) {
+            Elasticsearch::setModel(Leasing::class)->deleted(LeasingData::from($leasing));
+            return $leasing->delete();
+        });
     }
 
     public function getDataForEdit($id): array

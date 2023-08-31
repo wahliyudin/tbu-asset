@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\CategoryData;
 use App\Http\Requests\Masters\CategoryStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryService
 {
@@ -22,11 +23,13 @@ class CategoryService
     public function updateOrCreate(CategoryStoreRequest $request)
     {
         $data = CategoryData::from($request->all());
-        $category = Category::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($category, $data->getKey());
-        return $category;
+        return DB::transaction(function () use ($data) {
+            $category = Category::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($category, $data->getKey());
+            return $category;
+        });
     }
 
     public static function store(?string $name)
@@ -44,8 +47,10 @@ class CategoryService
 
     public function delete(Category $category)
     {
-        Elasticsearch::setModel(Category::class)->deleted(CategoryData::from($category));
-        return $category->delete();
+        return DB::transaction(function () use ($category) {
+            Elasticsearch::setModel(Category::class)->deleted(CategoryData::from($category));
+            return $category->delete();
+        });
     }
 
     public function getDataForEdit($id): array

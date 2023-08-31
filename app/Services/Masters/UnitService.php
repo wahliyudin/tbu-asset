@@ -6,6 +6,7 @@ use App\DataTransferObjects\Masters\UnitData;
 use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Models\Masters\Unit;
+use Illuminate\Support\Facades\DB;
 
 class UnitService
 {
@@ -22,11 +23,13 @@ class UnitService
     public function updateOrCreate(UnitStoreRequest $request)
     {
         $data = UnitData::from($request->all());
-        $unit = Unit::query()->updateOrCreate([
-            'id' => $data->key
-        ], $data->toArray());
-        $this->sendToElasticsearch($unit, $data->getKey());
-        return $unit;
+        return DB::transaction(function () use ($data) {
+            $unit = Unit::query()->updateOrCreate([
+                'id' => $data->key
+            ], $data->toArray());
+            $this->sendToElasticsearch($unit, $data->getKey());
+            return $unit;
+        });
     }
 
 
@@ -57,8 +60,10 @@ class UnitService
 
     public function delete(Unit $unit)
     {
-        Elasticsearch::setModel(Unit::class)->deleted(UnitData::from($unit));
-        return $unit->delete();
+        return DB::transaction(function () use ($unit) {
+            Elasticsearch::setModel(Unit::class)->deleted(UnitData::from($unit));
+            return $unit->delete();
+        });
     }
 
     public function getDataForEdit($id): array
