@@ -34,9 +34,11 @@ class CerService
     {
         return DB::transaction(function () use ($data) {
             $cer = $this->cerRepository->updateOrCreate($data);
-            $cer->items()->delete();
+            if ($data->getKey()) {
+                $cer->items()->delete();
+                $cer->workflows()->delete();
+            }
             $cer->items()->createMany($data->itemsToAttach());
-            $cer->workflows()->delete();
             CerWorkflowService::setModel($cer)->store();
             $this->sendToElasticsearch($cer, $data->getKey());
             return $cer;

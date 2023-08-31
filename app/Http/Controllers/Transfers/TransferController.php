@@ -7,7 +7,6 @@ use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
-use App\Models\Assets\Asset;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Assets\AssetService;
 use App\Services\Transfers\AssetTransferService;
@@ -27,9 +26,9 @@ class TransferController extends Controller
         return view('transfers.transfer.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->allToAssetTransferData())
+        return DataTables::of($this->service->allToAssetTransferData($request->get('search')))
             ->editColumn('no_transaksi', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->no_transaksi;
             })
@@ -138,7 +137,8 @@ class TransferController extends Controller
     public function employeeByAsset($asset)
     {
         try {
-            return response()->json(AssetData::from($this->assetService->getById($asset))->employee->toArray());
+            $employee = AssetData::from($this->assetService->getById($asset))?->employee?->toArray();
+            return response()->json($employee);
         } catch (\Throwable $th) {
             throw $th;
         }

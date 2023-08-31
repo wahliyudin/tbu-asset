@@ -6,13 +6,14 @@ use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\WorkflowData;
 use App\Enums\Workflows\Status;
+use App\Interfaces\DataInterface;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\DataCollection;
 use Illuminate\Support\Str;
 
-class AssetTransferData extends Data
+class AssetTransferData extends Data implements DataInterface
 {
     public function __construct(
         public ?string $no_transaksi,
@@ -53,5 +54,10 @@ class AssetTransferData extends Data
         if (is_null($this->request_transfer_date)) {
             $this->request_transfer_date = now();
         }
+    }
+
+    public function getKey(): string|null
+    {
+        return $this->id;
     }
 }

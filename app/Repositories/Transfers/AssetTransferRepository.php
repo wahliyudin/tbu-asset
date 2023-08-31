@@ -3,6 +3,7 @@
 namespace App\Repositories\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Facades\Elasticsearch;
 use App\Models\Transfers\AssetTransfer;
 
 class AssetTransferRepository
@@ -29,6 +30,21 @@ class AssetTransferRepository
             'transfer_date' => $data->transfer_date,
             'status' => $data->status,
         ]);
+    }
+
+    public function deleteFromElasticsearch(AssetTransfer $assetTransfer)
+    {
+        $assetTransferData = AssetTransferData::from($assetTransfer);
+        return Elasticsearch::setModel(AssetTransfer::class)->deleted($assetTransferData);
+    }
+
+    public function sendToElasticsearch(AssetTransfer $assetTransfer, $key)
+    {
+        $assetTransfer->load(['asset', 'workflows']);
+        if ($key) {
+            return Elasticsearch::setModel(AssetTransfer::class)->updated(AssetTransferData::from($assetTransfer));
+        }
+        return Elasticsearch::setModel(AssetTransfer::class)->created(AssetTransferData::from($assetTransfer));
     }
 
     public static function storeWorkflow()

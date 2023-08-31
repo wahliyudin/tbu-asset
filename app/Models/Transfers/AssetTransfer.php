@@ -2,6 +2,7 @@
 
 namespace App\Models\Transfers;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Models\Assets\Asset;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class AssetTransfer extends Model implements ModelThatHaveWorkflow
+class AssetTransfer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
 {
     use HasFactory;
 
@@ -32,6 +33,11 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow
         'transfer_date',
         'status',
     ];
+
+    public function indexName(): string
+    {
+        return 'tbu_asset_transfers';
+    }
 
     public function asset(): BelongsTo
     {

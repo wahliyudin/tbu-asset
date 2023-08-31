@@ -35,6 +35,8 @@ class CerWorkflowService extends Workflow
 
     protected function changeStatus(Model $cer, Status $status)
     {
-        Elasticsearch::setModel(Cer::class)->updated(CerData::from(array_merge($cer->toArray(), ['status' => $status->value])));
+        $cer->load(['items', 'workflows']);
+        $data = CerData::from(array_merge($cer->toArray(), ['status' => $status->value]));
+        return Elasticsearch::setModel(Cer::class)->updated($data);
     }
 }
