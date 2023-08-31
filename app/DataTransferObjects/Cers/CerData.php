@@ -78,6 +78,13 @@ class CerData extends Data implements DataInterface
         return $this->items->toArray();
     }
 
+    public function grandTotal()
+    {
+        return $this->items->toCollection()->sum(function (CerItemData $cerItemData) {
+            return $cerItemData->qty * $cerItemData->price;
+        });
+    }
+
     public function getKey(): string|null
     {
         return $this->id;

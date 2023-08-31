@@ -7,6 +7,7 @@ use App\Enums\Settings\Approval;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Module;
 use App\Enums\Workflows\Status;
+use App\Helpers\AuthHelper;
 use App\Models\Settings\SettingApproval;
 use App\Repositories\API\HRIS\ApprovalRepository as HRISApprovalRepository;
 use App\Repositories\Settings\ApprovalRepository;
@@ -21,6 +22,8 @@ use Spatie\LaravelData\DataCollection;
 abstract class Workflow extends Checker
 {
     protected array $additionalParams = [];
+
+    protected int $barrier = 0;
 
     public function __construct(
         protected Model $model,
@@ -43,7 +46,7 @@ abstract class Workflow extends Checker
 
         $data = $this->prepareApprovals($approvals);
 
-        $response = $this->patchDataWorkflows($data, auth()->user()->nik);
+        $response = $this->patchDataWorkflows($data, AuthHelper::getNik());
 
         return $this->responseToCollectionsOfWorkflowData($response);
     }
@@ -58,8 +61,25 @@ abstract class Workflow extends Checker
         $data = [];
         foreach ($approvals as $key => $approval) {
             array_push($data, $this->payloadApprovalForHRIS($approval));
+            if (!$this->delimiterCheck($approval)) {
+                break;
+            }
         }
         return $data;
+    }
+
+    private function delimiterCheck(SettingApproval $settingApproval)
+    {
+        if ($this->barrier < 10_000_000 && $settingApproval->approval === Approval::DEPARTMENT_HEAD) {
+            return false;
+        }
+        // if ($this->barrier > 10_000_000 && $this->barrier <= 25_000_000 && $settingApproval->approval === Approval::DIVISION_HEAD) {
+        //     return false;
+        // }
+        if ($this->barrier > 25_000_000 && $settingApproval->approval === Approval::DIRECTOR) {
+            return false;
+        }
+        return true;
     }
 
     private function payloadApprovalForHRIS(SettingApproval $approval): array
@@ -105,7 +125,7 @@ abstract class Workflow extends Checker
     public function lastAction(LastAction $lastAction)
     {
         $workflow = $this->currentWorkflow();
-        if (!$workflow->nik == auth()->user()->nik) {
+        if (!$workflow->nik == AuthHelper::getNik()) {
             throw ValidationException::withMessages(['Anda tidak berhak melakukan aksi ini']);
         }
         if ($this->isLast() && $lastAction == LastAction::APPROV) {
@@ -127,6 +147,12 @@ abstract class Workflow extends Checker
     public function setAdditionalParams(array $params)
     {
         $this->additionalParams = $params;
+        return $this;
+    }
+
+    public function setBarrier(int $barrier)
+    {
+        $this->barrier = $barrier;
         return $this;
     }
 

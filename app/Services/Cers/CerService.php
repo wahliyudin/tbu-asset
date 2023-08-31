@@ -6,6 +6,7 @@ use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
+use App\Helpers\AuthHelper;
 use App\Models\Cers\Cer;
 use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
@@ -27,7 +28,7 @@ class CerService
     public function all($search = null)
     {
         $data = Elasticsearch::setModel(Cer::class)->searchMultiMatch($search, 50)->all();
-        return CerData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', auth()->user()->nik);
+        return CerData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', AuthHelper::getNik());
     }
 
     public function updateOrCreate(CerData $data)
@@ -39,7 +40,7 @@ class CerService
                 $cer->workflows()->delete();
             }
             $cer->items()->createMany($data->itemsToAttach());
-            CerWorkflowService::setModel($cer)->store();
+            CerWorkflowService::setModel($cer)->setBarrier($data->grandTotal())->store();
             $this->sendToElasticsearch($cer, $data->getKey());
             return $cer;
         });
@@ -75,7 +76,7 @@ class CerService
     public static function getEmployee($nik = null): array
     {
         $token = UserService::getAdministrator()?->oatuhToken?->access_token;
-        $nik = $nik ?? auth()->user()->nik;
+        $nik = $nik ?? AuthHelper::getNik();
         $employee = (new EmployeeService)->setToken(auth()->check() ? null : $token)->getByNik($nik);
         return isset($employee['data']) ? $employee['data'] : [];
     }
@@ -84,13 +85,13 @@ class CerService
     {
         return Cer::query()->whereHas('workflows', function (Builder $query) {
             $query->where('last_action', LastAction::NOTTING)
-                ->where('nik', auth()->user()?->nik);
+                ->where('nik', AuthHelper::getNik());
         })->get();
     }
 
     public function getCerTxis($code)
     {
-        $data = (new TXISCerService)->getByCode('HU0KWXg803BawMQv');
+        $data = (new TXISCerService)->getByCode($code);
         return isset($data['data']) ? $data['data'] : [];
     }
 
