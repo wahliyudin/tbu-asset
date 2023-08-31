@@ -85,7 +85,9 @@ class DisposeController extends Controller
 
     public function show(AssetDispose $assetDispose)
     {
-        $assetDispose->load(['asset.unit', 'workflows']);
+        $assetDispose->load(['asset.unit', 'workflows' => function ($query) {
+            $query->orderBy('sequence', 'ASC');
+        }]);
         $data = AssetDisposeData::from($assetDispose);
         return view('disposes.dispose.show', [
             'assetDispose' => $data,

@@ -82,7 +82,9 @@ class TransferController extends Controller
 
     public function show(AssetTransfer $assetTransfer)
     {
-        $assetTransfer->load(['asset.unit', 'asset.leasing', 'workflows']);
+        $assetTransfer->load(['asset.unit', 'asset.leasing', 'workflows' => function ($query) {
+            $query->orderBy('sequence', 'ASC');
+        }]);
         return view('transfers.transfer.show', [
             'assetTransfer' => AssetTransferData::from($assetTransfer),
         ]);

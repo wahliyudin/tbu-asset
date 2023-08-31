@@ -71,10 +71,14 @@ abstract class Workflow extends Checker
 
     private function patchDataWorkflows(array $data, $nik)
     {
-        return (new HRISApprovalRepository)->getBySubmitted([
+        $response = (new HRISApprovalRepository)->getBySubmitted([
             'submitted' => $nik,
             'approvals' => $data
         ]);
+        if (isset($response['exception'])) {
+            throw ValidationException::withMessages([isset($response['message']) ? $response['message'] : 'Something went wrong!']);
+        }
+        return $response;
     }
 
     private function responseToCollectionsOfWorkflowData($response): DataCollection

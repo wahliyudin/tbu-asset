@@ -93,7 +93,9 @@ class CerController extends Controller
 
     public function show(Cer $cer)
     {
-        $cer->load(['items.uom', 'workflows']);
+        $cer->load(['items.uom', 'workflows' => function ($query) {
+            $query->orderBy('sequence', 'ASC');
+        }]);
         $data = CerData::from($cer);
         return view('cers.cer.show', [
             'cer' => $data,

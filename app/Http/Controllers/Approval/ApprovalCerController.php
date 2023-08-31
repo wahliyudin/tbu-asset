@@ -58,7 +58,7 @@ class ApprovalCerController extends Controller
         $cer->load(['items.uom', 'workflows' => function ($query) {
             $query->orderBy('sequence', 'ASC');
         }]);
-        $data = CerData::from($cer)->except('workflows.employee.position');
+        $data = CerData::from($cer);
         return view('approvals.cer.show', [
             'cer' => $data,
             'employee' => $data->employee,
