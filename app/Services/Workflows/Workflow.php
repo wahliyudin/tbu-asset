@@ -20,6 +20,8 @@ use Spatie\LaravelData\DataCollection;
 
 abstract class Workflow extends Checker
 {
+    protected array $additionalParams = [];
+
     public function __construct(
         protected Model $model,
         protected Module $module,
@@ -71,14 +73,21 @@ abstract class Workflow extends Checker
 
     private function patchDataWorkflows(array $data, $nik)
     {
-        $response = (new HRISApprovalRepository)->getBySubmitted([
-            'submitted' => $nik,
-            'approvals' => $data
-        ]);
+        $payload = $this->preparePayload($data, $nik);
+        $response = (new HRISApprovalRepository)->getBySubmitted($payload);
         if (isset($response['exception'])) {
             throw ValidationException::withMessages([isset($response['message']) ? $response['message'] : 'Something went wrong!']);
         }
         return $response;
+    }
+
+    private function preparePayload(array $data, $nik)
+    {
+        $payload = [
+            'submitted' => $nik,
+            'approvals' => $data,
+        ];
+        return array_merge($payload, $this->additionalParams);
     }
 
     private function responseToCollectionsOfWorkflowData($response): DataCollection
@@ -113,6 +122,12 @@ abstract class Workflow extends Checker
             $this->handleIsRejected();
         }
         return WorkflowRepository::updateLasAction($workflow, $lastAction);
+    }
+
+    public function setAdditionalParams(array $params)
+    {
+        $this->additionalParams = $params;
+        return $this;
     }
 
     protected abstract function handleStoreWorkflow();
