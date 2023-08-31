@@ -2,6 +2,7 @@
 
 namespace App\Models\Disposes;
 
+use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Enums\Disposes\Dispose\Pelaksanaan;
 use App\Enums\Workflows\Status;
 use App\Models\Assets\Asset;
@@ -12,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class AssetDispose extends Model implements ModelThatHaveWorkflow
+class AssetDispose extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
 {
     use HasFactory;
 
@@ -28,6 +29,11 @@ class AssetDispose extends Model implements ModelThatHaveWorkflow
         'remark',
         'status',
     ];
+
+    public function indexName(): string
+    {
+        return 'tbu_asset_transfers';
+    }
 
     protected $casts = [
         'pelaksanaan' => Pelaksanaan::class,

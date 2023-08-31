@@ -19,11 +19,13 @@ var DisposesList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/asset-disposes/datatable"
+                url: "/asset-disposes/datatable",
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -63,7 +65,7 @@ var DisposesList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-dispose-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 

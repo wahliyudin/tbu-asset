@@ -7,7 +7,6 @@ use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
-use App\Models\Assets\Asset;
 use App\Models\Disposes\AssetDispose;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\Assets\AssetService;
@@ -30,25 +29,25 @@ class DisposeController extends Controller
         return view('disposes.dispose.index');
     }
 
-    public function datatable()
+    public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('no_dispose', function (AssetDispose $assetDispose) {
+        return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('no_dispose', function ($assetDispose) {
                 return $assetDispose->no_dispose;
             })
-            ->editColumn('pelaksanaan', function (AssetDispose $assetDispose) {
-                return $assetDispose->pelaksanaan->badge();
+            ->editColumn('pelaksanaan', function ($assetDispose) {
+                return $assetDispose->pelaksanaan?->badge();
             })
-            ->editColumn('nilai_buku', function (AssetDispose $assetDispose) {
+            ->editColumn('nilai_buku', function ($assetDispose) {
                 return Helper::formatRupiah($assetDispose->nilai_buku, true);
             })
-            ->editColumn('est_harga_pasar', function (AssetDispose $assetDispose) {
+            ->editColumn('est_harga_pasar', function ($assetDispose) {
                 return Helper::formatRupiah($assetDispose->est_harga_pasar, true);
             })
-            ->editColumn('status', function (AssetDispose $assetDispose) {
-                return $assetDispose->status->badge();
+            ->editColumn('status', function ($assetDispose) {
+                return $assetDispose->status?->badge();
             })
-            ->editColumn('action', function (AssetDispose $assetDispose) {
+            ->editColumn('action', function ($assetDispose) {
                 return view('disposes.dispose.action', compact('assetDispose'))->render();
             })
             ->rawColumns(['action', 'pelaksanaan', 'status'])

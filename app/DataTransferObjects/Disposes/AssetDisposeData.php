@@ -26,7 +26,7 @@ class AssetDisposeData extends Data implements DataInterface
         public ?string $notes,
         public ?string $justifikasi,
         public ?string $remark,
-        public Pelaksanaan|string|null $pelaksanaan,
+        public Pelaksanaan|null $pelaksanaan,
         public ?Status $status,
         public ?string $id = null,
         public ?AssetData $asset,
