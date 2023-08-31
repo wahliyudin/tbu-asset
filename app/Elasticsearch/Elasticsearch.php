@@ -6,7 +6,9 @@ use App\Elasticsearch\Traits\CheckerTrait;
 use App\Interfaces\DataInterface;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\ClientBuilder;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 
 class Elasticsearch extends ParamBuilder
@@ -61,29 +63,43 @@ class Elasticsearch extends ParamBuilder
     public function created(DataInterface $data = null)
     {
         $this->setData($data);
-        $this->clientBuilder->index($this->withId()->setAttributes($this->data->toArray())->getParams());
+        try {
+            $this->clientBuilder->index($this->withId()->setAttributes($this->data->toArray())->getParams());
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), in_array($th->getCode(), [500, 404, 422]) ? $th->getCode() : 500);
+        }
         return $this;
     }
 
     public function updated(DataInterface $data = null)
     {
         $this->setData($data);
-        $this->clientBuilder->update($this->withId()->setDoc($this->data->toArray())->getParams());
+        try {
+            $this->clientBuilder->update($this->withId()->setDoc($this->data->toArray())->getParams());
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), in_array($th->getCode(), [500, 404, 422]) ? $th->getCode() : 500);
+        }
         return $this;
     }
 
     public function deleted(DataInterface $data = null)
     {
         $this->setData($data);
-        $this->clientBuilder->delete($this->withId()->getParams());
+        try {
+            $this->clientBuilder->delete($this->withId()->getParams());
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), in_array($th->getCode(), [500, 404, 422]) ? $th->getCode() : 500);
+        }
         return $this;
     }
 
     public function cleared()
     {
-        $this->clientBuilder->deleteByQuery($this->withoutType()->matchAll()->getParams());
-        $this->model->delete();
-        return $this;
+        return DB::transaction(function () {
+            $this->clientBuilder->deleteByQuery($this->withoutType()->matchAll()->getParams());
+            $this->model->delete();
+            return $this;
+        });
     }
 
     public function createIndex()
