@@ -16,6 +16,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\Label\Font\OpenSans;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Label\Margin\Margin;
+use Endroid\QrCode\Logo\Logo;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
 
 class CerService
 {
@@ -102,5 +113,40 @@ class CerService
             return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
         }
         return Elasticsearch::setModel(Cer::class)->created(CerData::from($cer));
+    }
+
+    public function generateQRCode($content, $size = 100, $label = 'PT. TATA BARA UTAMA')
+    {
+        $writer = new PngWriter();
+
+        $qrCode = QrCode::create($content)
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize($size)
+            ->setMargin(10)
+            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+
+        $logo = Logo::create(public_path('assets/media/logos/tbu.png'))
+            ->setResizeToWidth(round($size * 0.8))
+            ->setPunchoutBackground(false);
+
+        $label = Label::create($label)
+            ->setFont(new OpenSans(round($size * 0.045)))
+            ->setMargin(new Margin(-5, 10, 10, 10))
+            ->setTextColor(new Color(34, 57, 104));
+
+        $result = $writer->write($qrCode, $logo, $label);
+
+        return $this->saveBase64Image($result->getDataUri());
+    }
+
+    public function saveBase64Image($base64Data, $folder = 'qrcode', $filename = 'example.png')
+    {
+        $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Data));;
+        $path = $folder . '/' . $filename;
+        Storage::disk('public')->put($path, $imageData);
+        return $path;
     }
 }
