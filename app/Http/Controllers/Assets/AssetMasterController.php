@@ -73,7 +73,6 @@ class AssetMasterController extends Controller
     {
         return view('assets.asset.show', [
             'asset' => AssetData::from($this->service->getByKode($kode)),
-            'qr_code' => $this->service->generateQRCode('Hello, Wahliyudin', 250)
         ]);
     }
 

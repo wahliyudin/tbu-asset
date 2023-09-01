@@ -36,6 +36,7 @@ class Asset extends Model implements ElasticsearchInterface
         'po_number',
         'gr_number',
         'remark',
+        'qr_code',
         'status',
     ];
 

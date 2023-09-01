@@ -79,7 +79,8 @@ class AssetService
 
     public function updateOrCreate(AssetRequest $request)
     {
-        $data = AssetData::from($request->all());
+        $qrCode = AssetService::generateQRCode($request->kode, 250, filename: time() . $request->kode . '.png');
+        $data = AssetData::from(array_merge($request->all(), ['qr_code' => $qrCode]));
         DB::transaction(function () use ($data, $request) {
             $asset = $this->assetRepository->updateOrCreate($data);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
@@ -94,6 +95,7 @@ class AssetService
             $this->assetInsuranceRepository->delete($asset->insurance);
             $this->assetLeasingRepository->delete($asset->leasing);
             Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
+            Storage::disk('public')->delete($asset->qr_code);
             return $asset->delete();
         });
     }
@@ -140,7 +142,7 @@ class AssetService
     }
 
 
-    public function generateQRCode($content, $size = 100, $label = 'PT. TATA BARA UTAMA')
+    public static function generateQRCode($content, $size = 100, $folder = 'qrcode', $filename = 'example.png', $label = 'PT. TATA BARA UTAMA')
     {
         $writer = new PngWriter();
 
@@ -164,10 +166,10 @@ class AssetService
 
         $result = $writer->write($qrCode, $logo, $label);
 
-        return $this->saveBase64Image($result->getDataUri());
+        return self::saveBase64Image($result->getDataUri(), $folder, $filename);
     }
 
-    public function saveBase64Image($base64Data, $folder = 'qrcode', $filename = 'example.png')
+    public static function saveBase64Image($base64Data, $folder = 'qrcode', $filename = 'example.png')
     {
         $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Data));;
         $path = $folder . '/' . $filename;

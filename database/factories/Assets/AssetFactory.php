@@ -40,6 +40,7 @@ class AssetFactory extends Factory
             'po_number' => fake()->sentence(1),
             'gr_number' => fake()->sentence(1),
             'remark' => fake()->sentence(1),
+            'qr_code' => fake()->imageUrl(250, 250),
             'status' => fake()->randomElement(Status::cases()),
         ];
     }

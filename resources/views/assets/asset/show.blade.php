@@ -28,8 +28,8 @@
     <div class="row">
         <div class="col-md-3 text-center">
             <div class="symbol symbol-150px symbol-lg-200px symbol-fixed position-relative">
-                <img src="{{ asset('storage/' . $qr_code) }}" alt="image" class="border border-white border-4"
-                    style="border-radius: 20px">
+                <img src="{{ str($asset->qr_code)->contains(['http:', 'https:']) ? $asset->qr_code : asset('storage/' . $asset->qr_code) }}"
+                    alt="image" class="border border-white border-4" style="border-radius: 20px">
             </div>
         </div>
         <div class="col-md-9">

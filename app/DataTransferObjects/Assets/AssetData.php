@@ -9,6 +9,7 @@ use App\DataTransferObjects\Masters\UnitData;
 use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
 use App\Interfaces\DataInterface;
+use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Data;
 
@@ -30,6 +31,7 @@ class AssetData extends Data implements DataInterface
         public ?string $po_number,
         public ?string $gr_number,
         public ?string $remark,
+        public ?string $qr_code,
         public ?Status $status,
         public ?string $key = null,
         public ?string $id = null,
@@ -42,8 +44,17 @@ class AssetData extends Data implements DataInterface
         public ?ProjectData $project,
         public ?EmployeeData $employee,
     ) {
-        $this->employee = EmployeeData::from(GlobalService::getEmployee($this->pic));
-        $this->project = ProjectData::from(GlobalService::getProject($this->asset_location));
+        $this->initParams();
+    }
+
+    public function initParams()
+    {
+        if (!isset($this->employee)) {
+            $this->employee = EmployeeData::from(GlobalService::getEmployee($this->pic));
+        }
+        if (!isset($this->project)) {
+            $this->project = ProjectData::from(GlobalService::getProject($this->asset_location));
+        }
     }
 
     public function getKey(): string|null

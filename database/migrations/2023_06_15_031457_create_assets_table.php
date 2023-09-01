@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('po_number')->nullable();
             $table->string('gr_number')->nullable();
             $table->string('remark')->nullable();
+            $table->string('qr_code')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });
