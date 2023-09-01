@@ -4,8 +4,10 @@ namespace App\DataTransferObjects\Assets;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\ProjectData;
+use App\DataTransferObjects\Masters\SubClusterData;
 use App\DataTransferObjects\Masters\UnitData;
 use App\DataTransferObjects\Masters\UomData;
+use App\Enums\Asset\Status;
 use App\Interfaces\DataInterface;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Data;
@@ -28,10 +30,11 @@ class AssetData extends Data implements DataInterface
         public ?string $po_number,
         public ?string $gr_number,
         public ?string $remark,
-        public ?string $status,
+        public ?Status $status,
         public ?string $key = null,
         public ?string $id = null,
         public ?AssetInsuranceData $insurance,
+        public ?SubClusterData $sub_cluster,
         public ?AssetLeasingData $leasing,
         public ?DeprecationData $deprecation,
         public ?UnitData $unit,

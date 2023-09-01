@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Assets;
 
+use App\DataTransferObjects\Assets\AssetData;
 use App\Excels\Assets\Asset as AssetsAsset;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
@@ -71,7 +72,8 @@ class AssetMasterController extends Controller
     public function show($kode)
     {
         return view('assets.asset.show', [
-            'asset' => $this->service->getByKode($kode)
+            'asset' => AssetData::from($this->service->getByKode($kode)),
+            'qr_code' => $this->service->generateQRCode('Hello, Wahliyudin', 250)
         ]);
     }
 

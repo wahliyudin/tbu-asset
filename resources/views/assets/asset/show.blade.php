@@ -25,162 +25,164 @@
 @endsection
 
 @section('content')
-    <div class="card card-flush mb-9" id="kt_user_profile_panel">
-        <!--begin::Hero nav-->
-        <div class="card-header rounded-top bgi-size-cover h-200px"
-            style="background-position: 100% 50%; background-image:url('{{ asset('assets/media/misc/profile-head-bg.jpg') }}')">
-        </div>
-        <!--end::Hero nav-->
-
-        <!--begin::Body-->
-        <div class="card-body mt-n19">
-            <!--begin::Details-->
-            <div class="m-0">
-                <!--begin: Pic-->
-                <div class="d-flex flex-stack align-items-end pb-4 mt-n19">
-                    <div class="symbol symbol-150px symbol-lg-200px symbol-fixed position-relative mt-n3">
-                        <img src="{{ asset('assets/media/avatars/300-3.jpg') }}" alt="image"
-                            class="border border-white border-4" style="border-radius: 20px">
-                        <div
-                            class="position-absolute translate-middle bottom-0 start-100 ms-n1 mb-9 bg-success rounded-circle h-15px w-15px">
-                        </div>
-                    </div>
-                </div>
-                <!--end::Pic-->
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <div class="symbol symbol-150px symbol-lg-200px symbol-fixed position-relative">
+                <img src="{{ asset('storage/' . $qr_code) }}" alt="image" class="border border-white border-4"
+                    style="border-radius: 20px">
             </div>
-            <!--end::Details-->
         </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
-                <!--begin::Card header-->
-                <div class="card-header cursor-pointer">
-                    <!--begin::Card title-->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title m-0">
-                        <h3 class="fw-bold m-0">Profile Details</h3>
+                        <h3 class="fw-bold m-0">Asset Details</h3>
                     </div>
-                    <!--end::Card title-->
                 </div>
-                <!--begin::Card header-->
-
-                <!--begin::Card body-->
                 <div class="card-body p-9">
-                    <!--begin::Row-->
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">Full Name</label>
-                        <!--end::Label-->
-
-                        <!--begin::Col-->
-                        <div class="col-lg-8">
-                            <span class="fw-bold fs-6 text-gray-800">Max Smith</span>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Kode</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->kode ?? '-' }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Row-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">Company</label>
-                        <!--end::Label-->
-
-                        <!--begin::Col-->
-                        <div class="col-lg-8 fv-row">
-                            <span class="fw-semibold text-gray-800 fs-6">Keenthemes</span>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Status</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{!! $asset->status?->badge() ?? '-' !!}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Col-->
                     </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">
-                            Contact Phone
-
-                            <span class="ms-1" data-bs-toggle="tooltip" aria-label="Phone number must be active"
-                                data-bs-original-title="Phone number must be active" data-kt-initialized="1">
-                                <i class="ki-duotone ki-information fs-7"><span class="path1"></span><span
-                                        class="path2"></span><span class="path3"></span></i> </span>
-                        </label>
-                        <!--end::Label-->
-
-                        <!--begin::Col-->
-                        <div class="col-lg-8 d-flex align-items-center">
-                            <span class="fw-bold fs-6 text-gray-800 me-2">044 3276 454 935</span>
-                            <span class="badge badge-success">Verified</span>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Sub Cluster</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->sub_cluster->name ?? '-' }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">Company Site</label>
-                        <!--end::Label-->
-
-                        <!--begin::Col-->
-                        <div class="col-lg-8">
-                            <a href="#" class="fw-semibold fs-6 text-gray-800 text-hover-primary">keenthemes.com</a>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">PIC</label>
+                                <div class="col-lg-7">
+                                    <span
+                                        class="fw-bold fs-6 text-gray-800">{{ $asset->employee->nama_karyawan ?? '-' }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Col-->
                     </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">
-                            Country
-
-                            <span class="ms-1" data-bs-toggle="tooltip" aria-label="Country of origination"
-                                data-bs-original-title="Country of origination" data-kt-initialized="1">
-                                <i class="ki-duotone ki-information fs-7"><span class="path1"></span><span
-                                        class="path2"></span><span class="path3"></span></i> </span>
-                        </label>
-                        <!--end::Label-->
-
-                        <!--begin::Col-->
-                        <div class="col-lg-8">
-                            <span class="fw-bold fs-6 text-gray-800">Germany</span>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Activity</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->activity ?? '-' }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Col-->
-                    </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-7">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">Communication</label>
-                        <!--end::Label-->
-
-                        <!--begin::Col-->
-                        <div class="col-lg-8">
-                            <span class="fw-bold fs-6 text-gray-800">Email, Phone</span>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Asset Location</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->project->project ?? '-' }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--end::Col-->
                     </div>
-                    <!--end::Input group-->
-
-                    <!--begin::Input group-->
-                    <div class="row mb-10">
-                        <!--begin::Label-->
-                        <label class="col-lg-4 fw-semibold text-muted">Allow Changes</label>
-                        <!--begin::Label-->
-
-                        <!--begin::Label-->
-                        <div class="col-lg-8">
-                            <span class="fw-semibold fs-6 text-gray-800">Yes</span>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Kondisi</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->kondisi ?? '-' }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--begin::Label-->
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Unit Code</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->unit->kode ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!--end::Input group-->
-
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Quantity</label>
+                                <div class="col-lg-7">
+                                    <span
+                                        class="fw-bold fs-6 text-gray-800">{{ $asset->quantity . ' ' . $asset->uom->name ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Tanggal Bast</label>
+                                <div class="col-lg-7">
+                                    <span
+                                        class="fw-bold fs-6 text-gray-800">{{ \Carbon\Carbon::make($asset->tgl_bast)->format('d F Y') ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">HM</label>
+                                <div class="col-lg-7">
+                                    <span
+                                        class="fw-bold fs-6 text-gray-800">{{ $asset->hm . ' ' . $asset->uom->name ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">PR Number</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->pr_number ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">PO Number</label>
+                                <div class="col-lg-7">
+                                    <span
+                                        class="fw-bold fs-6 text-gray-800">{{ $asset->po_number . ' ' . $asset->uom->name ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">GR Number</label>
+                                <div class="col-lg-7">
+                                    <span class="fw-bold fs-6 text-gray-800">{{ $asset->gr_number ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-lg-6 mb-5">
+                            <div class="row">
+                                <label class="col-lg-4 fw-semibold text-muted">Remark</label>
+                                <div class="col-lg-7">
+                                    <span
+                                        class="fw-bold fs-6 text-gray-800">{{ $asset->remark . ' ' . $asset->uom->name ?? '-' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--end::Card body-->
             </div>
         </div>
     </div>

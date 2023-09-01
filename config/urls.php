@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'hris' => env('SSO_TARGET_URL', 'http://202.148.22.198:81/'),
-    'txis' => 'http://202.148.22.198:86/',
+    'hris' => env('URL_HRIS', 'http://202.148.22.198:81/'),
+    'txis' => env('URL_TXIS', 'http://202.148.22.198:8080/'),
 ];

@@ -60,7 +60,7 @@ abstract class Workflow extends Checker
     {
         $data = [];
         foreach ($approvals as $key => $approval) {
-            array_push($data, $this->payloadApprovalForHRIS($approval));
+            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
             if (!$this->delimiterCheck($approval)) {
                 break;
             }
@@ -82,13 +82,19 @@ abstract class Workflow extends Checker
         return true;
     }
 
-    private function payloadApprovalForHRIS(SettingApproval $approval): array
+    private function payloadApprovalForHRIS(SettingApproval $approval, $sequence): array
     {
-        return [
+        $payload = [
             'approval' => $approval->approval->valueByHRIS(),
             'nik' => $approval->nik,
             'title' => $approval->title
         ];
+        foreach ($this->additionalParams as $param) {
+            if (isset($param['sequence']) ? $param['sequence'] : null == $sequence) {
+                $payload = array_merge($payload, $param);
+            }
+        }
+        return $payload;
     }
 
     private function patchDataWorkflows(array $data, $nik)
@@ -142,6 +148,12 @@ abstract class Workflow extends Checker
             $this->handleIsRejected();
         }
         return WorkflowRepository::updateLasAction($workflow, $lastAction);
+    }
+
+    public function addAdditionalParam(array $param)
+    {
+        $this->additionalParams[] = $param;
+        return $this;
     }
 
     public function setAdditionalParams(array $params)

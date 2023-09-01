@@ -400,6 +400,7 @@ var AssetsList = function () {
                                     if (result.isConfirmed) {
                                         submitButton.disabled = false;
                                         datatable.ajax.reload();
+                                        modal.hide();
                                     }
                                 });
                             },
