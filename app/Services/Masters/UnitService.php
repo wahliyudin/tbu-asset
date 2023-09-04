@@ -22,7 +22,7 @@ class UnitService
 
     public function updateOrCreate(UnitStoreRequest $request)
     {
-        $data = UnitData::from($request->all());
+        $data = UnitData::fromRequest($request->all());
         return DB::transaction(function () use ($data) {
             $unit = Unit::query()->updateOrCreate([
                 'id' => $data->key

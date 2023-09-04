@@ -155,16 +155,16 @@ class AssetService
             ->setForegroundColor(new Color(0, 0, 0))
             ->setBackgroundColor(new Color(255, 255, 255));
 
-        $logo = Logo::create(public_path('assets/media/logos/tbu.png'))
-            ->setResizeToWidth(round($size * 0.8))
-            ->setPunchoutBackground(false);
+        // $logo = Logo::create(public_path('assets/media/logos/tbu.png'))
+        //     ->setResizeToWidth(round($size * 0.8))
+        //     ->setPunchoutBackground(false);
 
         $label = Label::create($label)
             ->setFont(new OpenSans(round($size * 0.045)))
             ->setMargin(new Margin(-5, 10, 10, 10))
             ->setTextColor(new Color(34, 57, 104));
 
-        $result = $writer->write($qrCode, $logo, $label);
+        $result = $writer->write($qrCode, label: $label);
 
         return self::saveBase64Image($result->getDataUri(), $folder, $filename);
     }
