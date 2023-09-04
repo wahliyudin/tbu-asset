@@ -55,6 +55,8 @@ class UnitData extends Data implements DataInterface
             isset($data['serial_number']) ? $data['serial_number'] : null,
             isset($data['spesification']) ? $data['spesification'] : null,
             isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
+            isset($data['key']) ? $data['key'] : null,
+            isset($data['id']) ? $data['id'] : null,
         );
     }
 }
