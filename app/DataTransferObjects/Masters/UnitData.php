@@ -28,7 +28,7 @@ class UnitData extends Data implements DataInterface
         return $this->key ?? $this->id;
     }
 
-    public static function fromImport(array $data)
+    public function fromImport(array $data)
     {
         return new self(
             isset($data['id_unit']) ? $data['id_unit'] : null,
@@ -40,23 +40,6 @@ class UnitData extends Data implements DataInterface
             isset($data['serial_number']) ? $data['serial_number'] : null,
             isset($data['detail_spesifikasi']) ? $data['detail_spesifikasi'] : null,
             isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
-        );
-    }
-
-    public static function fromRequest(array $data)
-    {
-        return new self(
-            isset($data['kode']) ? $data['kode'] : null,
-            isset($data['model']) ? $data['model'] : null,
-            isset($data['type']) ? $data['type'] : null,
-            isset($data['seri']) ? $data['seri'] : null,
-            isset($data['class']) ? $data['class'] : null,
-            isset($data['brand']) ? $data['brand'] : null,
-            isset($data['serial_number']) ? $data['serial_number'] : null,
-            isset($data['spesification']) ? $data['spesification'] : null,
-            isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
-            isset($data['key']) ? $data['key'] : null,
-            isset($data['id']) ? $data['id'] : null,
         );
     }
 }
