@@ -52,7 +52,7 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div
-                            class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index', 'masters.clusters.index', 'masters.sub-clusters.index', 'masters.sub-cluster-items.index', 'masters.catalogs.index', 'masters.dealers.index', 'masters.leasings.index', 'masters.units.index') ? 'hover show' : '' }}">
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index', 'masters.clusters.index', 'masters.sub-clusters.index', 'masters.sub-cluster-items.index', 'masters.catalogs.index', 'masters.dealers.index', 'masters.leasings.index', 'masters.units.index', 'masters.uoms.index') ? 'hover show' : '' }}">
                             @permission('category_read')
                                 <div class="menu-item">
                                     <a class="menu-link {{ request()->routeIs('masters.categories.index') ? 'active' : '' }}"
