@@ -439,6 +439,7 @@ var AssetsList = function () {
             }).then(function (result) {
                 if (result.value) {
                     form.reset();
+                    modal.hide();
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
@@ -469,6 +470,7 @@ var AssetsList = function () {
             }).then(function (result) {
                 if (result.value) {
                     form.reset();
+                    modal.hide();
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "Your form has not been cancelled!.",
