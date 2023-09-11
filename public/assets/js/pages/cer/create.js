@@ -102,6 +102,10 @@ var KTModalCersAdd = function () {
                 data: 'periode',
             },
             {
+                name: 'description',
+                data: 'description',
+            },
+            {
                 name: 'total',
                 data: 'total',
             },],

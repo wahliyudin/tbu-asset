@@ -26,6 +26,9 @@ class BudgetController extends Controller
             ->editColumn('periode', function (BudgetData $budgetData) {
                 return $budgetData->periode;
             })
+            ->editColumn('description', function (BudgetData $budgetData) {
+                return $budgetData->description;
+            })
             ->editColumn('total', function (BudgetData $budgetData) {
                 return Helper::formatRupiah($budgetData->total);
             })

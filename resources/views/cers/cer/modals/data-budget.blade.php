@@ -31,6 +31,7 @@
                                     <th class="min-w-50px">Actions</th>
                                     <th>Kode</th>
                                     <th>Periode</th>
+                                    <th>Description</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>

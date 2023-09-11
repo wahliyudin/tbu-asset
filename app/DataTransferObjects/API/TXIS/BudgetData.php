@@ -10,6 +10,7 @@ class BudgetData extends Data
         public ?int $id,
         public ?string $periode,
         public ?string $kode,
+        public ?string $description,
         public ?int $total,
     ) {
     }
@@ -20,6 +21,7 @@ class BudgetData extends Data
             isset($data['idbudget_detail']) ? $data['idbudget_detail'] : null,
             isset($data['budgetheader']['tahun']) ? $data['budgetheader']['tahun'] : null,
             isset($data['budgetcode']) ? $data['budgetcode'] : null,
+            isset($data['description']) ? $data['description'] : null,
             isset($data['totalbudget']) ? $data['totalbudget'] : null,
         );
     }
