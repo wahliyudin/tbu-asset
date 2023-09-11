@@ -37,7 +37,7 @@ class AssetService
     ) {
     }
 
-    public function coba()
+    public function allNotElastic()
     {
         return Asset::query()->with(['unit', 'leasing', 'insurance'])->get();
     }
