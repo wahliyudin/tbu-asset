@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Repositories\SSO\OauthTokenRepository;
+use App\Services\SSO\AuthService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,14 +38,15 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct(
-        protected OauthTokenRepository $oauthTokenRepository
+        protected AuthService $authService
     ) {
         $this->middleware('guest')->except('logout');
     }
 
     public function logout(Request $request)
     {
-        $this->oauthTokenRepository->destroy(Auth::user()->id);
+        $this->authService->logout();
+
         $this->guard()->logout();
 
         $request->session()->invalidate();

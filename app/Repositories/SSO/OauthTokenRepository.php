@@ -4,6 +4,7 @@ namespace App\Repositories\SSO;
 
 use App\DataTransferObjects\SSO\TokenDto;
 use App\Models\SSO\OauthToken;
+use Illuminate\Support\Facades\Http;
 
 class OauthTokenRepository
 {

@@ -4,6 +4,7 @@ namespace App\Services\SSO;
 
 use App\DataTransferObjects\API\HRIS\UserData;
 use App\DataTransferObjects\SSO\TokenDto;
+use App\Models\SSO\OauthToken;
 use App\Repositories\SSO\OauthTokenRepository;
 use App\Services\API\HRIS\UserService;
 use Illuminate\Http\Request;
@@ -68,5 +69,15 @@ class AuthService
         $this->oauthTokenRepository->store($tokenDto, $user->getKey());
         Auth::login($user);
         return $user;
+    }
+
+    public function logout()
+    {
+        $oAuthToken = OauthToken::query()->where('user_id', auth()->user()->id)->first();
+        $response = Http::withHeaders([
+            "Accept" => "application/json",
+            "Authorization" => "Bearer " . $oAuthToken->access_token
+        ])->get(config('urls.hris') . 'api/logout');
+        $oAuthToken->delete();
     }
 }
