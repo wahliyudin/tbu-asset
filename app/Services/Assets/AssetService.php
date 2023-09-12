@@ -61,7 +61,7 @@ class AssetService
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['unit', 'subCluster', 'insurance', 'leasing', 'uom'])
+            ->with(['unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom'])
             ->where('kode', $kode)
             ->firstOrFail();
     }

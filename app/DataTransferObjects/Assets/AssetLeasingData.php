@@ -2,9 +2,10 @@
 
 namespace App\DataTransferObjects\Assets;
 
+use App\DataTransferObjects\Masters\DealerData;
+use App\DataTransferObjects\Masters\LeasingData;
 use App\Helpers\Helper;
 use App\Http\Requests\Assets\AssetRequest;
-use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
 class AssetLeasingData extends Data
@@ -16,6 +17,8 @@ class AssetLeasingData extends Data
         public ?string $jangka_waktu_leasing,
         public ?string $biaya_leasing,
         public ?string $legalitas,
+        public ?DealerData $dealer = null,
+        public ?LeasingData $leasing = null,
         public ?string $key = null,
     ) {
     }

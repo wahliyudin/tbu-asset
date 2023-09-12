@@ -2,6 +2,8 @@
 
 namespace App\Models\Assets;
 
+use App\Models\Masters\Dealer;
+use App\Models\Masters\Leasing;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
