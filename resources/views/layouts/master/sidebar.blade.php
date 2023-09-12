@@ -175,6 +175,23 @@
                         </a>
                     </div>
                 @endpermission
+                @permission('asset_register_read')
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('asset-registers.index', 'asset-registers.create') ? 'active' : '' }}"
+                            href="{{ route('asset-registers.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-dropbox fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                    <i class="path3"></i>
+                                    <i class="path4"></i>
+                                    <i class="path5"></i>
+                                </i>
+                            </span>
+                            <span class="menu-title">Asset Register</span>
+                        </a>
+                    </div>
+                @endpermission
                 @permission('asset_request_read')
                     <div class="menu-item">
                         <a class="menu-link {{ request()->routeIs('asset-requests.index', 'asset-requests.create', 'asset-requests.show', 'asset-requests.edit') ? 'active' : '' }}"

@@ -72,6 +72,10 @@ return [
                     'title' => 'ASSET REQUEST',
                     'permissions' => 'c,r,u,d,approv,reject',
                 ],
+                [
+                    'title' => 'ASSET REGISTER',
+                    'permissions' => 'c,r,u',
+                ],
             ]
         ],
         [

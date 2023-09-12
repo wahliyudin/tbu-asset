@@ -6,11 +6,11 @@ var Form = function () {
         $(`.form-asset`).on('click', `.simpan`, function (e) {
             e.preventDefault();
             var postData = new FormData($(`.form-asset`)[0]);
-            var cer = $(this).data('cer');
+            var cerItem = $(this).data('cer-item');
             $(`.simpan`).attr("data-kt-indicator", "on");
             $.ajax({
                 type: 'POST',
-                url: `/asset-requests/${cer}/register`,
+                url: `/asset-registers/${cerItem}/register`,
                 processData: false,
                 contentType: false,
                 data: postData,
@@ -21,7 +21,7 @@ var Form = function () {
                         response.message,
                         'success'
                     ).then(function () {
-                        window.location.href = "/asset-requests";
+                        window.location.href = "/asset-registers";
                     });
                 },
                 error: function (jqXHR, xhr, textStatus, errorThrow, exception) {

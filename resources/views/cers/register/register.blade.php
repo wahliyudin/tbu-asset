@@ -1,23 +1,23 @@
 @extends('layouts.master')
 
-@section('title', 'Register Cer')
+@section('title', 'Register Asset')
 
 @section('toolbar')
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
         <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3 ">
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                    Register Cer
+                    Register Asset
                 </h1>
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('asset-requests.index') }}" class="text-muted text-hover-primary">
-                            Cer </a>
+                        <a href="{{ route('asset-registers.index') }}" class="text-muted text-hover-primary">Register Asset
+                        </a>
                     </li>
                     <li class="breadcrumb-item">
                         <span class="bullet bg-gray-400 w-5px h-2px"></span>
                     </li>
-                    <li class="breadcrumb-item text-muted">Register Cer</li>
+                    <li class="breadcrumb-item text-muted">Register Asset</li>
                 </ul>
             </div>
         </div>
@@ -28,9 +28,10 @@
     <div class="card">
         <div class="card-body">
             <form action="" method="post" class="form-asset">
-                <x-assets.form :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers" :leasings="$leasings" />
+                <x-assets.form :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers" :leasings="$leasings"
+                    :projects="$projects" :uoms="$uoms" />
                 <div class="d-flex justify-content-end">
-                    <button type="button" data-cer="{{ $cer->id }}" class="btn btn-sm btn-primary ps-4 simpan">
+                    <button type="button" data-cer-item="{{ $cerItem->id }}" class="btn btn-sm btn-primary ps-4 simpan">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-save-2 fs-3">
@@ -51,7 +52,7 @@
 
 @push('js')
     <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
-    <script src="{{ asset('assets/js/pages/cer/register.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/cer/register/register.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('input[name="kode"]').val('');
@@ -65,9 +66,12 @@
             $('input[name="quantity"]').val('');
             $('input[name="tgl_bast"]').val('');
             $('input[name="hm"]').val('');
-            $('input[name="pr_number"]').val("{{ isset($cerTxis['prnumber']) ? $cerTxis['prnumber'] : '' }}");
-            $('input[name="po_number"]').val("{{ isset($cerTxis['ponumber']) ? $cerTxis['ponumber'] : '' }}");
-            $('input[name="gr_number"]').val("{{ isset($cerTxis['grnumber']) ? $cerTxis['grnumber'] : '' }}");
+            $('input[name="pr_number"]').val(
+                "{{ isset($cerItemTxis['prnumber']) ? $cerItemTxis['prnumber'] : '' }}");
+            $('input[name="po_number"]').val(
+                "{{ isset($cerItemTxis['ponumber']) ? $cerItemTxis['ponumber'] : '' }}");
+            $('input[name="gr_number"]').val(
+                "{{ isset($cerItemTxis['grnumber']) ? $cerItemTxis['grnumber'] : '' }}");
             $('input[name="remark"]').val('');
             $('select[name="status"]').val('').trigger('change');
 
