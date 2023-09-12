@@ -78,6 +78,9 @@ class CerController extends Controller
             ->editColumn('model', function (Asset $asset) {
                 return $asset->unit?->model;
             })
+            ->editColumn('uom', function (Asset $asset) {
+                return '<span data-id="' . $asset->uom_id . '">' . $asset->uom?->name . '</span>';
+            })
             ->editColumn('est_umur', function (Asset $asset) {
                 return $asset->depreciation?->umur_asset;
             })
@@ -87,7 +90,7 @@ class CerController extends Controller
             ->editColumn('action', function (Asset $asset) {
                 return '<button type="button" data-asset="' . $asset->getKey() . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'uom'])
             ->make();
     }
 

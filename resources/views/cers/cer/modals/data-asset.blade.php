@@ -32,6 +32,7 @@
                                     <th>Kode Asset</th>
                                     <th>Asset Description</th>
                                     <th>Asset Model</th>
+                                    <th>UOM</th>
                                     <th>Umur Asset</th>
                                     <th>Unit Price</th>
                                 </tr>

@@ -6,7 +6,6 @@ var KTModalCersAdd = function () {
     var modalAsset;
     var modalBudget;
     var currentItem;
-    var indexItem = 1;
 
     var initRepeater = () => {
         $('.items').repeater({
@@ -17,6 +16,7 @@ var KTModalCersAdd = function () {
             show: function () {
                 $(this).slideDown();
                 currentItem = this;
+                $(this).find('.qty').val(1);
                 initPluginsAndEventRepeater();
             },
             hide: function (deleteElement) {
@@ -30,9 +30,6 @@ var KTModalCersAdd = function () {
         });
         initPluginsAndEventRepeater();
         currentItem = $('[data-repeater-item]').get(0);
-        if ($($(currentItem).find('.asset-description')).val() != '') {
-            indexItem = 2;
-        }
     }
 
     var initPluginsAndEventRepeater = () => {
@@ -58,6 +55,11 @@ var KTModalCersAdd = function () {
                 $(tr).find('.sub-total').val(subTotal).trigger('input');
                 initTotalRepeater();
             });
+        });
+        $('[data-repeater-list="items"]').on('click', '[btn-asset]', function (e) {
+            e.preventDefault();
+            modalAsset.show();
+            currentItem = $(this).closest('tr');
         });
     }
 
@@ -170,6 +172,10 @@ var KTModalCersAdd = function () {
                 data: 'model',
             },
             {
+                name: 'uom',
+                data: 'uom',
+            },
+            {
                 name: 'est_umur',
                 data: 'est_umur',
             },
@@ -188,19 +194,9 @@ var KTModalCersAdd = function () {
     }
 
     var initActionAsset = () => {
-        $('#data_asset_close').click(function (e) {
-            e.preventDefault();
-            modalAsset.hide();
-            if (indexItem > 1) {
-                $(currentItem).slideUp();
-            }
-        });
         $('.add-item').click(function (e) {
             e.preventDefault();
-            modalAsset.show();
-            if (indexItem > 1) {
-                $('[data-repeater-create]').trigger('click');
-            }
+            $('[data-repeater-create]').trigger('click');
         });
         $('#data-asset_table').on('click', '.select-asset', function (e) {
             e.preventDefault();
@@ -209,7 +205,10 @@ var KTModalCersAdd = function () {
             var arrayTd = parent.querySelectorAll('td');
             populateItem(arrayTd, asset);
             modalAsset.hide();
-            indexItem++;
+        });
+        $('#data_asset_close').click(function (e) {
+            e.preventDefault();
+            modalAsset.hide();
         });
     }
 
@@ -217,8 +216,9 @@ var KTModalCersAdd = function () {
         $($(currentItem).find('.asset')).val(key);
         $($(currentItem).find('.asset-description')).val(arrayTd[2].innerText);
         $($(currentItem).find('.asset-model')).val(arrayTd[3].innerText);
-        $($(currentItem).find('.umur-asset')).val(arrayTd[4].innerText);
-        $($(currentItem).find('.price')).val(arrayTd[5].innerText).trigger('input').trigger('keyup');
+        $($(currentItem).find('select')).val($($(arrayTd[4]).find('span')).data('id'));
+        $($(currentItem).find('.umur-asset')).val(arrayTd[5].innerText);
+        $($(currentItem).find('.price')).val(arrayTd[6].innerText).trigger('input').trigger('keyup');
         initTotalRepeater();
     }
 
