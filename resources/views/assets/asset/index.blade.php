@@ -78,9 +78,16 @@
         </div>
     </div>
     <div style="position: fixed; bottom: 10px; right: 10px; width: 400px; z-index: 99999;" class="notif-progress d-none">
-        <div class="card">
+        <div class="card" style="position: relative;">
+            <span class="btn-close-progress" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
+                <i class="ki-duotone ki-cross-circle fs-1">
+                    <i class="path1"></i>
+                    <i class="path2"></i>
+                </i>
+            </span>
             <div class="card-body">
-                <span id="title">Uploading...</span>
+                <span id="title">Uploading... </span>
+                <span id="desc"></span>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-success notif-progress-line"
                         role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">

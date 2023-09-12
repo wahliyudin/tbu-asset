@@ -4,15 +4,24 @@ namespace App\Jobs\Assets;
 
 use App\DataTransferObjects\Masters\CategoryData;
 use App\DataTransferObjects\Masters\ClusterData;
+use App\DataTransferObjects\Masters\LeasingData;
 use App\DataTransferObjects\Masters\SubClusterData;
 use App\DataTransferObjects\Masters\UnitData;
+use App\Helpers\CarbonHelper;
 use App\Models\Assets\Asset;
+use App\Models\Assets\AssetLeasing;
+use App\Models\Employee;
+use App\Services\Assets\AssetDepreciationService;
+use App\Services\Assets\AssetLeasingService;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
+use App\Services\Masters\DealerService;
+use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
+use App\Services\Masters\UomService;
 use Carbon\Carbon;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -52,38 +61,93 @@ class ImportJob implements ShouldQueue
                 $cluster?->getKey()
             );
             $unit = UnitService::store([
-                'kode' => isset($val['kode']) ? $val['kode'] : null,
-                'model' => isset($val['model']) ? $val['model'] : null,
-                'type' => isset($val['type']) ? $val['type'] : null,
+                'kode' => isset($val['id_unit']) ? $val['id_unit'] : null,
+                'model' => isset($val['unit_model']) ? $val['unit_model'] : null,
+                'type' => isset($val['unit_type']) ? $val['unit_type'] : null,
                 'seri' => isset($val['seri']) ? $val['seri'] : null,
-                'class' => isset($val['class']) ? $val['class'] : null,
+                'class' => isset($val['unit_class']) ? $val['unit_class'] : null,
                 'brand' => isset($val['brand']) ? $val['brand'] : null,
                 'serial_number' => isset($val['serial_number']) ? $val['serial_number'] : null,
-                'spesification' => isset($val['spesification']) ? $val['spesification'] : null,
+                'spesification' => isset($val['detail_spesifikasi']) ? $val['detail_spesifikasi'] : null,
                 'tahun_pembuatan' => isset($val['tahun_pembuatan']) ? $val['tahun_pembuatan'] : null,
+                'kelengkapan_tambahan' => isset($val['kelengkapan_tambahan']) ? $val['kelengkapan_tambahan'] : null,
             ]);
-            $pic = GlobalService::getEmployeeByNamaKaryawan($val['p_i_c']);
-            $results[] =  [
-                'kode' => $val['id_asset_existing'],
+            $uom = (new UomService)->store([
+                'name' => isset($val['uom']) ? $val['uom'] : null,
+            ]);
+            $dealer = (new DealerService)->store([
+                'name' => isset($val['suplier_dealer']) ? $val['suplier_dealer'] : null,
+            ]);
+
+            $leasing = (new LeasingService)->store(LeasingData::from(['name' => isset($val['vendor_leasing']) ? $val['vendor_leasing'] : null]));
+
+            // $pic = GlobalService::getEmployeeByNamaKaryawan($val['pic']);
+            $pic = Employee::query()->where('nama_karyawan', $val['pic'])->first();
+            
+            $asset = AssetService::store([
+                'kode' => isset($val['id_asset_existing']) ? $val['id_asset_existing'] : null,
                 'unit_id' => $unit?->getKey(),
                 'sub_cluster_id' => $subCluster?->getKey(),
-                'member_name' => isset($val['member_name']) ? $val['member_name'] : null,
                 'pic' => $pic?->nik,
-                'activity' => $val['activity'],
+                'activity' => isset($val['activity']) ? $val['activity'] : null,
                 'asset_location' => $pic?->position?->project?->project,
-                'kondisi' => $val['kondisi'],
-                'uom_id' => null,
-                'quantity' => $val['jumlah'],
-                'tgl_bast' => Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d'),
-                'hm' => null,
-                'pr_number' => $val['pr'],
-                'po_number' => $val['po'],
-                'gr_number' => $val['gr'],
-                'remark' => $val['keterangan'],
-                'status' => null,
-            ];
+                'kondisi' => isset($val['kondisi']) ? $val['kondisi'] : null,
+                'uom_id' => $uom->getKey(),
+                'quantity' => isset($val['jumlah']) ? $val['jumlah'] : null,
+                'tgl_bast' => CarbonHelper::convertDate($val['tanggal_bast']),
+                'hm' => isset($val['hours_meter']) ? $val['hours_meter'] : null,
+                'pr_number' => isset($val['pr']) ? $val['pr'] : null,
+                'po_number' => isset($val['po']) ? $val['po'] : null,
+                'gr_number' => isset($val['gr']) ? $val['gr'] : null,
+                'remark' => isset($val['keterangan']) ? $val['keterangan'] : null,
+                'status_asset' => isset($val['status']) ? $val['status'] : null,
+            ]);
+
+            $assetLeasing = AssetLeasingService::store([
+                'asset_id' => $asset->getKey(),
+                'dealer_id' => $dealer->getKey(),
+                'leasing_id' => $leasing->getKey(),
+                'harga_beli' => isset($val['nilai_perolehan']) ? $val['nilai_perolehan'] : null,
+                'jangka_waktu_leasing' => is_int($val['jangka_waktu_leasing']) ? $val['jangka_waktu_leasing'] : null,
+                'tanggal_perolehan' => CarbonHelper::convertDate($val['tanggal_perolehan']),
+                'biaya_leasing' => isset($val['biaya_leasing']) ? $val['biaya_leasing'] : null,
+                'legalitas' => isset($val['legalitas']) ? $val['legalitas'] : null,
+            ]);
+
+            $depresiasi = AssetDepreciationService::store([
+                'asset_id' => $asset->getKey(),
+                'masa_pakai' =>isset($val['masa_pakai']) ? $val['masa_pakai'] : null,
+                'umur_asset' => isset($val['umur_asset']) ? $val['umur_asset'] : null,
+                'umur_pakai' => isset($val['umur_pakai']) ? $val['umur_pakai'] : null,
+                'depresiasi' => isset($val['depresiasi']) ? $val['depresiasi'] : null,
+                'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
+            ]);
+
+            \Log::info(print_r($depresiasi, true));
+
+            // $results[] =  [
+            //     'kode' => $val['id_asset_existing'],
+            //     'unit_id' => $unit?->getKey(),
+            //     'sub_cluster_id' => $subCluster?->getKey(),
+            //     'member_name' => null,
+            //     'pic' => $pic?->nik,
+            //     'activity' => $val['activity'],
+            //     'asset_location' => $pic?->position?->project?->project,
+            //     'kondisi' => $val['kondisi'],
+            //     'uom_id' => null,
+            //     'quantity' => $val['jumlah'],
+            //     'tgl_bast' => Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d'),
+            //     'hm' => $val['hm'],
+            //     'pr_number' => $val['pr'],
+            //     'po_number' => $val['po'],
+            //     'gr_number' => $val['gr'],
+            //     'remark' => $val['keterangan'],
+            //     'status_asset' => $val['status'],
+            // ];
         }
-        Asset::query()->upsert($results, 'id');
+
+        
+        // Asset::query()->upsert($results, 'id');
     }
 
     /**

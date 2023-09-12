@@ -20,6 +20,7 @@ class AssetLeasing extends Model
         'jangka_waktu_leasing',
         'biaya_leasing',
         'legalitas',
+        'tanggal_perolehan'
     ];
 
     public function asset(): BelongsTo

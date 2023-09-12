@@ -32,6 +32,22 @@ class UomService
         });
     }
 
+    public function store(array $data) {
+        if(!isset($data['name'])){
+            return null;
+        }
+
+        $uom = Uom::query()->where('name', $data['name'])->first();
+        if($uom){
+            return $uom;
+        }
+
+        return Uom::query()->create([
+            'name' => $data['name'],
+            'keterangan' => isset($data['keterangan']) ? $data['keterangan'] : null
+        ]);
+    }
+
     public function delete(Uom $uom)
     {
         return DB::transaction(function () use ($uom) {

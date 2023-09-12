@@ -32,6 +32,21 @@ class DealerService
         });
     }
 
+    public function store(array $data) {
+        if(!isset($data['name'])){
+            return null;
+        }
+
+        $dealer = Dealer::query()->where('name', $data['name'])->first();
+        if($dealer){
+            return $dealer;
+        }
+
+        return Dealer::query()->create([
+            'name' => $data['name'],
+        ]);
+    }
+
     public function delete(Dealer $dealer)
     {
         return DB::transaction(function () use ($dealer) {
