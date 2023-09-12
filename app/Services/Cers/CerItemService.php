@@ -12,6 +12,11 @@ class CerItemService
         return CerItem::query()->get();
     }
 
+    public function all(...$columns)
+    {
+        return CerItem::select(array_merge(['id'], $columns))->get();
+    }
+
     public function getCerItemTxis($code)
     {
         $data = (new CerService)->getByCode($code);

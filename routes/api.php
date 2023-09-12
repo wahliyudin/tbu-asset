@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Assets\AssetMasterController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Cers\CerController;
+use App\Http\Controllers\API\Cers\CerItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::post('login', [AuthController::class, 'login']);
 // Route::middleware('auth:sanctum')->group(function () {
 Route::get('cers/list-no-cer', [CerController::class, 'listNoCers']);
 Route::get('cers/{no}/show', [CerController::class, 'show']);
+
+Route::get('cer-items/list-ids', [CerItemController::class, 'listIds']);
 
 Route::get('asset-masters', [AssetMasterController::class, 'index']);
 // });
