@@ -78,6 +78,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'pgsql_hris' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_HRIS', '127.0.0.1'),
+            'port' => env('DB_PORT_HRIS', '5432'),
+            'database' => env('DB_DATABASE_HRIS', 'forge'),
+            'username' => env('DB_USERNAME_HRIS', 'forge'),
+            'password' => env('DB_PASSWORD_HRIS', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
