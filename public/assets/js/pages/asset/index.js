@@ -662,11 +662,13 @@ var AssetsList = function () {
     var initInterval = () => {
         $('.btn-close-progress').click(function (e) {
             e.preventDefault();
-            $('.notif-progress-line').width('0%');
-            $('.notif-progress-line').text('0%');
-            $('.notif-progress').addClass('d-none');
-            localStorage.removeItem('batch_asset');
-            bulkProcess();
+            if (localStorage.getItem('batch_asset')) {
+                $('.notif-progress-line').width('0%');
+                $('.notif-progress-line').text('0%');
+                $('.notif-progress').addClass('d-none');
+                localStorage.removeItem('batch_asset');
+                bulkProcess();
+            }
         });
         setInterval(() => {
             var batch_asset = localStorage.getItem('batch_asset');
