@@ -40,7 +40,10 @@ class CerService
                 $cer->workflows()->delete();
             }
             $cer->items()->createMany($data->itemsToAttach());
-            CerWorkflowService::setModel($cer)->setBarrier($data->grandTotal())->store();
+            // cek site
+            CerWorkflowService::setModel($cer)
+                ->setBarrier($data->grandTotal())
+                ->store();
             $this->sendToElasticsearch($cer, $data->getKey());
             return $cer;
         });

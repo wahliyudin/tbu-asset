@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CerWorkflowService extends Workflow
 {
-    public static function setModel(Cer $cer)
+    public static function setModel(Cer $cer, Module $module = Module::CER_HO)
     {
-        return new self($cer, Module::CER);
+        return new self($cer, $module);
     }
 
     protected function handleStoreWorkflow()
