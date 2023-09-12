@@ -89,6 +89,36 @@ class AssetService
         });
     }
 
+    public static function store(array $data){
+        if(!isset($data['kode'])){
+            return null;
+        }
+
+        $asset= Asset::query()->where('kode', $data['kode'])->first();
+        if($asset){
+            return $asset;
+        }
+
+        return Asset::query()->create([
+            'kode' => $data['kode'],
+            'unit_id' => $data['unit_id'],
+            'sub_cluster_id' => $data['sub_cluster_id'],
+            'pic' => $data['pic'],
+            'activity' => $data['activity'],
+            'asset_location' => $data['asset_location'],
+            'kondisi' => $data['kondisi'],
+            'uom_id' => $data['uom_id'],
+            'quantity' => $data['quantity'],
+            'tgl_bast' => $data['tgl_bast'],
+            'hm' => $data['hm'],
+            'pr_number' => $data['pr_number'],
+            'po_number' => $data['po_number'],
+            'gr_number' => $data['gr_number'],
+            'remark' => $data['remark'],
+            'status_asset' => $data['status_asset'],
+        ]);
+    }
+
     public function delete(Asset $asset)
     {
         return DB::transaction(function () use ($asset) {

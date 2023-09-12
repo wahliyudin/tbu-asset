@@ -660,6 +660,13 @@ var AssetsList = function () {
     }
 
     var initInterval = () => {
+        $('.btn-close-progress').click(function (e) {
+            e.preventDefault();
+            $('.notif-progress-line').width('0%');
+            $('.notif-progress-line').text('0%');
+            $('.notif-progress').addClass('d-none');
+            localStorage.removeItem('batch_asset');
+        });
         setInterval(() => {
             var batch_asset = localStorage.getItem('batch_asset');
             if (batch_asset) {
@@ -686,18 +693,19 @@ var AssetsList = function () {
                                 bulkProcess();
                             }
                         }
-                        if (response.failedJobs > 0) {
-                            $('.notif-progress-line').width('0%');
-                            $('.notif-progress-line').text('0%');
-                            datatable.ajax.reload();
-                            $('.notif-progress').addClass('d-none');
-                            localStorage.removeItem('batch_asset');
-                            toastr.options.closeButton = true;
-                            toastr.options.timeOut = 1000000;
-                            toastr.options.extendedTimeOut = 1000000;
-                            var message = "Jumlah Job gagal: " + response.failedJobs + "<br> Jumlah Job sukses: " + response.processedJobs + "<br> dari " + response.totalJobs + " Job";
-                            toastr.error(message, 'Gagal!');
-                        }
+                        // if (response.failedJobs > 0) {
+                        // $('.notif-progress-line').width('0%');
+                        // $('.notif-progress-line').text('0%');
+                        // datatable.ajax.reload();
+                        // $('.notif-progress').addClass('d-none');
+                        // localStorage.removeItem('batch_asset');
+                        // toastr.options.closeButton = true;
+                        // toastr.options.timeOut = 1000000;
+                        // toastr.options.extendedTimeOut = 1000000;
+                        // var message = "Jumlah Job gagal: " + response.failedJobs + "<br> Jumlah Job sukses: " + response.processedJobs + "<br> dari " + response.totalJobs + " Job";
+                        // toastr.error(message, 'Gagal!');
+                        // }
+                        $('.notif-progress #desc').text(`Success: ${response.processedJobs}, Failed: ${response.failedJobs}, From: ${response.totalJobs}`);
                     })
                     .catch(function (error) {
                         handleError(error);

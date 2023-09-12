@@ -22,6 +22,7 @@ class Asset extends Model implements ElasticsearchInterface
 
     protected $fillable = [
         'kode',
+        'new_id_asset',
         'unit_id',
         'sub_cluster_id',
         'pic',
@@ -38,6 +39,7 @@ class Asset extends Model implements ElasticsearchInterface
         'remark',
         'qr_code',
         'status',
+        'status_asset',
     ];
 
     protected $casts = [

@@ -11,6 +11,7 @@ class Depreciation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'asset_id',
         'masa_pakai',
         'umur_asset',
         'umur_pakai',

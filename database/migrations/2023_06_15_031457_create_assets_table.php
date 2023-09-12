@@ -17,9 +17,9 @@ return new class extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             $table->string('kode')->nullable();
+            $table->string('new_id_asset')->nullable();
             $table->foreignIdFor(Unit::class)->nullable();
             $table->foreignIdFor(SubCluster::class)->nullable();
-            $table->string('member_name')->nullable();
             $table->unsignedBigInteger('pic')->nullable();
             $table->string('activity')->nullable();
             $table->string('asset_location')->nullable();
@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('remark')->nullable();
             $table->string('qr_code')->nullable();
             $table->string('status')->nullable();
+            $table->string('status_asset')->nullable();
             $table->timestamps();
         });
     }

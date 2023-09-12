@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('brand')->nullable();
             $table->string('serial_number')->nullable();
             $table->string('spesification')->nullable();
+            $table->string('kelengkapan_tambahan')->nullable();
             $table->year('tahun_pembuatan')->nullable();
             $table->timestamps();
         });

@@ -22,6 +22,7 @@ class Unit extends Model implements ElasticsearchInterface
         'serial_number',
         'spesification',
         'tahun_pembuatan',
+        'kelengkapan_tambahan',
     ];
 
     public function indexName(): string

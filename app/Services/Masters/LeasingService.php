@@ -32,12 +32,27 @@ class LeasingService
         });
     }
 
-    public static function store(LeasingData $data)
-    {
+    public function store(LeasingData $data) {
+        if(!isset($data->name)){
+            return null;
+        }
+        $leasing = Leasing::query()->where('name', $data->name)->first();
+        if($leasing){
+            return $leasing;
+        }
+
         return Leasing::query()->create([
             'name' => $data->name,
         ]);
+        
     }
+
+    // public static function store(LeasingData $data)
+    // {
+    //     return Leasing::query()->create([
+    //         'name' => $data->name,
+    //     ]);
+    // }
 
     public function delete(Leasing $leasing)
     {
