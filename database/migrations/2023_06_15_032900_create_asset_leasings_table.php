@@ -19,10 +19,11 @@ return new class extends Migration
             $table->foreignIdFor(Asset::class);
             $table->foreignIdFor(Dealer::class);
             $table->foreignIdFor(Leasing::class);
-            $table->bigInteger('harga_beli');
-            $table->integer('jangka_waktu_leasing');
-            $table->bigInteger('biaya_leasing');
-            $table->string('legalitas');
+            $table->bigInteger('harga_beli')->nullable();
+            $table->integer('jangka_waktu_leasing')->nullable();
+            $table->bigInteger('biaya_leasing')->nullable();
+            $table->string('legalitas')->nullable();
+            $table->date('tanggal_perolehan')->nullable();
             $table->timestamps();
         });
     }
