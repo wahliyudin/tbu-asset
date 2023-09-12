@@ -50,17 +50,17 @@ class DatabaseSeeder extends Seeder
             UomSeeder::class,
             ApprovalSeeder::class,
         ]);
-        // Catalog::factory(10)->create();
-        // Dealer::factory(10)->create();
-        // Leasing::factory(10)->create();
-        // Category::factory(2)->create();
-        // Cluster::factory(10)->create();
-        // SubCluster::factory(10)->create();
-        // SubClusterItem::factory(10)->create();
-        // Unit::factory(10)->create();
-        // Asset::factory(50)->create();
-        // AssetLeasing::factory(10)->create();
-        // AssetInsurance::factory(10)->create();
+        Catalog::factory(10)->create();
+        Dealer::factory(10)->create();
+        Leasing::factory(10)->create();
+        Category::factory(2)->create();
+        Cluster::factory(10)->create();
+        SubCluster::factory(10)->create();
+        SubClusterItem::factory(10)->create();
+        Unit::factory(10)->create();
+        Asset::factory(50)->create();
+        AssetLeasing::factory(10)->create();
+        AssetInsurance::factory(10)->create();
 
         $user = User::query()->create([
             'nik' => 12345678,
@@ -70,16 +70,16 @@ class DatabaseSeeder extends Seeder
         ]);
         $user->permissions()->sync(Permission::query()->pluck('id')->toArray());
 
-        // $this->call([
-        //     AssetSeeder::class,
-        //     CategorySeeder::class,
-        //     ClusterSeeder::class,
-        //     SubClusterSeeder::class,
-        //     SubClusterItemSeeder::class,
-        //     CatalogSeeder::class,
-        //     DealerSeeder::class,
-        //     LeasingSeeder::class,
-        //     UnitSeeder::class,
-        // ]);
+        $this->call([
+            AssetSeeder::class,
+            CategorySeeder::class,
+            ClusterSeeder::class,
+            SubClusterSeeder::class,
+            SubClusterItemSeeder::class,
+            CatalogSeeder::class,
+            DealerSeeder::class,
+            LeasingSeeder::class,
+            UnitSeeder::class,
+        ]);
     }
 }

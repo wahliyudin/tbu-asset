@@ -666,9 +666,16 @@ var AssetsList = function () {
             $('.notif-progress-line').text('0%');
             $('.notif-progress').addClass('d-none');
             localStorage.removeItem('batch_asset');
+            bulkProcess();
         });
         setInterval(() => {
             var batch_asset = localStorage.getItem('batch_asset');
+            var batch_asset_success = localStorage.getItem('batch_asset_success');
+            var batch_asset_failed = localStorage.getItem('batch_asset_failed');
+            var batch_asset_total = localStorage.getItem('batch_asset_total');
+            var total = batch_asset_failed + batch_asset_success;
+
+
             if (batch_asset) {
                 if ($('.notif-progress').hasClass('d-none')) {
                     $('.notif-progress').removeClass('d-none');
@@ -688,11 +695,15 @@ var AssetsList = function () {
                             toastr.options.extendedTimeOut = 1000000;
                             toastr.success(localStorage.getItem('message_asset'), 'Completed!');
 
-                            if (localStorage.getItem('is_bulk') == 0 && !localStorage.getItem('batch_asset')) {
+                            if (localStorage.getItem('is_bulk') == 0 && total == batch_asset_total) {
                                 localStorage.setItem('is_bulk', 1);
                                 bulkProcess();
                             }
                         }
+                        localStorage.setItem('batch_asset_success', response.processedJobs);
+                        localStorage.setItem('batch_asset_failed', response.failedJobs);
+                        localStorage.setItem('batch_asset_total', response.totalJobs);
+
                         // if (response.failedJobs > 0) {
                         // $('.notif-progress-line').width('0%');
                         // $('.notif-progress-line').text('0%');

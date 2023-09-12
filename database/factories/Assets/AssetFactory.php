@@ -27,7 +27,7 @@ class AssetFactory extends Factory
             'kode' => fake()->unique()->sentence(1),
             'unit_id' => Unit::factory(),
             'sub_cluster_id' => SubCluster::factory(),
-            'member_name' => fake()->sentence(1),
+            // 'member_name' => fake()->sentence(1),
             'pic' => fake()->numberBetween(1000, 9999),
             'activity' => fake()->sentence(1),
             'asset_location' => fake()->numberBetween(1000, 9999),
