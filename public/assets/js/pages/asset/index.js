@@ -663,26 +663,27 @@ var AssetsList = function () {
         $('.btn-close-progress').click(function (e) {
             e.preventDefault();
             if (localStorage.getItem('batch_asset')) {
-                $('.notif-progress-line').width('0%');
-                $('.notif-progress-line').text('0%');
-                $('.notif-progress').addClass('d-none');
-                localStorage.removeItem('batch_asset');
                 bulkProcess();
             }
+            $('.notif-progress-line').width('0%');
+            $('.notif-progress-line').text('0%');
+            $('.notif-progress').addClass('d-none');
+            localStorage.removeItem('batch_asset');
         });
         setInterval(() => {
             var batch_asset = localStorage.getItem('batch_asset');
+            var batch_asset_bulk = localStorage.getItem('batch_asset_bulk');
             var batch_asset_success = localStorage.getItem('batch_asset_success');
             var batch_asset_failed = localStorage.getItem('batch_asset_failed');
             var batch_asset_total = localStorage.getItem('batch_asset_total');
             var total = batch_asset_failed + batch_asset_success;
 
 
-            if (batch_asset) {
+            if (batch_asset || batch_asset_bulk) {
                 if ($('.notif-progress').hasClass('d-none')) {
                     $('.notif-progress').removeClass('d-none');
                 }
-                fetchBatch(batch_asset)
+                fetchBatch(batch_asset ?? batch_asset_bulk)
                     .then(function (response) {
                         $('.notif-progress-line').width(response.progress + '%');
                         $('.notif-progress-line').text(response.progress + '%');
@@ -766,7 +767,7 @@ var AssetsList = function () {
         fetchBulk()
             .then(function (response) {
                 $('.notif-progress #title').text('Synchronize...');
-                localStorage.setItem('batch_asset', response.id);
+                localStorage.setItem('batch_asset_bulk', response.id);
                 localStorage.setItem('message_asset', "Successfully synchronize");
             })
             .catch(function (error) {
