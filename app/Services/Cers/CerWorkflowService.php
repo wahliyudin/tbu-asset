@@ -6,14 +6,16 @@ use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Workflows\Module;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
+use App\Helpers\ProjectHelper;
 use App\Models\Cers\Cer;
 use App\Services\Workflows\Workflow;
 use Illuminate\Database\Eloquent\Model;
 
 class CerWorkflowService extends Workflow
 {
-    public static function setModel(Cer $cer, Module $module = Module::CER_HO)
+    public static function setModel(Cer $cer)
     {
+        $module = ProjectHelper::hasHeadOffice($cer->employee?->position?->project) ? Module::CER_HO : Module::CER_SITE;
         return new self($cer, $module);
     }
 

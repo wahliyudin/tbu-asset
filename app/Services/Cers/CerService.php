@@ -40,7 +40,6 @@ class CerService
                 $cer->workflows()->delete();
             }
             $cer->items()->createMany($data->itemsToAttach());
-            // cek site
             CerWorkflowService::setModel($cer)
                 ->setBarrier($data->grandTotal())
                 ->store();
