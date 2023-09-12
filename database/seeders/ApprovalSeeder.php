@@ -17,13 +17,13 @@ class ApprovalSeeder extends Seeder
     {
         $appravols = [
             [
-                'module' => Module::CER,
+                'module' => Module::CER_HO,
                 'approval' => Approval::DEPARTMENT_HEAD,
                 'nik' => null,
                 'title' => 'Approved',
             ],
             [
-                'module' => Module::CER,
+                'module' => Module::CER_HO,
                 'approval' => Approval::DIRECTOR,
                 'nik' => null,
                 'title' => 'Approved',
