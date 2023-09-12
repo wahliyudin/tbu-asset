@@ -5,6 +5,7 @@ use App\Http\Controllers\Approval\ApprovalDisposeController;
 use App\Http\Controllers\Approval\ApprovalTransferController;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
+use App\Http\Controllers\Cers\RegisterController;
 use App\Http\Controllers\Disposes\DisposeController;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\HomeController;
@@ -125,8 +126,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('asset-requests/{cer}/show', [CerController::class, 'show'])->name('asset-requests.show')->middleware('permission:asset_request_read');
     Route::get('asset-requests/{cer}/edit', [CerController::class, 'edit'])->name('asset-requests.edit')->middleware('permission:asset_request_update');
     Route::delete('asset-requests/{cer}/destroy', [CerController::class, 'destroy'])->name('asset-requests.destroy')->middleware('permission:asset_request_delete');
-    Route::get('asset-requests/{cer}/register', [CerController::class, 'register'])->name('asset-requests.register');
-    Route::post('asset-requests/{cer}/register', [CerController::class, 'storeRegister'])->name('asset-requests.store-register');
+
+    Route::get('asset-registers', [RegisterController::class, 'index'])->name('asset-registers.index');
+    Route::post('asset-registers/datatable', [RegisterController::class, 'datatable'])->name('asset-registers.datatable');
+    Route::get('asset-registers/{cerItem}/register', [RegisterController::class, 'create'])->name('asset-registers.create');
+    Route::post('asset-registers/{cerItem}/register', [RegisterController::class, 'store'])->name('asset-registers.store');
 
     Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index')->middleware('permission:asset_transfer_read');
     Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable')->middleware('permission:asset_transfer_read');

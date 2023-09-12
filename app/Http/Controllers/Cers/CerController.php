@@ -8,18 +8,12 @@ use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Assets\Asset;
 use App\Models\Cers\Cer;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
 use App\Services\Cers\CerService;
-use App\Services\GlobalService;
-use App\Services\Masters\DealerService;
-use App\Services\Masters\LeasingService;
-use App\Services\Masters\SubClusterService;
-use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -148,34 +142,6 @@ class CerController extends Controller
             $this->service->delete($cer);
             return response()->json([
                 'message' => 'Berhasil dihapus'
-            ]);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
-
-    public function register(Cer $cer)
-    {
-        $cer->loadMissing(['items.uom', 'workflows']);
-        $data = CerData::from($cer);
-        $cerTxis = $this->service->getCerTxis('');
-        return view('cers.cer.register', [
-            'cer' => $data,
-            'cerTxis' => $cerTxis,
-            'units' => UnitService::dataForSelect(),
-            'subClusters' => SubClusterService::dataForSelect(),
-            'dealers' => DealerService::dataForSelect(),
-            'leasings' => LeasingService::dataForSelect(),
-            'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection()
-        ]);
-    }
-
-    public function storeRegister(Cer $cer, AssetRequest $request)
-    {
-        try {
-            $this->assetService->updateOrCreate($request);
-            return response()->json([
-                'message' => "Berhasil diregister"
             ]);
         } catch (\Throwable $th) {
             throw $th;

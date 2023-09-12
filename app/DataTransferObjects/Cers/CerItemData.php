@@ -15,6 +15,7 @@ class CerItemData extends Data
         public ?int $price,
         public ?string $uom_id,
         public ?string $key = null,
+        public ?string $id = null,
         public ?UomData $uom,
     ) {
     }
