@@ -660,11 +660,13 @@ var AssetsList = function () {
     }
 
     var initInterval = () => {
+        $('.btn-sync-progress').click(function (e) {
+            e.preventDefault();
+            localStorage.removeItem('batch_asset');
+            bulkProcess();
+        });
         $('.btn-close-progress').click(function (e) {
             e.preventDefault();
-            if (localStorage.getItem('batch_asset')) {
-                bulkProcess();
-            }
             $('.notif-progress-line').width('0%');
             $('.notif-progress-line').text('0%');
             $('.notif-progress').addClass('d-none');
@@ -674,15 +676,20 @@ var AssetsList = function () {
         setInterval(() => {
             var batch_asset = localStorage.getItem('batch_asset');
             var batch_asset_bulk = localStorage.getItem('batch_asset_bulk');
-            var batch_asset_success = localStorage.getItem('batch_asset_success');
-            var batch_asset_failed = localStorage.getItem('batch_asset_failed');
-            var batch_asset_total = localStorage.getItem('batch_asset_total');
+            var batch_asset_success = parseInt(localStorage.getItem('batch_asset_success'));
+            var batch_asset_failed = parseInt(localStorage.getItem('batch_asset_failed'));
+            var batch_asset_total = parseInt(localStorage.getItem('batch_asset_total'));
             var total = batch_asset_failed + batch_asset_success;
-
 
             if (batch_asset || batch_asset_bulk) {
                 if ($('.notif-progress').hasClass('d-none')) {
                     $('.notif-progress').removeClass('d-none');
+                }
+                if (batch_asset_bulk && !batch_asset) {
+                    $('.btn-sync-progress').attr('disabled', true);
+                }
+                if (!batch_asset_bulk && batch_asset && total == batch_asset_total) {
+                    $('.btn-sync-progress').attr('disabled', false);
                 }
                 fetchBatch(batch_asset ?? batch_asset_bulk)
                     .then(function (response) {
@@ -698,12 +705,8 @@ var AssetsList = function () {
                             toastr.options.timeOut = 1000000;
                             toastr.options.extendedTimeOut = 1000000;
                             toastr.success(localStorage.getItem('message_asset'), 'Completed!');
-
-                            if (localStorage.getItem('is_bulk') == 0 && total == batch_asset_total) {
-                                localStorage.setItem('is_bulk', 1);
-                                bulkProcess();
-                            }
                         }
+
                         localStorage.setItem('batch_asset_success', response.processedJobs);
                         localStorage.setItem('batch_asset_failed', response.failedJobs);
                         localStorage.setItem('batch_asset_total', response.totalJobs);

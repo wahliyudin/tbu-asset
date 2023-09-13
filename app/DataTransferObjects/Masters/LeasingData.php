@@ -9,8 +9,7 @@ use Spatie\LaravelData\Data;
 class LeasingData extends Data implements DataInterface
 {
     public function __construct(
-        #[Required]
-        public string $name,
+        public ?string $name,
         public ?string $key = null,
         public ?string $id = null,
     ) {
