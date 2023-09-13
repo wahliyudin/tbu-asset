@@ -24,6 +24,7 @@ class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
         'no_cer',
         'nik',
         'type_budget',
+        'department_id',
         'budget_ref',
         'peruntukan',
         'tgl_kebutuhan',

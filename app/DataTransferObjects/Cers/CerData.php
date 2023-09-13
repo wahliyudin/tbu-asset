@@ -27,6 +27,7 @@ class CerData extends Data implements DataInterface
         public TypeBudget|null $type_budget = null,
         public ?string $budget_ref = null,
         public Peruntukan|null $peruntukan = null,
+        public ?string $department_id = null,
         public ?string $tgl_kebutuhan = null,
         public ?string $justifikasi = null,
         public SumberPendanaan|null $sumber_pendanaan = null,

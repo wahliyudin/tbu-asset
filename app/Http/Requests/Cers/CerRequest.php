@@ -17,6 +17,7 @@ class CerRequest extends FormRequest
         $rules = [
             'peruntukan' => ['required'],
             'type_budget' => ['required'],
+            'department_id' => ['required'],
             'tgl_kebutuhan' => ['required'],
             'justifikasi' => ['required'],
             'items' => ['array'],

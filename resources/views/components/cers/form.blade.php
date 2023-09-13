@@ -18,10 +18,25 @@
                     <tr>
                         <td class="fs-6 fw-semibold w-150px">Department</td>
                         <td>:</td>
-                        <td>
+                        <td class="department">
                             <input type="hidden" name="deptcode"
                                 value="{{ $employee?->position?->department?->budget_dept_code }}">
-                            {{ $employee?->position?->department?->department_name }}
+                            @if ($isPJO)
+                                <select class="form-select form-select" @disabled($type == 'show')
+                                    name="department_id" data-control="select2" data-placeholder="Department"
+                                    data-dropdown-parent=".department">
+                                    <option selected disabled value="">- pilih -</option>
+                                    @foreach ($departments as $department)
+                                        <option @selected($cer?->department_id == $department->dept_id) value="{{ $department->dept_id }}">
+                                            {{ $department->department_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @else
+                                <input type="hidden" name="department_id"
+                                    value="{{ $employee?->position?->department?->dept_id }}">
+                                {{ $employee?->position?->department?->department_name }}
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -160,7 +175,8 @@
             <div class="col-md-4 d-flex justify-content-between align-items-start">
                 <h5>5. Badget</h5>
                 @if ($type != 'show')
-                    <button type="button" class="btn btn-sm btn-primary ps-3 pe-2 search-budget">
+                    <button type="button" @disabled($cer?->type_budget == \App\Enums\Cers\TypeBudget::UNBUDGET)
+                        class="btn btn-sm btn-primary ps-3 pe-2 search-budget">
                         <i class="ki-duotone ki-search-list fs-2">
                             <i class="path1"></i>
                             <i class="path2"></i>
