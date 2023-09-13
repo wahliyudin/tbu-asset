@@ -171,11 +171,11 @@
                 <x-cers.sumber-pendanaan :cer="$cer" :type="$type" />
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="row mt-4 budget">
             <div class="col-md-4 d-flex justify-content-between align-items-start">
                 <h5>5. Badget</h5>
                 @if ($type != 'show')
-                    <button type="button" @disabled($cer?->type_budget == \App\Enums\Cers\TypeBudget::UNBUDGET)
+                    <button type="button" @disabled(\App\Helpers\Helper::hasUnBudgeted($cer))
                         class="btn btn-sm btn-primary ps-3 pe-2 search-budget">
                         <i class="ki-duotone ki-search-list fs-2">
                             <i class="path1"></i>
@@ -191,7 +191,8 @@
                         <tr>
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Ref No</td>
                             <td class="w-250px">
-                                <input type="text" class="form-control" readonly value="{{ $cer?->budget_ref }}"
+                                <input type="text" class="form-control" readonly
+                                    value="{{ \App\Helpers\Helper::hasBudgeted($cer) ? $cer?->budget_ref : null }}"
                                     name="budget_ref">
                             </td>
                         </tr>
@@ -200,7 +201,8 @@
                             </td>
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
-                                    value="{{ $cer?->budget?->periode }}" name="budget_periode">
+                                    value="{{ \App\Helpers\Helper::hasBudgeted($cer) ? $cer?->budget?->periode : null }}"
+                                    name="budget_periode">
                             </td>
                         </tr>
                     </tbody>
@@ -213,7 +215,7 @@
                             <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
-                                    value="{{ \App\Helpers\Helper::formatRupiah($cer?->budget?->total) }}"
+                                    value="{{ \App\Helpers\Helper::hasBudgeted($cer) ? \App\Helpers\Helper::formatRupiah($cer?->budget?->total) : null }}"
                                     name="total_budget_idr">
                             </td>
                         </tr>
@@ -228,8 +230,70 @@
                 </table>
             </div>
         </div>
+        <div class="row justify-content-end mt-4 unbudget d-none">
+            <div class="col-md-4 d-flex justify-content-between align-items-start">
+                <h5>5. Unbudget</h5>
+                @if ($type != 'show')
+                    <button type="button" @disabled(\App\Helpers\Helper::hasBudgeted($cer))
+                        class="btn btn-sm btn-primary ps-3 pe-2 search-unbudget">
+                        <i class="ki-duotone ki-search-list fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                            <i class="path3"></i>
+                        </i>
+                    </button>
+                @endif
+            </div>
+            <div class="col-md-4">
+                <table class="table table-bordered w-100 border-gray-300">
+                    <tbody>
+                        <tr>
+                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Ref No</td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control unbudget_ref" readonly
+                                    value="{{ \App\Helpers\Helper::hasUnBudgeted($cer) ? $cer?->budget_ref : null }}"
+                                    name="budget_ref">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">Periode (tahun)
+                            </td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control unbudget_periode" readonly
+                                    value="{{ \App\Helpers\Helper::hasUnBudgeted($cer) ? $cer?->budget?->periode : null }}"
+                                    name="budget_periode">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-4 pe-0">
+                <table class="table table-bordered w-100 border-gray-300">
+                    <tbody>
+                        <tr>
+                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control total_unbudget_idr" readonly
+                                    value="{{ \App\Helpers\Helper::hasUnBudgeted($cer) ? \App\Helpers\Helper::formatRupiah($cer?->budget?->total) : null }}"
+                                    name="total_budget_idr">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">USD
+                            </td>
+                            <td class="w-250px">
+                                <input type="text" class="form-control" readonly name="total_budget_usd">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <input type="file" class="form-control" readonly name="file_ucr" placeholder="File UCR">
+            </div>
+        </div>
         <div class="d-flex flex-column mt-4">
-            <h5>6. Cost & Benefit Analyst</h5>
+            <h5>7. Cost & Benefit Analyst</h5>
             <textarea name="cost_analyst" @readonly($type == 'show') class="form-control ms-4">{{ isset($cer?->cost_analyst) ? $cer?->cost_analyst : '' }}</textarea>
         </div>
     </div>
@@ -292,12 +356,11 @@
                 $('input[name="type_budget"]').change(function(e) {
                     e.preventDefault();
                     if ($(this).val() == '{{ \App\Enums\Cers\TypeBudget::BUDGET }}') {
-                        $('.search-budget').attr('disabled', false);
+                        $('.unbudget').addClass('d-none');
+                        $('.budget').removeClass('d-none');
                     } else {
-                        $('.search-budget').attr('disabled', true);
-                        $('input[name="budget_ref"]').val('');
-                        $('input[name="budget_periode"]').val('');
-                        $('input[name="total_budget_idr"]').val('');
+                        $('.budget').addClass('d-none');
+                        $('.unbudget').removeClass('d-none');
                     }
                 });
 

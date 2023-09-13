@@ -24,9 +24,10 @@ class CerRequest extends FormRequest
             'sumber_pendanaan' => ['required'],
             'budget_ref' => ['nullable'],
             'cost_analyst' => ['required'],
+            'budget_ref' => ['required'],
         ];
-        if (request()->type_budget == TypeBudget::BUDGET->value) {
-            $rules['budget_ref'] = ['required'];
+        if (request()->type_budget == TypeBudget::UNBUDGET->value) {
+            $rules['file_ucr'] = ['required'];
         }
         foreach (request()->get('items') ?? [] as $key => $value) {
             $rules['items.' . $key . '.description'] = ['required', 'string'];
