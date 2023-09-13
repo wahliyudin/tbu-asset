@@ -15,6 +15,7 @@ class AssetLeasing extends Model
     protected $fillable = [
         'asset_id',
         'dealer_id',
+        'suplier_dealer',
         'leasing_id',
         'harga_beli',
         'jangka_waktu_leasing',

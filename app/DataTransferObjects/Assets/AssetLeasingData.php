@@ -12,12 +12,12 @@ class AssetLeasingData extends Data
 {
     public function __construct(
         public ?string $dealer_id,
+        public ?string $suplier_dealer,
         public ?string $leasing_id,
         public ?string $harga_beli,
         public ?string $jangka_waktu_leasing,
         public ?string $biaya_leasing,
         public ?string $legalitas,
-        public ?DealerData $dealer = null,
         public ?LeasingData $leasing = null,
         public ?string $key = null,
     ) {
@@ -27,6 +27,7 @@ class AssetLeasingData extends Data
     {
         return new self(
             $request->get('dealer_id_leasing'),
+            $request->get('suplier_dealer_leasing'),
             $request->get('leasing_id_leasing'),
             $request->get('harga_beli_leasing'),
             $request->get('jangka_waktu_leasing'),

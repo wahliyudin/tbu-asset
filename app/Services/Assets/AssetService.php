@@ -80,6 +80,10 @@ class AssetService
     public function updateOrCreate(AssetRequest $request)
     {
         $qrCode = AssetService::generateQRCode($request->kode, 250, filename: time() . $request->kode . '.png');
+        if ($key = $request->key) {
+            $asset = Asset::query()->select(['id', 'qr_code'])->find($key);
+            Storage::disk('public')->delete($asset->qr_code);
+        }
         $data = AssetData::from(array_merge($request->all(), ['qr_code' => $qrCode]));
         DB::transaction(function () use ($data, $request) {
             $asset = $this->assetRepository->updateOrCreate($data);
@@ -89,13 +93,14 @@ class AssetService
         });
     }
 
-    public static function store(array $data){
-        if(!isset($data['kode'])){
+    public static function store(array $data)
+    {
+        if (!isset($data['kode'])) {
             return null;
         }
 
-        $asset= Asset::query()->where('kode', $data['kode'])->first();
-        if($asset){
+        $asset = Asset::query()->where('kode', $data['kode'])->first();
+        if ($asset) {
             return $asset;
         }
 
