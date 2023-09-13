@@ -148,7 +148,7 @@
                                         <label class="col-lg-4 fw-semibold text-muted">Tanggal Bast</label>
                                         <div class="col-lg-7">
                                             <span
-                                                class="fw-bold fs-6 text-gray-800">{{ \Carbon\Carbon::make($asset->tgl_bast)->format('d F Y') ?? '-' }}</span>
+                                                class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\CarbonHelper::convertDate($asset->tgl_bast, 'd F Y') ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
