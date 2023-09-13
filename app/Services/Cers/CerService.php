@@ -48,10 +48,6 @@ class CerService
         });
     }
 
-    public function storeFile()
-    {
-    }
-
     public function delete(Cer $cer)
     {
         return DB::transaction(function () use ($cer) {

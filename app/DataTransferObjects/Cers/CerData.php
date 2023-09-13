@@ -11,9 +11,12 @@ use App\Enums\Cers\TypeBudget;
 use App\Enums\Workflows\Status;
 use App\Helpers\Helper;
 use App\Interfaces\DataInterface;
+use App\Models\Cers\Cer;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\GlobalService;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\DataCollection;
@@ -33,6 +36,7 @@ class CerData extends Data implements DataInterface
         public SumberPendanaan|null $sumber_pendanaan = null,
         public ?string $cost_analyst = null,
         public ?string $deptcode = null,
+        public ?string $file_ucr = null,
         public ?Status $status = null,
         public ?string $id = null,
         #[DataCollectionOf(CerItemData::class)]
@@ -59,6 +63,11 @@ class CerData extends Data implements DataInterface
         }
     }
 
+    public function generateNo()
+    {
+        return Str::random();
+    }
+
     public static function fromRequest(Request $request)
     {
         $items = [];
@@ -72,8 +81,30 @@ class CerData extends Data implements DataInterface
                 'uom_id' => $request->items[$i]['uom_id'],
             ];
         }
+        if ($id = $request->id) {
+            $cer = Cer::query()->find($id);
+            Storage::disk('public')->delete($cer->file_ucr);
+        }
 
-        return self::from(array_merge($request->toArray(), ['items' => $items, 'status' => Status::OPEN]));
+        $noCer = self::generateNo();
+        $file_ucr = self::storeFile($request->file('file_ucr'), $noCer);
+        return self::from(array_merge($request->toArray(), [
+            'items' => $items,
+            'file_ucr' => $file_ucr,
+            'no_cer' => $noCer,
+            'status' => Status::OPEN
+        ]));
+    }
+
+    public function storeFile(?UploadedFile $uploadedFile, $noCer)
+    {
+        if (!$uploadedFile) {
+            return null;
+        }
+        $folder = 'cers';
+        $fileName = $noCer . '-' . time() . '.' . $uploadedFile->getClientOriginalExtension();
+        $uploadedFile->storeAs("public/$folder", $fileName);
+        return $folder . '/' . $fileName;
     }
 
     public function itemsToAttach(): array

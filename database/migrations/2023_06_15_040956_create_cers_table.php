@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('justifikasi');
             $table->string('sumber_pendanaan');
             $table->string('cost_analyst');
+            $table->string('file_ucr')->nullable();
             $table->string('status')->default('open');
             $table->timestamps();
         });
