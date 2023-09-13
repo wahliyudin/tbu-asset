@@ -669,6 +669,7 @@ var AssetsList = function () {
             $('.notif-progress-line').text('0%');
             $('.notif-progress').addClass('d-none');
             localStorage.removeItem('batch_asset');
+            localStorage.removeItem('batch_asset_bulk');
         });
         setInterval(() => {
             var batch_asset = localStorage.getItem('batch_asset');
