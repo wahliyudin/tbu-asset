@@ -20,6 +20,7 @@ class AssetLeasingRepository
             'jangka_waktu_leasing' => $data->jangka_waktu_leasing,
             'biaya_leasing' => $data->biayaToInt(),
             'legalitas' => $data->legalitas,
+            'tanggal_perolehan' => $data->tanggal_perolehan,
         ]);
     }
 

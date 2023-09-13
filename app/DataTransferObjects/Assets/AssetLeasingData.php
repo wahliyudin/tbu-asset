@@ -18,6 +18,7 @@ class AssetLeasingData extends Data
         public ?string $jangka_waktu_leasing,
         public ?string $biaya_leasing,
         public ?string $legalitas,
+        public ?string $tanggal_perolehan,
         public ?LeasingData $leasing = null,
         public ?string $key = null,
     ) {
@@ -33,6 +34,7 @@ class AssetLeasingData extends Data
             $request->get('jangka_waktu_leasing'),
             $request->get('biaya_leasing'),
             $request->get('legalitas_leasing'),
+            $request->get('tanggal_perolehan_leasing'),
         );
     }
 

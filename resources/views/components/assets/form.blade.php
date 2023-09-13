@@ -189,6 +189,11 @@
                         <input type="text" class="form-control form-control-solid" placeholder="Legalitas"
                             name="legalitas_leasing" />
                     </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Tanggal Perolehan</label>
+                        <input class="form-control form-control-solid" placeholder="Tanggal Perolehan"
+                            name="tanggal_perolehan_leasing" id="tanggal_perolehan_leasing" />
+                    </div>
                 </div>
             </div>
         </div>
