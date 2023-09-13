@@ -7,9 +7,11 @@ use App\Enums\Asset\Status;
 use App\Models\Assets\AssetInsurance;
 use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
+use App\Models\Department;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Models\Masters\Uom;
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,6 +30,7 @@ class Asset extends Model implements ElasticsearchInterface
         'pic',
         'activity',
         'asset_location',
+        'dept_id',
         'kondisi',
         'uom_id',
         'quantity',
@@ -84,5 +87,15 @@ class Asset extends Model implements ElasticsearchInterface
     public function uom()
     {
         return $this->belongsTo(Uom::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'asset_location', 'project_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'dept_id', 'dept_id');
     }
 }

@@ -56,9 +56,9 @@ var AssetsList = function () {
             ajax: {
                 type: "POST",
                 url: "/asset-masters/datatable",
-                data: function (d) {
-                    d.search = $('input[name="search"]').val();
-                }
+                // data: function (d) {
+                //     d.search = $('input[name="search"]').val();
+                // }
             },
             columns: [
                 {
@@ -109,8 +109,8 @@ var AssetsList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            // datatable.search(e.target.value).draw();
-            datatable.ajax.reload();
+            datatable.search(e.target.value).draw();
+            // datatable.ajax.reload();
         });
     }
 
@@ -695,17 +695,17 @@ var AssetsList = function () {
                     .then(function (response) {
                         $('.notif-progress-line').width(response.progress + '%');
                         $('.notif-progress-line').text(response.progress + '%');
-                        if (response.progress == 100) {
-                            $('.notif-progress-line').width('0%');
-                            $('.notif-progress-line').text('0%');
-                            datatable.ajax.reload();
-                            $('.notif-progress').addClass('d-none');
-                            localStorage.removeItem('batch_asset');
-                            toastr.options.closeButton = true;
-                            toastr.options.timeOut = 1000000;
-                            toastr.options.extendedTimeOut = 1000000;
-                            toastr.success(localStorage.getItem('message_asset'), 'Completed!');
-                        }
+                        // if (response.progress == 100) {
+                        //     $('.notif-progress-line').width('0%');
+                        //     $('.notif-progress-line').text('0%');
+                        //     datatable.ajax.reload();
+                        //     $('.notif-progress').addClass('d-none');
+                        //     localStorage.removeItem('batch_asset');
+                        //     toastr.options.closeButton = true;
+                        //     toastr.options.timeOut = 1000000;
+                        //     toastr.options.extendedTimeOut = 1000000;
+                        //     toastr.success(localStorage.getItem('message_asset'), 'Completed!');
+                        // }
 
                         localStorage.setItem('batch_asset_success', response.processedJobs);
                         localStorage.setItem('batch_asset_failed', response.failedJobs);

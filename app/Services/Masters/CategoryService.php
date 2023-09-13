@@ -32,16 +32,17 @@ class CategoryService
         });
     }
 
-    public static function store(?string $name)
+    public static function store(array $data)
     {
-        if (!$name) {
+        if (!isset($data['id']) || !isset($data['name'])) {
             return null;
         }
-        if ($category = Category::query()->where('name', trim($name))->first()) {
+        if ($category = Category::query()->where('name', trim($data['name']))->first()) {
             return $category;
         }
         return Category::query()->create([
-            'name' => $name
+            'id' => $data['id'],
+            'name' => $data['name']
         ]);
     }
 

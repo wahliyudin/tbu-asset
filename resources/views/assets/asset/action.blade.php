@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center gap-2">
     @permission('asset_master_update')
-        <button type="button" data-asset="{{ $asset->_source->id ?? $asset->_source->key }}"
+        <button type="button" data-asset="{{ $key }}"
             class="btn btn-sm btn-primary ps-4 btn-edit">
             <span class="indicator-label">
                 <div class="d-flex align-items-center gap-2">
@@ -16,7 +16,7 @@
         </button>
     @endpermission
     @permission('asset_master_delete')
-        <button type="button" data-asset="{{ $asset->_source->id ?? $asset->_source->key }}"
+        <button type="button" data-asset="{{ $key }}"
             class="btn btn-sm btn-danger ps-4 btn-delete">
             <span class="indicator-label">
                 <div class="d-flex align-items-center gap-2">
@@ -35,7 +35,7 @@
         </button>
     @endpermission
     @permission('asset_master_read')
-        <a href="{{ route('asset-masters.show', $asset->_source?->kode) }}" class="btn btn-sm btn-warning ps-4 d-flex">
+        <a href="{{ route('asset-masters.show', $kode) }}" class="btn btn-sm btn-warning ps-4 d-flex">
             <i class="ki-duotone ki-eye fs-3">
                 <i class="path1"></i>
                 <i class="path2"></i>

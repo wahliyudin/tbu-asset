@@ -108,7 +108,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('master/uoms/{uom}/destroy', [UomController::class, 'destroy'])->name('masters.uoms.destroy')->middleware('permission:uom_delete');
 
     Route::get('asset-masters', [AssetMasterController::class, 'index'])->name('asset-masters.index')->middleware('permission:asset_master_read');
-    Route::post('asset-masters/datatable', [AssetMasterController::class, 'datatable'])->name('asset-masters.datatable')->middleware('permission:asset_master_read');
+    Route::post('asset-masters/datatable', [AssetMasterController::class, 'datatablePG'])->name('asset-masters.datatable')->middleware('permission:asset_master_read');
     Route::post('asset-masters/store', [AssetMasterController::class, 'store'])->name('asset-masters.store')->middleware('permission:asset_master_create|asset_master_update');
     Route::get('asset-masters/{kode}/show', [AssetMasterController::class, 'show'])->name('asset-masters.show')->middleware('permission:asset_master_read');
     Route::post('asset-masters/{asset}/edit', [AssetMasterController::class, 'edit'])->name('asset-masters.edit')->middleware('permission:asset_master_update');

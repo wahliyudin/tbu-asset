@@ -47,6 +47,7 @@ class UnitService
         }
         return Unit::query()->create([
             'kode' => isset($data['kode']) ? $data['kode'] : null,
+            'prefix' => isset($data['prefix']) ? $data['prefix'] : null,
             'model' => isset($data['model']) ? $data['model'] : null,
             'type' => isset($data['type']) ? $data['type'] : null,
             'seri' => isset($data['seri']) ? $data['seri'] : null,

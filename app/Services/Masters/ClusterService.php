@@ -32,17 +32,18 @@ class ClusterService
         });
     }
 
-    public static function store($name, $category_id)
+    public static function store(array $data)
     {
-        if (!$name || !$category_id) {
+        if (!isset($data['id']) || !isset($data['name']) || !isset($data['category_id']) )  {
             return null;
         }
-        if ($cluster = Cluster::query()->where('name', trim($name))->first()) {
+        if ($cluster = Cluster::query()->where('name', trim($data['name']))->where('category_id', trim($data['category_id']))->first()) {
             return $cluster;
         }
         return Cluster::query()->create([
-            'category_id' => $category_id,
-            'name' => $name,
+            'id' => $data['id'],
+            'category_id' => $data['category_id'],
+            'name' => $data['name'],
         ]);
     }
 

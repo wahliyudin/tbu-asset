@@ -41,6 +41,37 @@ class AssetMasterController extends Controller
         ]);
     }
 
+    public function datatablePG(Request $request)
+    {
+        return DataTables::collection($this->service->allNotElastic())
+            ->editColumn('kode', function ($asset) {
+                return $asset->kode;
+            })
+            ->editColumn('kode_unit', function ($asset) {
+                return $asset->unit?->kode;
+            })
+            ->editColumn('unit_model', function ($asset) {
+                return $asset->unit?->model;
+            })
+            ->editColumn('unit_type', function ($asset) {
+                return $asset->unit?->type;
+            })
+            ->editColumn('asset_location', function ($asset) {
+                return $asset->project?->project;
+            })
+            ->editColumn('pic', function ($asset) {
+                return $asset->employee?->nama_karyawan ?? $asset->pic;
+            })
+            ->editColumn('action', function ($asset) {
+                $key = $asset->getKey();
+                $kode = $asset->kode;
+                return view('assets.asset.action', compact('key','kode'))->render();
+            })
+            ->rawColumns(['action'])
+            ->make();
+    }
+    
+
     public function datatable(Request $request)
     {
         return DataTables::collection($this->service->all($request->get('search')))
@@ -63,7 +94,9 @@ class AssetMasterController extends Controller
                 return $asset->_source->employee?->nama_karyawan ?? $asset->_source->pic;
             })
             ->editColumn('action', function ($asset) {
-                return view('assets.asset.action', compact('asset'))->render();
+                $key = $asset->_source->key;
+                $kode = $asset->_source->kode;
+                return view('assets.asset.action', compact('key','kode'))->render();
             })
             ->rawColumns(['action'])
             ->make();
