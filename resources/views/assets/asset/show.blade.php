@@ -109,7 +109,7 @@
                                         <label class="col-lg-4 fw-semibold text-muted">Asset Location</label>
                                         <div class="col-lg-7">
                                             <span
-                                                class="fw-bold fs-6 text-gray-800">{{ $asset->project->project ?? '-' }}</span>
+                                                class="fw-bold fs-6 text-gray-800">{{ $asset->project?->project ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -127,7 +127,7 @@
                                     <div class="row">
                                         <label class="col-lg-4 fw-semibold text-muted">Unit Code</label>
                                         <div class="col-lg-7">
-                                            <span class="fw-bold fs-6 text-gray-800">{{ $asset->unit->kode ?? '-' }}</span>
+                                            <span class="fw-bold fs-6 text-gray-800">{{ $asset->unit?->kode ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                         <label class="col-lg-4 fw-semibold text-muted">Quantity</label>
                                         <div class="col-lg-7">
                                             <span
-                                                class="fw-bold fs-6 text-gray-800">{{ $asset->quantity . ' ' . $asset->uom->name ?? '-' }}</span>
+                                                class="fw-bold fs-6 text-gray-800">{{ $asset->quantity . ' ' . $asset->uom?->name ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -157,8 +157,7 @@
                                     <div class="row">
                                         <label class="col-lg-4 fw-semibold text-muted">HM</label>
                                         <div class="col-lg-7">
-                                            <span
-                                                class="fw-bold fs-6 text-gray-800">{{ $asset->hm . ' ' . $asset->uom->name ?? '-' }}</span>
+                                            <span class="fw-bold fs-6 text-gray-800">{{ $asset->hm ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -176,8 +175,7 @@
                                     <div class="row">
                                         <label class="col-lg-4 fw-semibold text-muted">PO Number</label>
                                         <div class="col-lg-7">
-                                            <span
-                                                class="fw-bold fs-6 text-gray-800">{{ $asset->po_number . ' ' . $asset->uom->name ?? '-' }}</span>
+                                            <span class="fw-bold fs-6 text-gray-800">{{ $asset->po_number ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -195,8 +193,7 @@
                                     <div class="row">
                                         <label class="col-lg-4 fw-semibold text-muted">Remark</label>
                                         <div class="col-lg-7">
-                                            <span
-                                                class="fw-bold fs-6 text-gray-800">{{ $asset->remark . ' ' . $asset->uom->name ?? '-' }}</span>
+                                            <span class="fw-bold fs-6 text-gray-800">{{ $asset->remark ?? '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
