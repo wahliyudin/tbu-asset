@@ -32,7 +32,6 @@ class AssetData extends Data implements DataInterface
         public ?string $po_number,
         public ?string $gr_number,
         public ?string $remark,
-        public ?string $qr_code,
         public ?Status $status,
         public ?string $status_asset,
         public ?string $key = null,

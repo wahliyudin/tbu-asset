@@ -57,9 +57,9 @@ var AssetsList = function () {
             ajax: {
                 type: "POST",
                 url: "/asset-masters/datatable",
-                // data: function (d) {
-                //     d.search = $('input[name="search"]').val();
-                // }
+                data: function (d) {
+                    d.search = $('input[name="search"]').val();
+                }
             },
             columns: [
                 {
@@ -111,8 +111,8 @@ var AssetsList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.search(e.target.value).draw();
-            // datatable.ajax.reload();
+            // datatable.search(e.target.value).draw();
+            datatable.ajax.reload();
         });
     }
 

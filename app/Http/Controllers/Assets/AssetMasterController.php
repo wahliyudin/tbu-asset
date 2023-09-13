@@ -65,12 +65,12 @@ class AssetMasterController extends Controller
             ->editColumn('action', function ($asset) {
                 $key = $asset->getKey();
                 $kode = $asset->kode;
-                return view('assets.asset.action', compact('key','kode'))->render();
+                return view('assets.asset.action', compact('key', 'kode'))->render();
             })
             ->rawColumns(['action'])
             ->make();
     }
-    
+
 
     public function datatable(Request $request)
     {
@@ -96,7 +96,7 @@ class AssetMasterController extends Controller
             ->editColumn('action', function ($asset) {
                 $key = $asset->_source->key;
                 $kode = $asset->_source->kode;
-                return view('assets.asset.action', compact('key','kode'))->render();
+                return view('assets.asset.action', compact('key', 'kode'))->render();
             })
             ->rawColumns(['action'])
             ->make();

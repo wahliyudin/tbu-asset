@@ -17,16 +17,6 @@ use App\Repositories\Assets\AssetRepository;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Endroid\QrCode\Color\Color;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
-use Endroid\QrCode\Label\Font\OpenSans;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Label\Label;
-use Endroid\QrCode\Label\Margin\Margin;
-use Endroid\QrCode\Logo\Logo;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\PngWriter;
 
 class AssetService
 {
@@ -79,12 +69,7 @@ class AssetService
 
     public function updateOrCreate(AssetRequest $request)
     {
-        $qrCode = AssetService::generateQRCode($request->kode, 250, filename: time() . $request->kode . '.png');
-        if ($key = $request->key) {
-            $asset = Asset::query()->select(['id', 'qr_code'])->find($key);
-            Storage::disk('public')->delete($asset->qr_code);
-        }
-        $data = AssetData::from(array_merge($request->all(), ['qr_code' => $qrCode]));
+        $data = AssetData::from(array_merge($request->all()));
         DB::transaction(function () use ($data, $request) {
             $asset = $this->assetRepository->updateOrCreate($data);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
@@ -131,7 +116,6 @@ class AssetService
             $this->assetInsuranceRepository->delete($asset->insurance);
             $this->assetLeasingRepository->delete($asset->leasing);
             Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
-            Storage::disk('public')->delete($asset->qr_code);
             return $asset->delete();
         });
     }
@@ -175,41 +159,5 @@ class AssetService
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }
         return Elasticsearch::setModel(Asset::class)->created(AssetData::from($asset));
-    }
-
-
-    public static function generateQRCode($content, $size = 100, $folder = 'qrcode', $filename = 'example.png', $label = 'PT. TATA BARA UTAMA')
-    {
-        $writer = new PngWriter();
-
-        $qrCode = QrCode::create($content)
-            ->setEncoding(new Encoding('UTF-8'))
-            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
-            ->setSize($size)
-            ->setMargin(10)
-            ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->setForegroundColor(new Color(0, 0, 0))
-            ->setBackgroundColor(new Color(255, 255, 255));
-
-        // $logo = Logo::create(public_path('assets/media/logos/tbu.png'))
-        //     ->setResizeToWidth(round($size * 0.8))
-        //     ->setPunchoutBackground(false);
-
-        $label = Label::create($label)
-            ->setFont(new OpenSans(round($size * 0.045)))
-            ->setMargin(new Margin(-5, 10, 10, 10))
-            ->setTextColor(new Color(34, 57, 104));
-
-        $result = $writer->write($qrCode, label: $label);
-
-        return self::saveBase64Image($result->getDataUri(), $folder, $filename);
-    }
-
-    public static function saveBase64Image($base64Data, $folder = 'qrcode', $filename = 'example.png')
-    {
-        $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Data));;
-        $path = $folder . '/' . $filename;
-        Storage::disk('public')->put($path, $imageData);
-        return $path;
     }
 }
