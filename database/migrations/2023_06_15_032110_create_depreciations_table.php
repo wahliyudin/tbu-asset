@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create('depreciations', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Asset::class);
-            $table->integer('masa_pakai');
-            $table->integer('umur_asset');
-            $table->integer('umur_pakai');
-            $table->bigInteger('depresiasi');
-            $table->bigInteger('sisa');
+            $table->integer('masa_pakai')->nullable();
+            $table->integer('umur_asset')->nullable();
+            $table->integer('umur_pakai')->nullable();
+            $table->bigInteger('depresiasi')->nullable();
+            $table->bigInteger('sisa')->nullable();
             $table->timestamps();
         });
     }

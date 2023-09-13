@@ -3,14 +3,12 @@
 namespace App\DataTransferObjects\Masters;
 
 use App\Interfaces\DataInterface;
-use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
 class LeasingData extends Data implements DataInterface
 {
     public function __construct(
-        #[Required]
-        public string $name,
+        public ?string $name = null,
         public ?string $key = null,
         public ?string $id = null,
     ) {

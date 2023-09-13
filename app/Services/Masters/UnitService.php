@@ -54,7 +54,7 @@ class UnitService
             'brand' => isset($data['brand']) ? $data['brand'] : null,
             'serial_number' => isset($data['serial_number']) ? $data['serial_number'] : null,
             'spesification' => isset($data['spesification']) ? $data['spesification'] : null,
-            'tahun_pembuatan' => isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
+            'tahun_pembuatan' => ((int)$data['tahun_pembuatan'] == 0) ? null : (int)$data['tahun_pembuatan'] ,
         ]);
     }
 

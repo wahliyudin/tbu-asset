@@ -84,8 +84,13 @@ class ImportJob implements ShouldQueue
             // $pic = GlobalService::getEmployeeByNamaKaryawan($val['pic']);
             $pic = Employee::query()->where('nama_karyawan', $val['pic'])->first();
             
+            \Log::info([
+                'id' => $val['new_id_asset'],
+                'pr' => $val['pr']
+            ]);
+
             $asset = AssetService::store([
-                'kode' => isset($val['id_asset_existing']) ? $val['id_asset_existing'] : null,
+                'kode' => isset($val['new_id_asset']) ? $val['new_id_asset'] : null,
                 'unit_id' => $unit?->getKey(),
                 'sub_cluster_id' => $subCluster?->getKey(),
                 'pic' => $pic?->nik,
@@ -105,8 +110,8 @@ class ImportJob implements ShouldQueue
 
             $assetLeasing = AssetLeasingService::store([
                 'asset_id' => $asset->getKey(),
-                'dealer_id' => $dealer->getKey(),
-                'leasing_id' => $leasing->getKey(),
+                'dealer_id' => $dealer?->getKey(),
+                'leasing_id' => $leasing?->getKey(),
                 'harga_beli' => isset($val['nilai_perolehan']) ? $val['nilai_perolehan'] : null,
                 'jangka_waktu_leasing' => is_int($val['jangka_waktu_leasing']) ? $val['jangka_waktu_leasing'] : null,
                 'tanggal_perolehan' => CarbonHelper::convertDate($val['tanggal_perolehan']),
@@ -123,8 +128,7 @@ class ImportJob implements ShouldQueue
                 'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
             ]);
 
-            \Log::info(print_r($depresiasi, true));
-
+           
             // $results[] =  [
             //     'kode' => $val['id_asset_existing'],
             //     'unit_id' => $unit?->getKey(),
