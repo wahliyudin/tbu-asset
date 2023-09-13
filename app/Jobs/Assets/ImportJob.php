@@ -83,7 +83,6 @@ class ImportJob implements ShouldQueue
 
             // $pic = GlobalService::getEmployeeByNamaKaryawan($val['pic']);
             $pic = Employee::query()->where('nama_karyawan', $val['pic'])->first();
-            
             \Log::info([
                 'id' => $val['new_id_asset'],
                 'pr' => $val['pr']
@@ -121,14 +120,13 @@ class ImportJob implements ShouldQueue
 
             $depresiasi = AssetDepreciationService::store([
                 'asset_id' => $asset->getKey(),
-                'masa_pakai' =>isset($val['masa_pakai']) ? $val['masa_pakai'] : null,
+                'masa_pakai' => isset($val['masa_pakai']) ? $val['masa_pakai'] : null,
                 'umur_asset' => isset($val['umur_asset']) ? $val['umur_asset'] : null,
                 'umur_pakai' => isset($val['umur_pakai']) ? $val['umur_pakai'] : null,
                 'depresiasi' => isset($val['depresiasi']) ? $val['depresiasi'] : null,
                 'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
             ]);
 
-           
             // $results[] =  [
             //     'kode' => $val['id_asset_existing'],
             //     'unit_id' => $unit?->getKey(),
@@ -150,7 +148,7 @@ class ImportJob implements ShouldQueue
             // ];
         }
 
-        
+
         // Asset::query()->upsert($results, 'id');
     }
 

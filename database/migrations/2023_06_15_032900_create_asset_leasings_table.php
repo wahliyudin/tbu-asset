@@ -17,8 +17,8 @@ return new class extends Migration
         Schema::create('asset_leasings', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Asset::class);
-            $table->foreignIdFor(Dealer::class);
-            $table->foreignIdFor(Leasing::class);
+            $table->foreignIdFor(Dealer::class)->nullable();
+            $table->foreignIdFor(Leasing::class)->nullable();
             $table->bigInteger('harga_beli')->nullable();
             $table->integer('jangka_waktu_leasing')->nullable();
             $table->bigInteger('biaya_leasing')->nullable();

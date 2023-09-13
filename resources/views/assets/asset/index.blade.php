@@ -79,13 +79,20 @@
     </div>
     <div style="position: fixed; bottom: 10px; right: 10px; width: 400px; z-index: 99999;" class="notif-progress d-none">
         <div class="card" style="position: relative;">
-            <span class="btn-close-progress" style="position: absolute; top: 10px; right: 10px; cursor: pointer;">
-                <i class="ki-duotone ki-cross-circle fs-1">
-                    <i class="path1"></i>
-                    <i class="path2"></i>
-                </i>
-            </span>
-            <div class="card-body">
+            <div class="card-header py-2 px-2" style="min-height: 0 !important;">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                    <button class="btn-sync-progress btn btn-success text-white px-2 py-1" disabled>
+                        synchronize
+                    </button>
+                    <span class="btn-close-progress" style="cursor: pointer;">
+                        <i class="ki-duotone ki-cross-circle fs-1">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                    </span>
+                </div>
+            </div>
+            <div class="card-body py-4">
                 <span id="title">Uploading... </span>
                 <span id="desc"></span>
                 <div class="progress">
