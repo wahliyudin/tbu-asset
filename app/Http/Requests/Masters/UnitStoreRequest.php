@@ -23,6 +23,7 @@ class UnitStoreRequest extends FormRequest
             'serial_number' => ['required'],
             'spesification' => ['required'],
             'tahun_pembuatan' => ['required'],
+            'kelengkapan_tambahan' => ['required'],
         ];
     }
 }

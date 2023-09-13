@@ -130,6 +130,11 @@
                                     name="spesification" />
                             </div>
                             <div class="col-md-6 fv-row mb-7">
+                                <label class="required fs-6 fw-semibold mb-2">kelengkapan_tambahan</label>
+                                <input type="text" class="form-control form-control-solid"
+                                    placeholder="Kelengkapan Tambahan" name="kelengkapan_tambahan" />
+                            </div>
+                            <div class="col-md-6 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Tahun Pembuatan</label>
                                 <input type="text" id="tahun_pembuatan" class="form-control form-control-solid"
                                     placeholder="Tahun Pembuatan" name="tahun_pembuatan" />
@@ -158,25 +163,4 @@
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/pages/unit/index.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            new tempusDominus.TempusDominus(document.getElementById("tahun_pembuatan"), {
-                display: {
-                    viewMode: "calendar",
-                    components: {
-                        decades: true,
-                        year: true,
-                        month: false,
-                        date: false,
-                        hours: false,
-                        minutes: false,
-                        seconds: false
-                    }
-                },
-                localization: {
-                    format: 'yyyy'
-                }
-            });
-        });
-    </script>
 @endpush

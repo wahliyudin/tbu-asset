@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\UnitData;
-use App\Facades\Elasticsearch;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Models\Masters\Unit;
