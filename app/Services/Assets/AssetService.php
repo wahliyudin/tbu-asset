@@ -39,7 +39,7 @@ class AssetService
 
     public function allNotElastic()
     {
-        return Asset::query()->with(['unit', 'leasing', 'insurance'])->get();
+        return Asset::query()->with(['unit', 'leasing', 'insurance','project'])->get();
     }
 
     public function all($search = null)
@@ -111,6 +111,7 @@ class AssetService
             'pic' => $data['pic'],
             'activity' => $data['activity'],
             'asset_location' => $data['asset_location'],
+            'dept_id' => $data['dept_id'],
             'kondisi' => $data['kondisi'],
             'uom_id' => $data['uom_id'],
             'quantity' => $data['quantity'],

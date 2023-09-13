@@ -10,7 +10,9 @@ use App\DataTransferObjects\Masters\UnitData;
 use App\Helpers\CarbonHelper;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetLeasing;
+use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Project;
 use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetLeasingService;
 use App\Services\Assets\AssetService;
@@ -51,17 +53,31 @@ class ImportJob implements ShouldQueue
     {
         $results = [];
         foreach ($this->assets as $i => $val) {
-            $category = CategoryService::store($val['asset_category']);
-            $cluster = ClusterService::store(
-                $val['asset_cluster'],
-                $category?->getKey()
-            );
-            $subCluster = SubClusterService::store(
-                $val['asset_sub_cluster'],
-                $cluster?->getKey()
-            );
+
+            $category = CategoryService::store([
+                'id' => $val['kode_asset_category'],
+                'name' => $val['asset_category']
+            ]);
+            
+            
+
+            $cluster = ClusterService::store([
+                'id' => $val['kode_asset_cluster'],
+                'name' => $val['asset_cluster'],
+                'category_id' => $category?->getKey()
+            ]);
+            
+            $subCluster = SubClusterService::store([
+                'id' => $val['kode_asset_sub_cluster'],
+                'name' => $val['asset_sub_cluster'],
+                'cluster_id' => $cluster?->getKey()
+            ]);
+
+            
+
             $unit = UnitService::store([
                 'kode' => isset($val['id_unit']) ? $val['id_unit'] : null,
+                'prefix' => isset($val['kode_unit_model']) ? $val['kode_unit_model'] : null,
                 'model' => isset($val['unit_model']) ? $val['unit_model'] : null,
                 'type' => isset($val['unit_type']) ? $val['unit_type'] : null,
                 'seri' => isset($val['seri']) ? $val['seri'] : null,
@@ -72,21 +88,28 @@ class ImportJob implements ShouldQueue
                 'tahun_pembuatan' => isset($val['tahun_pembuatan']) ? $val['tahun_pembuatan'] : null,
                 'kelengkapan_tambahan' => isset($val['kelengkapan_tambahan']) ? $val['kelengkapan_tambahan'] : null,
             ]);
+
+
             $uom = (new UomService)->store([
                 'name' => isset($val['uom']) ? $val['uom'] : null,
             ]);
-            $dealer = (new DealerService)->store([
-                'name' => isset($val['suplier_dealer']) ? $val['suplier_dealer'] : null,
-            ]);
+
+            // $dealer = (new DealerService)->store([
+            //     'name' => isset($val['suplier_dealer']) ? $val['suplier_dealer'] : null,
+            // ]);
 
             $leasing = (new LeasingService)->store(LeasingData::from(['name' => isset($val['vendor_leasing']) ? $val['vendor_leasing'] : null]));
 
-            // $pic = GlobalService::getEmployeeByNamaKaryawan($val['pic']);
             $pic = Employee::query()->where('nama_karyawan', $val['pic'])->first();
 
+            $project = Project::query()->where('project', $val['lokasi_asset'])->first();
+
+            $department = Department::query()->where('department_name', $val['departemen'])->first();
+
             \Log::info([
-                'id' => $val['new_id_asset'],
-                'pr' => $val['pr']
+                'no' => $val['no'],
+                'department' => $val['departemen'],
+                'dept_id' => $department,
             ]);
 
             $asset = AssetService::store([
@@ -95,9 +118,10 @@ class ImportJob implements ShouldQueue
                 'sub_cluster_id' => $subCluster?->getKey(),
                 'pic' => $pic?->nik,
                 'activity' => isset($val['activity']) ? $val['activity'] : null,
-                'asset_location' => $pic?->position?->project?->project,
+                'asset_location' => $project?->project_id,
+                'dept_id' => $department?->dept_id,
                 'kondisi' => isset($val['kondisi']) ? $val['kondisi'] : null,
-                'uom_id' => $uom->getKey(),
+                'uom_id' => $uom?->getKey(),
                 'quantity' => isset($val['jumlah']) ? $val['jumlah'] : null,
                 'tgl_bast' => CarbonHelper::convertDate($val['tanggal_bast']),
                 'hm' => isset($val['hours_meter']) ? $val['hours_meter'] : null,
@@ -108,12 +132,20 @@ class ImportJob implements ShouldQueue
                 'status_asset' => isset($val['status']) ? $val['status'] : null,
             ]);
 
+            \Log::info([
+                'no' => $val['no'],
+                'asset' => $asset,
+            ]);
+
             $assetLeasing = AssetLeasingService::store([
                 'asset_id' => $asset->getKey(),
-                'dealer_id' => $dealer?->getKey(),
+                'dealer_id' => isset($val['dealer_id']) ? $val['dealer_id'] : null,
+                'suplier_dealer' => isset($val['suplier_dealer']) ? $val['suplier_dealer'] : null,
                 'leasing_id' => $leasing?->getKey(),
                 'harga_beli' => isset($val['nilai_perolehan']) ? $val['nilai_perolehan'] : null,
                 'jangka_waktu_leasing' => is_int($val['jangka_waktu_leasing']) ? $val['jangka_waktu_leasing'] : null,
+                'tanggal_awal_leasing' => CarbonHelper::convertDate($val['tanggal_awal_leasing']),
+                'tanggal_akhir_leasing' => CarbonHelper::convertDate($val['tanggal_akhir_leasing']),
                 'tanggal_perolehan' => CarbonHelper::convertDate($val['tanggal_perolehan']),
                 'biaya_leasing' => isset($val['biaya_leasing']) ? $val['biaya_leasing'] : null,
                 'legalitas' => isset($val['legalitas']) ? $val['legalitas'] : null,
@@ -127,7 +159,6 @@ class ImportJob implements ShouldQueue
                 'depresiasi' => isset($val['depresiasi']) ? $val['depresiasi'] : null,
                 'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
             ]);
-
 
             // $results[] =  [
             //     'kode' => $val['id_asset_existing'],

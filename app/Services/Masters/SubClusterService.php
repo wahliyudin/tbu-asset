@@ -32,17 +32,18 @@ class SubClusterService
         });
     }
 
-    public static function store($name, $cluster_id)
+    public static function store(array $data)
     {
-        if (!$name || !$cluster_id) {
+        if (!isset($data['id']) || !isset($data['name']) || !isset($data['cluster_id']) )  {
             return null;
         }
-        if ($subCluster = SubCluster::query()->where('name', trim($name))->first()) {
+        if ($subCluster = SubCluster::query()->where('name', trim($data['name']))->where('cluster_id', trim($data['cluster_id']))->first()) {
             return $subCluster;
         }
         return SubCluster::query()->create([
-            'cluster_id' => $cluster_id,
-            'name' => $name,
+            'id' => $data['id'],
+            'cluster_id' => $data['cluster_id'],
+            'name' => $data['name'],
         ]);
     }
 

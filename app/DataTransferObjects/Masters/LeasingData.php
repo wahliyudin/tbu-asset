@@ -3,7 +3,6 @@
 namespace App\DataTransferObjects\Masters;
 
 use App\Interfaces\DataInterface;
-use Spatie\LaravelData\Attributes\Validation\Required;
 use Spatie\LaravelData\Data;
 
 class LeasingData extends Data implements DataInterface

@@ -19,6 +19,8 @@ class AssetLeasing extends Model
         'leasing_id',
         'harga_beli',
         'jangka_waktu_leasing',
+        'tanggal_awal_leasing',
+        'tanggal_akhir_leasing',
         'biaya_leasing',
         'legalitas',
         'tanggal_perolehan'

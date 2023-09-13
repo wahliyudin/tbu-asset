@@ -17,12 +17,12 @@ return new class extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             $table->string('kode')->nullable();
-            $table->string('new_id_asset')->nullable();
             $table->foreignIdFor(Unit::class)->nullable();
             $table->foreignIdFor(SubCluster::class)->nullable();
             $table->unsignedBigInteger('pic')->nullable();
             $table->string('activity')->nullable();
             $table->string('asset_location')->nullable();
+            $table->integer('dept_id')->nullable();
             $table->string('kondisi')->nullable();
             $table->foreignIdFor(Uom::class)->nullable();
             $table->integer('quantity')->nullable();
