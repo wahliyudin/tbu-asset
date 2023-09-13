@@ -2,6 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Enums\Cers\TypeBudget;
+use App\Models\Cers\Cer;
+
 class Helper
 {
     public function resetToNumber(string $val): int
@@ -29,5 +32,15 @@ class Helper
     public static function clearUrl(string $url): string
     {
         return str($url)->replace('//', '/')->value();
+    }
+
+    public static function hasBudgeted(?Cer $cer)
+    {
+        return $cer?->type_budget === TypeBudget::BUDGET;
+    }
+
+    public static function hasUnBudgeted(?Cer $cer)
+    {
+        return $cer?->type_budget === TypeBudget::UNBUDGET;
     }
 }

@@ -17,15 +17,17 @@ class CerRequest extends FormRequest
         $rules = [
             'peruntukan' => ['required'],
             'type_budget' => ['required'],
+            'department_id' => ['required'],
             'tgl_kebutuhan' => ['required'],
             'justifikasi' => ['required'],
             'items' => ['array'],
             'sumber_pendanaan' => ['required'],
             'budget_ref' => ['nullable'],
             'cost_analyst' => ['required'],
+            'budget_ref' => ['required'],
         ];
-        if (request()->type_budget == TypeBudget::BUDGET->value) {
-            $rules['budget_ref'] = ['required'];
+        if (request()->type_budget == TypeBudget::UNBUDGET->value) {
+            $rules['file_ucr'] = ['required'];
         }
         foreach (request()->get('items') ?? [] as $key => $value) {
             $rules['items.' . $key . '.description'] = ['required', 'string'];

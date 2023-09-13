@@ -18,6 +18,7 @@ class UnitData extends Data implements DataInterface
         public ?string $serial_number,
         public ?string $spesification,
         public ?string $tahun_pembuatan,
+        public ?string $kelengkapan_tambahan,
         public ?string $key = null,
         public ?string $id = null,
     ) {
@@ -40,6 +41,7 @@ class UnitData extends Data implements DataInterface
             isset($data['serial_number']) ? $data['serial_number'] : null,
             isset($data['detail_spesifikasi']) ? $data['detail_spesifikasi'] : null,
             isset($data['tahun_pembuatan']) ? $data['tahun_pembuatan'] : null,
+            isset($data['kelengkapan_tambahan']) ? $data['kelengkapan_tambahan'] : null,
         );
     }
 }

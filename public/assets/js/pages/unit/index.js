@@ -200,6 +200,13 @@ var CategorysList = function () {
                             }
                         }
                     },
+                    'kelengkapan_tambahan': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kelengkapan Tamabahan is required'
+                            }
+                        }
+                    },
                     'spesification': {
                         validators: {
                             notEmpty: {
@@ -246,6 +253,7 @@ var CategorysList = function () {
                                 brand: $($(form).find('input[name="brand"]')).val(),
                                 serial_number: $($(form).find('input[name="serial_number"]')).val(),
                                 spesification: $($(form).find('input[name="spesification"]')).val(),
+                                kelengkapan_tambahan: $($(form).find('input[name="kelengkapan_tambahan"]')).val(),
                                 tahun_pembuatan: $($(form).find('input[name="tahun_pembuatan"]')).val(),
                             },
                             dataType: "JSON",
@@ -375,6 +383,7 @@ var CategorysList = function () {
             $($(form).find('input[name="brand"]')).val('');
             $($(form).find('input[name="serial_number"]')).val('');
             $($(form).find('input[name="spesification"]')).val('');
+            $($(form).find('input[name="kelengkapan_tambahan"]')).val('');
             $($(form).find('input[name="tahun_pembuatan"]')).val('');
             $('#create-unit .title').text('Tambah Unit');
             $(submitButton).data('unit', '');
@@ -401,12 +410,33 @@ var CategorysList = function () {
                     $($(form).find('input[name="brand"]')).val(response.brand);
                     $($(form).find('input[name="serial_number"]')).val(response.serial_number);
                     $($(form).find('input[name="spesification"]')).val(response.spesification);
+                    $($(form).find('input[name="kelengkapan_tambahan"]')).val(response.kelengkapan_tambahan);
                     $($(form).find('input[name="tahun_pembuatan"]')).val(response.tahun_pembuatan);
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
                 error: handleError
             });
+        });
+    }
+
+    var initPlugins = () => {
+        new tempusDominus.TempusDominus(document.getElementById("tahun_pembuatan"), {
+            display: {
+                viewMode: "calendar",
+                components: {
+                    decades: true,
+                    year: true,
+                    month: false,
+                    date: false,
+                    hours: false,
+                    minutes: false,
+                    seconds: false
+                }
+            },
+            localization: {
+                format: 'yyyy'
+            }
         });
     }
 
@@ -435,6 +465,7 @@ var CategorysList = function () {
             handleForm();
             buttonCreate();
             buttonEdit();
+            initPlugins();
         }
     }
 }();

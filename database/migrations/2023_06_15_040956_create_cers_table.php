@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type_budget');
             $table->string('budget_ref')->nullable();
             $table->string('peruntukan');
+            $table->unsignedBigInteger('department_id');
             $table->date('tgl_kebutuhan');
             $table->string('justifikasi');
             $table->string('sumber_pendanaan');

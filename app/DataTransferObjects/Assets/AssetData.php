@@ -17,6 +17,7 @@ class AssetData extends Data implements DataInterface
 {
     public function __construct(
         public ?string $kode,
+        public ?string $new_id_asset,
         public ?string $unit_id,
         public ?string $sub_cluster_id,
         public ?string $pic,
@@ -33,6 +34,7 @@ class AssetData extends Data implements DataInterface
         public ?string $remark,
         public ?string $qr_code,
         public ?Status $status,
+        public ?string $status_asset,
         public ?string $key = null,
         public ?string $id = null,
         public ?AssetInsuranceData $insurance,

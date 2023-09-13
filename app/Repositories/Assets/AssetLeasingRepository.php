@@ -14,11 +14,13 @@ class AssetLeasingRepository
             'asset_id' => $asset->getKey()
         ], [
             'dealer_id' => $data->dealer_id,
+            'suplier_dealer' => $data->suplier_dealer,
             'leasing_id' => $data->leasing_id,
             'harga_beli' => $data->hargaBeliToInt(),
             'jangka_waktu_leasing' => $data->jangka_waktu_leasing,
             'biaya_leasing' => $data->biayaToInt(),
             'legalitas' => $data->legalitas,
+            'tanggal_perolehan' => $data->tanggal_perolehan,
         ]);
     }
 
