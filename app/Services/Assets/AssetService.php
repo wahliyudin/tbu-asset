@@ -39,7 +39,7 @@ class AssetService
 
     public function allNotElastic()
     {
-        return Asset::query()->with(['unit', 'leasing', 'insurance','project'])->get();
+        return Asset::query()->with(['unit', 'leasing', 'insurance', 'project'])->get();
     }
 
     public function all($search = null)
@@ -165,7 +165,7 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom'])->get();
+        return Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'project', 'department'])->get();
     }
 
     private function sendToElasticsearch(Asset $asset, $key)
