@@ -171,9 +171,10 @@
                 <x-cers.sumber-pendanaan :cer="$cer" :type="$type" />
             </div>
         </div>
+        <input type="hidden" name="budget_ref" value="{{ $cer?->budget_ref }}">
         <div class="row mt-4 budget">
             <div class="col-md-4 d-flex justify-content-between align-items-start">
-                <h5>5. Badget</h5>
+                <h5>5. Budget</h5>
                 @if ($type != 'show')
                     <button type="button" @disabled(\App\Helpers\Helper::hasUnBudgeted($cer))
                         class="btn btn-sm btn-primary ps-3 pe-2 search-budget">
@@ -193,7 +194,7 @@
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
                                     value="{{ \App\Helpers\Helper::hasBudgeted($cer) ? $cer?->budget_ref : null }}"
-                                    name="budget_ref">
+                                    name="view_budget_ref">
                             </td>
                         </tr>
                         <tr>
@@ -252,7 +253,7 @@
                             <td class="w-250px">
                                 <input type="text" class="form-control unbudget_ref" readonly
                                     value="{{ \App\Helpers\Helper::hasUnBudgeted($cer) ? $cer?->budget_ref : null }}"
-                                    name="budget_ref">
+                                    name="view_budget_ref">
                             </td>
                         </tr>
                         <tr>

@@ -63,7 +63,7 @@ class CerData extends Data implements DataInterface
         }
     }
 
-    public function generateNo()
+    public static function generateNo()
     {
         return Str::random();
     }
@@ -81,22 +81,26 @@ class CerData extends Data implements DataInterface
                 'uom_id' => $request->items[$i]['uom_id'],
             ];
         }
-        if ($id = $request->id) {
+        if ($id = $request->id && $request->hasFile('file_ucr')) {
             $cer = Cer::query()->find($id);
             Storage::disk('public')->delete($cer->file_ucr);
         }
 
         $noCer = self::generateNo();
         $file_ucr = self::storeFile($request->file('file_ucr'), $noCer);
-        return self::from(array_merge($request->toArray(), [
+        $self = self::from(array_merge($request->toArray(), [
             'items' => $items,
             'file_ucr' => $file_ucr,
             'no_cer' => $noCer,
             'status' => Status::OPEN
         ]));
+        if (!$file_ucr) {
+            return $self->except('file_ucr');
+        }
+        return $self;
     }
 
-    public function storeFile(?UploadedFile $uploadedFile, $noCer)
+    public static function storeFile(?UploadedFile $uploadedFile, $noCer)
     {
         if (!$uploadedFile) {
             return null;

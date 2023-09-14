@@ -63,7 +63,7 @@ class CerController extends Controller
 
     public function datatableAssetIdle()
     {
-        return DataTables::of($this->assetService->getByStatus(Status::IDLE))
+        return DataTables::of($this->assetService->allNotElastic())
             ->editColumn('kode', function (Asset $asset) {
                 return $asset->kode;
             })

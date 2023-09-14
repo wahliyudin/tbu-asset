@@ -137,6 +137,7 @@ var KTModalCersAdd = function () {
     }
 
     var populateBudget = (arrayTd) => {
+        $('input[name="view_budget_ref"]').val(arrayTd[1].innerText);
         $('input[name="budget_ref"]').val(arrayTd[1].innerText);
         $('input[name="budget_periode"]').val(arrayTd[2].innerText);
         $('input[name="total_budget_idr"]').val(arrayTd[3].innerText);
@@ -145,7 +146,7 @@ var KTModalCersAdd = function () {
     var initDatatableAsset = () => {
         datatableAsset = $('#data-asset_table').DataTable({
             processing: true,
-            serverSide: true,
+            // serverSide: true,
             order: [
                 [1, 'asc']
             ],

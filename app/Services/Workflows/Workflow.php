@@ -16,6 +16,7 @@ use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Spatie\LaravelData\DataCollection;
 
@@ -60,24 +61,24 @@ abstract class Workflow extends Checker
     {
         $data = [];
         foreach ($approvals as $key => $approval) {
-            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
             if (!$this->delimiterCheck($approval)) {
                 break;
             }
+            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
         }
         return $data;
     }
 
     private function delimiterCheck(SettingApproval $settingApproval)
     {
-        if ($this->barrier < 10_000_000 && $settingApproval->approval === Approval::DEPARTMENT_HEAD) {
-            return false;
+        if ($settingApproval->approval === Approval::DEPARTMENT_HEAD) {
+            return $this->barrier < 10_000_000;
         }
         // if ($this->barrier > 10_000_000 && $this->barrier <= 25_000_000 && $settingApproval->approval === Approval::DIVISION_HEAD) {
-        //     return false;
+        //     return true;
         // }
-        if ($this->barrier > 25_000_000 && $settingApproval->approval === Approval::DIRECTOR) {
-            return false;
+        if ($settingApproval->approval === Approval::DIRECTOR) {
+            return $this->barrier >= 25_000_000;
         }
         return true;
     }

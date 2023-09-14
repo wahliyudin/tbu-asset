@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
+use App\DataTransferObjects\Cers\CerData;
 use App\Enums\Cers\TypeBudget;
-use App\Models\Cers\Cer;
 
 class Helper
 {
@@ -34,12 +34,12 @@ class Helper
         return str($url)->replace('//', '/')->value();
     }
 
-    public static function hasBudgeted(?Cer $cer)
+    public static function hasBudgeted(?CerData $cer)
     {
         return $cer?->type_budget === TypeBudget::BUDGET;
     }
 
-    public static function hasUnBudgeted(?Cer $cer)
+    public static function hasUnBudgeted(?CerData $cer)
     {
         return $cer?->type_budget === TypeBudget::UNBUDGET;
     }
