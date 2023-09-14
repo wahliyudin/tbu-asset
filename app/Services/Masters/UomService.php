@@ -5,7 +5,9 @@ namespace App\Services\Masters;
 use App\DataTransferObjects\Masters\UomData;
 use App\Facades\Elasticsearch;
 use App\Http\Requests\Masters\UomStoreRequest;
+use App\Jobs\Masters\Uom\BulkJob;
 use App\Models\Masters\Uom;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class UomService
@@ -32,13 +34,14 @@ class UomService
         });
     }
 
-    public function store(array $data) {
-        if(!isset($data['name'])){
+    public function store(array $data)
+    {
+        if (!isset($data['name'])) {
             return null;
         }
 
         $uom = Uom::query()->where('name', $data['name'])->first();
-        if($uom){
+        if ($uom) {
             return $uom;
         }
 
@@ -68,5 +71,25 @@ class UomService
             return Elasticsearch::setModel(Uom::class)->updated(UomData::from($uom));
         }
         return Elasticsearch::setModel(Uom::class)->created(UomData::from($uom));
+    }
+
+    public function getAllDataWithRelations()
+    {
+        return Uom::query()->get();
+    }
+
+    public function bulk(array $clusters = [])
+    {
+        return Elasticsearch::setModel(Uom::class)
+            ->bulk(UomData::collection($clusters));
+    }
+
+    public function instanceBulk(Batch $batch)
+    {
+        $units = $this->getAllDataWithRelations()->toArray();
+        foreach (array_chunk($units, 10) as $units) {
+            $batch->add(new BulkJob($units));
+        }
+        return $batch;
     }
 }

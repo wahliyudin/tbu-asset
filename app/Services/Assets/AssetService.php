@@ -7,9 +7,19 @@ use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
 use App\Enums\Asset\Status;
 use App\Facades\Elasticsearch;
+use App\Facades\Masters\Category\CategoryService;
+use App\Facades\Masters\Cluster\ClusterService;
+use App\Facades\Masters\Leasing\LeasingService;
+use App\Facades\Masters\SubCluster\SubClusterService;
+use App\Facades\Masters\Unit\UnitService;
+use App\Facades\Masters\Uom\UomService;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Jobs\Assets\BulkJob;
 use App\Jobs\Assets\ImportJob;
+use App\Jobs\Masters\Category\BulkJob as CategoryBulkJob;
+use App\Jobs\Masters\Cluster\BulkJob as ClusterBulkJob;
+use App\Jobs\Masters\Leasing\BulkJob as LeasingBulkJob;
+use App\Jobs\Masters\SubCluster\BulkJob as SubClusterBulkJob;
 use App\Models\Assets\Asset;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
@@ -138,6 +148,12 @@ class AssetService
         foreach (array_chunk($assets, 10) as $assets) {
             $batch->add(new BulkJob($assets));
         }
+        $batch = CategoryService::instanceBulk($batch);
+        $batch = ClusterService::instanceBulk($batch);
+        $batch = LeasingService::instanceBulk($batch);
+        $batch = SubClusterService::instanceBulk($batch);
+        $batch = UnitService::instanceBulk($batch);
+        $batch = UomService::instanceBulk($batch);
         return $batch;
     }
 

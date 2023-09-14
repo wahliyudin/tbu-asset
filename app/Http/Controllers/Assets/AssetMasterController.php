@@ -94,7 +94,7 @@ class AssetMasterController extends Controller
                 return $asset->_source->employee?->nama_karyawan ?? $asset->_source->pic;
             })
             ->editColumn('action', function ($asset) {
-                $key = $asset->_source->key;
+                $key = $asset->_source->id;
                 $kode = $asset->_source->kode;
                 return view('assets.asset.action', compact('key', 'kode'))->render();
             })

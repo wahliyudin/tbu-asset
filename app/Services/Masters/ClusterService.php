@@ -5,7 +5,9 @@ namespace App\Services\Masters;
 use App\DataTransferObjects\Masters\ClusterData;
 use App\Http\Requests\Masters\ClusterStoreRequest;
 use App\Facades\Elasticsearch;
+use App\Jobs\Masters\Cluster\BulkJob;
 use App\Models\Masters\Cluster;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class ClusterService
@@ -34,7 +36,7 @@ class ClusterService
 
     public static function store(array $data)
     {
-        if (!isset($data['id']) || !isset($data['name']) || !isset($data['category_id']) )  {
+        if (!isset($data['id']) || !isset($data['name']) || !isset($data['category_id'])) {
             return null;
         }
         if ($cluster = Cluster::query()->where('name', trim($data['name']))->where('category_id', trim($data['category_id']))->first()) {
@@ -68,5 +70,25 @@ class ClusterService
             return Elasticsearch::setModel(Cluster::class)->updated(ClusterData::from($cluster));
         }
         return Elasticsearch::setModel(Cluster::class)->created(ClusterData::from($cluster));
+    }
+
+    public function getAllDataWithRelations()
+    {
+        return Cluster::query()->with(['subClusters.subClusterItems', 'category'])->get();
+    }
+
+    public function bulk(array $clusters = [])
+    {
+        return Elasticsearch::setModel(Cluster::class)
+            ->bulk(ClusterData::collection($clusters));
+    }
+
+    public function instanceBulk(Batch $batch)
+    {
+        $clusters = $this->getAllDataWithRelations()->toArray();
+        foreach (array_chunk($clusters, 10) as $clusters) {
+            $batch->add(new BulkJob($clusters));
+        }
+        return $batch;
     }
 }

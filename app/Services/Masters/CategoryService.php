@@ -5,7 +5,9 @@ namespace App\Services\Masters;
 use App\DataTransferObjects\Masters\CategoryData;
 use App\Http\Requests\Masters\CategoryStoreRequest;
 use App\Facades\Elasticsearch;
+use App\Jobs\Masters\Category\BulkJob;
 use App\Models\Masters\Category;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class CategoryService
@@ -67,5 +69,25 @@ class CategoryService
             return Elasticsearch::setModel(Category::class)->updated(CategoryData::from($category));
         }
         return Elasticsearch::setModel(Category::class)->created(CategoryData::from($category));
+    }
+
+    public function getAllDataWithRelations()
+    {
+        return Category::query()->with(['clusters.subClusters.subClusterItems'])->get();
+    }
+
+    public function bulk(array $categories = [])
+    {
+        return Elasticsearch::setModel(Category::class)
+            ->bulk(CategoryData::collection($categories));
+    }
+
+    public function instanceBulk(Batch $batch)
+    {
+        $categories = $this->getAllDataWithRelations()->toArray();
+        foreach (array_chunk($categories, 10) as $categories) {
+            $batch->add(new BulkJob($categories));
+        }
+        return $batch;
     }
 }

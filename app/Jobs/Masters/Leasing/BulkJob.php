@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs\Assets;
+namespace App\Jobs\Masters\Leasing;
 
-use App\Services\Assets\AssetService;
+use App\Facades\Masters\Leasing\LeasingService;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -19,7 +19,7 @@ class BulkJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        protected array $assets
+        protected array $leasings
     ) {
     }
 
@@ -28,7 +28,6 @@ class BulkJob implements ShouldQueue
      */
     public function handle(): void
     {
-        // leasing, uom, unit, sub cluster, cluster, category
-        AssetService::bulk($this->assets);
+        LeasingService::bulk($this->leasings);
     }
 }

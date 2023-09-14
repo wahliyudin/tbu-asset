@@ -5,7 +5,9 @@ namespace App\Services\Masters;
 use App\DataTransferObjects\Masters\LeasingData;
 use App\Http\Requests\Masters\LeasingStoreRequest;
 use App\Facades\Elasticsearch;
+use App\Jobs\Masters\Leasing\BulkJob;
 use App\Models\Masters\Leasing;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class LeasingService
@@ -32,19 +34,19 @@ class LeasingService
         });
     }
 
-    public function store(LeasingData $data) {
-        if(!isset($data->name)){
+    public function store(LeasingData $data)
+    {
+        if (!isset($data->name)) {
             return null;
         }
         $leasing = Leasing::query()->where('name', $data->name)->first();
-        if($leasing){
+        if ($leasing) {
             return $leasing;
         }
 
         return Leasing::query()->create([
             'name' => $data->name,
         ]);
-        
     }
 
     // public static function store(LeasingData $data)
@@ -74,5 +76,25 @@ class LeasingService
             return Elasticsearch::setModel(Leasing::class)->updated(LeasingData::from($cluster));
         }
         return Elasticsearch::setModel(Leasing::class)->created(LeasingData::from($cluster));
+    }
+
+    public function getAllDataWithRelations()
+    {
+        return Leasing::query()->get();
+    }
+
+    public function bulk(array $clusters = [])
+    {
+        return Elasticsearch::setModel(Leasing::class)
+            ->bulk(LeasingData::collection($clusters));
+    }
+
+    public function instanceBulk(Batch $batch)
+    {
+        $leasings = $this->getAllDataWithRelations()->toArray();
+        foreach (array_chunk($leasings, 10) as $leasings) {
+            $batch->add(new BulkJob($leasings));
+        }
+        return $batch;
     }
 }

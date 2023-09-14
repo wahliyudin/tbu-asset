@@ -5,7 +5,9 @@ namespace App\Services\Masters;
 use App\DataTransferObjects\Masters\UnitData;
 use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Facades\Elasticsearch;
+use App\Jobs\Masters\Unit\BulkJob;
 use App\Models\Masters\Unit;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class UnitService
@@ -55,7 +57,7 @@ class UnitService
             'brand' => isset($data['brand']) ? $data['brand'] : null,
             'serial_number' => isset($data['serial_number']) ? $data['serial_number'] : null,
             'spesification' => isset($data['spesification']) ? $data['spesification'] : null,
-            'tahun_pembuatan' => ((int)$data['tahun_pembuatan'] == 0) ? null : (int)$data['tahun_pembuatan'] ,
+            'tahun_pembuatan' => ((int)$data['tahun_pembuatan'] == 0) ? null : (int)$data['tahun_pembuatan'],
         ]);
     }
 
@@ -79,5 +81,25 @@ class UnitService
             return Elasticsearch::setModel(Unit::class)->updated(UnitData::from($unit));
         }
         return Elasticsearch::setModel(Unit::class)->created(UnitData::from($unit));
+    }
+
+    public function getAllDataWithRelations()
+    {
+        return Unit::query()->get();
+    }
+
+    public function bulk(array $clusters = [])
+    {
+        return Elasticsearch::setModel(Unit::class)
+            ->bulk(UnitData::collection($clusters));
+    }
+
+    public function instanceBulk(Batch $batch)
+    {
+        $units = $this->getAllDataWithRelations()->toArray();
+        foreach (array_chunk($units, 10) as $units) {
+            $batch->add(new BulkJob($units));
+        }
+        return $batch;
     }
 }

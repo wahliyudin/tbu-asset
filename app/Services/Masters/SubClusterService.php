@@ -5,7 +5,9 @@ namespace App\Services\Masters;
 use App\DataTransferObjects\Masters\SubClusterData;
 use App\Http\Requests\Masters\SubClusterStoreRequest;
 use App\Facades\Elasticsearch;
+use App\Jobs\Masters\SubCluster\BulkJob;
 use App\Models\Masters\SubCluster;
+use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class SubClusterService
@@ -34,7 +36,7 @@ class SubClusterService
 
     public static function store(array $data)
     {
-        if (!isset($data['id']) || !isset($data['name']) || !isset($data['cluster_id']) )  {
+        if (!isset($data['id']) || !isset($data['name']) || !isset($data['cluster_id'])) {
             return null;
         }
         if ($subCluster = SubCluster::query()->where('name', trim($data['name']))->where('cluster_id', trim($data['cluster_id']))->first()) {
@@ -68,5 +70,25 @@ class SubClusterService
             return Elasticsearch::setModel(SubCluster::class)->updated(SubClusterData::from($subCluster));
         }
         return Elasticsearch::setModel(SubCluster::class)->created(SubClusterData::from($subCluster));
+    }
+
+    public function getAllDataWithRelations()
+    {
+        return SubCluster::query()->with(['cluster.category', 'subClusterItems'])->get();
+    }
+
+    public function bulk(array $clusters = [])
+    {
+        return Elasticsearch::setModel(SubCluster::class)
+            ->bulk(SubClusterData::collection($clusters));
+    }
+
+    public function instanceBulk(Batch $batch)
+    {
+        $subClusters = $this->getAllDataWithRelations()->toArray();
+        foreach (array_chunk($subClusters, 10) as $subClusters) {
+            $batch->add(new BulkJob($subClusters));
+        }
+        return $batch;
     }
 }
