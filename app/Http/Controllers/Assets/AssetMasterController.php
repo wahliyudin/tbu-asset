@@ -109,6 +109,13 @@ class AssetMasterController extends Controller
         ]);
     }
 
+    public function showScan($kode)
+    {
+        return view('assets.asset.show-scan', [
+            'asset' => AssetData::from($this->service->getByKode($kode)),
+        ]);
+    }
+
     public function store(AssetRequest $request)
     {
         try {

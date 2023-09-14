@@ -49,6 +49,8 @@ Route::get('sso/callback', [AuthController::class, 'callback'])->name('sso.callb
 
 Auth::routes();
 
+Route::get('asset-masters/{kode}/show-scan', [AssetMasterController::class, 'showScan'])->name('asset-masters.show-scan');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/home/charts', [HomeController::class, 'charts'])->name('home.charts');

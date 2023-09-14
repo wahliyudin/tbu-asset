@@ -735,6 +735,12 @@ var AssetsList = function () {
                         // var message = "Jumlah Job gagal: " + response.failedJobs + "<br> Jumlah Job sukses: " + response.processedJobs + "<br> dari " + response.totalJobs + " Job";
                         // toastr.error(message, 'Gagal!');
                         // }
+                        if (batch_asset_bulk) {
+                            $('.notif-progress #title').text('Synchronize...');
+                        }
+                        if (batch_asset) {
+                            $('.notif-progress #title').text('Uploading...');
+                        }
                         $('.notif-progress #desc').text(`Success: ${response.processedJobs}, Failed: ${response.failedJobs}, From: ${response.totalJobs}`);
                     })
                     .catch(function (error) {
