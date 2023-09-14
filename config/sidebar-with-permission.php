@@ -70,7 +70,7 @@ return [
             'child' => [
                 [
                     'title' => 'ASSET REQUEST',
-                    'permissions' => 'c,r,u,d,approv,reject',
+                    'permissions' => 'c,r,u,d,approv,reject,report',
                 ],
                 [
                     'title' => 'ASSET REGISTER',
@@ -83,7 +83,7 @@ return [
             'child' => [
                 [
                     'title' => 'ASSET TRANSFER',
-                    'permissions' => 'c,r,u,d,approv,reject',
+                    'permissions' => 'c,r,u,d,approv,reject,report',
                 ],
             ]
         ],
@@ -92,7 +92,7 @@ return [
             'child' => [
                 [
                     'title' => 'ASSET DISPOSE',
-                    'permissions' => 'c,r,u,d,approv,reject',
+                    'permissions' => 'c,r,u,d,approv,reject,report',
                 ],
             ]
         ],
@@ -117,6 +117,7 @@ return [
         'd' => 'delete',
         'approv' => 'approv',
         'reject' => 'reject',
+        'report' => 'report',
         'list' => 'list',
     ]
 ];

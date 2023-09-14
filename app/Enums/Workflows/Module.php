@@ -4,8 +4,8 @@ namespace App\Enums\Workflows;
 
 enum Module: string
 {
-    case CER_HO = 'CER HO';
-    case CER_SITE = 'CER SITE';
+    case CER_HO = 'CER_HO';
+    case CER_SITE = 'CER_SITE';
     case TRANSFER = 'TRANSFER';
     case DISPOSE = 'DISPOSE';
 

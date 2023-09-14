@@ -63,6 +63,7 @@ class ApprovalRepository
             $tmp = $settingApprovals->where('module', $module);
             $results = array_merge($results, [
                 $module->value => [
+                    'title' => $module->label(),
                     'module' => $module->value,
                     'childs' => $tmp
                 ],

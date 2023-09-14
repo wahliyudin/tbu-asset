@@ -14,8 +14,8 @@ class SidebarWithPermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $modules = config('sidebar_with_permission.sidebars');
-        $mapPermission = collect(config('sidebar_with_permission.permissions_map'));
+        $modules = config('sidebar-with-permission.sidebars');
+        $mapPermission = collect(config('sidebar-with-permission.permissions_map'));
         foreach ($modules as $module) {
             $name = str($module['title'])->lower()->value();
             $parent = Sidebar::query()->create([

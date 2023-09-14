@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <h4 class="text-dark">Approval {{ $settingApproval['module'] }}</h4>
+                            <h4 class="text-dark">Approval {{ $settingApproval['title'] }}</h4>
                         </div>
                     </div>
                     <div class="card-body">

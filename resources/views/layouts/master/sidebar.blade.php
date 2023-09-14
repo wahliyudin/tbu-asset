@@ -306,48 +306,57 @@
                         </div>
                     </div>
                 @endpermission
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-notepad-bookmark fs-2">
-                                <i class="path1"></i>
-                                <i class="path2"></i>
-                                <i class="path3"></i>
-                                <i class="path4"></i>
-                                <i class="path5"></i>
-                                <i class="path6"></i>
-                            </i>
+                @permission('asset_request_report|asset_transfer_report|asset_dispose_report')
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-notepad-bookmark fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                    <i class="path3"></i>
+                                    <i class="path4"></i>
+                                    <i class="path5"></i>
+                                    <i class="path6"></i>
+                                </i>
+                            </span>
+                            <span class="menu-title">Report</span>
+                            <span class="menu-arrow"></span>
                         </span>
-                        <span class="menu-title">Report</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion">
-                        <div class="menu-item">
-                            <a class="menu-link" href="">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Asset Request</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Asset Transfer</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Asset Dispose</span>
-                            </a>
+                        <div class="menu-sub menu-sub-accordion">
+                            @permission('asset_request_report')
+                                <div class="menu-item">
+                                    <a class="menu-link" href="">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Asset Request</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            @permission('asset_transfer_report')
+                                <div class="menu-item">
+                                    <a class="menu-link" href="">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Asset Transfer</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            @permission('asset_dispose_report')
+                                <div class="menu-item">
+                                    <a class="menu-link" href="">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Asset Dispose</span>
+                                    </a>
+                                </div>
+                            @endpermission
                         </div>
                     </div>
-                </div>
+                @endpermission
+                {{-- @permission('approval_read|access_permission_read') --}}
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -372,6 +381,7 @@
                                 </a>
                             </div>
                         @endpermission
+                        {{-- @permission('access_permission_read') --}}
                         <div class="menu-item">
                             <a class="menu-link {{ request()->routeIs('settings.access-permission.index') ? 'active' : '' }}"
                                 href="{{ route('settings.access-permission.index') }}">
@@ -381,8 +391,10 @@
                                 <span class="menu-title">Access Permission</span>
                             </a>
                         </div>
+                        {{-- @endpermission --}}
                     </div>
                 </div>
+                {{-- @endpermission --}}
             </div>
         </div>
     </div>
