@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Elasticsearch\Elasticsearch;
 use App\Elasticsearch\ElasticsearchBuilder;
 use App\Services\Assets\AssetService;
+use App\Services\HRIS\EmployeeService;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
 use App\Services\Masters\LeasingService;
@@ -28,6 +29,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind('sub_cluster_service', SubClusterService::class);
         $this->app->bind('unit_service', UnitService::class);
         $this->app->bind('uom_service', UomService::class);
+        $this->app->bind('employee_service', EmployeeService::class);
     }
 
     /**
