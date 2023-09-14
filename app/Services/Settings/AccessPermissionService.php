@@ -3,6 +3,7 @@
 namespace App\Services\Settings;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
+use App\Models\Employee;
 use App\Models\Sidebar;
 use App\Models\User;
 use App\Services\API\HRIS\EmployeeService;
@@ -17,14 +18,15 @@ class AccessPermissionService
     public function datatable()
     {
         $users = User::select(['nik', 'name'])->get();
-        $result = $this->employeeService->whereIn('nik', $users->pluck('nik')->toArray())->getData();
-        $data = EmployeeData::collection(isset($result['data']) ? $result['data'] : [])->toCollection();
-        $user = $users->where('nik', 12345678)->first();
-        $data->add(EmployeeData::from([
-            'nik' => $user->nik,
-            'nama_karyawan' => $user->name
+        $employees = Employee::select(['nik', 'nama_karyawan'])
+            ->whereIn('nik', $users->pluck('nik'))
+            ->get();
+        $admin = $users->where('nik', 12345678)->first();
+        $employees->add(new Employee([
+            'nik' => $admin->nik,
+            'nama_karyawan' => $admin->name,
         ]));
-        return $data;
+        return EmployeeData::collection($employees)->toCollection();
     }
 
     public function getSidebarAlreadyBuild(User $user)
