@@ -8,6 +8,7 @@ use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Models\Cers\Cer;
+use App\Models\Employee;
 use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\CerService as TXISCerService;
@@ -60,13 +61,31 @@ class CerService
 
     public function getListNoCerByUser(Request $request)
     {
-        return Cer::query()->where('status', Status::CLOSE)->when($request->nik, function ($query, $nik) {
-            $query->where('nik', $nik);
-        })->when($request->email, function ($query, $email) {
-            $query->whereHas('user', function ($query) use ($email) {
-                $query->where('email', $email);
-            });
-        })->pluck('no_cer');
+        $employee = Employee::query()
+            ->with('position')
+            ->where('nik', $request->nik)
+            ->orWhere('email_perusahaan', $request->email)
+            ->first();
+        return Cer::query()->where('status', Status::CLOSE)
+            ->when($request->nik, function ($query, $nik) {
+                $query->where('nik', $nik);
+            })->when($request->email, function ($query, $email) use ($employee) {
+                $query->whereHas('user', function ($query) use ($email) {
+                    $query->where('email', $email);
+                })
+                    ->whereHas('employee', function ($query) use ($employee) {
+                        $query->whereHas('position', function ($query) use ($employee) {
+                            $query->where('dept_id', $employee->position?->dept_id);
+                        });
+                    });
+            })
+            ->whereFalse('status_create_pr')
+            ->pluck('no_cer');
+    }
+
+    public function update(Cer $cer, array $data)
+    {
+        return $cer->update($data);
     }
 
     public function findByNo($no)

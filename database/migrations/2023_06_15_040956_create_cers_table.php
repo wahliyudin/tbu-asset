@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('sumber_pendanaan');
             $table->string('cost_analyst');
             $table->string('file_ucr')->nullable();
+            $table->boolean('status_pr')->default(false);
             $table->string('status')->default('open');
             $table->timestamps();
         });
