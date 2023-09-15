@@ -70,9 +70,7 @@ class CerService
             ->when($request->nik, function ($query, $nik) {
                 $query->where('nik', $nik);
             })->when($request->email, function ($query, $email) use ($employee) {
-                $query->whereHas('user', function ($query) use ($email) {
-                    $query->where('email', $email);
-                })->with(['employee' => function ($query) use ($employee) {
+                $query->with(['employee' => function ($query) use ($employee) {
                     $query->whereHas('position', function ($query) use ($employee) {
                         $query->where('dept_id', $employee->position?->dept_id);
                     });
