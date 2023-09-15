@@ -27,7 +27,7 @@ Route::post('login', [AuthController::class, 'login']);
 // Route::middleware('auth:sanctum')->group(function () {
 Route::get('cers/list-no-cer', [CerController::class, 'listNoCers']);
 Route::get('cers/{no}/show', [CerController::class, 'show']);
-Route::put('cers/{cer:no_cer}/update-status-pr', [CerController::class, 'updateStatusPr']);
+Route::post('cers/{cer:no_cer}/update-status-pr', [CerController::class, 'updateStatusPr']);
 
 Route::get('cer-items/list-ids', [CerItemController::class, 'listIds']);
 
