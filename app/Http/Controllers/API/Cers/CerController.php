@@ -27,7 +27,7 @@ class CerController extends Controller
         }
     }
 
-    public function updateStatusPr($id, Request $request)
+    public function updateStatusPr($noCer, Request $request)
     {
         try {
             $validator = Validator::make($request->all(), [
@@ -36,7 +36,7 @@ class CerController extends Controller
             if ($validator->fails()) {
                 return $this->response($validator->messages(), false, '', 422);
             }
-            $cer = Cer::query()->where('id', $id)->first();
+            $cer = Cer::query()->where('no_cer', $noCer)->first();
             if (!$cer) {
                 return $this->response([], false, 'Not Found', 404);
             }
