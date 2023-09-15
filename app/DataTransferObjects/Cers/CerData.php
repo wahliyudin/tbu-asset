@@ -47,7 +47,9 @@ class CerData extends Data implements DataInterface
         public ?BudgetData $budget,
     ) {
         $this->setDefaultValue();
-        $this->employee = EmployeeData::from(GlobalService::getEmployee($this->nik, false));
+        if (!isset($this->employee)) {
+            $this->employee = EmployeeData::from(GlobalService::getEmployee($this->nik, false));
+        }
         if (isset($this->budget_ref)) {
             $this->budget = BudgetData::fromApi(GlobalService::getBudgetByCode($this->budget_ref));
         }

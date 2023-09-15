@@ -60,9 +60,13 @@ class RegisterController extends Controller
 
     public function create(CerItem $cerItem)
     {
-        $cerItem->loadMissing(['cer']);
-        // dd($cerItem->toArray());
+        $cerItem->loadMissing([
+            'cer.employee.position.divisi',
+            'cer.employee.position.department',
+            'cer.employee.position.project',
+        ]);
         $data = CerItemData::from($cerItem);
+        // dd($data->toArray());
         $cerItemDetail = $this->cerItemService->getByCerItemId($cerItem->id);
         return view('cers.register.register', [
             'cerItem' => $data,

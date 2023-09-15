@@ -60,7 +60,8 @@
             $('select[name="sub_cluster_id"]').val('').trigger('change');
             $('select[name="pic"]').val('').trigger('change');
             $('input[name="activity"]').val('');
-            $('input[name="asset_location"]').val('');
+            $('select[name="asset_location"]').val(
+                "{{ $cerItem->cer?->employee?->position?->project?->project_id }}").trigger('change');
             $('input[name="kondisi"]').val('');
             $('select[name="uom_id"]').val("{{ $cerItem->uom_id }}").trigger('change');
             $('input[name="quantity"]').val("{{ $cerItem->qty }}");
@@ -79,11 +80,11 @@
             $('select[name="dealer_id_leasing"]').val('').trigger('change');
             $('select[name="leasing_id_leasing"]').val('').trigger('change');
             $('input[name="harga_beli_leasing"]').val("{{ $cerItem->price }}").trigger('input');
-            $('input[name="jangka_waktu_leasing"]').val('');
+            $('input[name="jangka_waktu_leasing"]').val("{{ $cerItem->est_umur }}");
             $('input[name="biaya_leasing"]').val('');
             $('input[name="legalitas_leasing"]').val('');
 
-            $('input[name="jangka_waktu_insurance"]').val('');
+            $('input[name="jangka_waktu_insurance"]').val("{{ $cerItem->est_umur }}");
             $('input[name="biaya_insurance"]').val('');
             $('input[name="legalitas_insurance"]').val('');
         });
