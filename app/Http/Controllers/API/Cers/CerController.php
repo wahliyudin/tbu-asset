@@ -40,9 +40,12 @@ class CerController extends Controller
             if (!$cer) {
                 return $this->response([], false, 'Not Found', 404);
             }
-            return $this->responseSuccess($this->cerService->update($cer, [
+            $this->cerService->update($cer, [
                 'status_pr' => $request->status_pr
-            ]));
+            ]);
+            return $this->responseSuccess([
+                'message' => 'Berhasil di ubah'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

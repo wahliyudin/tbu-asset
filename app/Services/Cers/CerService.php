@@ -82,7 +82,8 @@ class CerService
 
     public function update(Cer $cer, array $data)
     {
-        return $cer->update($data);
+        $cer->update($data);
+        return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
     }
 
     public function findByNo($no)
