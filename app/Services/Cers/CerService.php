@@ -72,14 +72,13 @@ class CerService
             })->when($request->email, function ($query, $email) use ($employee) {
                 $query->whereHas('user', function ($query) use ($email) {
                     $query->where('email', $email);
-                })
-                    ->whereHas('employee', function ($query) use ($employee) {
-                        $query->whereHas('position', function ($query) use ($employee) {
-                            $query->where('dept_id', $employee->position?->dept_id);
-                        });
+                })->with(['employee' => function ($query) use ($employee) {
+                    $query->whereHas('position', function ($query) use ($employee) {
+                        $query->where('dept_id', $employee->position?->dept_id);
                     });
+                }]);
             })
-            ->whereFalse('status_create_pr')
+            ->where('status_pr', false)
             ->pluck('no_cer');
     }
 

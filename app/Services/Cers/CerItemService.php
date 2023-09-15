@@ -15,9 +15,7 @@ class CerItemService
 
     public function getAllByReadyToRegister()
     {
-        return CerItem::query()->whereHas('cer', function ($query) {
-            $query->whereTrue('status_pr');
-        })->with('cer')->get();
+        return CerItem::query()->with('cer')->get();
     }
 
     public function all(...$columns)

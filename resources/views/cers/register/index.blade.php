@@ -33,9 +33,6 @@
                     <input type="text" data-kt-cer-item-table-filter="search"
                         class="form-control form-control-solid w-250px ps-13" placeholder="Cari Register Asset" />
                 </div>
-                <button type="button" class="btn btn-primary ps-4" data-bs-toggle="modal" data-bs-target="#timeline">
-                    <i class="ki-duotone ki-plus fs-2"></i>Timeline
-                </button>
             </div>
         </div>
         <div class="card-body pt-0">

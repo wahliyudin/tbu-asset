@@ -40,7 +40,7 @@ class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
         'type_budget' => TypeBudget::class,
         'sumber_pendanaan' => SumberPendanaan::class,
         'peruntukan' => Peruntukan::class,
-        'status' => Status::class,
+        'status' => Status::class
     ];
 
     public function indexName(): string
