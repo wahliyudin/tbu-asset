@@ -36,7 +36,7 @@ class CerController extends Controller
             if ($validator->fails()) {
                 return $this->response($validator->messages(), false, '', 422);
             }
-            $cer = Cer::query()->where('no_cer', $noCer)->first();
+            $cer = Cer::query()->with(['items', 'workflows'])->where('no_cer', $noCer)->first();
             if (!$cer) {
                 return $this->response([], false, 'Not Found', 404);
             }

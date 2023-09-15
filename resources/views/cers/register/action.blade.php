@@ -7,7 +7,7 @@
         </i><span>History</span>
     </button>
     @permission('asset_master_create')
-        <a href="{{ route('asset-registers.create', $cerItem->id) }}" @disabled($cerItem->cer?->status_pr)
+        <a href="{{ route('asset-registers.create', $cerItem->id) }}" @disabled($cerItem->cer?->status_pr === 0)
             class="btn btn-sm btn-success ps-4 d-flex">
             <i class="ki-duotone ki-add-files fs-3">
                 <i class="path1"></i>
