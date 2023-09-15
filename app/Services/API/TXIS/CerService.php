@@ -19,4 +19,11 @@ class CerService extends TXISService
             'cer_no' => $code
         ])->json();
     }
+
+    public function getByCerItemId($cerItemId)
+    {
+        return $this->get($this->url(self::PREFIX), [
+            'cer_item' => $cerItemId
+        ])->json();
+    }
 }

@@ -8,6 +8,11 @@ use App\Services\API\TXIS\CerService;
 
 class CerItemService
 {
+    public function __construct(
+        protected CerService $cerService
+    ) {
+    }
+
     public function getAllByReadyToRegister()
     {
         return CerItem::query()->get();
@@ -21,9 +26,9 @@ class CerItemService
             })->get();
     }
 
-    public function getCerItemTxis($code)
+    public function getByCerItemId($code)
     {
-        $data = (new CerService)->getByCode($code);
+        $data = $this->cerService->getByCerItemId($code);
         return isset($data['data']) ? $data['data'] : [];
     }
 }

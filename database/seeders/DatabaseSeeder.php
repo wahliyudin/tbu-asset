@@ -9,6 +9,7 @@ use App\Facades\Elasticsearch;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetInsurance;
 use App\Models\Assets\AssetLeasing;
+use App\Models\Cers\Cer;
 use App\Models\Masters\Catalog;
 use App\Models\Masters\Category;
 use App\Models\Masters\Cluster;
@@ -81,5 +82,6 @@ class DatabaseSeeder extends Seeder
             LeasingSeeder::class,
             UnitSeeder::class,
         ]);
+        Elasticsearch::setModel(Cer::class)->cleared();
     }
 }

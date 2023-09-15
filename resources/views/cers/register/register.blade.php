@@ -62,22 +62,23 @@
             $('input[name="activity"]').val('');
             $('input[name="asset_location"]').val('');
             $('input[name="kondisi"]').val('');
-            $('input[name="uom"]').val('');
-            $('input[name="quantity"]').val('');
-            $('input[name="tgl_bast"]').val('');
+            $('select[name="uom_id"]').val("{{ $cerItem->uom_id }}").trigger('change');
+            $('input[name="quantity"]').val("{{ $cerItem->qty }}");
+            $('input[name="tgl_bast"]').val(
+                "{{ isset($cerItemDetail['gr']['tgl_bast']) ? $cerItemDetail['gr']['tgl_bast'] : '' }}");
             $('input[name="hm"]').val('');
             $('input[name="pr_number"]').val(
-                "{{ isset($cerItemTxis['prnumber']) ? $cerItemTxis['prnumber'] : '' }}");
+                "{{ isset($cerItemDetail['pr']['pr']) ? $cerItemDetail['pr']['pr'] : '' }}");
             $('input[name="po_number"]').val(
-                "{{ isset($cerItemTxis['ponumber']) ? $cerItemTxis['ponumber'] : '' }}");
+                "{{ isset($cerItemDetail['po']['po']) ? $cerItemDetail['po']['po'] : '' }}");
             $('input[name="gr_number"]').val(
-                "{{ isset($cerItemTxis['grnumber']) ? $cerItemTxis['grnumber'] : '' }}");
+                "{{ isset($cerItemDetail['gr']['gr']) ? $cerItemDetail['gr']['gr'] : '' }}");
             $('input[name="remark"]').val('');
             $('select[name="status"]').val('').trigger('change');
 
             $('select[name="dealer_id_leasing"]').val('').trigger('change');
             $('select[name="leasing_id_leasing"]').val('').trigger('change');
-            $('input[name="harga_beli_leasing"]').val('');
+            $('input[name="harga_beli_leasing"]').val("{{ $cerItem->price }}").trigger('input');
             $('input[name="jangka_waktu_leasing"]').val('');
             $('input[name="biaya_leasing"]').val('');
             $('input[name="legalitas_leasing"]').val('');
