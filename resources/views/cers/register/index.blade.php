@@ -81,15 +81,15 @@
                             </div>
                             <div class="timeline-content mb-10 mt-n1">
                                 <div class="mb-5 pe-3">
-                                    <a href="#" class="fs-5 fw-semibold text-gray-800 text-hover-primary mb-2">3
-                                        New Incoming Project Files:</a>
-                                    <div class="d-flex align-items-center mt-1 fs-6">
-                                        <div class="text-muted me-2 fs-7">Sent at 10:30 PM
-                                            by</div>
-                                        <div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip"
-                                            data-bs-boundary="window" data-bs-placement="top" title="Jan Hummer">
-                                            <img src="../../assets/media/avatars/300-23.jpg" alt="img" />
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="fs-5 fw-semibold text-gray-800 mb-2 d-flex align-items-center">
+                                            <span>PR : </span>
+                                            <span class="nopr ms-2"></span>
                                         </div>
+                                        <span class="statuspr ms-2"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center mt-1 fs-6">
+                                        <div class="text-muted me-2 fs-7 prdate"></div>
                                     </div>
                                 </div>
                             </div>
@@ -104,18 +104,15 @@
                             </div>
                             <div class="timeline-content mb-10 mt-n1">
                                 <div class="pe-3 mb-5">
-                                    <div class="fs-5 fw-semibold mb-2">
-                                        Task <a href="#" class="text-primary fw-bold me-1">#45890</a>
-                                        merged with <a href="#" class="text-primary fw-bold me-1">#45890</a> in
-                                        “Ads Pro Admin Dashboard project:
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="fs-5 fw-semibold text-gray-800 mb-2 d-flex align-items-center">
+                                            <span>PO : </span>
+                                            <span class="nopo ms-2"></span>
+                                        </div>
+                                        <span class="statuspo ms-2"></span>
                                     </div>
                                     <div class="d-flex align-items-center mt-1 fs-6">
-                                        <div class="text-muted me-2 fs-7">Initiated at 4:23
-                                            PM by</div>
-                                        <div class="symbol symbol-circle symbol-25px" data-bs-toggle="tooltip"
-                                            data-bs-boundary="window" data-bs-placement="top" title="Nina Nilson">
-                                            <img src="../../assets/media/avatars/300-14.jpg" alt="img" />
-                                        </div>
+                                        <div class="text-muted me-2 fs-7 podate"></div>
                                     </div>
                                 </div>
                             </div>
@@ -131,18 +128,30 @@
                             </div>
                             <div class="timeline-content mt-n1">
                                 <div class="pe-3 mb-5">
-                                    <div class="fs-5 fw-semibold mb-2">
-                                        New order <a href="#" class="text-primary fw-bold me-1">#67890</a>
-                                        is placed for Workshow Planning & Budget Estimation
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="fs-5 fw-semibold text-gray-800 mb-2 d-flex align-items-center">
+                                            <span>GR : </span>
+                                            <span class="nogr ms-2"></span>
+                                        </div>
+                                        <span class="statusgr ms-2"></span>
                                     </div>
                                     <div class="d-flex align-items-center mt-1 fs-6">
-                                        <div class="text-muted me-2 fs-7">Placed at 4:23 PM
-                                            by</div>
-                                        <a href="#" class="text-primary fw-bold me-1">Jimmy
-                                            Bold</a>
+                                        <div class="text-muted me-2 fs-7 grdate"></div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 d-flex justify-content-end">
+                            @permission('asset_master_create')
+                                <a href="" class="btn btn-sm btn-success ps-4 d-flex btn-register d-none">
+                                    <i class="ki-duotone ki-add-files fs-3">
+                                        <i class="path1"></i>
+                                        <i class="path2"></i>
+                                        <i class="path3"></i>
+                                    </i>Register</a>
+                            @endpermission
                         </div>
                     </div>
                 </div>

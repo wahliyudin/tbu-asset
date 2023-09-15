@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cers;
 
 use App\DataTransferObjects\Cers\CerItemData;
+use App\Enums\Cers\StatusTXIS;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
@@ -15,6 +16,7 @@ use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
+use Carbon\Carbon;
 use Yajra\DataTables\Facades\DataTables;
 
 class RegisterController extends Controller
@@ -66,7 +68,6 @@ class RegisterController extends Controller
             'cer.employee.position.project',
         ]);
         $data = CerItemData::from($cerItem);
-        // dd($data->toArray());
         $cerItemDetail = $this->cerItemService->getByCerItemId($cerItem->id);
         return view('cers.register.register', [
             'cerItem' => $data,
@@ -87,6 +88,34 @@ class RegisterController extends Controller
             $this->assetService->updateOrCreate($request);
             return response()->json([
                 'message' => "Berhasil diregister"
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function history($id)
+    {
+        try {
+            $response = $this->cerItemService->getByCerItemId($id);
+            // dd($response);
+            return response()->json([
+                'is_register' => $response['gr']['status_gr'],
+                [
+                    'no' => $response['pr']['pr'],
+                    'badge' => StatusTXIS::byValue($response['pr']['status'])?->badge() ?? '-',
+                    'date' => isset($response['pr']['prdate']) ? Carbon::parse($response['pr']['prdate'])->translatedFormat('d F Y') : '-',
+                ],
+                [
+                    'no' => $response['po']['po'],
+                    'badge' => StatusTXIS::byValue($response['po']['status'])?->badge() ?? '-',
+                    'date' => isset($response['po']['podate']) ? Carbon::parse($response['po']['podate'])->translatedFormat('d F Y') : '-',
+                ],
+                [
+                    'no' => $response['gr']['gr'],
+                    'badge' => StatusTXIS::byValue($response['gr']['status'])?->badge() ?? '-',
+                    'date' => isset($response['gr']['tgl_gr']) ? Carbon::parse($response['gr']['tgl_gr'])->translatedFormat('d F Y') : '-',
+                ],
             ]);
         } catch (\Throwable $th) {
             throw $th;

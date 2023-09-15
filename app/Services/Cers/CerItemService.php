@@ -26,9 +26,9 @@ class CerItemService
             })->get();
     }
 
-    public function getByCerItemId($code)
+    public function getByCerItemId($id)
     {
-        $data = $this->cerService->getByCerItemId($code);
+        $data = $this->cerService->getByCerItemId($id);
         return isset($data['data']) ? $data['data'] : [];
     }
 }

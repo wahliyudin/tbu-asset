@@ -1,6 +1,7 @@
 "use strict";
 
 var index = function () {
+    var datatable;
 
     var initDatatable = () => {
         datatable = $('#cer_item_table').DataTable({
@@ -49,6 +50,75 @@ var index = function () {
         });
     }
 
+    var iniEvents = () => {
+        $('#cer_item_table').on('click', '.btn-history', function (e) {
+            e.preventDefault();
+            var id = $(this).data('cer-item');
+            var self = this;
+            $(self).attr("data-kt-indicator", "on");
+            $.ajax({
+                type: "GET",
+                url: `/asset-registers/${id}/history`,
+                dataType: "JSON",
+                success: function (response) {
+                    $('#timeline').modal('show');
+                    $('.nopr').text(response[0].no);
+                    $('.prdate').text(response[0].date);
+                    $('.statuspr').html(response[0].badge);
+
+                    $('.nopo').text(response[1].no);
+                    $('.podate').text(response[1].date);
+                    $('.statuspo').html(response[1].badge);
+
+                    $('.nogr').text(response[2].no);
+                    $('.grdate').text(response[2].date);
+                    $('.statusgr').html(response[2].badge);
+
+                    if (response['is_register']) {
+                        $('.btn-register').removeClass('d-none');
+                    }
+                    $(self).removeAttr("data-kt-indicator");
+
+                    $('.btn-register').attr('href', `/asset-registers/${id}/register`);
+                },
+                error: function (jqXHR, xhr, textStatus, errorThrow, exception) {
+                    $(self).removeAttr("data-kt-indicator");
+                    if (jqXHR.status == 422) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan!',
+                            text: JSON.parse(jqXHR.responseText)
+                                .message,
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: jqXHR.responseText,
+                        })
+                    }
+                }
+            });
+        });
+
+        $('[data-bs-dismiss="modal"]').click(function (e) {
+            e.preventDefault();
+            $('.nopr').text('');
+            $('.prdate').text('');
+            $('.statuspr').html('');
+
+            $('.nopo').text('');
+            $('.podate').text('');
+            $('.statuspo').html('');
+
+            $('.nogr').text('');
+            $('.grdate').text('');
+            $('.statusgr').html('');
+
+            $('.btn-register').addClass('d-none');
+        });
+    }
+
     return {
         init: function () {
             $.ajaxSetup({
@@ -57,6 +127,7 @@ var index = function () {
                 }
             });
             initDatatable();
+            iniEvents();
         }
     }
 }();

@@ -133,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-registers/datatable', [RegisterController::class, 'datatable'])->name('asset-registers.datatable');
     Route::get('asset-registers/{cerItem}/register', [RegisterController::class, 'create'])->name('asset-registers.create');
     Route::post('asset-registers/{cerItem}/register', [RegisterController::class, 'store'])->name('asset-registers.store');
+    Route::get('asset-registers/{id}/history', [RegisterController::class, 'history'])->name('asset-registers.history');
 
     Route::get('asset-transfers', [TransferController::class, 'index'])->name('asset-transfers.index')->middleware('permission:asset_transfer_read');
     Route::post('asset-transfers/datatable', [TransferController::class, 'datatable'])->name('asset-transfers.datatable')->middleware('permission:asset_transfer_read');
