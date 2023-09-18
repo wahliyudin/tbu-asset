@@ -42,9 +42,9 @@ class AssetService
         return Asset::query()->with(['unit', 'leasing', 'insurance', 'project'])->get();
     }
 
-    public function all($search = null)
+    public function all($search = null, $size = 50)
     {
-        return Elasticsearch::setModel(Asset::class)->searchMultiMatch($search, 50)->all();
+        return Elasticsearch::setModel(Asset::class)->searchMultiMatch($search, $size)->all();
     }
 
     public function getById($id)
@@ -81,7 +81,7 @@ class AssetService
     {
         $data = AssetData::from(array_merge($request->all()));
         DB::transaction(function () use ($data, $request) {
-            $asset = $this->assetRepository->updateOrCreate($data);
+            $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
             $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
             $this->sendToElasticsearch($asset, $data->getKey());
@@ -175,5 +175,25 @@ class AssetService
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }
         return Elasticsearch::setModel(Asset::class)->created(AssetData::from($asset));
+    }
+
+    public function nextKode(string $kode)
+    {
+        $arr = str($kode)->explode('-');
+        $arr->pop();
+        $result = $arr->implode('-');
+
+        $asset = Asset::query()
+            ->select(['kode'])
+            ->where('kode', 'like', "$result-%")
+            ->orderBy('kode', 'DESC')
+            ->first();
+
+        $arr = str($asset?->kode)->explode('-');
+        $num = (int) $arr->last();
+        $num = $num + 1;
+        $arr->pop();
+        $arr->push($num);
+        return $arr->implode('-');
     }
 }

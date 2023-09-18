@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Cers;
 
 use App\DataTransferObjects\Cers\CerItemData;
 use App\Enums\Cers\StatusTXIS;
+use App\Facades\Assets\AssetService;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
@@ -70,6 +71,7 @@ class RegisterController extends Controller
         $cerItemDetail = $this->cerItemService->getByCerItemId($cerItem->id);
         return view('cers.register.register', [
             'cerItem' => $data,
+            'kode' => AssetService::nextKode($cerItemDetail['asset_number']),
             'cerItemDetail' => $cerItemDetail,
             'units' => UnitService::dataForSelect(),
             'uoms' => UomService::dataForSelect(),
