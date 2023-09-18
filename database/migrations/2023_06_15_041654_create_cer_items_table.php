@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('qty');
             $table->bigInteger('price');
             $table->unsignedBigInteger('uom_id')->nullable();
+            $table->boolean('is_register')->default(false);
             $table->timestamps();
         });
     }

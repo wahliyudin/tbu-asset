@@ -19,6 +19,7 @@ class CerItem extends Model
         'qty',
         'price',
         'uom_id',
+        'is_register',
     ];
 
     public function cer(): BelongsTo

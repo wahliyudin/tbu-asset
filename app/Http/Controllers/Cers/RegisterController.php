@@ -8,7 +8,6 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Models\Cers\CerItem;
-use App\Services\Assets\AssetService;
 use App\Services\Cers\CerItemService;
 use App\Services\GlobalService;
 use App\Services\Masters\DealerService;
@@ -23,7 +22,7 @@ class RegisterController extends Controller
 {
     public function __construct(
         protected CerItemService $cerItemService,
-        protected AssetService $assetService,
+
     ) {
     }
 
@@ -85,7 +84,7 @@ class RegisterController extends Controller
     public function store(CerItem $cerItem, AssetRequest $request)
     {
         try {
-            $this->assetService->updateOrCreate($request);
+            $this->cerItemService->register($cerItem, $request);
             return response()->json([
                 'message' => "Berhasil diregister"
             ]);
