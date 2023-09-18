@@ -7,6 +7,7 @@ use App\Enums\Workflows\Module;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\ProjectHelper;
+use App\Jobs\Cers\ApprovalJob;
 use App\Models\Cers\Cer;
 use App\Services\Workflows\Workflow;
 use Illuminate\Database\Eloquent\Model;
@@ -25,14 +26,17 @@ class CerWorkflowService extends Workflow
 
     protected function handleIsLastAndApprov()
     {
+        dispatch(new ApprovalJob('emails.cer.close', $this->model));
     }
 
     protected function handleIsNotLastAndApprov()
     {
+        dispatch(new ApprovalJob('emails.cer.approv', $this->model));
     }
 
     protected function handleIsRejected()
     {
+        dispatch(new ApprovalJob('emails.cer.reject', $this->model));
     }
 
     protected function changeStatus(Model $cer, Status $status)

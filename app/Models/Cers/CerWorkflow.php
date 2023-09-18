@@ -3,6 +3,7 @@
 namespace App\Models\Cers;
 
 use App\Enums\Workflows\LastAction;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +28,10 @@ class CerWorkflow extends Model
     public function cer(): BelongsTo
     {
         return $this->belongsTo(Cer::class);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'nik', 'nik');
     }
 }
