@@ -21,6 +21,8 @@ use App\Jobs\Masters\Cluster\BulkJob as ClusterBulkJob;
 use App\Jobs\Masters\Leasing\BulkJob as LeasingBulkJob;
 use App\Jobs\Masters\SubCluster\BulkJob as SubClusterBulkJob;
 use App\Models\Assets\Asset;
+use App\Models\Assets\AssetLeasing;
+use App\Models\Assets\Depreciation;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
@@ -133,6 +135,8 @@ class AssetService
     public function import(array $data)
     {
         Asset::truncate();
+        AssetLeasing::truncate();
+        Depreciation::truncate();
         Elasticsearch::setModel(Asset::class)->cleared();
         $batch = Bus::batch([])->dispatch();
         foreach (array_chunk($data, 10) as $assets) {
