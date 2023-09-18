@@ -101,20 +101,20 @@ class RegisterController extends Controller
             $response = $this->cerItemService->getByCerItemId($id);
             // dd($response);
             return response()->json([
-                'is_register' => $response['gr']['status_gr'],
+                'is_register' => isset($response['gr']['status_gr']) ? $response['gr']['status_gr'] : false,
                 [
-                    'no' => $response['pr']['pr'],
-                    'badge' => StatusTXIS::byValue($response['pr']['status'])?->badge() ?? '-',
+                    'no' => isset($response['pr']['pr']) ? $response['pr']['pr'] : '-',
+                    'badge' => StatusTXIS::byValue(isset($response['pr']['status']) ? $response['pr']['status'] : null)?->badge() ?? '-',
                     'date' => isset($response['pr']['prdate']) ? Carbon::parse($response['pr']['prdate'])->translatedFormat('d F Y') : '-',
                 ],
                 [
-                    'no' => $response['po']['po'],
-                    'badge' => StatusTXIS::byValue($response['po']['status'])?->badge() ?? '-',
+                    'no' => isset($response['po']['po']) ? $response['po']['po'] : '-',
+                    'badge' => StatusTXIS::byValue(isset($response['po']['status']) ? $response['po']['status'] : null)?->badge() ?? '-',
                     'date' => isset($response['po']['podate']) ? Carbon::parse($response['po']['podate'])->translatedFormat('d F Y') : '-',
                 ],
                 [
-                    'no' => $response['gr']['gr'],
-                    'badge' => StatusTXIS::byValue($response['gr']['status'])?->badge() ?? '-',
+                    'no' => isset($response['gr']['gr']) ? $response['gr']['gr'] : '-',
+                    'badge' => StatusTXIS::byValue(isset($response['gr']['status']) ? $response['gr']['status'] : null)?->badge() ?? '-',
                     'date' => isset($response['gr']['tgl_gr']) ? Carbon::parse($response['gr']['tgl_gr'])->translatedFormat('d F Y') : '-',
                 ],
             ]);

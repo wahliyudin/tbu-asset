@@ -55,7 +55,7 @@
     <script src="{{ asset('assets/js/pages/cer/register/register.js') }}"></script>
     <script>
         $(document).ready(function() {
-            $('input[name="kode"]').val('');
+            $('input[name="kode"]').val("{{ $kode }}");
             $('select[name="unit_id"]').val('').trigger('change');
             $('select[name="sub_cluster_id"]').val('').trigger('change');
             $('select[name="pic"]').val('').trigger('change');

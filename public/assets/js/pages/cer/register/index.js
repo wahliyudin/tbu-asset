@@ -74,7 +74,7 @@ var index = function () {
                     $('.grdate').text(response[2].date);
                     $('.statusgr').html(response[2].badge);
 
-                    if (!response['is_register']) {
+                    if (response['is_register']) {
                         $('.btn-register').removeClass('d-none');
                     }
                     $(self).removeAttr("data-kt-indicator");
