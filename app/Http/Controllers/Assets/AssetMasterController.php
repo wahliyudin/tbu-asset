@@ -11,7 +11,6 @@ use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
-use App\Services\Masters\DealerService;
 use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
@@ -34,7 +33,7 @@ class AssetMasterController extends Controller
             'uoms' => UomService::dataForSelect(),
             'units' => UnitService::dataForSelect(),
             'subClusters' => SubClusterService::dataForSelect(),
-            'dealers' => DealerService::dataForSelect(),
+            'dealers' => GlobalService::vendorForSelect(),
             'leasings' => LeasingService::dataForSelect(),
             'projects' => GlobalService::getProjects(),
             'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection()

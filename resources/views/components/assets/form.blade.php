@@ -148,7 +148,7 @@
                             data-placeholder="Dealer" data-dropdown-parent=".dealer">
                             <option></option>
                             @foreach ($dealers as $dealer)
-                                <option value="{{ $dealer->getKey() }}">{{ $dealer->name }}
+                                <option value="{{ $dealer->vendorid }}">{{ $dealer->vendorname }}
                                 </option>
                             @endforeach
                         </select>

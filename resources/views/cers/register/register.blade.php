@@ -77,7 +77,9 @@
             $('input[name="remark"]').val('');
             $('select[name="status"]').val('').trigger('change');
 
-            $('select[name="dealer_id_leasing"]').val('').trigger('change');
+            $('select[name="dealer_id_leasing"]').val(
+                    "{{ isset($cerItemDetail['po']['vendorid']) ? $cerItemDetail['po']['vendorid'] : '' }}")
+                .trigger('change');
             $('select[name="leasing_id_leasing"]').val('').trigger('change');
             $('input[name="harga_beli_leasing"]').val("{{ $cerItem->price }}").trigger('input');
             $('input[name="jangka_waktu_leasing"]').val("{{ $cerItem->est_umur }}");

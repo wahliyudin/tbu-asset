@@ -4,9 +4,11 @@ namespace App\Services;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\ProjectData;
+use App\DataTransferObjects\API\TXIS\VendorData;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\HRIS\ProjectService;
 use App\Services\API\TXIS\BudgetService;
+use App\Services\API\TXIS\VendorService;
 
 class GlobalService
 {
@@ -50,5 +52,11 @@ class GlobalService
     {
         $project = (new ProjectService)->getById($id);
         return ProjectData::from(isset($project['data']) ? $project['data'] : []);
+    }
+
+    public static function vendorForSelect()
+    {
+        return VendorData::collection((new VendorService())->all()['data'])
+            ->only('vendorid', 'vendorname');
     }
 }

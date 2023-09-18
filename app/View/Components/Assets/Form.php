@@ -18,7 +18,7 @@ class Form extends Component
         public Collection $uoms,
         public Collection $subClusters,
         public Collection $employees,
-        public Collection $dealers,
+        public $dealers,
         public Collection $leasings,
     ) {
     }
