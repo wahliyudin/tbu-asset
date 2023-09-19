@@ -69,7 +69,7 @@
 
 @push('modal')
     <div class="modal fade" id="create-unit" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form class="form" action="#" id="create-unit_form">
                     <div class="modal-header" id="create-unit_header">
@@ -83,12 +83,12 @@
                     </div>
                     <div class="modal-body py-10 px-lg-17">
                         <div class="row">
-                            <div class="col-md-6 fv-row mb-7">
+                            <div class="col-md-12 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Prefix</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Prefix"
                                     name="prefix" />
                             </div>
-                            <div class="col-md-6 fv-row mb-7">
+                            <div class="col-md-12 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Model</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Model"
                                     name="model" />
