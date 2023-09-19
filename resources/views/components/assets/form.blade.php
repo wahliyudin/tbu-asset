@@ -5,6 +5,11 @@
             Asset </a>
     </li>
     <li class="nav-item my-1">
+        <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
+            data-bs-toggle="tab" href="#unit">
+            Unit </a>
+    </li>
+    <li class="nav-item my-1">
         <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 "
             data-bs-toggle="tab" href="#leasing">
             Leasing </a>
@@ -13,6 +18,11 @@
         <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 "
             data-bs-toggle="tab" href="#asuransi">
             Asuransi </a>
+    </li>
+    <li class="nav-item my-1">
+        <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 "
+            data-bs-toggle="tab" href="#depresiasi">
+            Depresiasi </a>
     </li>
 </ul>
 <div class="tab-content">
@@ -101,7 +111,8 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">HM</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="HM" name="hm" />
+                        <input type="text" class="form-control form-control-solid" placeholder="HM"
+                            name="hm" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">PR Number</label>

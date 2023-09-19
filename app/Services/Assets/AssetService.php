@@ -41,7 +41,7 @@ class AssetService
 
     public function allNotElastic()
     {
-        return Asset::query()->with(['unit', 'leasing', 'insurance', 'project'])->get();
+        return Asset::query()->with(['assetUnit', 'leasing', 'insurance', 'project'])->get();
     }
 
     public function all($search = null, $size = 50)
@@ -52,7 +52,7 @@ class AssetService
     public function getById($id)
     {
         return Asset::query()->with([
-            'unit',
+            'assetUnit',
             'subCluster',
             'insurance',
             'leasing',
@@ -63,7 +63,7 @@ class AssetService
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom'])
+            ->with(['assetUnit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom'])
             ->where('kode', $kode)
             ->firstOrFail();
     }
@@ -169,12 +169,12 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'project', 'department'])->get();
+        return Asset::query()->with(['assetUnit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'project', 'department'])->get();
     }
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
-        $asset->load(['unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
+        $asset->load(['assetUnit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }

@@ -16,7 +16,7 @@ class AssetSeeder extends Seeder
     public function run(): void
     {
         $this->command->info('Start Get data asset');
-        $assets = Asset::query()->with(['unit', 'uom', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing'])->get();
+        $assets = Asset::query()->with(['assetUnit', 'uom', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing'])->get();
         $this->command->info('End Get data asset');
         $this->command->info('Start Cleared assets');
         Elasticsearch::setModel(Asset::class)->cleared();

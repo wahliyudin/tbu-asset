@@ -9,9 +9,9 @@ use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
 use App\Models\Department;
 use App\Models\Masters\SubCluster;
-use App\Models\Masters\Unit;
 use App\Models\Masters\Uom;
 use App\Models\Project;
+use App\Models\Assets\AssetUnit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -25,7 +25,7 @@ class Asset extends Model implements ElasticsearchInterface
     protected $fillable = [
         'kode',
         'new_id_asset',
-        'unit_id',
+        'unit_asset_id',
         'sub_cluster_id',
         'pic',
         'activity',
@@ -53,9 +53,9 @@ class Asset extends Model implements ElasticsearchInterface
         return 'tbu_asset_assets';
     }
 
-    public function unit(): BelongsTo
+    public function unitAsset(): BelongsTo
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(AssetUnit::class);
     }
 
     public function subCluster(): BelongsTo

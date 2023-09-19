@@ -5,7 +5,6 @@ namespace App\DataTransferObjects\Assets;
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\ProjectData;
 use App\DataTransferObjects\Masters\SubClusterData;
-use App\DataTransferObjects\Masters\UnitData;
 use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
 use App\Interfaces\DataInterface;
@@ -18,7 +17,7 @@ class AssetData extends Data implements DataInterface
     public function __construct(
         public ?string $kode,
         public ?string $new_id_asset,
-        public ?string $unit_id,
+        public ?string $asset_unit_id,
         public ?string $sub_cluster_id,
         public ?string $pic,
         public ?string $activity,
@@ -40,7 +39,7 @@ class AssetData extends Data implements DataInterface
         public ?SubClusterData $sub_cluster,
         public ?AssetLeasingData $leasing,
         public ?DeprecationData $deprecation,
-        public ?UnitData $unit,
+        public ?AssetUnitData $asset_unit,
         public ?UomData $uom,
         public ?ProjectData $project,
         public ?EmployeeData $employee,
