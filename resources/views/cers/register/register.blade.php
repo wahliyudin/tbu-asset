@@ -56,7 +56,6 @@
     <script>
         $(document).ready(function() {
             $('input[name="kode"]').val("{{ $kode }}");
-            $('select[name="unit_id"]').val('').trigger('change');
             $('select[name="sub_cluster_id"]').val('').trigger('change');
             $('select[name="pic"]').val('{{ $cerItem->cer?->nik }}').trigger('change');
             $('input[name="activity"]').val('');
@@ -76,6 +75,17 @@
                 "{{ isset($cerItemDetail['gr']['gr']) ? $cerItemDetail['gr']['gr'] : '' }}");
             $('input[name="remark"]').val('');
             $('select[name="status"]').val('{{ \App\Enums\Asset\Status::ACTIVE->value }}').trigger('change');
+
+            $('select[name="unit_unit_id"]').val("").trigger('change');
+            $('input[name="unit_kode"]').val("");
+            $('input[name="unit_type"]').val("");
+            $('input[name="unit_seri"]').val("");
+            $('input[name="unit_class"]').val("");
+            $('input[name="unit_brand"]').val("");
+            $('input[name="unit_serial_number"]').val("");
+            $('input[name="unit_spesification"]').val("{{ $cerItem->description }}");
+            $('input[name="unit_tahun_pembuatan"]').val("");
+            $('input[name="unit_kelengkapan_tambahan"]').val("");
 
             $('select[name="dealer_id_leasing"]').val(
                     "{{ isset($cerItemDetail['po']['vendorid']) ? $cerItemDetail['po']['vendorid'] : '' }}")

@@ -68,10 +68,10 @@ class CerController extends Controller
                 return $asset->kode;
             })
             ->editColumn('description', function (Asset $asset) {
-                return $asset->unit?->spesification;
+                return $asset->assetUnit?->spesification;
             })
             ->editColumn('model', function (Asset $asset) {
-                return $asset->unit?->model;
+                return $asset->assetUnit?->unit?->model;
             })
             ->editColumn('uom', function (Asset $asset) {
                 return '<span data-id="' . $asset->uom_id . '">' . $asset->uom?->name . '</span>';
