@@ -236,7 +236,7 @@
                 <h5>5. Unbudget</h5>
                 @if ($type != 'show')
                     <button type="button" @disabled(\App\Helpers\Helper::hasBudgeted($cer))
-                        class="btn btn-sm btn-primary ps-3 pe-2 search-unbudget">
+                        class="btn btn-sm btn-primary ps-3 pe-2 search-budget">
                         <i class="ki-duotone ki-search-list fs-2">
                             <i class="path1"></i>
                             <i class="path2"></i>
