@@ -37,11 +37,11 @@ class UnitService
 
     public static function store(array $data)
     {
-        if (!isset($data['kode']) || !isset($data['model'])) {
+        if (!isset($data['prefix']) || !isset($data['model'])) {
             return null;
         }
         if ($unit = Unit::query()
-            ->where('kode', trim(isset($data['kode']) ? $data['kode'] : null))
+            ->where('prefix', trim(isset($data['prefix']) ? $data['prefix'] : null))
             ->orWhere('model', trim(isset($data['model']) ? $data['model'] : null))
             ->first()
         ) {

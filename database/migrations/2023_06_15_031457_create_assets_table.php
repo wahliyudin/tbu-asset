@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             $table->string('kode')->nullable();
-            $table->foreignId('asset_unit_id')->constrained()->nullable();
+            $table->foreignId('asset_unit_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(SubCluster::class)->nullable();
             $table->unsignedBigInteger('pic')->nullable();
             $table->string('activity')->nullable();

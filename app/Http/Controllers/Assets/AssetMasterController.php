@@ -10,6 +10,7 @@ use App\Http\Requests\Assets\ImportRequest;
 use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
 use App\Services\Assets\AssetService;
+use App\Services\Assets\AssetUnitService;
 use App\Services\GlobalService;
 use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
@@ -29,10 +30,11 @@ class AssetMasterController extends Controller
 
     public function index()
     {
+        // dd($this->service->allNotElastic()->first());
         return view('assets.asset.index', [
             'uoms' => UomService::dataForSelect(),
-            'units' => UnitService::dataForSelect(),
             'subClusters' => SubClusterService::dataForSelect(),
+            'units' => UnitService::dataForSelect(),
             'dealers' => GlobalService::vendorForSelect(),
             'leasings' => LeasingService::dataForSelect(),
             'projects' => GlobalService::getProjects(),
@@ -47,13 +49,13 @@ class AssetMasterController extends Controller
                 return $asset->kode;
             })
             ->editColumn('kode_unit', function ($asset) {
-                return $asset->unit?->kode;
+                return $asset->assetUnit?->kode;
             })
             ->editColumn('unit_model', function ($asset) {
-                return $asset->unit?->model;
+                return $asset->assetUnit?->unit?->model;
             })
             ->editColumn('unit_type', function ($asset) {
-                return $asset->unit?->type;
+                return $asset->assetUnit?->type;
             })
             ->editColumn('asset_location', function ($asset) {
                 return $asset->project?->project;
@@ -78,13 +80,13 @@ class AssetMasterController extends Controller
                 return $asset->_source->kode;
             })
             ->editColumn('kode_unit', function ($asset) {
-                return $asset->_source->unit?->kode;
+                return $asset->_source->asset_unit?->kode;
             })
             ->editColumn('unit_model', function ($asset) {
-                return $asset->_source->unit?->model;
+                return $asset->_source->asset_unit?->unit?->model;
             })
             ->editColumn('unit_type', function ($asset) {
-                return $asset->_source->unit?->type;
+                return $asset->_source->asset_unit?->type;
             })
             ->editColumn('asset_location', function ($asset) {
                 return $asset->_source->project?->project;

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('asset_units', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('unit_id')->constrained();
+            $table->foreignId('unit_id')->nullable()->constrained();
             $table->string('kode')->nullable();
             $table->string('type')->nullable();
             $table->string('seri')->nullable();

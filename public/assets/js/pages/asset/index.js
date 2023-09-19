@@ -30,6 +30,17 @@ var AssetsList = function () {
         remark: '',
         status: '',
 
+        unit_unit_id: '',
+        unit_kode: '',
+        unit_type: '',
+        unit_seri: '',
+        unit_class: '',
+        unit_brand: '',
+        unit_serial_number: '',
+        unit_spesification: '',
+        unit_tahun_pembuatan: '',
+        unit_kelengkapan_tambahan: '',
+
         dealer_id_leasing: '',
         leasing_id_leasing: '',
         harga_beli_leasing: '',
@@ -105,6 +116,23 @@ var AssetsList = function () {
         $("#tanggal_perolehan_leasing").flatpickr();
         $('.uang').mask('0.000.000.000', {
             reverse: true
+        });
+        new tempusDominus.TempusDominus(document.getElementById("tahun_pembuatan"), {
+            display: {
+                viewMode: "calendar",
+                components: {
+                    decades: true,
+                    year: true,
+                    month: false,
+                    date: false,
+                    hours: false,
+                    minutes: false,
+                    seconds: false
+                }
+            },
+            localization: {
+                format: 'yyyy'
+            }
         });
     }
 
@@ -256,13 +284,13 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'hm': {
-                        validators: {
-                            notEmpty: {
-                                message: 'HM is required'
-                            }
-                        }
-                    },
+                    // 'hm': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'HM is required'
+                    //         }
+                    //     }
+                    // },
                     'pr_number': {
                         validators: {
                             notEmpty: {
@@ -295,6 +323,84 @@ var AssetsList = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Status is required'
+                            }
+                        }
+                    },
+
+                    'unit_unit_id': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Unit is required'
+                            }
+                        }
+                    },
+                    'unit_kode': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kode is required'
+                            }
+                        }
+                    },
+                    'unit_model': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Model is required'
+                            }
+                        }
+                    },
+                    'unit_type': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Type is required'
+                            }
+                        }
+                    },
+                    'unit_seri': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Seri is required'
+                            }
+                        }
+                    },
+                    'unit_class': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Class is required'
+                            }
+                        }
+                    },
+                    'unit_brand': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Brand is required'
+                            }
+                        }
+                    },
+                    'unit_serial_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Status is required'
+                            }
+                        }
+                    },
+                    'unit_spesification': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Spesification is required'
+                            }
+                        }
+                    },
+                    'unit_kelengkapan_tambahan': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Kelengkapan Tambahan is required'
+                            }
+                        }
+                    },
+                    'unit_tahun_pembuatan': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tahun Pembuatan is required'
                             }
                         }
                     },
@@ -514,6 +620,17 @@ var AssetsList = function () {
         attributes.remark = $($(form).find('input[name="remark"]')).val();
         attributes.status = $($(form).find('select[name="status"]')).val();
 
+        attributes.unit_unit_id = $($(form).find('select[name="unit_unit_id"]')).val();
+        attributes.unit_kode = $($(form).find('input[name="unit_kode"]')).val();
+        attributes.unit_type = $($(form).find('input[name="unit_type"]')).val();
+        attributes.unit_seri = $($(form).find('input[name="unit_seri"]')).val();
+        attributes.unit_class = $($(form).find('input[name="unit_class"]')).val();
+        attributes.unit_brand = $($(form).find('input[name="unit_brand"]')).val();
+        attributes.unit_serial_number = $($(form).find('input[name="unit_serial_number"]')).val();
+        attributes.unit_spesification = $($(form).find('input[name="unit_spesification"]')).val();
+        attributes.unit_tahun_pembuatan = $($(form).find('input[name="unit_tahun_pembuatan"]')).val();
+        attributes.unit_kelengkapan_tambahan = $($(form).find('input[name="unit_kelengkapan_tambahan"]')).val();
+
         attributes.dealer_id_leasing = $($(form).find('select[name="dealer_id_leasing"]')).val();
         attributes.leasing_id_leasing = $($(form).find('select[name="leasing_id_leasing"]')).val();
         attributes.harga_beli_leasing = $($(form).find('input[name="harga_beli_leasing"]')).val();
@@ -546,6 +663,17 @@ var AssetsList = function () {
         attributes.remark = '';
         attributes.status = '';
 
+        attributes.unit_unit_id = '';
+        attributes.unit_kode = '';
+        attributes.unit_type = '';
+        attributes.unit_seri = '';
+        attributes.unit_class = '';
+        attributes.unit_brand = '';
+        attributes.unit_serial_number = '';
+        attributes.unit_spesification = '';
+        attributes.unit_tahun_pembuatan = '';
+        attributes.unit_kelengkapan_tambahan = '';
+
         attributes.dealer_id_leasing = '';
         attributes.leasing_id_leasing = '';
         attributes.harga_beli_leasing = '';
@@ -576,6 +704,17 @@ var AssetsList = function () {
         $($(form).find('input[name="gr_number"]')).val(json === null ? attributes.gr_number : json.gr_number);
         $($(form).find('input[name="remark"]')).val(json === null ? attributes.remark : json.remark);
         $($(form).find('select[name="status"]')).val(json === null ? attributes.status : json.status).trigger('change');
+
+        $($(form).find('select[name="unit_unit_id"]')).val(json === null ? attributes.unit_unit_id : json.asset_unit?.unit_id).trigger('change');
+        $($(form).find('input[name="unit_kode"]')).val(json === null ? attributes.unit_kode : json.asset_unit?.kode);
+        $($(form).find('input[name="unit_type"]')).val(json === null ? attributes.unit_type : json.asset_unit?.type);
+        $($(form).find('input[name="unit_seri"]')).val(json === null ? attributes.unit_seri : json.asset_unit?.seri);
+        $($(form).find('input[name="unit_class"]')).val(json === null ? attributes.unit_class : json.asset_unit?.class);
+        $($(form).find('input[name="unit_brand"]')).val(json === null ? attributes.unit_brand : json.asset_unit?.brand);
+        $($(form).find('input[name="unit_serial_number"]')).val(json === null ? attributes.unit_serial_number : json.asset_unit?.serial_number);
+        $($(form).find('input[name="unit_spesification"]')).val(json === null ? attributes.unit_spesification : json.asset_unit?.spesification);
+        $($(form).find('input[name="unit_tahun_pembuatan"]')).val(json === null ? attributes.unit_tahun_pembuatan : json.asset_unit?.tahun_pembuatan);
+        $($(form).find('input[name="unit_kelengkapan_tambahan"]')).val(json === null ? attributes.unit_kelengkapan_tambahan : json.asset_unit?.kelengkapan_tambahan);
 
         $($(form).find('select[name="dealer_id_leasing"]')).val(json === null ? attributes.dealer_id_leasing : json.leasing?.dealer_id).trigger('change');
         $($(form).find('select[name="leasing_id_leasing"]')).val(json === null ? attributes.leasing_id_leasing : json.leasing?.leasing_id).trigger('change');
@@ -674,6 +813,7 @@ var AssetsList = function () {
     var initInterval = () => {
         $('.btn-sync-progress').click(function (e) {
             e.preventDefault();
+            $(this).attr('disabled', true);
             localStorage.removeItem('batch_asset');
             bulkProcess();
         });
@@ -794,6 +934,7 @@ var AssetsList = function () {
             })
             .catch(function (error) {
                 handleError(error);
+                $(this).attr('disabled', false);
             });
     }
 

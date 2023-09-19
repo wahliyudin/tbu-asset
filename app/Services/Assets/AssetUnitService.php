@@ -2,6 +2,7 @@
 
 namespace App\Services\Assets;
 
+use App\DataTransferObjects\Assets\AssetUnitData;
 use App\Models\Assets\AssetUnit;
 
 class AssetUnitService
@@ -19,6 +20,7 @@ class AssetUnitService
         }
 
         return AssetUnit::query()->create([
+            'unit_id' => $data['unit_id'],
             'kode' => $data['kode'],
             'type' => $data['type'],
             'seri' => $data['seri'],
@@ -29,5 +31,12 @@ class AssetUnitService
             'tahun_pembuatan' => $data['tahun_pembuatan'],
             'kelengkapan_tambahan' => $data['kelengkapan_tambahan'],
         ]);
+    }
+
+    public function updateOrCreate(AssetUnitData $data)
+    {
+        return AssetUnit::query()->updateOrCreate([
+            $data->key
+        ], $data->toArray());
     }
 }

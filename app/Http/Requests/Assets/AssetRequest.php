@@ -32,6 +32,17 @@ class AssetRequest extends FormRequest
             'remark' => ['required'],
             'status' => ['required'],
 
+            'unit_unit_id' => ['required'],
+            'unit_kode' => ['required'],
+            'unit_type' => ['required'],
+            'unit_seri' => ['required'],
+            'unit_class' => ['required'],
+            'unit_brand' => ['required'],
+            'unit_serial_number' => ['required'],
+            'unit_spesification' => ['required'],
+            'unit_tahun_pembuatan' => ['required'],
+            'unit_kelengkapan_tambahan' => ['required'],
+
             'dealer_id_leasing' => ['required'],
             'leasing_id_leasing' => ['required'],
             'harga_beli_leasing' => ['required'],

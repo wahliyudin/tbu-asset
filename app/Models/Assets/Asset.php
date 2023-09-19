@@ -25,7 +25,7 @@ class Asset extends Model implements ElasticsearchInterface
     protected $fillable = [
         'kode',
         'new_id_asset',
-        'unit_asset_id',
+        'asset_unit_id',
         'sub_cluster_id',
         'pic',
         'activity',
@@ -53,7 +53,7 @@ class Asset extends Model implements ElasticsearchInterface
         return 'tbu_asset_assets';
     }
 
-    public function unitAsset(): BelongsTo
+    public function assetUnit(): BelongsTo
     {
         return $this->belongsTo(AssetUnit::class);
     }

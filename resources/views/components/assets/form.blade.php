@@ -5,7 +5,7 @@
             Asset </a>
     </li>
     <li class="nav-item my-1">
-        <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 active"
+        <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-base nav-link px-3 px-lg-4 mx-1 "
             data-bs-toggle="tab" href="#unit">
             Unit </a>
     </li>
@@ -34,16 +34,6 @@
                         <label class="required fs-6 fw-semibold mb-2">Kode</label>
                         <input type="text" class="form-control form-control-solid" placeholder="Kode"
                             name="kode" />
-                    </div>
-                    <div class="col-md-4 fv-row mb-7 unit">
-                        <label class="required fs-6 fw-semibold mb-2">Unit</label>
-                        <select class="form-select form-select-solid" name="unit_id" data-control="select2"
-                            data-placeholder="Unit" data-dropdown-parent=".unit">
-                            <option></option>
-                            @foreach ($units as $unit)
-                                <option value="{{ $unit->getKey() }}">{{ $unit->model }}</option>
-                            @endforeach
-                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 sub-cluster">
                         <label class="required fs-6 fw-semibold mb-2">Sub Cluster</label>
@@ -111,8 +101,7 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">HM</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="HM"
-                            name="hm" />
+                        <input type="text" class="form-control form-control-solid" placeholder="HM" name="hm" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">PR Number</label>
@@ -144,6 +133,75 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="unit" role="tabpanel">
+        <div class="card">
+            <div class="card-body p-9">
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-7 unit">
+                        <label class="required fs-6 fw-semibold mb-2">Unit</label>
+                        <select class="form-select form-select-solid" name="unit_unit_id" data-control="select2"
+                            data-placeholder="Unit" data-dropdown-parent=".unit">
+                            <option></option>
+                            @foreach ($units as $unit)
+                                <option value="{{ $unit->getKey() }}">{{ $unit->model }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Kode</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Kode"
+                            name="unit_kode" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Model</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Model"
+                            name="unit_model" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Type</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Type"
+                            name="unit_type" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Seri</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Seri"
+                            name="unit_seri" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Class</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Class"
+                            name="unit_class" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Brand</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Brand"
+                            name="unit_brand" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Serial Number</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Serial Number"
+                            name="unit_serial_number" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Spesification</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Spesification"
+                            name="unit_spesification" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Kelengkapan Tambahan</label>
+                        <input type="text" class="form-control form-control-solid"
+                            placeholder="Kelengkapan Tambahan" name="unit_kelengkapan_tambahan" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Tahun Pembuatan</label>
+                        <input type="text" id="tahun_pembuatan" class="form-control form-control-solid"
+                            placeholder="Tahun Pembuatan" name="unit_tahun_pembuatan" />
                     </div>
                 </div>
             </div>

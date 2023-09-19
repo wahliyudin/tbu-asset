@@ -5,6 +5,7 @@ namespace App\Services\Assets;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
+use App\DataTransferObjects\Assets\AssetUnitData;
 use App\Enums\Asset\Status;
 use App\Facades\Elasticsearch;
 use App\Facades\Masters\Category\CategoryService;
@@ -36,12 +37,15 @@ class AssetService
         protected AssetRepository $assetRepository,
         protected AssetInsuranceRepository $assetInsuranceRepository,
         protected AssetLeasingRepository $assetLeasingRepository,
+        protected AssetUnitService $assetUnitService,
     ) {
     }
 
     public function allNotElastic()
     {
-        return Asset::query()->with(['assetUnit', 'leasing', 'insurance', 'project'])->get();
+        return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project'])->whereHas('assetUnit', function ($query) {
+            $query->whereHas('unit');
+        })->get();
     }
 
     public function all($search = null, $size = 50)
@@ -52,7 +56,7 @@ class AssetService
     public function getById($id)
     {
         return Asset::query()->with([
-            'assetUnit',
+            'assetUnit.unit',
             'subCluster',
             'insurance',
             'leasing',
@@ -63,7 +67,7 @@ class AssetService
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['assetUnit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom'])
+            ->with(['assetUnit.unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom'])
             ->where('kode', $kode)
             ->firstOrFail();
     }
@@ -81,8 +85,9 @@ class AssetService
 
     public function updateOrCreate(AssetRequest $request)
     {
-        $data = AssetData::from(array_merge($request->all()));
-        DB::transaction(function () use ($data, $request) {
+        DB::transaction(function () use ($request) {
+            $assetUnit = $this->assetUnitService->updateOrCreate(AssetUnitData::fromRequest($request));
+            $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey()]));
             $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
             $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
@@ -169,12 +174,12 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['assetUnit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'project', 'department'])->get();
+        return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'project', 'department'])->get();
     }
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
-        $asset->load(['assetUnit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
+        $asset->load(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }
