@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
+            $table->string('prefix')->nullable();
             $table->string('model')->nullable();
-            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

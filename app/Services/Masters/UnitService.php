@@ -48,16 +48,8 @@ class UnitService
             return $unit;
         }
         return Unit::query()->create([
-            'kode' => isset($data['kode']) ? $data['kode'] : null,
             'prefix' => isset($data['prefix']) ? $data['prefix'] : null,
             'model' => isset($data['model']) ? $data['model'] : null,
-            'type' => isset($data['type']) ? $data['type'] : null,
-            'seri' => isset($data['seri']) ? $data['seri'] : null,
-            'class' => isset($data['class']) ? $data['class'] : null,
-            'brand' => isset($data['brand']) ? $data['brand'] : null,
-            'serial_number' => isset($data['serial_number']) ? $data['serial_number'] : null,
-            'spesification' => isset($data['spesification']) ? $data['spesification'] : null,
-            'tahun_pembuatan' => ((int)$data['tahun_pembuatan'] == 0) ? null : (int)$data['tahun_pembuatan'],
         ]);
     }
 

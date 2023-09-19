@@ -13,17 +13,8 @@ class Unit extends Model implements ElasticsearchInterface
     use HasFactory;
 
     protected $fillable = [
-        'kode',
         'prefix',
         'model',
-        'type',
-        'seri',
-        'class',
-        'brand',
-        'serial_number',
-        'spesification',
-        'tahun_pembuatan',
-        'kelengkapan_tambahan',
     ];
 
     public function indexName(): string

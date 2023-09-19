@@ -20,15 +20,8 @@ class UnitFactory extends Factory
     public function definition(): array
     {
         return [
-            'kode' => fake()->sentence(1),
+            'prefix' => fake()->countryCode(),
             'model' => fake()->sentence(1),
-            'type' => fake()->sentence(1),
-            'seri' => fake()->sentence(1),
-            'class' => fake()->sentence(1),
-            'brand' => fake()->sentence(1),
-            'serial_number' => fake()->sentence(1),
-            'spesification' => fake()->sentence(1),
-            'tahun_pembuatan' => fake()->year(),
         ];
     }
 }

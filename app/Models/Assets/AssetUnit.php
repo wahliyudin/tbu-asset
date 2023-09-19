@@ -13,7 +13,7 @@ class AssetUnit extends Model
     protected $fillable = [
         'unit_id',
         'kode',
-        'prefix',
+        'type',
         'seri',
         'class',
         'brand',

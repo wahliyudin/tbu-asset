@@ -24,29 +24,11 @@ class UnitController extends Controller
     public function datatable(Request $request)
     {
         return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
+            ->editColumn('prefix', function ($unit) {
+                return $unit->_source->prefix;
+            })
             ->editColumn('model', function ($unit) {
                 return $unit->_source->model;
-            })
-            ->editColumn('type', function ($unit) {
-                return $unit->_source->type;
-            })
-            ->editColumn('seri', function ($unit) {
-                return $unit->_source->seri;
-            })
-            ->editColumn('class', function ($unit) {
-                return $unit->_source->class;
-            })
-            ->editColumn('brand', function ($unit) {
-                return $unit->_source->brand;
-            })
-            ->editColumn('serial_number', function ($unit) {
-                return $unit->_source->serial_number;
-            })
-            ->editColumn('spesification', function ($unit) {
-                return $unit->_source->spesification;
-            })
-            ->editColumn('tahun_pembuatan', function ($unit) {
-                return $unit->_source->tahun_pembuatan;
             })
             ->editColumn('action', function ($unit) {
                 return view('masters.unit.action', compact('unit'))->render();

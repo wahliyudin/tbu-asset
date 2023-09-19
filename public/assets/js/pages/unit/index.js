@@ -31,36 +31,12 @@ var CategorysList = function () {
             },
             columns: [
                 {
+                    name: 'prefix',
+                    data: 'prefix',
+                },
+                {
                     name: 'model',
                     data: 'model',
-                },
-                {
-                    name: 'type',
-                    data: 'type',
-                },
-                {
-                    name: 'seri',
-                    data: 'seri',
-                },
-                {
-                    name: 'class',
-                    data: 'class',
-                },
-                {
-                    name: 'brand',
-                    data: 'brand',
-                },
-                {
-                    name: 'serial_number',
-                    data: 'serial_number',
-                },
-                {
-                    name: 'spesification',
-                    data: 'spesification',
-                },
-                {
-                    name: 'tahun_pembuatan',
-                    data: 'tahun_pembuatan',
                 },
                 {
                     name: 'action',
@@ -151,7 +127,7 @@ var CategorysList = function () {
             form,
             {
                 fields: {
-                    'kode': {
+                    'prefix': {
                         validators: {
                             notEmpty: {
                                 message: 'Kode is required'
@@ -162,62 +138,6 @@ var CategorysList = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Model is required'
-                            }
-                        }
-                    },
-                    'type': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Type is required'
-                            }
-                        }
-                    },
-                    'seri': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Seri is required'
-                            }
-                        }
-                    },
-                    'class': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Class is required'
-                            }
-                        }
-                    },
-                    'brand': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Brand is required'
-                            }
-                        }
-                    },
-                    'serial_number': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Serial Number is required'
-                            }
-                        }
-                    },
-                    'kelengkapan_tambahan': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Kelengkapan Tamabahan is required'
-                            }
-                        }
-                    },
-                    'spesification': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Spesification is required'
-                            }
-                        }
-                    },
-                    'tahun_pembuatan': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Tahun Pembuatan is required'
                             }
                         }
                     },
@@ -245,16 +165,8 @@ var CategorysList = function () {
                             url: "/master/units/store",
                             data: {
                                 key: $(submitButton).data('unit'),
-                                kode: $($(form).find('input[name="kode"]')).val(),
+                                prefix: $($(form).find('input[name="prefix"]')).val(),
                                 model: $($(form).find('input[name="model"]')).val(),
-                                type: $($(form).find('input[name="type"]')).val(),
-                                seri: $($(form).find('input[name="seri"]')).val(),
-                                class: $($(form).find('input[name="class"]')).val(),
-                                brand: $($(form).find('input[name="brand"]')).val(),
-                                serial_number: $($(form).find('input[name="serial_number"]')).val(),
-                                spesification: $($(form).find('input[name="spesification"]')).val(),
-                                kelengkapan_tambahan: $($(form).find('input[name="kelengkapan_tambahan"]')).val(),
-                                tahun_pembuatan: $($(form).find('input[name="tahun_pembuatan"]')).val(),
                             },
                             dataType: "JSON",
                             success: function (response) {
@@ -375,16 +287,8 @@ var CategorysList = function () {
 
     var buttonCreate = () => {
         $('[data-bs-target="#create-unit"]').on('click', function () {
-            $($(form).find('input[name="kode"]')).val('');
+            $($(form).find('input[name="prefix"]')).val('');
             $($(form).find('input[name="model"]')).val('');
-            $($(form).find('input[name="type"]')).val('');
-            $($(form).find('input[name="seri"]')).val('');
-            $($(form).find('input[name="class"]')).val('');
-            $($(form).find('input[name="brand"]')).val('');
-            $($(form).find('input[name="serial_number"]')).val('');
-            $($(form).find('input[name="spesification"]')).val('');
-            $($(form).find('input[name="kelengkapan_tambahan"]')).val('');
-            $($(form).find('input[name="tahun_pembuatan"]')).val('');
             $('#create-unit .title').text('Tambah Unit');
             $(submitButton).data('unit', '');
         });
@@ -402,16 +306,8 @@ var CategorysList = function () {
                 url: `/master/units/${unit}/edit`,
                 dataType: "JSON",
                 success: function (response) {
-                    $($(form).find('input[name="kode"]')).val(response.kode);
+                    $($(form).find('input[name="prefix"]')).val(response.prefix);
                     $($(form).find('input[name="model"]')).val(response.model);
-                    $($(form).find('input[name="type"]')).val(response.type);
-                    $($(form).find('input[name="seri"]')).val(response.seri);
-                    $($(form).find('input[name="class"]')).val(response.class);
-                    $($(form).find('input[name="brand"]')).val(response.brand);
-                    $($(form).find('input[name="serial_number"]')).val(response.serial_number);
-                    $($(form).find('input[name="spesification"]')).val(response.spesification);
-                    $($(form).find('input[name="kelengkapan_tambahan"]')).val(response.kelengkapan_tambahan);
-                    $($(form).find('input[name="tahun_pembuatan"]')).val(response.tahun_pembuatan);
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },

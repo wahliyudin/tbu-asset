@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('unit_id')->constrained();
             $table->string('kode')->nullable();
-            $table->string('prefix')->nullable();
+            $table->string('type')->nullable();
             $table->string('seri')->nullable();
             $table->string('class')->nullable();
             $table->string('brand')->nullable();

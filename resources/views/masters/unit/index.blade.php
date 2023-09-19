@@ -54,14 +54,8 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="unit_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th class="min-w-125px">Prefix</th>
                         <th class="min-w-125px">Model</th>
-                        <th class="min-w-125px">Type</th>
-                        <th class="min-w-125px">Seri</th>
-                        <th class="min-w-125px">Class</th>
-                        <th class="min-w-125px">Brand</th>
-                        <th class="min-w-125px">Serial Number</th>
-                        <th class="min-w-125px">Spesification</th>
-                        <th class="min-w-125px">Tahun Pembuatan</th>
                         <th class="text-end min-w-70px">Actions</th>
                     </tr>
                 </thead>
@@ -90,54 +84,14 @@
                     <div class="modal-body py-10 px-lg-17">
                         <div class="row">
                             <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Kode</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Kode"
-                                    name="kode" />
+                                <label class="required fs-6 fw-semibold mb-2">Prefix</label>
+                                <input type="text" class="form-control form-control-solid" placeholder="Prefix"
+                                    name="prefix" />
                             </div>
                             <div class="col-md-6 fv-row mb-7">
                                 <label class="required fs-6 fw-semibold mb-2">Model</label>
                                 <input type="text" class="form-control form-control-solid" placeholder="Model"
                                     name="model" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Type</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Type"
-                                    name="type" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Seri</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Seri"
-                                    name="seri" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Class</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Class"
-                                    name="class" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Brand</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Brand"
-                                    name="brand" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Serial Number</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Serial Number"
-                                    name="serial_number" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Spesification</label>
-                                <input type="text" class="form-control form-control-solid" placeholder="Spesification"
-                                    name="spesification" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">kelengkapan_tambahan</label>
-                                <input type="text" class="form-control form-control-solid"
-                                    placeholder="Kelengkapan Tambahan" name="kelengkapan_tambahan" />
-                            </div>
-                            <div class="col-md-6 fv-row mb-7">
-                                <label class="required fs-6 fw-semibold mb-2">Tahun Pembuatan</label>
-                                <input type="text" id="tahun_pembuatan" class="form-control form-control-solid"
-                                    placeholder="Tahun Pembuatan" name="tahun_pembuatan" />
                             </div>
                         </div>
                     </div>

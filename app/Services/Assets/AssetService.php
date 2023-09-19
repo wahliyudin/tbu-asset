@@ -103,7 +103,7 @@ class AssetService
 
         return Asset::query()->create([
             'kode' => $data['kode'],
-            'unit_id' => $data['unit_id'],
+            'asset_unit_id' => $data['asset_unit_id'],
             'sub_cluster_id' => $data['sub_cluster_id'],
             'pic' => $data['pic'],
             'activity' => $data['activity'],

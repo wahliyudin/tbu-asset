@@ -2,29 +2,21 @@
 
 namespace App\Jobs\Assets;
 
-use App\DataTransferObjects\Masters\CategoryData;
-use App\DataTransferObjects\Masters\ClusterData;
 use App\DataTransferObjects\Masters\LeasingData;
-use App\DataTransferObjects\Masters\SubClusterData;
-use App\DataTransferObjects\Masters\UnitData;
 use App\Helpers\CarbonHelper;
-use App\Models\Assets\Asset;
-use App\Models\Assets\AssetLeasing;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Project;
 use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetLeasingService;
 use App\Services\Assets\AssetService;
-use App\Services\GlobalService;
+use App\Services\Assets\AssetUnitService;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
-use App\Services\Masters\DealerService;
 use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
-use Carbon\Carbon;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -32,7 +24,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class ImportJob implements ShouldQueue
 {
@@ -58,27 +49,31 @@ class ImportJob implements ShouldQueue
                 'id' => $val['kode_asset_category'],
                 'name' => $val['asset_category']
             ]);
-            
-            
+
+
 
             $cluster = ClusterService::store([
                 'id' => $val['kode_asset_cluster'],
                 'name' => $val['asset_cluster'],
                 'category_id' => $category?->getKey()
             ]);
-            
+
             $subCluster = SubClusterService::store([
                 'id' => $val['kode_asset_sub_cluster'],
                 'name' => $val['asset_sub_cluster'],
                 'cluster_id' => $cluster?->getKey()
             ]);
 
-            
+
 
             $unit = UnitService::store([
-                'kode' => isset($val['id_unit']) ? $val['id_unit'] : null,
                 'prefix' => isset($val['kode_unit_model']) ? $val['kode_unit_model'] : null,
                 'model' => isset($val['unit_model']) ? $val['unit_model'] : null,
+            ]);
+
+            $assetUnit = AssetUnitService::store([
+                'kode' => isset($val['id_unit']) ? $val['id_unit'] : null,
+                'unit_id' => $unit?->getKey(),
                 'type' => isset($val['unit_type']) ? $val['unit_type'] : null,
                 'seri' => isset($val['seri']) ? $val['seri'] : null,
                 'class' => isset($val['unit_class']) ? $val['unit_class'] : null,
@@ -114,7 +109,7 @@ class ImportJob implements ShouldQueue
 
             $asset = AssetService::store([
                 'kode' => isset($val['new_id_asset']) ? $val['new_id_asset'] : null,
-                'unit_id' => $unit?->getKey(),
+                'asset_unit_id' => $assetUnit?->getKey(),
                 'sub_cluster_id' => $subCluster?->getKey(),
                 'pic' => $pic?->nik,
                 'activity' => isset($val['activity']) ? $val['activity'] : null,

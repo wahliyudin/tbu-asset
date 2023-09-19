@@ -10,7 +10,7 @@ class AssetUnitData extends Data
     public function __construct(
         public ?string $unit_id,
         public ?string $kode,
-        public ?string $prefix,
+        public ?string $type,
         public ?string $seri,
         public ?string $class,
         public ?string $brand,
