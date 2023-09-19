@@ -14,6 +14,7 @@ class Unit extends Model implements ElasticsearchInterface
 
     protected $fillable = [
         'kode',
+        'prefix',
         'model',
         'type',
         'seri',

@@ -15,6 +15,7 @@ class SubCluster extends Model implements ElasticsearchInterface
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'cluster_id',
         'name',
     ];

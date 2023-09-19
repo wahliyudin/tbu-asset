@@ -39,7 +39,7 @@ class SubClusterService
         if (!isset($data['id']) || !isset($data['name']) || !isset($data['cluster_id'])) {
             return null;
         }
-        if ($subCluster = SubCluster::query()->where('name', trim($data['name']))->where('cluster_id', trim($data['cluster_id']))->first()) {
+        if ($subCluster = SubCluster::query()->where('id', trim($data['id']))->orWhere('cluster_id', trim($data['cluster_id']))->first()) {
             return $subCluster;
         }
         return SubCluster::query()->create([

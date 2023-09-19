@@ -14,7 +14,8 @@ class Category extends Model implements ElasticsearchInterface
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'id',
+        'name',
     ];
 
     public function indexName(): string

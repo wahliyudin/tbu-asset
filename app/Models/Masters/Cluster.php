@@ -15,6 +15,7 @@ class Cluster extends Model implements ElasticsearchInterface
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'category_id',
         'name',
     ];
