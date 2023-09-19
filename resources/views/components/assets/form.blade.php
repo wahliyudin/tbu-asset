@@ -100,7 +100,7 @@
                             id="tgl_bast" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">HM</label>
+                        <label class="fs-6 fw-semibold mb-2">HM</label>
                         <input type="text" class="form-control form-control-solid" placeholder="HM" name="hm" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">

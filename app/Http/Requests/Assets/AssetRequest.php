@@ -25,7 +25,7 @@ class AssetRequest extends FormRequest
             'uom_id' => ['required'],
             'quantity' => ['required', 'integer'],
             'tgl_bast' => ['required', 'date'],
-            'hm' => ['required'],
+            'hm' => ['nullable'],
             'pr_number' => ['required'],
             'po_number' => ['required'],
             'gr_number' => ['required'],
