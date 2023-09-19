@@ -20,6 +20,11 @@
                     </li>
                     <li class="nav-item my-1">
                         <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-5 nav-link px-3 px-lg-4 mx-1 "
+                            data-bs-toggle="tab" href="#unit">
+                            Unit </a>
+                    </li>
+                    <li class="nav-item my-1">
+                        <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-5 nav-link px-3 px-lg-4 mx-1 "
                             data-bs-toggle="tab" href="#leasing">
                             Leasing </a>
                     </li>
@@ -27,6 +32,11 @@
                         <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-5 nav-link px-3 px-lg-4 mx-1 "
                             data-bs-toggle="tab" href="#asuransi">
                             Asuransi </a>
+                    </li>
+                    <li class="nav-item my-1">
+                        <a class="btn btn-sm btn-color-gray-600 bg-state-body btn-active-color-gray-800 fw-bolder fw-bold fs-6 fs-lg-5 nav-link px-3 px-lg-4 mx-1 "
+                            data-bs-toggle="tab" href="#depresiasi">
+                            Depresiasi </a>
                     </li>
                 </ul>
             </div>
@@ -177,6 +187,100 @@
                                     <label class="col-lg-4 fw-semibold text-muted">Remark</label>
                                     <div class="col-lg-7">
                                         <span class="fw-bold fs-6 text-gray-800">{{ $asset->remark ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="unit" role="tabpanel">
+                        <div class="row mb-5">
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Unit</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->unit?->model ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Kode</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->kode ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Type</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->type ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Seri</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->seri ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Class</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit->class ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Brand</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->brand ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Serial Number</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->serial_number ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Spesification</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->spesification ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Tahun Pembuatan</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->tahun_pembuatan ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Kelengkapan Tambahan</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->kelengkapan_tambahan ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>

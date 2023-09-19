@@ -43,9 +43,7 @@ class AssetService
 
     public function allNotElastic()
     {
-        return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project'])->whereHas('assetUnit', function ($query) {
-            $query->whereHas('unit');
-        })->get();
+        return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project'])->get();
     }
 
     public function all($search = null, $size = 50)
@@ -130,6 +128,7 @@ class AssetService
     public function delete(Asset $asset)
     {
         return DB::transaction(function () use ($asset) {
+            $this->assetUnitService->delete($asset->assetUnit);
             $this->assetInsuranceRepository->delete($asset->insurance);
             $this->assetLeasingRepository->delete($asset->leasing);
             Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));

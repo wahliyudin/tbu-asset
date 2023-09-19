@@ -39,4 +39,9 @@ class AssetUnitService
             $data->key
         ], $data->toArray());
     }
+
+    public function delete(?AssetUnit $assetUnit)
+    {
+        return $assetUnit?->delete();
+    }
 }
