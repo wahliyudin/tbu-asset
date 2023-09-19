@@ -185,8 +185,10 @@ class AssetService
     {
         $arr = str($kode)->explode('-');
         $arr->pop();
+        $arr = $arr->replace([
+            1 => '%'
+        ]);
         $result = $arr->implode('-');
-
         $asset = Asset::query()
             ->select(['kode'])
             ->where('kode', 'like', "$result-%")
