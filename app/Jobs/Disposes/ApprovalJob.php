@@ -36,7 +36,7 @@ class ApprovalJob implements ShouldQueue
     {
 
         if ($this->view == 'emails.dispose.approv') {;
-            $employee = DisposeWorkflowService::setModel($this->dispose)->currentWorkflow()?->employee;
+            $employee = DisposeWorkflowService::setModel($this->dispose)->nextWorkflow()?->employee;
             $data['url'] = route('approvals.disposes.show', $this->dispose->getKey());
         } else {
             $employee = $this->dispose->employee;

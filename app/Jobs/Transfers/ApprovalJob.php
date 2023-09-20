@@ -36,7 +36,7 @@ class ApprovalJob implements ShouldQueue
     {
 
         if ($this->view == 'emails.transfer.approv') {;
-            $employee = TransferWorkflowService::setModel($this->transfer)->currentWorkflow()?->employee;
+            $employee = TransferWorkflowService::setModel($this->transfer)->nextWorkflow()?->employee;
             $data['url'] = route('approvals.transfers.show', $this->transfer->getKey());
         } else {
             $employee = $this->transfer->employee;
