@@ -77,7 +77,7 @@ class CerController extends Controller
                 return '<span data-id="' . $asset->uom_id . '">' . $asset->uom?->name . '</span>';
             })
             ->editColumn('est_umur', function (Asset $asset) {
-                return $asset->depreciation?->umur_asset;
+                return $asset->lifetime?->masa_pakai;
             })
             ->editColumn('unit_price', function (Asset $asset) {
                 return Helper::formatRupiah($asset->leasing?->harga_beli);

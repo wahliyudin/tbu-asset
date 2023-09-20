@@ -310,9 +310,20 @@
                             name="date" readonly />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Umur Asset</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Umur Asset"
-                            name="umur_asset" />
+                        <label class="fs-6 fw-semibold mb-2">Nilai Sisa</label>
+                        <input type="text" class="form-control form-control-solid uang" placeholder="Nilai Sisa"
+                            name="nilai_sisa" value="0" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7 lifetime">
+                        <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
+                        <select class="form-select form-select-solid" name="lifetime_id" data-control="select2"
+                            data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime">
+                            <option></option>
+                            @foreach ($lifetimes as $lifetime)
+                                <option value="{{ $lifetime->getKey() }}">{{ $lifetime->masa_pakai }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="depresiasi_table">

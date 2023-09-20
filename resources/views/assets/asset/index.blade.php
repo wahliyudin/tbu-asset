@@ -120,8 +120,8 @@
                 </div>
                 <div class="modal-body px-lg-17" style="min-height: 761px;">
                     <form class="form" action="#" id="create-asset_form">
-                        <x-assets.form :projects="$projects" :uoms="$uoms" :units="$units" :subClusters="$subClusters"
-                            :employees="$employees" :dealers="$dealers" :leasings="$leasings" />
+                        <x-assets.form :lifetimes="$lifetimes" :projects="$projects" :uoms="$uoms" :units="$units"
+                            :subClusters="$subClusters" :employees="$employees" :dealers="$dealers" :leasings="$leasings" />
                     </form>
                 </div>
                 <div class="modal-footer flex-center">

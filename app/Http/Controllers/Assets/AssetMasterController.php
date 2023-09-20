@@ -11,10 +11,12 @@ use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Assets\ImportRequest;
 use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
+use App\Models\Masters\Lifetime;
 use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
 use App\Services\Masters\LeasingService;
+use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
@@ -38,6 +40,7 @@ class AssetMasterController extends Controller
             'uoms' => UomService::dataForSelect(),
             'subClusters' => SubClusterService::dataForSelect(),
             'units' => UnitService::dataForSelect(),
+            'lifetimes' => LifetimeService::dataForSelect(),
             'dealers' => GlobalService::vendorForSelect(),
             'leasings' => LeasingService::dataForSelect(),
             'projects' => GlobalService::getProjects(),
@@ -191,17 +194,18 @@ class AssetMasterController extends Controller
     public function depreciation(Request $request)
     {
         try {
-            $umur_asset = $request->get('umur_asset');
+            $lifetime_id = $request->get('lifetime_id');
             $price = $request->get('price');
+            $nilaiSisa = $request->get('nilai_sisa');
             $date = $request->get('date');
-            if (!$umur_asset || !$price || !$date) {
+            if (!$lifetime_id || !$price || !$date) {
                 return response()->json([]);
             }
             $request->validate([
-                'umur_asset' => ['numeric'],
                 'date' => ['date'],
             ]);
-            $depresiasi = $this->assetDepreciationService->generate($umur_asset, Helper::resetRupiah($price), CarbonHelper::convertDate($date));
+            $lifetime = Lifetime::query()->find($lifetime_id);
+            $depresiasi = $this->assetDepreciationService->generate($lifetime->masa_pakai, CarbonHelper::convertDate($date), Helper::resetRupiah($price), Helper::resetRupiah($nilaiSisa));
             return response()->json($depresiasi);
         } catch (\Throwable $th) {
             throw $th;

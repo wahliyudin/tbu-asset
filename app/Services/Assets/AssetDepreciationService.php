@@ -30,20 +30,21 @@ class AssetDepreciationService
         ]);
     }
 
-    public static function generate(int $month, int $price, string $date)
+    public static function generate(int $month, string $date, int $price, int $nilaiSisa = 0)
     {
         $date = Carbon::make($date);
         $result = [];
-        $sisa = $price;
-        for ($i = 0; $i < $month; $i++) {
-            $depre = $price / $month;
-            $sisa = $sisa - $depre;
+        $year = $month / 12;
+        $depre = ($price - $nilaiSisa) / $year;
+        $akumulasi = $depre;
+        for ($i = 0; $i < $year; $i++) {
             $result[] = [
                 'date' => $date->translatedFormat('d F Y'),
                 'depreciation' => Helper::formatRupiah($depre, true),
-                'sisa' => Helper::formatRupiah($sisa, true)
+                'sisa' => Helper::formatRupiah($price - $akumulasi, true)
             ];
-            $date->addMonth();
+            $akumulasi = $depre + $akumulasi;
+            $date->addYear();
         }
         return $result;
     }

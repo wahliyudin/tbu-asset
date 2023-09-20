@@ -410,12 +410,23 @@
                             </div>
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Umur Asset</label>
+                                    <label class="col-lg-4 fw-semibold text-muted">Nilai Sisa</label>
                                     <div class="col-lg-7">
                                         <span
-                                            class="fw-bold fs-6 text-gray-800">{{ $asset->umur_asset ?? '-' }}</span>
+                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\Helper::formatRupiah($asset->nilai_sisa) ?? '-' }}</span>
                                     </div>
-                                    <input type="hidden" name="umur_asset" value="{{ $asset->umur_asset }}">
+                                    <input type="hidden" name="nilai_sisa"
+                                        value="{{ \App\Helpers\Helper::formatRupiah($asset->nilai_sisa) }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Masa Pakai</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->lifetime?->masa_pakai ?? '-' }}</span>
+                                    </div>
+                                    <input type="hidden" name="lifetime_id" value="{{ $asset->lifetime_id }}">
                                 </div>
                             </div>
                         </div>

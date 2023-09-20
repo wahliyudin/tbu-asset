@@ -25,6 +25,7 @@ use App\Jobs\Masters\SubCluster\BulkJob as SubClusterBulkJob;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
+use App\Models\Masters\Lifetime;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
@@ -60,14 +61,14 @@ class AssetService
             'subCluster',
             'insurance',
             'leasing',
-            'uom',
+            'uom', 'lifetime',
         ])->find($id);
     }
 
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['assetUnit.unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom'])
+            ->with(['assetUnit.unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom', 'lifetime'])
             ->where('kode', $kode)
             ->firstOrFail();
     }
@@ -87,9 +88,11 @@ class AssetService
     {
         DB::transaction(function () use ($request) {
             $assetUnit = $this->assetUnitService->updateOrCreate(AssetUnitData::fromRequest($request));
-            $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey()]));
+            $nilaiSisa = Helper::resetRupiah($request->nilai_sisa);
+            $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey(), 'nilai_sisa' => $nilaiSisa]));
             $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
-            $deprecations = $this->prepareDeprecation($asset->getKey(), $request->umur_asset, Helper::resetRupiah($request->price), $request->date);
+            $lifetime = Lifetime::query()->find($request->lifetime_id);
+            $deprecations = $this->prepareDeprecation($asset->getKey(), $lifetime->masa_pakai, $request->date, Helper::resetRupiah($request->price), $nilaiSisa ?? 0);
             $asset->depreciations()->delete();
             $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
@@ -98,15 +101,15 @@ class AssetService
         });
     }
 
-    public function prepareDeprecation($assetId, $month, $price, $date)
+    public function prepareDeprecation($assetId, $masa_pakai, $date, $price, $nilaiSisa = 0)
     {
-        $depre = $this->assetDepreciationService->generate($month, $price, $date);
+        $depre = $this->assetDepreciationService->generate($masa_pakai, $date, $price, $nilaiSisa);
         $results = [];
         foreach ($depre as $key => $value) {
             $results[] = [
                 'asset_id' => $assetId,
-                'masa_pakai' => null,
-                'umur_asset' => $month,
+                'masa_pakai' => $masa_pakai,
+                'umur_asset' => null,
                 'umur_pakai' => null,
                 'depresiasi' => Helper::resetRupiah($value['depreciation']),
                 'sisa' => Helper::resetRupiah($value['sisa']),
@@ -137,7 +140,8 @@ class AssetService
             'kondisi' => $data['kondisi'],
             'uom_id' => $data['uom_id'],
             'quantity' => $data['quantity'],
-            'umur_asset' => $data['umur_asset'],
+            'lifetime_id' => $data['lifetime_id'],
+            'nilai_sisa' => $data['nilai_sisa'],
             'tgl_bast' => $data['tgl_bast'],
             'hm' => $data['hm'],
             'pr_number' => $data['pr_number'],
@@ -196,12 +200,12 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'project', 'department'])->get();
+        return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'project', 'department'])->get();
     }
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
-        $asset->load(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom']);
+        $asset->load(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }

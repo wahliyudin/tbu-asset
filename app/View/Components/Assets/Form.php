@@ -15,6 +15,7 @@ class Form extends Component
     public function __construct(
         public Collection $projects,
         public Collection $units,
+        public Collection $lifetimes,
         public Collection $uoms,
         public Collection $subClusters,
         public Collection $employees,

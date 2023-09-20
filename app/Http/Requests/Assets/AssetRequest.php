@@ -53,7 +53,7 @@ class AssetRequest extends FormRequest
             'biaya_insurance' => ['required'],
             'legalitas_insurance' => ['required'],
 
-            'umur_asset' => ['required'],
+            'lifetime_id' => ['required'],
         ];
     }
 }

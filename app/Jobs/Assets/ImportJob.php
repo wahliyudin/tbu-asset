@@ -14,6 +14,7 @@ use App\Services\Assets\AssetUnitService;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
 use App\Services\Masters\LeasingService;
+use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
@@ -102,6 +103,9 @@ class ImportJob implements ShouldQueue
 
             $department = Department::query()->where('department_name', $val['departemen'])->first();
 
+            $lifetime = LifetimeService::store([
+                'masa_pakai' => $val['masa_pakai']
+            ]);
 
             $asset = AssetService::store([
                 'kode' => isset($val['new_id_asset']) ? $val['new_id_asset'] : null,
@@ -114,7 +118,8 @@ class ImportJob implements ShouldQueue
                 'kondisi' => isset($val['kondisi']) ? $val['kondisi'] : null,
                 'uom_id' => $uom?->getKey(),
                 'quantity' => isset($val['jumlah']) ? $val['jumlah'] : null,
-                'umur_asset' => isset($val['umur_asset']) ? (int) $val['umur_asset'] : 0,
+                'lifetime_id' => $lifetime?->getKey(),
+                'nilai_sisa' => isset($val['nilai_sisa']) ? (int) $val['nilai_sisa'] : 0,
                 'tgl_bast' => CarbonHelper::convertDate($val['tanggal_bast']),
                 'hm' => isset($val['hours_meter']) ? $val['hours_meter'] : null,
                 'pr_number' => isset($val['pr']) ? $val['pr'] : null,
@@ -139,10 +144,10 @@ class ImportJob implements ShouldQueue
             ]);
 
             $tglBast = CarbonHelper::convertDate($val['tanggal_bast']);
-            if ($asset?->getKey() && $tglBast) {
-                $umur_asset = isset($val['umur_asset']) ? (int) $val['umur_asset'] : 0;
+            if ($asset?->getKey() && $tglBast && $lifetime) {
                 $nilaiPerolehan = isset($val['nilai_perolehan']) ? (int) $val['nilai_perolehan'] : 0;
-                $depreciations = AssetsAssetService::prepareDeprecation($asset?->getKey(), $umur_asset, $nilaiPerolehan, $tglBast);
+                $nilaiSisa = isset($val['nilai_sisa']) ? (int) $val['nilai_sisa'] : 0;
+                $depreciations = AssetsAssetService::prepareDeprecation($asset?->getKey(), $lifetime->masa_pakai, $tglBast, $nilaiPerolehan, $nilaiSisa);
                 Log::info($depreciations);
                 // $depresiasi = AssetDepreciationService::store([
                 //     'asset_id' => $asset->getKey(),

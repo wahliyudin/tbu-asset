@@ -12,6 +12,7 @@ use App\Models\Cers\CerItem;
 use App\Services\Cers\CerItemService;
 use App\Services\GlobalService;
 use App\Services\Masters\LeasingService;
+use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
@@ -73,6 +74,7 @@ class RegisterController extends Controller
             'kode' => AssetService::nextKode($cerItemDetail['asset_number']),
             'cerItemDetail' => $cerItemDetail,
             'units' => UnitService::dataForSelect(),
+            'lifetimes' => LifetimeService::dataForSelect(),
             'uoms' => UomService::dataForSelect(),
             'subClusters' => SubClusterService::dataForSelect(),
             'dealers' => GlobalService::vendorForSelect(),

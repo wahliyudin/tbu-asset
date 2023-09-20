@@ -39,7 +39,8 @@ var detail = function () {
             data: {
                 date: $('input[name="date"]').val(),
                 price: $('input[name="price"]').val(),
-                umur_asset: $('input[name="umur_asset"]').val(),
+                nilai_sisa: $('input[name="nilai_sisa"]').val(),
+                lifetime_id: $('input[name="lifetime_id"]').val(),
             },
             dataType: "JSON",
             success: function (response) {

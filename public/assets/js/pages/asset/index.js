@@ -53,7 +53,9 @@ var AssetsList = function () {
         biaya_insurance: '',
         legalitas_insurance: '',
 
-        umur_asset: '',
+        date: '',
+        lifetime_id: '',
+        nilai_sisa: '',
     };
 
     var initCategoryList = function () {
@@ -479,10 +481,10 @@ var AssetsList = function () {
                         }
                     },
 
-                    'umur_asset': {
+                    'lifetime_id': {
                         validators: {
                             notEmpty: {
-                                message: 'Umur Asset is required'
+                                message: 'Masa Pakai is required'
                             }
                         }
                     },
@@ -653,7 +655,9 @@ var AssetsList = function () {
         attributes.biaya_insurance = $($(form).find('input[name="biaya_insurance"]')).val();
         attributes.legalitas_insurance = $($(form).find('input[name="legalitas_insurance"]')).val();
 
-        attributes.umur_asset = $($(form).find('input[name="umur_asset"]')).val();
+        attributes.date = $($(form).find('input[name="date"]')).val();
+        attributes.lifetime_id = $($(form).find('select[name="lifetime_id"]')).val();
+        attributes.nilai_sisa = $($(form).find('input[name="nilai_sisa"]')).val();
     }
 
     var resetAttributes = () => {
@@ -698,7 +702,8 @@ var AssetsList = function () {
         attributes.biaya_insurance = '';
         attributes.legalitas_insurance = '';
 
-        attributes.umur_asset = '';
+        attributes.lifetime_id = '';
+        attributes.nilai_sisa = '';
     }
 
     const populateForm = (json = null) => {
@@ -744,7 +749,8 @@ var AssetsList = function () {
 
         $($(form).find('input[name="price"]')).val(json === null ? attributes.harga_beli_leasing : json.leasing?.harga_beli).trigger('input');
         $($(form).find('input[name="date"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);
-        $($(form).find('input[name="umur_asset"]')).val(json === null ? attributes.umur_asset : json.umur_asset).trigger('change');
+        $($(form).find('input[name="nilai_sisa"]')).val(json === null ? attributes.nilai_sisa : json.nilai_sisa).trigger('input');
+        $($(form).find('select[name="lifetime_id"]')).val(json === null ? attributes.lifetime_id : json.lifetime_id).trigger('change');
     }
 
     var handleError = function (jqXHR, target) {

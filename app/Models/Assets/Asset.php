@@ -12,6 +12,7 @@ use App\Models\Masters\SubCluster;
 use App\Models\Masters\Uom;
 use App\Models\Project;
 use App\Models\Assets\AssetUnit;
+use App\Models\Masters\Lifetime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,7 +35,8 @@ class Asset extends Model implements ElasticsearchInterface
         'kondisi',
         'uom_id',
         'quantity',
-        'umur_asset',
+        'lifetime_id',
+        'nilai_sisa',
         'tgl_bast',
         'hm',
         'pr_number',
@@ -87,6 +89,11 @@ class Asset extends Model implements ElasticsearchInterface
     public function uom()
     {
         return $this->belongsTo(Uom::class);
+    }
+
+    public function lifetime()
+    {
+        return $this->belongsTo(Lifetime::class);
     }
 
     public function project()

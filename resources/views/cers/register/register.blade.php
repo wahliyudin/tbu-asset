@@ -32,8 +32,8 @@
     <div class="card">
         <div class="card-body">
             <form action="" method="post" class="form-asset">
-                <x-assets.form :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers" :leasings="$leasings"
-                    :projects="$projects" :uoms="$uoms" />
+                <x-assets.form :lifetimes="$lifetimes" :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers"
+                    :leasings="$leasings" :projects="$projects" :uoms="$uoms" />
                 <div class="d-flex justify-content-end">
                     <button type="button" data-cer-item="{{ $cerItem->id }}" class="btn btn-sm btn-primary ps-4 simpan">
                         <span class="indicator-label">
@@ -108,7 +108,7 @@
             $('input[name="price"]').val("{{ $cerItem->price }}").trigger('input');
             $('input[name="date"]').val(
                 "{{ isset($cerItemDetail['gr']['tgl_bast']) ? $cerItemDetail['gr']['tgl_bast'] : '' }}");
-            $('input[name="umur_asset"]').val().trigger('change');
+            $('select[name="lifetime_id"]').val().trigger('change');
         });
     </script>
 @endpush

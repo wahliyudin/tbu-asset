@@ -35,4 +35,17 @@ class LifetimeService
             return $lifetime->delete();
         });
     }
+
+    public static function store(array $data)
+    {
+        if (!$data['masa_pakai']) {
+            return null;
+        }
+        if ($lifetime = Lifetime::query()->where('masa_pakai', $data['masa_pakai'])->first()) {
+            return $lifetime;
+        }
+        return Lifetime::query()->create([
+            'masa_pakai' => $data['masa_pakai']
+        ]);
+    }
 }
