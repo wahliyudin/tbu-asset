@@ -2,6 +2,10 @@
 
 @section('title', 'Register Asset')
 
+@push('css')
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @section('toolbar')
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
         <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
@@ -51,6 +55,7 @@
 @endsection
 
 @push('js')
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/cer/register/register.js') }}"></script>
     <script>
