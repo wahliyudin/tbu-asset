@@ -132,6 +132,7 @@
                                         <div class="fs-5 fw-semibold text-gray-800 mb-2 d-flex align-items-center">
                                             <span>GR : </span>
                                             <span class="nogr ms-2"></span>
+                                            <span class="link-doc-bast ms-2"></span>
                                         </div>
                                         <span class="statusgr ms-2"></span>
                                     </div>

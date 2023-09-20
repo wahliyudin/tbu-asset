@@ -46,7 +46,7 @@
                         <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Kode</label>
+                                    <label class="col-lg-4 fw-semibold text-muted">ID Asset</label>
                                     <div class="col-lg-7">
                                         <span class="fw-bold fs-6 text-gray-800">{{ $asset->kode ?? '-' }}</span>
                                     </div>
@@ -108,15 +108,6 @@
                                     <label class="col-lg-4 fw-semibold text-muted">Kondisi</label>
                                     <div class="col-lg-7">
                                         <span class="fw-bold fs-6 text-gray-800">{{ $asset->kondisi ?? '-' }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Unit
-                                        Code</label>
-                                    <div class="col-lg-7">
-                                        <span class="fw-bold fs-6 text-gray-800">{{ $asset->unit?->kode ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -184,6 +175,24 @@
                         <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Umur Asset</label>
+                                    <div class="col-lg-7">
+                                        <span class="fw-bold fs-6 text-gray-800">{{ $umurAsset ?? '-' }} Bulan</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Umur Pakai</label>
+                                    <div class="col-lg-7">
+                                        <span class="fw-bold fs-6 text-gray-800">{{ $umurPakai ?? '-' }} Bulan</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Remark</label>
                                     <div class="col-lg-7">
                                         <span class="fw-bold fs-6 text-gray-800">{{ $asset->remark ?? '-' }}</span>
@@ -196,7 +205,7 @@
                         <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Unit</label>
+                                    <label class="col-lg-4 fw-semibold text-muted">Unit Model</label>
                                     <div class="col-lg-7">
                                         <span
                                             class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->unit?->model ?? '-' }}</span>
@@ -205,7 +214,7 @@
                             </div>
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Kode</label>
+                                    <label class="col-lg-4 fw-semibold text-muted">ID Unit</label>
                                     <div class="col-lg-7">
                                         <span
                                             class="fw-bold fs-6 text-gray-800">{{ $asset->asset_unit?->kode ?? '-' }}</span>
@@ -345,6 +354,15 @@
                                     <div class="col-lg-7">
                                         <span
                                             class="fw-bold fs-6 text-gray-800">{{ $asset->leasing?->legalitas ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Tanggal Perolehan</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\CarbonHelper::convertDate($asset->leasing?->tanggal_perolehan, 'd F Y') ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>
