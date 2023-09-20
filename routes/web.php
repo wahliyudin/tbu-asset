@@ -14,6 +14,7 @@ use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
 use App\Http\Controllers\Masters\DealerController;
 use App\Http\Controllers\Masters\LeasingController;
+use App\Http\Controllers\Masters\LifetimeController;
 use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
@@ -108,6 +109,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/uoms/store', [UomController::class, 'store'])->name('masters.uoms.store')->middleware('permission:uom_create');
     Route::post('master/uoms/{uom}/edit', [UomController::class, 'edit'])->name('masters.uoms.edit')->middleware('permission:uom_update');
     Route::delete('master/uoms/{uom}/destroy', [UomController::class, 'destroy'])->name('masters.uoms.destroy')->middleware('permission:uom_delete');
+
+    Route::get('master/lifetimes', [LifetimeController::class, 'index'])->name('masters.lifetimes.index')->middleware('permission:lifetime_read');
+    Route::post('master/lifetimes/datatable', [LifetimeController::class, 'datatable'])->name('masters.lifetimes.datatable')->middleware('permission:lifetime_read');
+    Route::post('master/lifetimes/store', [LifetimeController::class, 'store'])->name('masters.lifetimes.store')->middleware('permission:lifetime_create');
+    Route::post('master/lifetimes/{lifetime}/edit', [LifetimeController::class, 'edit'])->name('masters.lifetimes.edit')->middleware('permission:lifetime_update');
+    Route::delete('master/lifetimes/{lifetime}/destroy', [LifetimeController::class, 'destroy'])->name('masters.lifetimes.destroy')->middleware('permission:lifetime_delete');
 
     Route::get('asset-masters', [AssetMasterController::class, 'index'])->name('asset-masters.index')->middleware('permission:asset_master_read');
     Route::post('asset-masters/datatable', [AssetMasterController::class, 'datatable'])->name('asset-masters.datatable')->middleware('permission:asset_master_read');

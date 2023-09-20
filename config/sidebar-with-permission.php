@@ -54,6 +54,10 @@ return [
                     'title' => 'UOM',
                     'permissions' => 'c,r,u,d',
                 ],
+                [
+                    'title' => 'Lifetime',
+                    'permissions' => 'c,r,u,d',
+                ],
             ]
         ],
         [

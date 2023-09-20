@@ -26,6 +26,7 @@ use Database\Seeders\Masters\CategorySeeder;
 use Database\Seeders\Masters\ClusterSeeder;
 use Database\Seeders\Masters\DealerSeeder;
 use Database\Seeders\Masters\LeasingSeeder;
+use Database\Seeders\Masters\LifetimeSeeder;
 use Database\Seeders\Masters\SubClusterItemSeeder;
 use Database\Seeders\Masters\SubClusterSeeder;
 use Database\Seeders\Masters\UnitSeeder;
@@ -81,6 +82,7 @@ class DatabaseSeeder extends Seeder
             DealerSeeder::class,
             LeasingSeeder::class,
             UnitSeeder::class,
+            LifetimeSeeder::class,
         ]);
         Elasticsearch::setModel(Cer::class)->cleared();
     }
