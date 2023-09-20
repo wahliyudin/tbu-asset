@@ -99,6 +99,11 @@
             $('input[name="jangka_waktu_insurance"]').val("");
             $('input[name="biaya_insurance"]').val('');
             $('input[name="legalitas_insurance"]').val('');
+
+            $('input[name="price"]').val("{{ $cerItem->price }}").trigger('input');
+            $('input[name="date"]').val(
+                "{{ isset($cerItemDetail['gr']['tgl_bast']) ? $cerItemDetail['gr']['tgl_bast'] : '' }}");
+            $('input[name="umur_asset"]').val().trigger('change');
         });
     </script>
 @endpush
