@@ -53,6 +53,8 @@ class AssetRequest extends FormRequest
             'jangka_waktu_insurance' => ['required'],
             'biaya_insurance' => ['required'],
             'legalitas_insurance' => ['required'],
+
+            'umur_asset' => ['required'],
         ];
     }
 }

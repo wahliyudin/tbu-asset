@@ -52,6 +52,8 @@ var AssetsList = function () {
         jangka_waktu_insurance: '',
         biaya_insurance: '',
         legalitas_insurance: '',
+
+        umur_asset: '',
     };
 
     var initCategoryList = function () {
@@ -112,28 +114,28 @@ var AssetsList = function () {
     }
 
     var initPlugins = () => {
-        $("#tgl_bast").flatpickr();
-        $("#tanggal_perolehan_leasing").flatpickr();
-        $('.uang').mask('0.000.000.000', {
-            reverse: true
-        });
-        new tempusDominus.TempusDominus(document.getElementById("tahun_pembuatan"), {
-            display: {
-                viewMode: "calendar",
-                components: {
-                    decades: true,
-                    year: true,
-                    month: false,
-                    date: false,
-                    hours: false,
-                    minutes: false,
-                    seconds: false
-                }
-            },
-            localization: {
-                format: 'yyyy'
-            }
-        });
+        // $("#tgl_bast").flatpickr();
+        // $("#tanggal_perolehan_leasing").flatpickr();
+        // $('.uang').mask('0.000.000.000', {
+        //     reverse: true
+        // });
+        // new tempusDominus.TempusDominus(document.getElementById("tahun_pembuatan"), {
+        //     display: {
+        //         viewMode: "calendar",
+        //         components: {
+        //             decades: true,
+        //             year: true,
+        //             month: false,
+        //             date: false,
+        //             hours: false,
+        //             minutes: false,
+        //             seconds: false
+        //         }
+        //     },
+        //     localization: {
+        //         format: 'yyyy'
+        //     }
+        // });
     }
 
     var handleSearchDatatable = () => {
@@ -476,6 +478,14 @@ var AssetsList = function () {
                             }
                         }
                     },
+
+                    'umur_asset': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Umur Asset is required'
+                            }
+                        }
+                    },
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -642,6 +652,8 @@ var AssetsList = function () {
         attributes.jangka_waktu_insurance = $($(form).find('input[name="jangka_waktu_insurance"]')).val();
         attributes.biaya_insurance = $($(form).find('input[name="biaya_insurance"]')).val();
         attributes.legalitas_insurance = $($(form).find('input[name="legalitas_insurance"]')).val();
+
+        attributes.umur_asset = $($(form).find('input[name="umur_asset"]')).val();
     }
 
     var resetAttributes = () => {
@@ -685,6 +697,8 @@ var AssetsList = function () {
         attributes.jangka_waktu_insurance = '';
         attributes.biaya_insurance = '';
         attributes.legalitas_insurance = '';
+
+        attributes.umur_asset = '';
     }
 
     const populateForm = (json = null) => {
@@ -727,6 +741,8 @@ var AssetsList = function () {
         $($(form).find('input[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.insurance?.jangka_waktu);
         $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.insurance?.biaya).trigger('input');
         $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.insurance?.legalitas);
+
+        $($(form).find('input[name="umur_asset"]')).val(json === null ? attributes.umur_asset : json.umur_asset);
     }
 
     var handleError = function (jqXHR, target) {

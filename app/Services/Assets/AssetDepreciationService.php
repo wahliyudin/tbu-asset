@@ -1,18 +1,22 @@
-<?php 
+<?php
 
 namespace App\Services\Assets;
-use App\Models\Assets\Depreciation;
 
-class AssetDepreciationService 
+use App\Helpers\Helper;
+use App\Models\Assets\Depreciation;
+use Carbon\Carbon;
+
+class AssetDepreciationService
 {
-    public static function store(array $data){
-        if(!isset($data['asset_id'])){
+    public static function store(array $data)
+    {
+        if (!isset($data['asset_id'])) {
             return null;
         }
 
         $depresiasi = Depreciation::query()->where('asset_id', $data['asset_id'])->first();
 
-        if($depresiasi){
+        if ($depresiasi) {
             return $depresiasi;
         }
 
@@ -24,7 +28,23 @@ class AssetDepreciationService
             'depresiasi' => (int)$data['depresiasi'],
             'sisa' => (int)$data['sisa'],
         ]);
-
     }
-    
+
+    public function generate(int $month, int $price, string $date)
+    {
+        $date = Carbon::make($date);
+        $result = [];
+        $sisa = $price;
+        for ($i = 0; $i < $month; $i++) {
+            $depre = $price / $month;
+            $sisa = $sisa - $depre;
+            $result[] = [
+                'date' => $date->translatedFormat('d F Y'),
+                'depreciation' => Helper::formatRupiah($depre, true),
+                'sisa' => Helper::formatRupiah($sisa, true)
+            ];
+            $date->addMonth();
+        }
+        return $result;
+    }
 }

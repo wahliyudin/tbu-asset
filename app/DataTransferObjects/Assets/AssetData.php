@@ -25,6 +25,7 @@ class AssetData extends Data implements DataInterface
         public ?string $kondisi,
         public ?string $uom_id,
         public ?string $quantity,
+        public ?string $umur_asset,
         public ?string $tgl_bast,
         public ?string $hm,
         public ?string $pr_number,

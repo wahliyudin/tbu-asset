@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Assets;
 
 use App\DataTransferObjects\Assets\AssetData;
 use App\Excels\Assets\Asset as AssetsAsset;
+use App\Helpers\CarbonHelper;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Assets\ImportRequest;
 use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
+use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetService;
-use App\Services\Assets\AssetUnitService;
 use App\Services\GlobalService;
 use App\Services\Masters\LeasingService;
 use App\Services\Masters\SubClusterService;
@@ -25,6 +27,7 @@ class AssetMasterController extends Controller
 {
     public function __construct(
         private AssetService $service,
+        private AssetDepreciationService $assetDepreciationService,
     ) {
     }
 
@@ -183,5 +186,25 @@ class AssetMasterController extends Controller
     public function format()
     {
         return response()->download((new AssetsAsset)->generate());
+    }
+
+    public function depreciation(Request $request)
+    {
+        try {
+            $umur_asset = $request->get('umur_asset');
+            $price = $request->get('price');
+            $date = $request->get('date');
+            if (!$umur_asset || !$price || !$date) {
+                return response()->json([]);
+            }
+            $request->validate([
+                'umur_asset' => ['numeric'],
+                'date' => ['date'],
+            ]);
+            $depresiasi = $this->assetDepreciationService->generate($umur_asset, Helper::resetRupiah($price), CarbonHelper::convertDate($date));
+            return response()->json($depresiasi);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

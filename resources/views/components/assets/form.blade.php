@@ -295,4 +295,42 @@
             </div>
         </div>
     </div>
+    <div class="tab-pane fade" id="depresiasi" role="tabpanel">
+        <div class="card">
+            <div class="card-body p-9">
+                <div class="row">
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Harga Beli/ Nilai Perolehan</label>
+                        <input type="text" class="form-control form-control-solid uang"
+                            placeholder="Nilai Perolehan" name="price" readonly />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">Tanggal BAST</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Tanggal BAST"
+                            name="date" readonly />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Umur Asset</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="Umur Asset"
+                            name="umur_asset" />
+                    </div>
+                </div>
+                <table class="table align-middle table-row-dashed fs-6 gy-5" id="depresiasi_table">
+                    <thead>
+                        <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                            <th>Tanggal</th>
+                            <th>Depresiasi</th>
+                            <th>Nilai Sisa</th>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-semibold text-gray-600 depresiasi-container">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+@push('js')
+    <script src="{{ asset('assets/js/pages/asset/form.js') }}"></script>
+@endpush

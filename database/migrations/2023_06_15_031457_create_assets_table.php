@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('kondisi')->nullable();
             $table->foreignIdFor(Uom::class)->nullable();
             $table->integer('quantity')->nullable();
+            $table->integer('umur_asset')->nullable();
             $table->date('tgl_bast')->nullable();
             $table->string('hm')->nullable();
             $table->string('pr_number')->nullable();

@@ -34,6 +34,7 @@ class Asset extends Model implements ElasticsearchInterface
         'kondisi',
         'uom_id',
         'quantity',
+        'umur_asset',
         'tgl_bast',
         'hm',
         'pr_number',

@@ -7,6 +7,7 @@ use Spatie\LaravelData\Data;
 class DeprecationData extends Data
 {
     public function __construct(
+        public ?string $asset_id,
         public ?string $masa_pakai,
         public ?string $umur_asset,
         public ?string $umur_pakai,

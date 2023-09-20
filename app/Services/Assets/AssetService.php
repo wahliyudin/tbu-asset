@@ -14,6 +14,7 @@ use App\Facades\Masters\Leasing\LeasingService;
 use App\Facades\Masters\SubCluster\SubClusterService;
 use App\Facades\Masters\Unit\UnitService;
 use App\Facades\Masters\Uom\UomService;
+use App\Helpers\Helper;
 use App\Http\Requests\Assets\AssetRequest;
 use App\Jobs\Assets\BulkJob;
 use App\Jobs\Assets\ImportJob;
@@ -38,6 +39,7 @@ class AssetService
         protected AssetInsuranceRepository $assetInsuranceRepository,
         protected AssetLeasingRepository $assetLeasingRepository,
         protected AssetUnitService $assetUnitService,
+        protected AssetDepreciationService $assetDepreciationService,
     ) {
     }
 
@@ -87,10 +89,30 @@ class AssetService
             $assetUnit = $this->assetUnitService->updateOrCreate(AssetUnitData::fromRequest($request));
             $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey()]));
             $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
+            $deprecations = $this->prepareDeprecation($asset->getKey(), $request->month, Helper::resetRupiah($request->price), $request->date);
+            $asset->depreciations()->delete();
+            $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
             $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
             $this->sendToElasticsearch($asset, $data->getKey());
         });
+    }
+
+    public function prepareDeprecation($assetId, $month, $price, $date)
+    {
+        $depre = $this->assetDepreciationService->generate($month, $price, $date);
+        $results = [];
+        foreach ($depre as $key => $value) {
+            $results[] = [
+                'asset_id' => $assetId,
+                'masa_pakai' => null,
+                'umur_asset' => $month,
+                'umur_pakai' => null,
+                'depresiasi' => Helper::resetRupiah($value['depreciation']),
+                'sisa' => Helper::resetRupiah($value['sisa']),
+            ];
+        }
+        return $results;
     }
 
     public static function store(array $data)
