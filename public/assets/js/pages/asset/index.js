@@ -742,7 +742,9 @@ var AssetsList = function () {
         $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.insurance?.biaya).trigger('input');
         $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.insurance?.legalitas);
 
-        $($(form).find('input[name="umur_asset"]')).val(json === null ? attributes.umur_asset : json.umur_asset);
+        $($(form).find('input[name="price"]')).val(json === null ? attributes.harga_beli_leasing : json.leasing?.harga_beli).trigger('input');
+        $($(form).find('input[name="date"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);
+        $($(form).find('input[name="umur_asset"]')).val(json === null ? attributes.umur_asset : json.umur_asset).trigger('change');
     }
 
     var handleError = function (jqXHR, target) {

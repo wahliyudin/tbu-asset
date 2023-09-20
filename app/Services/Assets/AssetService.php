@@ -137,6 +137,7 @@ class AssetService
             'kondisi' => $data['kondisi'],
             'uom_id' => $data['uom_id'],
             'quantity' => $data['quantity'],
+            'umur_asset' => $data['umur_asset'],
             'tgl_bast' => $data['tgl_bast'],
             'hm' => $data['hm'],
             'pr_number' => $data['pr_number'],

@@ -30,7 +30,7 @@ class AssetDepreciationService
         ]);
     }
 
-    public function generate(int $month, int $price, string $date)
+    public static function generate(int $month, int $price, string $date)
     {
         $date = Carbon::make($date);
         $result = [];

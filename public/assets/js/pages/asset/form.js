@@ -1,6 +1,36 @@
 "use strict";
 
 var form = function () {
+    var datatableDepre;
+
+    var initialDatatableDepre = () => {
+        datatableDepre = $('#depresiasi_table').DataTable({
+            dom: 'frtip',
+        });
+    }
+
+    var clearDatatableDepre = () => {
+        datatableDepre.clear();
+        datatableDepre.destroy();
+        $("#depresiasi_table tbody").empty();
+    }
+
+    var loadDatatableDepre = (response) => {
+        if (datatableDepre != null) {
+            clearDatatableDepre();
+        }
+        $.each(response, function (indexInArray, valueOfElement) {
+            $('.depresiasi-container').append(`
+                <tr>
+                    <td>${++indexInArray}</td>
+                    <td>${valueOfElement.date}</td>
+                    <td>${valueOfElement.depreciation}</td>
+                    <td>${valueOfElement.sisa}</td>
+                </tr>
+            `);
+        });
+        initialDatatableDepre()
+    }
 
     var initEvents = () => {
         $('input[name="harga_beli_leasing"]').keyup(function (e) {
@@ -22,16 +52,7 @@ var form = function () {
                 },
                 dataType: "JSON",
                 success: function (response) {
-                    $('.depresiasi-container').empty();
-                    $.each(response, function (indexInArray, valueOfElement) {
-                        $('.depresiasi-container').append(`
-                            <tr>
-                                <td>${valueOfElement.date}</td>
-                                <td>${valueOfElement.depreciation}</td>
-                                <td>${valueOfElement.sisa}</td>
-                            </tr>
-                        `);
-                    });
+                    loadDatatableDepre(response);
                 },
                 error: function (jqXHR, xhr, textStatus, errorThrow, exception) {
                     if (jqXHR.status == 422) {

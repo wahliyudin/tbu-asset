@@ -3,11 +3,11 @@
 namespace App\Jobs\Assets;
 
 use App\DataTransferObjects\Masters\LeasingData;
+use App\Facades\Assets\AssetService as AssetsAssetService;
 use App\Helpers\CarbonHelper;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Project;
-use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetLeasingService;
 use App\Services\Assets\AssetService;
 use App\Services\Assets\AssetUnitService;
@@ -24,6 +24,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ImportJob implements ShouldQueue
 {
@@ -101,11 +102,6 @@ class ImportJob implements ShouldQueue
 
             $department = Department::query()->where('department_name', $val['departemen'])->first();
 
-            \Log::info([
-                'no' => $val['no'],
-                'department' => $val['departemen'],
-                'dept_id' => $department,
-            ]);
 
             $asset = AssetService::store([
                 'kode' => isset($val['new_id_asset']) ? $val['new_id_asset'] : null,
@@ -118,6 +114,7 @@ class ImportJob implements ShouldQueue
                 'kondisi' => isset($val['kondisi']) ? $val['kondisi'] : null,
                 'uom_id' => $uom?->getKey(),
                 'quantity' => isset($val['jumlah']) ? $val['jumlah'] : null,
+                'umur_asset' => isset($val['umur_asset']) ? (int) $val['umur_asset'] : 0,
                 'tgl_bast' => CarbonHelper::convertDate($val['tanggal_bast']),
                 'hm' => isset($val['hours_meter']) ? $val['hours_meter'] : null,
                 'pr_number' => isset($val['pr']) ? $val['pr'] : null,
@@ -125,11 +122,6 @@ class ImportJob implements ShouldQueue
                 'gr_number' => isset($val['gr']) ? $val['gr'] : null,
                 'remark' => isset($val['keterangan']) ? $val['keterangan'] : null,
                 'status_asset' => isset($val['status']) ? $val['status'] : null,
-            ]);
-
-            \Log::info([
-                'no' => $val['no'],
-                'asset' => $asset,
             ]);
 
             $assetLeasing = AssetLeasingService::store([
@@ -146,14 +138,22 @@ class ImportJob implements ShouldQueue
                 'legalitas' => isset($val['legalitas']) ? $val['legalitas'] : null,
             ]);
 
-            $depresiasi = AssetDepreciationService::store([
-                'asset_id' => $asset->getKey(),
-                'masa_pakai' => isset($val['masa_pakai']) ? $val['masa_pakai'] : null,
-                'umur_asset' => isset($val['umur_asset']) ? $val['umur_asset'] : null,
-                'umur_pakai' => isset($val['umur_pakai']) ? $val['umur_pakai'] : null,
-                'depresiasi' => isset($val['depresiasi']) ? $val['depresiasi'] : null,
-                'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
-            ]);
+            $tglBast = CarbonHelper::convertDate($val['tanggal_bast']);
+            if ($asset?->getKey() && $tglBast) {
+                $umur_asset = isset($val['umur_asset']) ? (int) $val['umur_asset'] : 0;
+                $nilaiPerolehan = isset($val['nilai_perolehan']) ? (int) $val['nilai_perolehan'] : 0;
+                $depreciations = AssetsAssetService::prepareDeprecation($asset?->getKey(), $umur_asset, $nilaiPerolehan, $tglBast);
+                Log::info($depreciations);
+                // $depresiasi = AssetDepreciationService::store([
+                //     'asset_id' => $asset->getKey(),
+                //     'masa_pakai' => isset($val['masa_pakai']) ? $val['masa_pakai'] : null,
+                //     'umur_asset' => isset($val['umur_asset']) ? $val['umur_asset'] : null,
+                //     'umur_pakai' => isset($val['umur_pakai']) ? $val['umur_pakai'] : null,
+                //     'depresiasi' => isset($val['depresiasi']) ? $val['depresiasi'] : null,
+                //     'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
+                // ]);
+                $asset->depreciations()->createMany($depreciations);
+            }
 
             // $results[] =  [
             //     'kode' => $val['id_asset_existing'],
