@@ -345,13 +345,6 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'unit_model': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Model is required'
-                            }
-                        }
-                    },
                     'unit_type': {
                         validators: {
                             notEmpty: {

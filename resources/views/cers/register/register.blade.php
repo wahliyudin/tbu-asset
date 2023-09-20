@@ -100,6 +100,9 @@
             $('input[name="jangka_waktu_leasing"]').val("");
             $('input[name="biaya_leasing"]').val('');
             $('input[name="legalitas_leasing"]').val('');
+            $('input[name="tanggal_perolehan_leasing"]').val(
+                "{{ isset($cerItemDetail['po']['podate']) ? $cerItemDetail['po']['podate'] : '' }}").trigger(
+                'change');
 
             $('input[name="jangka_waktu_insurance"]').val("");
             $('input[name="biaya_insurance"]').val('');

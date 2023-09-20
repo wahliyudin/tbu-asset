@@ -31,7 +31,7 @@
             <div class="card-body p-9">
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Kode</label>
+                        <label class="required fs-6 fw-semibold mb-2">ID Asset</label>
                         <input type="text" class="form-control form-control-solid" placeholder="Kode"
                             name="kode" />
                     </div>
@@ -143,25 +143,21 @@
             <div class="card-body p-9">
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7 unit">
-                        <label class="required fs-6 fw-semibold mb-2">Unit</label>
+                        <label class="required fs-6 fw-semibold mb-2">Unit Model</label>
                         <select class="form-select form-select-solid" name="unit_unit_id" data-control="select2"
                             data-placeholder="Unit" data-dropdown-parent=".unit">
                             <option></option>
                             @foreach ($units as $unit)
-                                <option value="{{ $unit->getKey() }}">{{ $unit->model }}
+                                <option data-prefix="{{ $unit->prefix }}" value="{{ $unit->getKey() }}">
+                                    {{ $unit->model }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Kode</label>
+                        <label class="required fs-6 fw-semibold mb-2">ID Unit</label>
                         <input type="text" class="form-control form-control-solid" placeholder="Kode"
                             name="unit_kode" />
-                    </div>
-                    <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Model</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Model"
-                            name="unit_model" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Type</label>

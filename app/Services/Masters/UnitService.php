@@ -19,7 +19,7 @@ class UnitService
 
     public static function dataForSelect(...$others)
     {
-        return Unit::select(array_merge(['id', 'model'], $others))->get();
+        return Unit::select(array_merge(['id', 'prefix', 'model'], $others))->get();
     }
 
     public function updateOrCreate(UnitStoreRequest $request)
