@@ -51,6 +51,7 @@ Route::get('sso/callback', [AuthController::class, 'callback'])->name('sso.callb
 Auth::routes();
 
 Route::get('asset-masters/{kode}/show-scan', [AssetMasterController::class, 'showScan'])->name('asset-masters.show-scan');
+Route::post('asset-masters/depreciation', [AssetMasterController::class, 'depreciation'])->name('asset-masters.depreciation');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -126,7 +127,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('asset-masters/format', [AssetMasterController::class, 'format'])->name('asset-masters.format')->middleware('permission:asset_master_create');
     Route::post('asset-masters/batch', [AssetMasterController::class, 'batch'])->name('asset-masters.batch');
     Route::post('asset-masters/bulk', [AssetMasterController::class, 'bulk'])->name('asset-masters.bulk');
-    Route::post('asset-masters/depreciation', [AssetMasterController::class, 'depreciation'])->name('asset-masters.depreciation');
+
 
     Route::get('asset-requests', [CerController::class, 'index'])->name('asset-requests.index')->middleware('permission:asset_request_read');
     Route::post('asset-requests/datatable', [CerController::class, 'datatable'])->name('asset-requests.datatable')->middleware('permission:asset_request_read');
