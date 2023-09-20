@@ -36,7 +36,7 @@ class AssetUnitService
     public function updateOrCreate(AssetUnitData $data)
     {
         return AssetUnit::query()->updateOrCreate([
-            $data->key
+            'id' => $data->key
         ], $data->toArray());
     }
 

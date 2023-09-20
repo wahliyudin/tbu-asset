@@ -89,7 +89,7 @@ class AssetService
             $assetUnit = $this->assetUnitService->updateOrCreate(AssetUnitData::fromRequest($request));
             $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey()]));
             $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
-            $deprecations = $this->prepareDeprecation($asset->getKey(), $request->month, Helper::resetRupiah($request->price), $request->date);
+            $deprecations = $this->prepareDeprecation($asset->getKey(), $request->umur_asset, Helper::resetRupiah($request->price), $request->date);
             $asset->depreciations()->delete();
             $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
