@@ -1,6 +1,6 @@
 <div class="row">
     @if ($withQrCode)
-        <div class="col-md-3 text-center">
+        <div class="col-md-3 text-center mb-5">
             <div class="card" style="width: auto !important; display: inline-block;">
                 <div class="card-body py-4 px-4">
                     {!! QrCode::size(200)->generate(route('asset-masters.show-scan', $asset->kode)) !!}
@@ -111,8 +111,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Quantity</label>
@@ -122,6 +120,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row mb-5">
                             <div class="col-lg-6">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Tanggal
@@ -132,8 +132,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">HM</label>
@@ -142,6 +140,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row mb-5">
                             <div class="col-lg-6">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">PR
@@ -151,8 +151,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">PO
@@ -162,6 +160,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row mb-5">
                             <div class="col-lg-6">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">GR
@@ -171,8 +171,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Umur Asset</label>
@@ -181,6 +179,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Umur Pakai</label>
@@ -189,8 +189,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Remark</label>
