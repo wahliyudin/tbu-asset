@@ -384,8 +384,60 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="depresiasi" role="tabpanel">
+                        <div class="row mb-5">
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Harga Beli/ Nilai Perolehan</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\Helper::formatRupiah($asset->leasing?->harga_beli) ?? '-' }}</span>
+                                    </div>
+                                    <input type="hidden" name="price"
+                                        value="{{ \App\Helpers\Helper::formatRupiah($asset->leasing?->harga_beli) }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Tanggal BAST</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\CarbonHelper::convertDate($asset->tgl_bast, 'd F Y') ?? '-' }}</span>
+                                    </div>
+                                    <input type="hidden" name="date"
+                                        value="{{ \App\Helpers\CarbonHelper::convertDate($asset->tgl_bast) }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Umur Asset</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->umur_asset ?? '-' }}</span>
+                                    </div>
+                                    <input type="hidden" name="umur_asset" value="{{ $asset->umur_asset }}">
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="depresiasi_table">
+                            <thead>
+                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                    <th>No</th>
+                                    <th>Tanggal</th>
+                                    <th>Depresiasi</th>
+                                    <th>Nilai Sisa</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600 depresiasi-container">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@push('js')
+    <script src="{{ asset('assets/js/pages/asset/detail.js') }}"></script>
+@endpush

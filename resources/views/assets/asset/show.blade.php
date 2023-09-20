@@ -2,6 +2,10 @@
 
 @section('title', 'Show Asset')
 
+@push('css')
+    <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
 @section('toolbar')
     <div id="kt_app_toolbar" class="app-toolbar  py-3 py-lg-6 ">
         <div id="kt_app_toolbar_container" class="app-container  container-xxl d-flex flex-stack ">
@@ -27,3 +31,7 @@
 @section('content')
     <x-assets.detail :asset="$asset" />
 @endsection
+
+@push('js')
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+@endpush
