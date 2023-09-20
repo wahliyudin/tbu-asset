@@ -117,7 +117,7 @@ class RegisterController extends Controller
                     'no' => isset($response['gr']['gr']) ? $response['gr']['gr'] : '-',
                     'badge' => StatusTXIS::byValue(isset($response['gr']['status']) ? $response['gr']['status'] : null)?->badge() ?? '-',
                     'date' => isset($response['gr']['tgl_gr']) ? Carbon::parse($response['gr']['tgl_gr'])->translatedFormat('d F Y') : '-',
-                    'doc_bast' => isset($response['gr']['doc_bast']) ? $response['po']['doc_bast'] : '#',
+                    'doc_bast' => isset($response['gr']['doc_bast']) ? $response['gr']['doc_bast'] : '#',
                 ],
             ]);
         } catch (\Throwable $th) {
