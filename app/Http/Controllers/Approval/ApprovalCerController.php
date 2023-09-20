@@ -55,7 +55,7 @@ class ApprovalCerController extends Controller
     public function show(Cer $cer)
     {
         $isCurrentWorkflow = CerWorkflowService::setModel($cer)->isCurrentWorkflow();
-        $cer->load(['items.uom', 'workflows' => function ($query) {
+        $cer->load(['employee.position.department', 'employee.position.project', 'department', 'items.uom', 'workflows' => function ($query) {
             $query->orderBy('sequence', 'ASC');
         }]);
         $data = CerData::from($cer);

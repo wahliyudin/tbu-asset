@@ -7,6 +7,7 @@ use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
 use App\Enums\Workflows\Status;
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
@@ -71,5 +72,10 @@ class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, 'nik', 'nik');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'dept_id');
     }
 }

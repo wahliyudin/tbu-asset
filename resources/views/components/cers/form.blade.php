@@ -21,7 +21,7 @@
                         <td class="department">
                             <input type="hidden" name="deptcode"
                                 value="{{ $employee?->position?->department?->budget_dept_code }}">
-                            @if ($isPJO)
+                            @if ($isPJO && $type != 'show')
                                 <select class="form-select form-select" @disabled($type == 'show')
                                     name="department_id" data-control="select2" data-placeholder="Department"
                                     data-dropdown-parent=".department">
@@ -33,9 +33,14 @@
                                     @endforeach
                                 </select>
                             @else
-                                <input type="hidden" name="department_id"
-                                    value="{{ $employee?->position?->department?->dept_id }}">
-                                {{ $employee?->position?->department?->department_name }}
+                                @if ($isPJO)
+                                    <input type="hidden" name="department_id" value="{{ $cer?->department_id }}">
+                                    {{ $cer?->department?->department_name }}
+                                @else
+                                    <input type="hidden" name="department_id"
+                                        value="{{ $employee?->position?->department?->dept_id }}">
+                                    {{ $employee?->position?->department?->department_name }}
+                                @endif
                             @endif
                         </td>
                     </tr>
