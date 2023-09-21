@@ -302,7 +302,7 @@
                                     <label class="col-lg-4 fw-semibold text-muted">Dealer</label>
                                     <div class="col-lg-7">
                                         <span
-                                            class="fw-bold fs-6 text-gray-800">{{ $asset->leasing?->dealer?->name ?? '-' }}</span>
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->leasing?->dealer?->vendorname ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>
