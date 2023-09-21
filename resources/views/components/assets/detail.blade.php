@@ -350,7 +350,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Legalitas</label>
+                                    <label class="col-lg-4 fw-semibold text-muted">Nomor Kontrak</label>
                                     <div class="col-lg-7">
                                         <span
                                             class="fw-bold fs-6 text-gray-800">{{ $asset->leasing?->legalitas ?? '-' }}</span>
@@ -393,7 +393,7 @@
                         <div class="row mb-5">
                             <div class="col-lg-6 mb-5">
                                 <div class="row">
-                                    <label class="col-lg-4 fw-semibold text-muted">Legalitas</label>
+                                    <label class="col-lg-4 fw-semibold text-muted">Nomor Asuransi</label>
                                     <div class="col-lg-7">
                                         <span
                                             class="fw-bold fs-6 text-gray-800">{{ $asset->insurance?->legalitas ?? '-' }}</span>
