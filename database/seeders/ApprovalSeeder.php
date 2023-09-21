@@ -18,8 +18,26 @@ class ApprovalSeeder extends Seeder
         $appravols = [
             [
                 'module' => Module::CER_HO,
-                'approval' => Approval::DEPARTMENT_HEAD,
+                'approval' => Approval::OTHER,
+                'nik' => 11190651,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_HO,
+                'approval' => Approval::GENERAL_MANAGER,
                 'nik' => null,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_HO,
+                'approval' => Approval::GENERAL_MANAGER_OPERATION,
+                'nik' => null,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_HO,
+                'approval' => Approval::OTHER,
+                'nik' => 11220836,
                 'title' => 'Approved',
             ],
             [
