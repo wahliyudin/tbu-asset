@@ -26,6 +26,7 @@ return new class extends Migration
             $table->unsignedBigInteger('condition_id')->nullable();
             $table->foreignIdFor(Uom::class)->nullable();
             $table->integer('quantity')->nullable();
+            $table->unsignedBigInteger('lifetime_id')->nullable();
             $table->bigInteger('nilai_sisa')->nullable();
             $table->date('tgl_bast')->nullable();
             $table->string('hm')->nullable();
