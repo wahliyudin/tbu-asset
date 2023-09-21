@@ -58,6 +58,10 @@ return [
                     'title' => 'Lifetime',
                     'permissions' => 'c,r,u,d',
                 ],
+                [
+                    'title' => 'Activity',
+                    'permissions' => 'c,r,u,d',
+                ],
             ]
         ],
         [

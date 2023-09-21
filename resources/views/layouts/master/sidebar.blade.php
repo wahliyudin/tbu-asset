@@ -36,7 +36,7 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
-                @permission('category_read|cluster_read|sub_cluster_read|sub_cluster_item_read|catalog_read|dealer_read|leasing_read|unit_read|uom_read|lifetime_read')
+                @permission('category_read|cluster_read|sub_cluster_read|sub_cluster_item_read|catalog_read|dealer_read|leasing_read|unit_read|uom_read|lifetime_read|activity_read')
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
@@ -160,6 +160,17 @@
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Lifetime</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            @permission('activity_read')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ request()->routeIs('masters.activities.index') ? 'active' : '' }}"
+                                        href="{{ route('masters.activities.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Activity</span>
                                     </a>
                                 </div>
                             @endpermission

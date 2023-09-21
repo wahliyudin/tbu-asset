@@ -9,6 +9,7 @@ use App\Http\Controllers\Cers\RegisterController;
 use App\Http\Controllers\Disposes\DisposeController;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Masters\ActivityController;
 use App\Http\Controllers\Masters\CatalogController;
 use App\Http\Controllers\Masters\CategoryController;
 use App\Http\Controllers\Masters\ClusterController;
@@ -116,6 +117,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/lifetimes/store', [LifetimeController::class, 'store'])->name('masters.lifetimes.store')->middleware('permission:lifetime_create');
     Route::post('master/lifetimes/{lifetime}/edit', [LifetimeController::class, 'edit'])->name('masters.lifetimes.edit')->middleware('permission:lifetime_update');
     Route::delete('master/lifetimes/{lifetime}/destroy', [LifetimeController::class, 'destroy'])->name('masters.lifetimes.destroy')->middleware('permission:lifetime_delete');
+
+    Route::get('master/activities', [ActivityController::class, 'index'])->name('masters.activities.index')->middleware('permission:activity_read');
+    Route::post('master/activities/datatable', [ActivityController::class, 'datatable'])->name('masters.activities.datatable')->middleware('permission:activity_read');
+    Route::post('master/activities/store', [ActivityController::class, 'store'])->name('masters.activities.store')->middleware('permission:activity_create');
+    Route::post('master/activities/{activity}/edit', [ActivityController::class, 'edit'])->name('masters.activities.edit')->middleware('permission:activity_update');
+    Route::delete('master/activities/{activity}/destroy', [ActivityController::class, 'destroy'])->name('masters.activities.destroy')->middleware('permission:activity_delete');
 
     Route::get('asset-masters', [AssetMasterController::class, 'index'])->name('asset-masters.index')->middleware('permission:asset_master_read');
     Route::post('asset-masters/datatable', [AssetMasterController::class, 'datatable'])->name('asset-masters.datatable')->middleware('permission:asset_master_read');
