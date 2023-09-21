@@ -2,6 +2,7 @@
 
 namespace App\Models\Cers;
 
+use App\Models\Masters\Unit;
 use App\Models\Masters\Uom;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,5 +31,10 @@ class CerItem extends Model
     public function uom(): BelongsTo
     {
         return $this->belongsTo(Uom::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'model', 'model');
     }
 }

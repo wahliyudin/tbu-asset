@@ -215,4 +215,15 @@ class AssetMasterController extends Controller
             throw $th;
         }
     }
+
+    public function nextIdAssetUnit($id)
+    {
+        try {
+            return response()->json([
+                'id' => $this->service->nextIdAssetUnitById($id)
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

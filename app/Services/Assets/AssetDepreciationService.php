@@ -35,16 +35,16 @@ class AssetDepreciationService
         $date = Carbon::make($date);
         $result = [];
         $year = $month / 12;
-        $depre = ($price - $nilaiSisa) / $year;
+        $depre = ($price - $nilaiSisa) / $month;
         $akumulasi = $depre;
-        for ($i = 0; $i < $year; $i++) {
+        for ($i = 0; $i < $month; $i++) {
             $result[] = [
                 'date' => $date->translatedFormat('d F Y'),
                 'depreciation' => Helper::formatRupiah($depre, true),
                 'sisa' => Helper::formatRupiah($price - $akumulasi, true)
             ];
             $akumulasi = $depre + $akumulasi;
-            $date->addYear();
+            $date->addMonth();
         }
         return $result;
     }

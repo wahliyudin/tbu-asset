@@ -437,13 +437,6 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'legalitas_leasing': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Legalitas is required'
-                            }
-                        }
-                    },
                     'tanggal_perolehan_leasing': {
                         validators: {
                             notEmpty: {
@@ -463,13 +456,6 @@ var AssetsList = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Biaya is required'
-                            }
-                        }
-                    },
-                    'legalitas_insurance': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Legalitas is required'
                             }
                         }
                     },

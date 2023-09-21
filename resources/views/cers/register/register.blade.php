@@ -82,7 +82,7 @@
             $('input[name="remark"]').val('');
             $('select[name="status"]').val('{{ \App\Enums\Asset\Status::ACTIVE->value }}').trigger('change');
 
-            $('select[name="unit_unit_id"]').val("").trigger('change');
+            $('select[name="unit_unit_id"]').val("{{ $cerItem->unit?->getKey() }}").trigger('change');
             $('input[name="unit_kode"]').val("");
             $('input[name="unit_type"]').val("");
             $('input[name="unit_seri"]').val("");
@@ -97,22 +97,30 @@
                     "{{ isset($cerItemDetail['po']['vendorid']) ? $cerItemDetail['po']['vendorid'] : '' }}")
                 .trigger('change');
             $('select[name="leasing_id_leasing"]').val('').trigger('change');
-            $('input[name="harga_beli_leasing"]').val("{{ $cerItem->price }}").trigger('input');
+            $('input[name="harga_beli_leasing"]').val(
+                    "{{ isset($cerItemDetail['po']['harga_po']) ? (int) $cerItemDetail['po']['harga_po'] : '' }}")
+                .trigger(
+                    'input');
             $('input[name="jangka_waktu_leasing"]').val("");
             $('input[name="biaya_leasing"]').val('');
-            $('input[name="legalitas_leasing"]').val('');
+            $(
+                'input[name="legalitas_leasing"]').val('');
             $('input[name="tanggal_perolehan_leasing"]').val(
                 "{{ isset($cerItemDetail['po']['podate']) ? $cerItemDetail['po']['podate'] : '' }}").trigger(
                 'change');
 
             $('input[name="jangka_waktu_insurance"]').val("");
             $('input[name="biaya_insurance"]').val('');
-            $('input[name="legalitas_insurance"]').val('');
+            $(
+                'input[name="legalitas_insurance"]').val('');
 
-            $('input[name="price"]').val("{{ $cerItem->price }}").trigger('input');
+            $('input[name="price"]').val(
+                    "{{ isset($cerItemDetail['po']['harga_po']) ? (int) $cerItemDetail['po']['harga_po'] : '' }}")
+                .trigger('input');
             $('input[name="date"]').val(
                 "{{ isset($cerItemDetail['gr']['tgl_bast']) ? $cerItemDetail['gr']['tgl_bast'] : '' }}");
-            $('select[name="lifetime_id"]').val().trigger('change');
+            $(
+                'select[name="lifetime_id"]').val().trigger('change');
         });
     </script>
 @endpush

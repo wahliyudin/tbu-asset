@@ -261,7 +261,7 @@
                             name="biaya_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Legalitas</label>
+                        <label class="fs-6 fw-semibold mb-2">Legalitas</label>
                         <input type="text" class="form-control form-control" placeholder="Legalitas"
                             name="legalitas_leasing" />
                     </div>
@@ -294,7 +294,7 @@
                             name="biaya_insurance" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Legalitas</label>
+                        <label class="fs-6 fw-semibold mb-2">Legalitas</label>
                         <input type="text" class="form-control form-control" placeholder="Legalitas"
                             name="legalitas_insurance" />
                     </div>

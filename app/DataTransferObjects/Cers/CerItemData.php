@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObjects\Cers;
 
+use App\DataTransferObjects\Masters\UnitData;
 use App\DataTransferObjects\Masters\UomData;
 use Spatie\LaravelData\Data;
 
@@ -18,6 +19,7 @@ class CerItemData extends Data
         public ?string $id = null,
         public ?UomData $uom,
         public ?CerData $cer,
+        public ?UnitData $unit,
     ) {
     }
 }

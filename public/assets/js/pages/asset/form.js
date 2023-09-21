@@ -50,17 +50,15 @@ var form = function () {
         });
         $('select[name="unit_unit_id"]').change(function (e) {
             e.preventDefault();
-            var selected = $('select[name="unit_unit_id"]').find(':selected');
-            var prefix = $(selected).data('prefix');
-            var year = $('input[name="unit_tahun_pembuatan"]').val();
-            $('input[name="unit_kode"]').val(prefix + '-' + year);
-        });
-        $('input[name="unit_tahun_pembuatan"]').change(function (e) {
-            e.preventDefault();
-            var selected = $('select[name="unit_unit_id"]').find(':selected');
-            var prefix = $(selected).data('prefix');
-            var year = $('input[name="unit_tahun_pembuatan"]').val();
-            $('input[name="unit_kode"]').val(prefix + '-' + year);
+            var id = $('select[name="unit_unit_id"]').val();
+            $.ajax({
+                type: "GET",
+                url: `/asset-masters/${id}/next-id-asset-unit`,
+                dataType: "JSON",
+                success: function (response) {
+                    $('input[name="unit_kode"]').val(response.id);
+                }
+            });
         });
     }
 

@@ -26,6 +26,7 @@ use App\Models\Assets\Asset;
 use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
 use App\Models\Masters\Lifetime;
+use App\Models\Masters\Unit;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
@@ -201,6 +202,21 @@ class AssetService
     private static function getDataBulk()
     {
         return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'project', 'department'])->get();
+    }
+
+    public function nextIdAssetUnitById($id)
+    {
+        $assetUnit = $this->assetUnitService->getByIdAndLatest($id);
+        if (!$assetUnit) {
+            $unit = Unit::query()->find($id);
+            return $unit->prefix . '-1';
+        }
+        $kode = str($assetUnit->kode)->explode('-');
+        $next = $kode->last() + 1;
+        $kode = $kode->replace([
+            1 => $next
+        ]);
+        return $kode->implode('-');
     }
 
     private function sendToElasticsearch(Asset $asset, $key)

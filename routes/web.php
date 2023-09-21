@@ -141,6 +141,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('asset-masters/format', [AssetMasterController::class, 'format'])->name('asset-masters.format')->middleware('permission:asset_master_create');
     Route::post('asset-masters/batch', [AssetMasterController::class, 'batch'])->name('asset-masters.batch');
     Route::post('asset-masters/bulk', [AssetMasterController::class, 'bulk'])->name('asset-masters.bulk');
+    Route::get('asset-masters/{id}/next-id-asset-unit', [AssetMasterController::class, 'nextIdAssetUnit'])->name('asset-masters.next-id-asset-unit');
 
 
     Route::get('asset-requests', [CerController::class, 'index'])->name('asset-requests.index')->middleware('permission:asset_request_read');

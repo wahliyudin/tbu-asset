@@ -44,4 +44,12 @@ class AssetUnitService
     {
         return $assetUnit?->delete();
     }
+
+    public function getByIdAndLatest($id)
+    {
+        return AssetUnit::query()
+            ->where('unit_id', $id)
+            ->orderBy('kode', 'DESC')
+            ->first();
+    }
 }

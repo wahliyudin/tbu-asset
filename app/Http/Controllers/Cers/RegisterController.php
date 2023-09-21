@@ -68,6 +68,7 @@ class RegisterController extends Controller
             'cer.employee.position.divisi',
             'cer.employee.position.department',
             'cer.employee.position.project',
+            'unit',
         ]);
         $data = CerItemData::from($cerItem);
         $cerItemDetail = $this->cerItemService->getByCerItemId($cerItem->id);
