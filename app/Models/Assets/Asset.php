@@ -12,6 +12,8 @@ use App\Models\Masters\SubCluster;
 use App\Models\Masters\Uom;
 use App\Models\Project;
 use App\Models\Assets\AssetUnit;
+use App\Models\Masters\Activity;
+use App\Models\Masters\Condition;
 use App\Models\Masters\Lifetime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,10 +31,10 @@ class Asset extends Model implements ElasticsearchInterface
         'asset_unit_id',
         'sub_cluster_id',
         'pic',
-        'activity',
+        'activity_id',
         'asset_location',
         'dept_id',
-        'kondisi',
+        'condition_id',
         'uom_id',
         'quantity',
         'lifetime_id',
@@ -94,6 +96,16 @@ class Asset extends Model implements ElasticsearchInterface
     public function lifetime()
     {
         return $this->belongsTo(Lifetime::class);
+    }
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class);
+    }
+
+    public function condition()
+    {
+        return $this->belongsTo(Condition::class);
     }
 
     public function project()

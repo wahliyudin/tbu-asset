@@ -32,8 +32,8 @@
     <div class="card">
         <div class="card-body">
             <form action="" method="post" class="form-asset">
-                <x-assets.form :lifetimes="$lifetimes" :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers"
-                    :leasings="$leasings" :projects="$projects" :uoms="$uoms" />
+                <x-assets.form :activities="$activities" :conditions="$conditions" :lifetimes="$lifetimes" :units="$units" :subClusters="$subClusters"
+                    :employees="$employees" :dealers="$dealers" :leasings="$leasings" :projects="$projects" :uoms="$uoms" />
                 <div class="d-flex justify-content-end">
                     <button type="button" data-cer-item="{{ $cerItem->id }}" class="btn btn-sm btn-primary ps-4 simpan">
                         <span class="indicator-label">

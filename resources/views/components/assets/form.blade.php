@@ -57,10 +57,16 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-4 fv-row mb-7 activity">
                         <label class="required fs-6 fw-semibold mb-2">Activity</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Activity"
-                            name="activity" />
+                        <select class="form-select form-select-solid" name="activity_id" data-control="select2"
+                            data-placeholder="Activity" data-dropdown-parent=".activity">
+                            <option></option>
+                            @foreach ($activities as $activity)
+                                <option value="{{ $activity->getKey() }}">{{ $activity->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 asset_location">
                         <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
@@ -73,10 +79,16 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-4 fv-row mb-7 condition">
                         <label class="required fs-6 fw-semibold mb-2">Kondisi</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Kondisi"
-                            name="kondisi" />
+                        <select class="form-select form-select-solid" name="condition_id" data-control="select2"
+                            data-placeholder="Kondisi" data-dropdown-parent=".condition">
+                            <option></option>
+                            @foreach ($conditions as $condition)
+                                <option value="{{ $condition->getKey() }}">{{ $condition->name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 uom">
                         <label class="required fs-6 fw-semibold mb-2">UOM</label>

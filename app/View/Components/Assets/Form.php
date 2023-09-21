@@ -16,6 +16,8 @@ class Form extends Component
         public Collection $projects,
         public Collection $units,
         public Collection $lifetimes,
+        public Collection $activities,
+        public Collection $conditions,
         public Collection $uoms,
         public Collection $subClusters,
         public Collection $employees,

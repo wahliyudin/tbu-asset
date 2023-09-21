@@ -61,14 +61,14 @@ class AssetService
             'subCluster',
             'insurance',
             'leasing',
-            'uom', 'lifetime',
+            'uom', 'lifetime', 'activity', 'condition'
         ])->find($id);
     }
 
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['assetUnit.unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom', 'lifetime'])
+            ->with(['assetUnit.unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom', 'lifetime', 'activity', 'condition'])
             ->where('kode', $kode)
             ->firstOrFail();
     }
@@ -134,10 +134,10 @@ class AssetService
             'asset_unit_id' => $data['asset_unit_id'],
             'sub_cluster_id' => $data['sub_cluster_id'],
             'pic' => $data['pic'],
-            'activity' => $data['activity'],
+            'activity_id' => $data['activity_id'],
             'asset_location' => $data['asset_location'],
             'dept_id' => $data['dept_id'],
-            'kondisi' => $data['kondisi'],
+            'condition_id' => $data['condition_id'],
             'uom_id' => $data['uom_id'],
             'quantity' => $data['quantity'],
             'lifetime_id' => $data['lifetime_id'],
@@ -200,12 +200,12 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'project', 'department'])->get();
+        return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'project', 'department'])->get();
     }
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
-        $asset->load(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime']);
+        $asset->load(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }

@@ -20,10 +20,10 @@ return new class extends Migration
             $table->foreignId('asset_unit_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(SubCluster::class)->nullable();
             $table->unsignedBigInteger('pic')->nullable();
-            $table->string('activity')->nullable();
+            $table->unsignedBigInteger('activity_id')->nullable();
             $table->string('asset_location')->nullable();
             $table->integer('dept_id')->nullable();
-            $table->string('kondisi')->nullable();
+            $table->unsignedBigInteger('condition_id')->nullable();
             $table->foreignIdFor(Uom::class)->nullable();
             $table->integer('quantity')->nullable();
             $table->unsignedBigInteger('lifetime_id')->nullable();

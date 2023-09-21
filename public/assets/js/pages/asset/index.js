@@ -17,9 +17,9 @@ var AssetsList = function () {
         unit_id: '',
         sub_cluster_id: '',
         pic: '',
-        activity: '',
+        activity_id: '',
         asset_location: '',
-        kondisi: '',
+        condition_id: '',
         uom_id: '',
         quantity: '',
         tgl_bast: '',
@@ -246,7 +246,7 @@ var AssetsList = function () {
                     //         }
                     //     }
                     // },
-                    'activity': {
+                    'activity_id': {
                         validators: {
                             notEmpty: {
                                 message: 'Activity is required'
@@ -260,7 +260,7 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'kondisi': {
+                    'condition_id': {
                         validators: {
                             notEmpty: {
                                 message: 'Kondisi is required'
@@ -612,9 +612,9 @@ var AssetsList = function () {
         attributes.unit_id = $($(form).find('select[name="unit_id"]')).val();
         attributes.sub_cluster_id = $($(form).find('select[name="sub_cluster_id"]')).val();
         attributes.pic = $($(form).find('select[name="pic"]')).val();
-        attributes.activity = $($(form).find('input[name="activity"]')).val();
+        attributes.activity_id = $($(form).find('select[name="activity_id"]')).val();
         attributes.asset_location = $($(form).find('select[name="asset_location"]')).val();
-        attributes.kondisi = $($(form).find('input[name="kondisi"]')).val();
+        attributes.condition_id = $($(form).find('select[name="condition_id"]')).val();
         attributes.uom_id = $($(form).find('select[name="uom_id"]')).val();
         attributes.quantity = $($(form).find('input[name="quantity"]')).val();
         attributes.tgl_bast = $($(form).find('input[name="tgl_bast"]')).val();
@@ -659,9 +659,9 @@ var AssetsList = function () {
         attributes.unit_id = '';
         attributes.sub_cluster_id = '';
         attributes.pic = '';
-        attributes.activity = '';
+        attributes.activity_id = '';
         attributes.asset_location = '';
-        attributes.kondisi = '';
+        attributes.condition_id = '';
         attributes.uom_id = '';
         attributes.quantity = '';
         attributes.tgl_bast = '';
@@ -704,9 +704,9 @@ var AssetsList = function () {
         $($(form).find('select[name="unit_id"]')).val(json === null ? attributes.unit_id : json.unit_id).trigger('change');
         $($(form).find('select[name="sub_cluster_id"]')).val(json === null ? attributes.sub_cluster_id : json.sub_cluster_id).trigger('change');
         $($(form).find('select[name="pic"]')).val(json === null ? attributes.pic : json.pic).trigger('change');
-        $($(form).find('input[name="activity"]')).val(json === null ? attributes.activity : json.activity);
+        $($(form).find('select[name="activity_id"]')).val(json === null ? attributes.activity_id : json.activity_id).trigger('change');
         $($(form).find('select[name="asset_location"]')).val(json === null ? attributes.asset_location : json.asset_location).trigger('change');
-        $($(form).find('input[name="kondisi"]')).val(json === null ? attributes.kondisi : json.kondisi);
+        $($(form).find('select[name="condition_id"]')).val(json === null ? attributes.condition_id : json.condition_id).trigger('change');
         $($(form).find('select[name="uom_id"]')).val(json === null ? attributes.uom_id : json.uom_id).trigger('change');
         $($(form).find('input[name="quantity"]')).val(json === null ? attributes.quantity : json.quantity);
         $($(form).find('input[name="tgl_bast"]')).val(json === null ? attributes.tgl_bast : json.tgl_bast);

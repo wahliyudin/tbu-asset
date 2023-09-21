@@ -4,6 +4,8 @@ namespace Database\Factories\Assets;
 
 use App\Enums\Asset\Status;
 use App\Models\Assets\Asset;
+use App\Models\Masters\Activity;
+use App\Models\Masters\Condition;
 use App\Models\Masters\SubCluster;
 use App\Models\Masters\Unit;
 use App\Models\Masters\Uom;
@@ -29,9 +31,9 @@ class AssetFactory extends Factory
             'sub_cluster_id' => SubCluster::factory(),
             // 'member_name' => fake()->sentence(1),
             'pic' => fake()->numberBetween(1000, 9999),
-            'activity' => fake()->sentence(1),
+            'activity_id' => fake()->randomElement(Activity::query()->pluck('id')->toArray()),
             'asset_location' => fake()->numberBetween(1000, 9999),
-            'kondisi' => fake()->sentence(1),
+            'condition_id' => fake()->randomElement(Condition::query()->pluck('id')->toArray()),
             'uom_id' => fake()->randomElement(Uom::query()->pluck('id')->toArray()),
             'quantity' => fake()->numberBetween(1, 10),
             'tgl_bast' => fake()->date(),

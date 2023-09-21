@@ -4,6 +4,8 @@ namespace App\DataTransferObjects\Assets;
 
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\ProjectData;
+use App\DataTransferObjects\Masters\ActivityData;
+use App\DataTransferObjects\Masters\ConditionData;
 use App\DataTransferObjects\Masters\LifetimeData;
 use App\DataTransferObjects\Masters\SubClusterData;
 use App\DataTransferObjects\Masters\UomData;
@@ -21,9 +23,9 @@ class AssetData extends Data implements DataInterface
         public ?string $asset_unit_id,
         public ?string $sub_cluster_id,
         public ?string $pic,
-        public ?string $activity,
+        public ?string $activity_id,
         public ?string $asset_location,
-        public ?string $kondisi,
+        public ?string $condition_id,
         public ?string $uom_id,
         public ?string $quantity,
         public ?string $lifetime_id,
@@ -45,6 +47,8 @@ class AssetData extends Data implements DataInterface
         public ?AssetUnitData $asset_unit,
         public ?UomData $uom,
         public ?LifetimeData $lifetime,
+        public ?ActivityData $activity,
+        public ?ConditionData $condition,
         public ?ProjectData $project,
         public ?EmployeeData $employee,
     ) {

@@ -15,6 +15,8 @@ use App\Models\Masters\Lifetime;
 use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetService;
 use App\Services\GlobalService;
+use App\Services\Masters\ActivityService;
+use App\Services\Masters\ConditionService;
 use App\Services\Masters\LeasingService;
 use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
@@ -41,6 +43,8 @@ class AssetMasterController extends Controller
             'subClusters' => SubClusterService::dataForSelect(),
             'units' => UnitService::dataForSelect(),
             'lifetimes' => LifetimeService::dataForSelect(),
+            'activities' => ActivityService::dataForSelect(),
+            'conditions' => ConditionService::dataForSelect(),
             'dealers' => GlobalService::vendorForSelect(),
             'leasings' => LeasingService::dataForSelect(),
             'projects' => GlobalService::getProjects(),

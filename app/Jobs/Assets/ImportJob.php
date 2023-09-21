@@ -11,8 +11,10 @@ use App\Models\Project;
 use App\Services\Assets\AssetLeasingService;
 use App\Services\Assets\AssetService;
 use App\Services\Assets\AssetUnitService;
+use App\Services\Masters\ActivityService;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
+use App\Services\Masters\ConditionService;
 use App\Services\Masters\LeasingService;
 use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
@@ -107,15 +109,23 @@ class ImportJob implements ShouldQueue
                 'masa_pakai' => $val['masa_pakai']
             ]);
 
+            $activity = ActivityService::store([
+                'name' => isset($val['activity']) ? $val['activity'] : null
+            ]);
+
+            $condition = ConditionService::store([
+                'name' => isset($val['kondisi']) ? $val['kondisi'] : null
+            ]);
+
             $asset = AssetService::store([
                 'kode' => isset($val['new_id_asset']) ? $val['new_id_asset'] : null,
                 'asset_unit_id' => $assetUnit?->getKey(),
                 'sub_cluster_id' => $subCluster?->getKey(),
                 'pic' => $pic?->nik,
-                'activity' => isset($val['activity']) ? $val['activity'] : null,
+                'activity_id' => $activity?->getKey(),
                 'asset_location' => $project?->project_id,
                 'dept_id' => $department?->dept_id,
-                'kondisi' => isset($val['kondisi']) ? $val['kondisi'] : null,
+                'condition_id' => $condition?->getKey(),
                 'uom_id' => $uom?->getKey(),
                 'quantity' => isset($val['jumlah']) ? $val['jumlah'] : null,
                 'lifetime_id' => $lifetime?->getKey(),

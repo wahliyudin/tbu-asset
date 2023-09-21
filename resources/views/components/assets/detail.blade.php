@@ -87,7 +87,8 @@
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Activity</label>
                                     <div class="col-lg-7">
-                                        <span class="fw-bold fs-6 text-gray-800">{{ $asset->activity ?? '-' }}</span>
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->activity?->name ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +108,8 @@
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Kondisi</label>
                                     <div class="col-lg-7">
-                                        <span class="fw-bold fs-6 text-gray-800">{{ $asset->kondisi ?? '-' }}</span>
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->condition?->name ?? '-' }}</span>
                                     </div>
                                 </div>
                             </div>
