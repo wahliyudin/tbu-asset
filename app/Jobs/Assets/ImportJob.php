@@ -20,6 +20,7 @@ use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
+use Carbon\Carbon;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -139,15 +140,21 @@ class ImportJob implements ShouldQueue
                 'status_asset' => isset($val['status']) ? $val['status'] : null,
             ]);
 
+            $tanggal_awal_leasing = CarbonHelper::convertDate($val['tanggal_awal_leasing']);
+            $jangka_waktu_leasing = is_int($val['jangka_waktu_leasing']) ? $val['jangka_waktu_leasing'] : null;
+            $tanggal_akhir_leasing = null;
+            if ($tanggal_awal_leasing && $jangka_waktu_leasing) {
+                $tanggal_akhir_leasing = Carbon::parse($tanggal_awal_leasing)->addMonths($jangka_waktu_leasing)->format('Y-m-d');
+            }
             $assetLeasing = AssetLeasingService::store([
                 'asset_id' => $asset->getKey(),
                 'dealer_id' => isset($val['dealer_id']) ? $val['dealer_id'] : null,
                 'suplier_dealer' => isset($val['suplier_dealer']) ? $val['suplier_dealer'] : null,
                 'leasing_id' => $leasing?->getKey(),
                 'harga_beli' => isset($val['nilai_perolehan']) ? $val['nilai_perolehan'] : null,
-                'jangka_waktu_leasing' => is_int($val['jangka_waktu_leasing']) ? $val['jangka_waktu_leasing'] : null,
-                'tanggal_awal_leasing' => CarbonHelper::convertDate($val['tanggal_awal_leasing']),
-                'tanggal_akhir_leasing' => CarbonHelper::convertDate($val['tanggal_akhir_leasing']),
+                'jangka_waktu_leasing' => $jangka_waktu_leasing,
+                'tanggal_awal_leasing' => $tanggal_awal_leasing,
+                'tanggal_akhir_leasing' => $tanggal_akhir_leasing,
                 'tanggal_perolehan' => CarbonHelper::convertDate($val['tanggal_perolehan']),
                 'biaya_leasing' => isset($val['biaya_leasing']) ? $val['biaya_leasing'] : null,
                 'legalitas' => isset($val['legalitas']) ? $val['legalitas'] : null,
