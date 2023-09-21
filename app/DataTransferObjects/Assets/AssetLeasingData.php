@@ -2,11 +2,13 @@
 
 namespace App\DataTransferObjects\Assets;
 
+use App\DataTransferObjects\API\TXIS\VendorData;
 use App\DataTransferObjects\Masters\DealerData;
 use App\DataTransferObjects\Masters\LeasingData;
 use App\DataTransferObjects\Masters\LifetimeData;
 use App\Helpers\Helper;
 use App\Http\Requests\Assets\AssetRequest;
+use App\Services\GlobalService;
 use Spatie\LaravelData\Data;
 
 class AssetLeasingData extends Data
@@ -24,8 +26,12 @@ class AssetLeasingData extends Data
         public ?string $tanggal_akhir_leasing,
         public ?LeasingData $leasing = null,
         public ?LifetimeData $lifetime = null,
+        public ?VendorData $dealer = null,
         public ?string $key = null,
     ) {
+        if ($this->dealer_id) {
+            $this->dealer = GlobalService::vendorById($this->dealer_id);
+        }
     }
 
     public static function fromRequest(AssetRequest $request): self

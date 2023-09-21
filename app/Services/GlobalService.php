@@ -59,4 +59,9 @@ class GlobalService
         return VendorData::collection((new VendorService())->all()['data'])
             ->only('vendorid', 'vendorname');
     }
+
+    public static function vendorById($id)
+    {
+        return VendorData::from((new VendorService)->getById($id));
+    }
 }
