@@ -139,6 +139,7 @@ class AssetService
             'asset_location' => $data['asset_location'],
             'dept_id' => $data['dept_id'],
             'condition_id' => $data['condition_id'],
+            'lifetime_id' => $data['lifetime_id'],
             'uom_id' => $data['uom_id'],
             'quantity' => $data['quantity'],
             'nilai_sisa' => $data['nilai_sisa'],
