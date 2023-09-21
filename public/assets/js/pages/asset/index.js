@@ -741,8 +741,8 @@ var AssetsList = function () {
         $($(form).find('input[name="biaya_leasing"]')).val(json === null ? attributes.biaya_leasing : json.leasing?.biaya_leasing).trigger('input');
         $($(form).find('input[name="legalitas_leasing"]')).val(json === null ? attributes.legalitas_leasing : json.leasing?.legalitas);
         $($(form).find('input[name="tanggal_perolehan_leasing"]')).val(json === null ? attributes.tanggal_perolehan_leasing : json.leasing?.tanggal_perolehan);
-        $($(form).find('input[name="tanggal_awal_leasing"]')).val(json === null ? attributes.tanggal_awal_leasing : json.leasing?.tanggal_perolehan);
-        $($(form).find('input[name="tanggal_akhir_leasing"]')).val(json === null ? attributes.tanggal_akhir_leasing : json.leasing?.tanggal_perolehan);
+        $($(form).find('input[name="tanggal_awal_leasing"]')).val(json === null ? attributes.tanggal_awal_leasing : json.leasing?.tanggal_awal_leasing);
+        $($(form).find('input[name="tanggal_akhir_leasing"]')).val(json === null ? attributes.tanggal_akhir_leasing : json.leasing?.tanggal_akhir_leasing);
 
         $($(form).find('select[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.insurance?.jangka_waktu).trigger('change');
         $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.insurance?.biaya).trigger('input');

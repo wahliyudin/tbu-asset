@@ -357,7 +357,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Tanggal Awal</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\CarbonHelper::convertDate($asset->leasing?->tanggal_awal_leasing, 'd F Y') ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Tanggal Akhir</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\CarbonHelper::convertDate($asset->leasing?->tanggal_akhir_leasing, 'd F Y') ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-lg-6 mb-5">
                                 <div class="row">
                                     <label class="col-lg-4 fw-semibold text-muted">Tanggal Perolehan</label>
                                     <div class="col-lg-7">

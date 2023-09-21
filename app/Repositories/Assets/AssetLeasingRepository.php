@@ -18,6 +18,8 @@ class AssetLeasingRepository
             'leasing_id' => $data->leasing_id,
             'harga_beli' => $data->hargaBeliToInt(),
             'jangka_waktu_leasing' => $data->jangka_waktu_leasing,
+            'tanggal_awal_leasing' => $data->tanggal_awal_leasing,
+            'tanggal_akhir_leasing' => $data->tanggal_akhir_leasing,
             'biaya_leasing' => $data->biayaToInt(),
             'legalitas' => $data->legalitas,
             'tanggal_perolehan' => $data->tanggal_perolehan,
