@@ -48,6 +48,8 @@ var AssetsList = function () {
         biaya_leasing: '',
         legalitas_leasing: '',
         tanggal_perolehan_leasing: '',
+        tanggal_awal_leasing: '',
+        tanggal_akhir_leasing: '',
 
         jangka_waktu_insurance: '',
         biaya_insurance: '',
@@ -444,6 +446,20 @@ var AssetsList = function () {
                             }
                         }
                     },
+                    'tanggal_awal_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tanggal Awal is required'
+                            }
+                        }
+                    },
+                    'tanggal_akhir_leasing': {
+                        validators: {
+                            notEmpty: {
+                                message: 'Tanggal Akhir is required'
+                            }
+                        }
+                    },
 
                     'jangka_waktu_insurance': {
                         validators: {
@@ -629,6 +645,8 @@ var AssetsList = function () {
         attributes.biaya_leasing = $($(form).find('input[name="biaya_leasing"]')).val();
         attributes.legalitas_leasing = $($(form).find('input[name="legalitas_leasing"]')).val();
         attributes.tanggal_perolehan_leasing = $($(form).find('input[name="tanggal_perolehan_leasing"]')).val();
+        attributes.tanggal_awal_leasing = $($(form).find('input[name="tanggal_awal_leasing"]')).val();
+        attributes.tanggal_akhir_leasing = $($(form).find('input[name="tanggal_akhir_leasing"]')).val();
 
         attributes.jangka_waktu_insurance = $($(form).find('select[name="jangka_waktu_insurance"]')).val();
         attributes.biaya_insurance = $($(form).find('input[name="biaya_insurance"]')).val();
@@ -676,6 +694,8 @@ var AssetsList = function () {
         attributes.biaya_leasing = '';
         attributes.legalitas_leasing = '';
         attributes.tanggal_perolehan_leasing = '';
+        attributes.tanggal_awal_leasing = '';
+        attributes.tanggal_akhir_leasing = '';
 
         attributes.jangka_waktu_insurance = '';
         attributes.biaya_insurance = '';
@@ -721,6 +741,8 @@ var AssetsList = function () {
         $($(form).find('input[name="biaya_leasing"]')).val(json === null ? attributes.biaya_leasing : json.leasing?.biaya_leasing).trigger('input');
         $($(form).find('input[name="legalitas_leasing"]')).val(json === null ? attributes.legalitas_leasing : json.leasing?.legalitas);
         $($(form).find('input[name="tanggal_perolehan_leasing"]')).val(json === null ? attributes.tanggal_perolehan_leasing : json.leasing?.tanggal_perolehan);
+        $($(form).find('input[name="tanggal_awal_leasing"]')).val(json === null ? attributes.tanggal_awal_leasing : json.leasing?.tanggal_perolehan);
+        $($(form).find('input[name="tanggal_akhir_leasing"]')).val(json === null ? attributes.tanggal_akhir_leasing : json.leasing?.tanggal_perolehan);
 
         $($(form).find('select[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.insurance?.jangka_waktu).trigger('change');
         $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.insurance?.biaya).trigger('input');

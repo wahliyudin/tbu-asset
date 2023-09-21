@@ -32,7 +32,35 @@ var form = function () {
         initialDatatableDepre()
     }
 
+    function addMonths(date, months) {
+        var newDate = new Date(date);
+        newDate.setMonth(newDate.getMonth() + months);
+        return newDate;
+    }
+
+    function formatDateToYYYYMMDD(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    }
+
     var initEvents = () => {
+        $('select[name="jangka_waktu_leasing"]').change(function (e) {
+            e.preventDefault();
+            var month = parseInt($(this).find(':selected').text());
+            var date = $('input[name="tanggal_awal_leasing"]').val();
+            if (date) {
+                $('input[name="tanggal_akhir_leasing"]').val(formatDateToYYYYMMDD(addMonths(date, month))).trigger('input');
+            }
+        });
+        $('input[name="tanggal_awal_leasing"]').change(function (e) {
+            e.preventDefault();
+            var month = parseInt($('select[name="jangka_waktu_leasing"]').find(':selected').text());
+            var date = $(this).val();
+            $('input[name="tanggal_akhir_leasing"]').val(formatDateToYYYYMMDD(addMonths(date, month))).trigger('input');
+        });
         $('input[name="harga_beli_leasing"]').keyup(function (e) {
             $('input[name="price"]').val($(this).val()).trigger('input');
         });
@@ -51,14 +79,16 @@ var form = function () {
         $('select[name="unit_unit_id"]').change(function (e) {
             e.preventDefault();
             var id = $('select[name="unit_unit_id"]').val();
-            $.ajax({
-                type: "GET",
-                url: `/asset-masters/${id}/next-id-asset-unit`,
-                dataType: "JSON",
-                success: function (response) {
-                    $('input[name="unit_kode"]').val(response.id);
-                }
-            });
+            if (id) {
+                $.ajax({
+                    type: "GET",
+                    url: `/asset-masters/${id}/next-id-asset-unit`,
+                    dataType: "JSON",
+                    success: function (response) {
+                        $('input[name="unit_kode"]').val(response.id);
+                    }
+                });
+            }
         });
     }
 
@@ -109,6 +139,7 @@ var form = function () {
     var initPlugins = () => {
         $("#tgl_bast").flatpickr();
         $("#tanggal_perolehan_leasing").flatpickr();
+        $("#tanggal_awal_leasing").flatpickr();
         $('.uang').mask('0.000.000.000', {
             reverse: true
         });

@@ -260,6 +260,16 @@
                         <input class="form-control" placeholder="Tanggal Perolehan" name="tanggal_perolehan_leasing"
                             id="tanggal_perolehan_leasing" />
                     </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Tanggal Awal</label>
+                        <input class="form-control" placeholder="Tanggal Awal" name="tanggal_awal_leasing"
+                            id="tanggal_awal_leasing" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="required fs-6 fw-semibold mb-2">Tanggal Akhir</label>
+                        <input class="form-control" readonly placeholder="Tanggal Akhir" name="tanggal_akhir_leasing"
+                            id="tanggal_akhir_leasing" />
+                    </div>
                 </div>
             </div>
         </div>
