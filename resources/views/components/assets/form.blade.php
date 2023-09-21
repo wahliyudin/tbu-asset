@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">ID Asset</label>
-                        <input type="text" class="form-control form-control" placeholder="Kode" name="kode" />
+                        <input type="text" class="form-control" placeholder="Kode" name="kode" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 sub-cluster">
                         <label class="required fs-6 fw-semibold mb-2">Sub Cluster</label>
@@ -102,37 +102,31 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Quantity</label>
-                        <input type="number" class="form-control form-control" placeholder="Quantity"
-                            name="quantity" />
+                        <input type="number" class="form-control" placeholder="Quantity" name="quantity" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Tanggal Bast</label>
-                        <input class="form-control form-control" placeholder="Tanggal Bast" name="tgl_bast"
-                            id="tgl_bast" />
+                        <input class="form-control" placeholder="Tanggal Bast" name="tgl_bast" id="tgl_bast" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">HM</label>
-                        <input type="text" class="form-control form-control" placeholder="HM" name="hm" />
+                        <input type="text" class="form-control" placeholder="HM" name="hm" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">PR Number</label>
-                        <input type="text" class="form-control form-control" placeholder="PR Number"
-                            name="pr_number" />
+                        <input type="text" class="form-control" placeholder="PR Number" name="pr_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">PO Number</label>
-                        <input type="text" class="form-control form-control" placeholder="PO Number"
-                            name="po_number" />
+                        <input type="text" class="form-control" placeholder="PO Number" name="po_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">GR Number</label>
-                        <input type="text" class="form-control form-control" placeholder="GR Number"
-                            name="gr_number" />
+                        <input type="text" class="form-control" placeholder="GR Number" name="gr_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Remark</label>
-                        <input type="text" class="form-control form-control" placeholder="Remark"
-                            name="remark" />
+                        <input type="text" class="form-control" placeholder="Remark" name="remark" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 status">
                         <label class="required fs-6 fw-semibold mb-2">Status</label>
@@ -167,47 +161,42 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">ID Unit</label>
-                        <input type="text" class="form-control form-control" placeholder="Kode"
-                            name="unit_kode" />
+                        <input type="text" class="form-control" placeholder="Kode" name="unit_kode" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Type</label>
-                        <input type="text" class="form-control form-control" placeholder="Type"
-                            name="unit_type" />
+                        <input type="text" class="form-control" placeholder="Type" name="unit_type" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Seri</label>
-                        <input type="text" class="form-control form-control" placeholder="Seri"
-                            name="unit_seri" />
+                        <input type="text" class="form-control" placeholder="Seri" name="unit_seri" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Class</label>
-                        <input type="text" class="form-control form-control" placeholder="Class"
-                            name="unit_class" />
+                        <input type="text" class="form-control" placeholder="Class" name="unit_class" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Brand</label>
-                        <input type="text" class="form-control form-control" placeholder="Brand"
-                            name="unit_brand" />
+                        <input type="text" class="form-control" placeholder="Brand" name="unit_brand" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Serial Number</label>
-                        <input type="text" class="form-control form-control" placeholder="Serial Number"
+                        <input type="text" class="form-control" placeholder="Serial Number"
                             name="unit_serial_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Spesification</label>
-                        <input type="text" class="form-control form-control" placeholder="Spesification"
+                        <input type="text" class="form-control" placeholder="Spesification"
                             name="unit_spesification" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Kelengkapan Tambahan</label>
-                        <input type="text" class="form-control form-control" placeholder="Kelengkapan Tambahan"
+                        <input type="text" class="form-control" placeholder="Kelengkapan Tambahan"
                             name="unit_kelengkapan_tambahan" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Tahun Pembuatan</label>
-                        <input type="text" id="tahun_pembuatan" class="form-control form-control"
+                        <input type="text" id="tahun_pembuatan" class="form-control"
                             placeholder="Tahun Pembuatan" name="unit_tahun_pembuatan" />
                     </div>
                 </div>
@@ -242,13 +231,13 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Harga Beli</label>
-                        <input type="text" class="form-control form-control uang" placeholder="Harga Beli"
+                        <input type="text" class="form-control uang" placeholder="Harga Beli"
                             name="harga_beli_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
                         <div class="input-group input-group">
-                            <input type="number" class="form-control form-control" placeholder="Jangka Waktu"
+                            <input type="number" class="form-control" placeholder="Jangka Waktu"
                                 id="jangka_waktu_leasing" name="jangka_waktu_leasing" />
                             <span class="input-group-text" id="jangka_waktu_leasing">
                                 Bulan
@@ -257,18 +246,29 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Biaya Leasing</label>
-                        <input type="text" class="form-control form-control uang" placeholder="Biaya Leasing"
+                        <input type="text" class="form-control uang" placeholder="Biaya Leasing"
                             name="biaya_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Legalitas</label>
-                        <input type="text" class="form-control form-control" placeholder="Legalitas"
+                        <label class="fs-6 fw-semibold mb-2">Nomor Kontrak</label>
+                        <input type="text" class="form-control" placeholder="Nomor Kontrak"
                             name="legalitas_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Tanggal Perolehan</label>
-                        <input class="form-control form-control" placeholder="Tanggal Perolehan"
-                            name="tanggal_perolehan_leasing" id="tanggal_perolehan_leasing" />
+                        <input class="form-control" placeholder="Tanggal Perolehan" name="tanggal_perolehan_leasing"
+                            id="tanggal_perolehan_leasing" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7 lifetime_leasing">
+                        <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
+                        <select class="form-select form-select" name="lifetime_id_leasing" data-control="select2"
+                            data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime_leasing">
+                            <option></option>
+                            @foreach ($lifetimes as $lifetime)
+                                <option value="{{ $lifetime->getKey() }}">{{ $lifetime->masa_pakai }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>
@@ -281,7 +281,7 @@
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
                         <div class="input-group input-group">
-                            <input type="number" class="form-control form-control" placeholder="Jangka Waktu"
+                            <input type="number" class="form-control" placeholder="Jangka Waktu"
                                 id="jangka_waktu_insurance" name="jangka_waktu_insurance" />
                             <span class="input-group-text" id="jangka_waktu_insurance">
                                 Bulan
@@ -290,12 +290,12 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Biaya</label>
-                        <input type="text" class="form-control form-control uang" placeholder="Biaya"
+                        <input type="text" class="form-control uang" placeholder="Biaya"
                             name="biaya_insurance" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="fs-6 fw-semibold mb-2">Legalitas</label>
-                        <input type="text" class="form-control form-control" placeholder="Legalitas"
+                        <label class="fs-6 fw-semibold mb-2">Nomor Asuransi</label>
+                        <input type="text" class="form-control" placeholder="Nomor Asuransi"
                             name="legalitas_insurance" />
                     </div>
                 </div>
@@ -308,29 +308,22 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Harga Beli/ Nilai Perolehan</label>
-                        <input type="text" class="form-control form-control uang" placeholder="Nilai Perolehan"
-                            name="price" readonly />
+                        <input type="text" class="form-control uang" placeholder="Nilai Perolehan" name="price"
+                            readonly />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Tanggal BAST</label>
-                        <input type="text" class="form-control form-control" placeholder="Tanggal BAST"
-                            name="date" readonly />
+                        <input type="text" class="form-control" placeholder="Tanggal BAST" name="date"
+                            readonly />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Nilai Sisa</label>
-                        <input type="text" class="form-control form-control uang" placeholder="Nilai Sisa"
-                            name="nilai_sisa" value="0" />
+                        <input type="text" class="form-control uang" placeholder="Nilai Sisa" name="nilai_sisa"
+                            value="0" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 lifetime">
                         <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
-                        <select class="form-select form-select" name="lifetime_id" data-control="select2"
-                            data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime">
-                            <option></option>
-                            @foreach ($lifetimes as $lifetime)
-                                <option value="{{ $lifetime->getKey() }}">{{ $lifetime->masa_pakai }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input type="text" name="lifetime_id" readonly class="form-control">
                     </div>
                 </div>
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="depresiasi_table">

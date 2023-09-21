@@ -40,8 +40,9 @@ var form = function () {
             e.preventDefault();
             $('input[name="date"]').val($(this).val());
         });
-        $('select[name="lifetime_id"]').change(function (e) {
+        $('select[name="lifetime_id_leasing"]').change(function (e) {
             e.preventDefault();
+            $('input[name="lifetime_id"]').val(parseInt($(this).find(":selected").text()));
             generateDepre();
         });
         $('input[name="nilai_sisa"]').change(function (e) {
@@ -70,7 +71,7 @@ var form = function () {
                 date: $('input[name="date"]').val(),
                 price: $('input[name="price"]').val(),
                 nilai_sisa: $('input[name="nilai_sisa"]').val(),
-                lifetime_id: $('select[name="lifetime_id"]').val(),
+                lifetime_id: $('input[name="lifetime_id"]').val(),
             },
             dataType: "JSON",
             success: function (response) {

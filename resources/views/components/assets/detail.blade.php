@@ -366,6 +366,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6 mb-5">
+                                <div class="row">
+                                    <label class="col-lg-4 fw-semibold text-muted">Masa Pakai</label>
+                                    <div class="col-lg-7">
+                                        <span
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->leasing?->lifetime?->masa_pakai ?? '-' }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="asuransi" role="tabpanel">
@@ -442,9 +451,10 @@
                                     <label class="col-lg-4 fw-semibold text-muted">Masa Pakai</label>
                                     <div class="col-lg-7">
                                         <span
-                                            class="fw-bold fs-6 text-gray-800">{{ $asset->lifetime?->masa_pakai ?? '-' }}</span>
+                                            class="fw-bold fs-6 text-gray-800">{{ $asset->leasing?->lifetime?->masa_pakai ?? '-' }}</span>
                                     </div>
-                                    <input type="hidden" name="lifetime_id" value="{{ $asset->lifetime_id }}">
+                                    <input type="hidden" name="lifetime_id"
+                                        value="{{ $asset->leasing?->lifetime?->masa_pakai }}">
                                 </div>
                             </div>
                         </div>

@@ -141,7 +141,6 @@ class AssetService
             'condition_id' => $data['condition_id'],
             'uom_id' => $data['uom_id'],
             'quantity' => $data['quantity'],
-            'lifetime_id' => $data['lifetime_id'],
             'nilai_sisa' => $data['nilai_sisa'],
             'tgl_bast' => $data['tgl_bast'],
             'hm' => $data['hm'],
