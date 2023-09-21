@@ -32,12 +32,11 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">ID Asset</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Kode"
-                            name="kode" />
+                        <input type="text" class="form-control form-control" placeholder="Kode" name="kode" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 sub-cluster">
                         <label class="required fs-6 fw-semibold mb-2">Sub Cluster</label>
-                        <select class="form-select form-select-solid" name="sub_cluster_id" data-control="select2"
+                        <select class="form-select form-select" name="sub_cluster_id" data-control="select2"
                             data-placeholder="Sub Cluster" data-dropdown-parent=".sub-cluster">
                             <option></option>
                             @foreach ($subClusters as $subCluster)
@@ -48,7 +47,7 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7 pic">
                         <label class="required fs-6 fw-semibold mb-2">PIC</label>
-                        <select class="form-select form-select-solid" name="pic" data-control="select2"
+                        <select class="form-select form-select" name="pic" data-control="select2"
                             data-placeholder="PIC" data-dropdown-parent=".pic">
                             <option></option>
                             @foreach ($employees as $employee)
@@ -59,7 +58,7 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7 activity">
                         <label class="required fs-6 fw-semibold mb-2">Activity</label>
-                        <select class="form-select form-select-solid" name="activity_id" data-control="select2"
+                        <select class="form-select form-select" name="activity_id" data-control="select2"
                             data-placeholder="Activity" data-dropdown-parent=".activity">
                             <option></option>
                             @foreach ($activities as $activity)
@@ -70,7 +69,7 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7 asset_location">
                         <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
-                        <select class="form-select form-select-solid" name="asset_location" data-control="select2"
+                        <select class="form-select form-select" name="asset_location" data-control="select2"
                             data-placeholder="Asset Location" data-dropdown-parent=".asset_location">
                             <option></option>
                             @foreach ($projects as $project)
@@ -81,7 +80,7 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7 condition">
                         <label class="required fs-6 fw-semibold mb-2">Kondisi</label>
-                        <select class="form-select form-select-solid" name="condition_id" data-control="select2"
+                        <select class="form-select form-select" name="condition_id" data-control="select2"
                             data-placeholder="Kondisi" data-dropdown-parent=".condition">
                             <option></option>
                             @foreach ($conditions as $condition)
@@ -92,7 +91,7 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7 uom">
                         <label class="required fs-6 fw-semibold mb-2">UOM</label>
-                        <select class="form-select form-select-solid" name="uom_id" data-control="select2"
+                        <select class="form-select form-select" name="uom_id" data-control="select2"
                             data-placeholder="UOM" data-dropdown-parent=".uom">
                             <option></option>
                             @foreach ($uoms as $uom)
@@ -103,41 +102,41 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Quantity</label>
-                        <input type="number" class="form-control form-control-solid" placeholder="Quantity"
+                        <input type="number" class="form-control form-control" placeholder="Quantity"
                             name="quantity" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Tanggal Bast</label>
-                        <input class="form-control form-control-solid" placeholder="Tanggal Bast" name="tgl_bast"
+                        <input class="form-control form-control" placeholder="Tanggal Bast" name="tgl_bast"
                             id="tgl_bast" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">HM</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="HM" name="hm" />
+                        <input type="text" class="form-control form-control" placeholder="HM" name="hm" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">PR Number</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="PR Number"
+                        <input type="text" class="form-control form-control" placeholder="PR Number"
                             name="pr_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">PO Number</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="PO Number"
+                        <input type="text" class="form-control form-control" placeholder="PO Number"
                             name="po_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">GR Number</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="GR Number"
+                        <input type="text" class="form-control form-control" placeholder="GR Number"
                             name="gr_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Remark</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Remark"
+                        <input type="text" class="form-control form-control" placeholder="Remark"
                             name="remark" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 status">
                         <label class="required fs-6 fw-semibold mb-2">Status</label>
-                        <select class="form-select form-select-solid" name="status" data-control="select2"
+                        <select class="form-select form-select" name="status" data-control="select2"
                             data-placeholder="Status" data-dropdown-parent=".status">
                             <option></option>
                             @foreach (\App\Enums\Asset\Status::cases() as $status)
@@ -156,7 +155,7 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7 unit">
                         <label class="required fs-6 fw-semibold mb-2">Unit Model</label>
-                        <select class="form-select form-select-solid" name="unit_unit_id" data-control="select2"
+                        <select class="form-select form-select" name="unit_unit_id" data-control="select2"
                             data-placeholder="Unit" data-dropdown-parent=".unit">
                             <option></option>
                             @foreach ($units as $unit)
@@ -168,47 +167,47 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">ID Unit</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Kode"
+                        <input type="text" class="form-control form-control" placeholder="Kode"
                             name="unit_kode" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Type</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Type"
+                        <input type="text" class="form-control form-control" placeholder="Type"
                             name="unit_type" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Seri</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Seri"
+                        <input type="text" class="form-control form-control" placeholder="Seri"
                             name="unit_seri" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Class</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Class"
+                        <input type="text" class="form-control form-control" placeholder="Class"
                             name="unit_class" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Brand</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Brand"
+                        <input type="text" class="form-control form-control" placeholder="Brand"
                             name="unit_brand" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Serial Number</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Serial Number"
+                        <input type="text" class="form-control form-control" placeholder="Serial Number"
                             name="unit_serial_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Spesification</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Spesification"
+                        <input type="text" class="form-control form-control" placeholder="Spesification"
                             name="unit_spesification" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Kelengkapan Tambahan</label>
-                        <input type="text" class="form-control form-control-solid"
-                            placeholder="Kelengkapan Tambahan" name="unit_kelengkapan_tambahan" />
+                        <input type="text" class="form-control form-control" placeholder="Kelengkapan Tambahan"
+                            name="unit_kelengkapan_tambahan" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Tahun Pembuatan</label>
-                        <input type="text" id="tahun_pembuatan" class="form-control form-control-solid"
+                        <input type="text" id="tahun_pembuatan" class="form-control form-control"
                             placeholder="Tahun Pembuatan" name="unit_tahun_pembuatan" />
                     </div>
                 </div>
@@ -221,7 +220,7 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7 dealer">
                         <label class="required fs-6 fw-semibold mb-2">Dealer</label>
-                        <select class="form-select form-select-solid" name="dealer_id_leasing" data-control="select2"
+                        <select class="form-select form-select" name="dealer_id_leasing" data-control="select2"
                             data-placeholder="Dealer" data-dropdown-parent=".dealer">
                             <option></option>
                             @foreach ($dealers as $dealer)
@@ -232,8 +231,8 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7 leasing">
                         <label class="required fs-6 fw-semibold mb-2">Leasing</label>
-                        <select class="form-select form-select-solid" name="leasing_id_leasing"
-                            data-control="select2" data-placeholder="Leasing" data-dropdown-parent=".leasing">
+                        <select class="form-select form-select" name="leasing_id_leasing" data-control="select2"
+                            data-placeholder="Leasing" data-dropdown-parent=".leasing">
                             <option></option>
                             @foreach ($leasings as $leasing)
                                 <option value="{{ $leasing->getKey() }}">{{ $leasing->name }}
@@ -243,13 +242,13 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Harga Beli</label>
-                        <input type="text" class="form-control form-control-solid uang" placeholder="Harga Beli"
+                        <input type="text" class="form-control form-control uang" placeholder="Harga Beli"
                             name="harga_beli_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
-                        <div class="input-group input-group-solid">
-                            <input type="number" class="form-control form-control-solid" placeholder="Jangka Waktu"
+                        <div class="input-group input-group">
+                            <input type="number" class="form-control form-control" placeholder="Jangka Waktu"
                                 id="jangka_waktu_leasing" name="jangka_waktu_leasing" />
                             <span class="input-group-text" id="jangka_waktu_leasing">
                                 Bulan
@@ -258,17 +257,17 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Biaya Leasing</label>
-                        <input type="text" class="form-control form-control-solid uang"
-                            placeholder="Biaya Leasing" name="biaya_leasing" />
+                        <input type="text" class="form-control form-control uang" placeholder="Biaya Leasing"
+                            name="biaya_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Legalitas</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Legalitas"
+                        <input type="text" class="form-control form-control" placeholder="Legalitas"
                             name="legalitas_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Tanggal Perolehan</label>
-                        <input class="form-control form-control-solid" placeholder="Tanggal Perolehan"
+                        <input class="form-control form-control" placeholder="Tanggal Perolehan"
                             name="tanggal_perolehan_leasing" id="tanggal_perolehan_leasing" />
                     </div>
                 </div>
@@ -281,8 +280,8 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
-                        <div class="input-group input-group-solid">
-                            <input type="number" class="form-control form-control-solid" placeholder="Jangka Waktu"
+                        <div class="input-group input-group">
+                            <input type="number" class="form-control form-control" placeholder="Jangka Waktu"
                                 id="jangka_waktu_insurance" name="jangka_waktu_insurance" />
                             <span class="input-group-text" id="jangka_waktu_insurance">
                                 Bulan
@@ -291,12 +290,12 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Biaya</label>
-                        <input type="text" class="form-control form-control-solid uang" placeholder="Biaya"
+                        <input type="text" class="form-control form-control uang" placeholder="Biaya"
                             name="biaya_insurance" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Legalitas</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Legalitas"
+                        <input type="text" class="form-control form-control" placeholder="Legalitas"
                             name="legalitas_insurance" />
                     </div>
                 </div>
@@ -309,22 +308,22 @@
                 <div class="row">
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Harga Beli/ Nilai Perolehan</label>
-                        <input type="text" class="form-control form-control-solid uang"
-                            placeholder="Nilai Perolehan" name="price" readonly />
+                        <input type="text" class="form-control form-control uang" placeholder="Nilai Perolehan"
+                            name="price" readonly />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Tanggal BAST</label>
-                        <input type="text" class="form-control form-control-solid" placeholder="Tanggal BAST"
+                        <input type="text" class="form-control form-control" placeholder="Tanggal BAST"
                             name="date" readonly />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Nilai Sisa</label>
-                        <input type="text" class="form-control form-control-solid uang" placeholder="Nilai Sisa"
+                        <input type="text" class="form-control form-control uang" placeholder="Nilai Sisa"
                             name="nilai_sisa" value="0" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 lifetime">
                         <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
-                        <select class="form-select form-select-solid" name="lifetime_id" data-control="select2"
+                        <select class="form-select form-select" name="lifetime_id" data-control="select2"
                             data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime">
                             <option></option>
                             @foreach ($lifetimes as $lifetime)

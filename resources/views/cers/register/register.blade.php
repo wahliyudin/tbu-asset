@@ -69,6 +69,7 @@
             $('input[name="kondisi"]').val('');
             $('select[name="uom_id"]').val("{{ $cerItem->uom_id }}").trigger('change');
             $('input[name="quantity"]').val("{{ $cerItem->qty }}");
+            $('input[name="quantity"]').attr('readonly', true);
             $('input[name="tgl_bast"]').val(
                 "{{ isset($cerItemDetail['gr']['tgl_bast']) ? $cerItemDetail['gr']['tgl_bast'] : '' }}");
             $('input[name="hm"]').val('');
