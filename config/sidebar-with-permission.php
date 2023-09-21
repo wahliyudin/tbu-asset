@@ -62,6 +62,10 @@ return [
                     'title' => 'Activity',
                     'permissions' => 'c,r,u,d',
                 ],
+                [
+                    'title' => 'Condition',
+                    'permissions' => 'c,r,u,d',
+                ],
             ]
         ],
         [

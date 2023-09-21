@@ -36,7 +36,7 @@
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </div>
-                @permission('category_read|cluster_read|sub_cluster_read|sub_cluster_item_read|catalog_read|dealer_read|leasing_read|unit_read|uom_read|lifetime_read|activity_read')
+                @permission('category_read|cluster_read|sub_cluster_read|sub_cluster_item_read|catalog_read|dealer_read|leasing_read|unit_read|uom_read|lifetime_read|activity_read|condition_read')
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
                             <span class="menu-icon">
@@ -52,7 +52,7 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div
-                            class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index', 'masters.clusters.index', 'masters.sub-clusters.index', 'masters.sub-cluster-items.index', 'masters.catalogs.index', 'masters.dealers.index', 'masters.leasings.index', 'masters.units.index', 'masters.uoms.index') ? 'hover show' : '' }}">
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs('masters.categories.index', 'masters.clusters.index', 'masters.sub-clusters.index', 'masters.sub-cluster-items.index', 'masters.catalogs.index', 'masters.dealers.index', 'masters.leasings.index', 'masters.units.index', 'masters.uoms.index', 'masters.lifetimes.index', 'masters.activities.index', 'masters.conditions.index') ? 'hover show' : '' }}">
                             @permission('category_read')
                                 <div class="menu-item">
                                     <a class="menu-link {{ request()->routeIs('masters.categories.index') ? 'active' : '' }}"
@@ -171,6 +171,17 @@
                                             <span class="bullet bullet-dot"></span>
                                         </span>
                                         <span class="menu-title">Activity</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            @permission('condition_read')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ request()->routeIs('masters.conditions.index') ? 'active' : '' }}"
+                                        href="{{ route('masters.conditions.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Condition</span>
                                     </a>
                                 </div>
                             @endpermission
