@@ -6,6 +6,7 @@ use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\ProjectData;
 use App\DataTransferObjects\Masters\ActivityData;
 use App\DataTransferObjects\Masters\ConditionData;
+use App\DataTransferObjects\Masters\LifetimeData;
 use App\DataTransferObjects\Masters\SubClusterData;
 use App\DataTransferObjects\Masters\UomData;
 use App\Enums\Asset\Status;
@@ -26,6 +27,7 @@ class AssetData extends Data implements DataInterface
         public ?string $condition_id,
         public ?string $uom_id,
         public ?string $quantity,
+        public ?string $lifetime_id,
         public ?string $nilai_sisa,
         public ?string $tgl_bast,
         public ?string $hm,
@@ -43,6 +45,7 @@ class AssetData extends Data implements DataInterface
         public ?DeprecationData $deprecation,
         public ?AssetUnitData $asset_unit,
         public ?UomData $uom,
+        public ?LifetimeData $lifetime,
         public ?ActivityData $activity,
         public ?ConditionData $condition,
         public ?ProjectData $project,

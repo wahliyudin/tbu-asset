@@ -22,7 +22,6 @@ class AssetLeasing extends Model
         'jangka_waktu_leasing',
         'tanggal_awal_leasing',
         'tanggal_akhir_leasing',
-        'lifetime_id',
         'biaya_leasing',
         'legalitas',
         'tanggal_perolehan'
@@ -41,10 +40,5 @@ class AssetLeasing extends Model
     public function leasing(): BelongsTo
     {
         return $this->belongsTo(Leasing::class);
-    }
-
-    public function lifetime(): BelongsTo
-    {
-        return $this->belongsTo(Lifetime::class);
     }
 }

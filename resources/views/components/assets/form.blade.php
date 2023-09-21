@@ -234,15 +234,16 @@
                         <input type="text" class="form-control uang" placeholder="Harga Beli"
                             name="harga_beli_leasing" />
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-4 fv-row mb-7 jangka_waktu_leasing">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
-                        <div class="input-group input-group">
-                            <input type="number" class="form-control" placeholder="Jangka Waktu"
-                                id="jangka_waktu_leasing" name="jangka_waktu_leasing" />
-                            <span class="input-group-text" id="jangka_waktu_leasing">
-                                Bulan
-                            </span>
-                        </div>
+                        <select class="form-select form-select" name="jangka_waktu_leasing" data-control="select2"
+                            data-placeholder="Jangka Waktu" data-dropdown-parent=".jangka_waktu_leasing">
+                            <option></option>
+                            @foreach ($lifetimes as $lifetime)
+                                <option value="{{ $lifetime->masa_pakai }}">{{ $lifetime->masa_pakai }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Biaya Leasing</label>
@@ -259,17 +260,6 @@
                         <input class="form-control" placeholder="Tanggal Perolehan" name="tanggal_perolehan_leasing"
                             id="tanggal_perolehan_leasing" />
                     </div>
-                    <div class="col-md-4 fv-row mb-7 lifetime_leasing">
-                        <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
-                        <select class="form-select form-select" name="lifetime_id_leasing" data-control="select2"
-                            data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime_leasing">
-                            <option></option>
-                            @foreach ($lifetimes as $lifetime)
-                                <option value="{{ $lifetime->getKey() }}">{{ $lifetime->masa_pakai }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
             </div>
         </div>
@@ -278,15 +268,16 @@
         <div class="card">
             <div class="card-body p-9">
                 <div class="row">
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-4 fv-row mb-7 jangka_waktu_insurance">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
-                        <div class="input-group input-group">
-                            <input type="number" class="form-control" placeholder="Jangka Waktu"
-                                id="jangka_waktu_insurance" name="jangka_waktu_insurance" />
-                            <span class="input-group-text" id="jangka_waktu_insurance">
-                                Bulan
-                            </span>
-                        </div>
+                        <select class="form-select form-select" name="jangka_waktu_insurance" data-control="select2"
+                            data-placeholder="Jangka Waktu" data-dropdown-parent=".jangka_waktu_insurance">
+                            <option></option>
+                            @foreach ($lifetimes as $lifetime)
+                                <option value="{{ $lifetime->masa_pakai }}">{{ $lifetime->masa_pakai }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Biaya</label>
@@ -311,7 +302,7 @@
                         <input type="text" class="form-control uang" placeholder="Nilai Perolehan" name="price"
                             readonly />
                     </div>
-                    <div class="col-md-4 fv-row mb-7">
+                    <div class="col-md-2 fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">Tanggal BAST</label>
                         <input type="text" class="form-control" placeholder="Tanggal BAST" name="date"
                             readonly />
@@ -321,9 +312,16 @@
                         <input type="text" class="form-control uang" placeholder="Nilai Sisa" name="nilai_sisa"
                             value="0" />
                     </div>
-                    <div class="col-md-4 fv-row mb-7 lifetime">
+                    <div class="col-md-2 fv-row mb-7 lifetime">
                         <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
-                        <input type="text" name="lifetime_id" readonly class="form-control">
+                        <select class="form-select form-select" name="lifetime_id" data-control="select2"
+                            data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime">
+                            <option></option>
+                            @foreach ($lifetimes as $lifetime)
+                                <option value="{{ $lifetime->getKey() }}">{{ $lifetime->masa_pakai }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="depresiasi_table">

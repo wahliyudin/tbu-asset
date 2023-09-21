@@ -37,6 +37,7 @@ class Asset extends Model implements ElasticsearchInterface
         'condition_id',
         'uom_id',
         'quantity',
+        'lifetime_id',
         'nilai_sisa',
         'tgl_bast',
         'hm',
@@ -90,6 +91,11 @@ class Asset extends Model implements ElasticsearchInterface
     public function uom()
     {
         return $this->belongsTo(Uom::class);
+    }
+
+    public function lifetime()
+    {
+        return $this->belongsTo(Lifetime::class);
     }
 
     public function activity()
