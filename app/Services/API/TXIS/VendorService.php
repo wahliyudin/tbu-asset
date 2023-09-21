@@ -21,7 +21,7 @@ class VendorService extends TXISService
 
     public function getById($id)
     {
-        return $this->get($this->url(), [$id])
+        return $this->get($this->url() . '/' . $id, [])
             ->json();
     }
 }
