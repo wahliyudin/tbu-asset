@@ -26,7 +26,7 @@ class CerRequest extends FormRequest
             'cost_analyst' => ['required'],
             'budget_ref' => ['required'],
         ];
-        if (request()->type_budget == TypeBudget::UNBUDGET->value) {
+        if (request()->type_budget == TypeBudget::UNBUDGET->value && !request()->id) {
             $rules['file_ucr'] = ['required'];
         }
         foreach (request()->get('items') ?? [] as $key => $value) {

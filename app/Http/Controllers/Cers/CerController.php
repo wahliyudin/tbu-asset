@@ -121,6 +121,18 @@ class CerController extends Controller
         }
     }
 
+    public function storeDraft(CerRequest $request)
+    {
+        try {
+            $this->service->updateOrCreate($request, true);
+            return response()->json([
+                'message' => 'Berhasil disimpan'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function edit(Cer $cer)
     {
         try {

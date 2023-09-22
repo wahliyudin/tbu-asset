@@ -74,7 +74,7 @@ class AccessPermissionService
                 ->contains($permission->id);
             $permissionsMap = config('sidebar-with-permission.permissions_map');
             foreach ($permissionsMap as $key => $val) {
-                if (str($permission->name)->contains($val)) {
+                if (str($permission->name)->contains('_' . $val)) {
                     $permission->display = str($val)->ucfirst();
                     $permission->input_name = $val . "[]";
                 }

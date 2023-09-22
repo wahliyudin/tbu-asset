@@ -6,6 +6,7 @@ use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
+use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Models\Department;
 use App\Models\Employee;
@@ -47,6 +48,13 @@ class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
     public function indexName(): string
     {
         return 'tbu_asset_cers';
+    }
+
+    public function currentApproval(): HasOne
+    {
+        return $this->hasOne(CerWorkflow::class)->ofMany('sequence', 'min', function ($query) {
+            $query->where('lastaction', LastAction::NOTTING);
+        });
     }
 
     public function items(): HasMany

@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObjects\Cers;
 
+use App\DataTransferObjects\API\HRIS\DepartmentData;
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\TXIS\BudgetData;
 use App\DataTransferObjects\WorkflowData;
@@ -44,6 +45,7 @@ class CerData extends Data implements DataInterface
         #[DataCollectionOf(WorkflowData::class)]
         public ?DataCollection $workflows,
         public ?EmployeeData $employee,
+        public ?DepartmentData $department,
         public ?BudgetData $budget,
     ) {
         $this->setDefaultValue();
@@ -70,7 +72,7 @@ class CerData extends Data implements DataInterface
         return Str::random();
     }
 
-    public static function fromRequest(Request $request)
+    public static function fromRequest(Request $request, bool $isDraft = false)
     {
         $items = [];
         for ($i = 0; $i < count($request->items); $i++) {
@@ -94,7 +96,7 @@ class CerData extends Data implements DataInterface
             'items' => $items,
             'file_ucr' => $file_ucr,
             'no_cer' => $noCer,
-            'status' => Status::OPEN
+            'status' => $isDraft ? Status::DRAFT : Status::OPEN
         ]));
         if (!$file_ucr) {
             return $self->except('file_ucr');

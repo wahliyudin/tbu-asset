@@ -9,10 +9,6 @@ return [
                     'title' => 'DASHBOARD',
                     'permissions' => 'c,r,u,d',
                 ],
-                [
-                    'title' => 'PERSONAL DASHBOARD',
-                    'permissions' => 'c,r,u,d',
-                ],
             ]
         ],
         [
@@ -55,15 +51,15 @@ return [
                     'permissions' => 'c,r,u,d',
                 ],
                 [
-                    'title' => 'Lifetime',
+                    'title' => 'LIFETIME',
                     'permissions' => 'c,r,u,d',
                 ],
                 [
-                    'title' => 'Activity',
+                    'title' => 'ACTIVITY',
                     'permissions' => 'c,r,u,d',
                 ],
                 [
-                    'title' => 'Condition',
+                    'title' => 'CONDITION',
                     'permissions' => 'c,r,u,d',
                 ],
             ]

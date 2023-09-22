@@ -33,19 +33,21 @@ class CerService
         return CerData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', AuthHelper::getNik());
     }
 
-    public function updateOrCreate(CerRequest $request)
+    public function updateOrCreate(CerRequest $request, bool $isDraft = false)
     {
-        $data = CerData::fromRequest($request);
-        return DB::transaction(function () use ($data) {
+        $data = CerData::fromRequest($request, $isDraft);
+        return DB::transaction(function () use ($data, $isDraft) {
             $cer = $this->cerRepository->updateOrCreate($data);
             if ($data->getKey()) {
                 $cer->items()->delete();
                 $cer->workflows()->delete();
             }
             $cer->items()->createMany($data->itemsToAttach());
-            CerWorkflowService::setModel($cer)
-                ->setBarrier($data->grandTotal())
-                ->store();
+            if (!$isDraft) {
+                CerWorkflowService::setModel($cer)
+                    ->setBarrier($data->grandTotal())
+                    ->store();
+            }
             $this->sendToElasticsearch($cer, $data->getKey());
             return $cer;
         });
@@ -104,10 +106,10 @@ class CerService
 
     public static function getByCurrentApproval()
     {
-        return Cer::query()->whereHas('workflows', function (Builder $query) {
-            $query->where('last_action', LastAction::NOTTING)
-                ->where('nik', AuthHelper::getNik());
-        })->get();
+        return Cer::query()
+            ->where('status', Status::OPEN)
+            ->whereHas('currentApproval')
+            ->get();
     }
 
     public function getCerTxis($code)

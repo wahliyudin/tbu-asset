@@ -177,7 +177,7 @@
             </div>
         </div>
         <input type="hidden" name="budget_ref" value="{{ $cer?->budget_ref }}">
-        <div class="row mt-4 budget {{ \App\Helpers\Helper::hasBudgeted($cer) ? '' : 'd-none' }}">
+        <div class="row mt-4 budget {{ \App\Helpers\Helper::hasBudgeted($cer) || !isset($cer) ? '' : 'd-none' }}">
             <div class="col-md-4 d-flex justify-content-between align-items-start">
                 <h5>5. Budget</h5>
                 @if ($type != 'show')
@@ -296,14 +296,16 @@
                 </table>
             </div>
             <div class="col-md-8">
-                @if ($type == 'show')
+                @if ($type == 'show' || $cer?->id)
                     <a target="_blank" href="{{ asset('storage/' . $cer?->file_ucr) }}"
                         class="btn btn-sm btn-success mb-1">
                         <i class="ki-duotone ki-document fs-4">
                             <i class="path1"></i>
                             <i class="path2"></i>
                         </i>Document</a>
-                @else
+                @endif
+
+                @if ($type != 'show')
                     <input type="file" class="form-control" name="file_ucr" placeholder="File UCR">
                 @endif
             </div>
@@ -314,10 +316,30 @@
         </div>
     </div>
     @if ($type != 'show')
-        <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-primary simpan-form-cer">
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-warning simpan-draft-form-cer ps-4">
                 <span class="indicator-label">
-                    Simpan
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="ki-duotone ki-archive-tick fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                        <span>Simpan Draft</span>
+                    </div>
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+            <button type="button" class="btn btn-primary simpan-form-cer ps-4">
+                <span class="indicator-label">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="ki-duotone ki-save-2 fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                        <span>Submit</span>
+                    </div>
                 </span>
                 <span class="indicator-progress">
                     Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

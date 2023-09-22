@@ -44,7 +44,7 @@
                         <th class="min-w-125px">Model</th>
                         <th class="min-w-125px">Est. Umur</th>
                         <th class="min-w-125px">Quantity</th>
-                        <th class="min-w-50px">Price</th>
+                        <th class="min-w-50px">Est. Price</th>
                         <th class="text-end min-w-70px">Actions</th>
                     </tr>
                 </thead>
