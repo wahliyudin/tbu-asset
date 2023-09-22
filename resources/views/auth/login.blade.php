@@ -31,7 +31,7 @@
             <a href="{{ route('sso.login') }}"
                 class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                 <img alt="Logo" src="{{ asset('assets/media/logos/tbu-crop.png') }}" class="h-15px me-3">
-                Sign in with HRIS
+                Sign in with HCIS
             </a>
         </div>
     </div>

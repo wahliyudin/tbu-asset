@@ -389,45 +389,45 @@
                         </div>
                     </div>
                 @endpermission
-                {{-- @permission('approval_read|access_permission_read') --}}
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-setting fs-2">
-                                <i class="path1"></i>
-                                <i class="path2"></i>
-                            </i>
+                @permission('approval_read|access_permission_read')
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-setting fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                </i>
+                            </span>
+                            <span class="menu-title">Setting</span>
+                            <span class="menu-arrow"></span>
                         </span>
-                        <span class="menu-title">Setting</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div
-                        class="menu-sub menu-sub-accordion {{ request()->routeIs('settings.approval.index', 'settings.access-permission.index') ? 'hover show' : '' }}">
-                        @permission('approval_read')
-                            <div class="menu-item">
-                                <a class="menu-link {{ request()->routeIs('settings.approval.index') ? 'active' : '' }}"
-                                    href="{{ route('settings.approval.index') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">Approval</span>
-                                </a>
-                            </div>
-                        @endpermission
-                        {{-- @permission('access_permission_read') --}}
-                        <div class="menu-item">
-                            <a class="menu-link {{ request()->routeIs('settings.access-permission.index') ? 'active' : '' }}"
-                                href="{{ route('settings.access-permission.index') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Access Permission</span>
-                            </a>
+                        <div
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs('settings.approval.index', 'settings.access-permission.index') ? 'hover show' : '' }}">
+                            @permission('approval_read')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ request()->routeIs('settings.approval.index') ? 'active' : '' }}"
+                                        href="{{ route('settings.approval.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Approval</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            @permission('access_permission_read')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ request()->routeIs('settings.access-permission.index') ? 'active' : '' }}"
+                                        href="{{ route('settings.access-permission.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">Access Permission</span>
+                                    </a>
+                                </div>
+                            @endpermission
                         </div>
-                        {{-- @endpermission --}}
                     </div>
-                </div>
-                {{-- @endpermission --}}
+                @endpermission
             </div>
         </div>
     </div>

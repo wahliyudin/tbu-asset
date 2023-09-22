@@ -56,7 +56,8 @@ class GlobalService
 
     public static function vendorForSelect()
     {
-        return VendorData::collection((new VendorService())->all()['data'])
+        $vendors = (new VendorService())->all();
+        return VendorData::collection(isset($vendors['data']) ? $vendors['data'] : [])
             ->only('vendorid', 'vendorname');
     }
 
