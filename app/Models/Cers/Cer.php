@@ -8,6 +8,7 @@ use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
+use App\Helpers\AuthHelper;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
@@ -52,8 +53,10 @@ class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
 
     public function currentApproval(): HasOne
     {
-        return $this->hasOne(CerWorkflow::class)->ofMany('sequence', 'min', function ($query) {
-            $query->where('lastaction', LastAction::NOTTING);
+        return $this->hasOne(CerWorkflow::class)->ofMany([
+            'sequence' => 'min',
+        ], function ($query) {
+            $query->where('last_action', LastAction::NOTTING);
         });
     }
 

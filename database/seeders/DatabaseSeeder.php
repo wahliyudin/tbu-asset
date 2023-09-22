@@ -33,6 +33,7 @@ use Database\Seeders\Masters\UnitSeeder;
 use Database\Seeders\Masters\UomSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -41,6 +42,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        foreach (Storage::allDirectories('public') as $directory) {
+            Storage::deleteDirectory($directory);
+        }
         // User::query()->create([
         //     'nik' => 12345678,
         //     'name' => 'Administrator',

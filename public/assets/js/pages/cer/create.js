@@ -140,7 +140,7 @@ var KTModalCersAdd = function () {
         $('input[name="view_budget_ref"]').val(arrayTd[1].innerText);
         $('input[name="budget_ref"]').val(arrayTd[1].innerText);
         $('input[name="budget_periode"]').val(arrayTd[2].innerText);
-        $('input[name="total_budget_idr"]').val(arrayTd[3].innerText);
+        $('input[name="total_budget_idr"]').val(arrayTd[4].innerText);
     }
 
     var initDatatableAsset = () => {

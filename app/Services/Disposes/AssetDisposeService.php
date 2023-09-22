@@ -6,6 +6,7 @@ use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
+use App\Helpers\AuthHelper;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
 use App\Models\Disposes\AssetDispose;
 use App\Repositories\Disposes\AssetDisposeRepository;
@@ -50,9 +51,12 @@ class AssetDisposeService
 
     public static function getByCurrentApproval()
     {
-        return AssetDispose::query()->whereHas('workflows', function (Builder $query) {
-            $query->where('last_action', LastAction::NOTTING)
-                ->where('nik', auth()->user()?->nik);
-        })->get();
+        return AssetDispose::query()
+            ->with('asset')
+            ->where('status', Status::OPEN)
+            ->whereHas('currentApproval', function ($query) {
+                $query->where('nik', AuthHelper::getNik());
+            })
+            ->get();
     }
 }

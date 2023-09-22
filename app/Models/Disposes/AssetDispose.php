@@ -4,6 +4,7 @@ namespace App\Models\Disposes;
 
 use App\Elasticsearch\Contracts\ElasticsearchInterface;
 use App\Enums\Disposes\Dispose\Pelaksanaan;
+use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Models\Assets\Asset;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
@@ -39,6 +40,15 @@ class AssetDispose extends Model implements ModelThatHaveWorkflow, Elasticsearch
         'pelaksanaan' => Pelaksanaan::class,
         'status' => Status::class,
     ];
+
+    public function currentApproval(): HasOne
+    {
+        return $this->hasOne(DisposeWorkflow::class)->ofMany([
+            'sequence' => 'min',
+        ], function ($query) {
+            $query->where('last_action', LastAction::NOTTING);
+        });
+    }
 
     public function asset(): BelongsTo
     {

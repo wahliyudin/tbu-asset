@@ -3,6 +3,7 @@
 namespace App\Models\Transfers;
 
 use App\Elasticsearch\Contracts\ElasticsearchInterface;
+use App\Enums\Workflows\LastAction;
 use App\Models\Assets\Asset;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,15 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
     public function indexName(): string
     {
         return 'tbu_asset_transfers';
+    }
+
+    public function currentApproval(): HasOne
+    {
+        return $this->hasOne(TransferWorkflow::class)->ofMany([
+            'sequence' => 'min',
+        ], function ($query) {
+            $query->where('last_action', LastAction::NOTTING);
+        });
     }
 
     public function asset(): BelongsTo

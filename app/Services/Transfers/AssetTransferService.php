@@ -98,10 +98,11 @@ class AssetTransferService
 
     public static function getByCurrentApproval()
     {
-        $data = AssetTransfer::query()->with('asset')
-            ->whereHas('workflows', function (Builder $query) {
-                $query->where('last_action', LastAction::NOTTING)
-                    ->where('nik', AuthHelper::getNik());
+        $data = AssetTransfer::query()
+            ->with('asset')
+            ->where('status', Status::OPEN)
+            ->whereHas('currentApproval', function ($query) {
+                $query->where('nik', AuthHelper::getNik());
             })
             ->get();
         return AssetTransferData::collection($data)->toCollection();

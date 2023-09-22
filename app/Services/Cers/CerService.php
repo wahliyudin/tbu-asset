@@ -108,7 +108,9 @@ class CerService
     {
         return Cer::query()
             ->where('status', Status::OPEN)
-            ->whereHas('currentApproval')
+            ->whereHas('currentApproval', function ($query) {
+                $query->where('nik', AuthHelper::getNik());
+            })
             ->get();
     }
 
