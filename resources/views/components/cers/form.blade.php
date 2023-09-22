@@ -177,7 +177,7 @@
             </div>
         </div>
         <input type="hidden" name="budget_ref" value="{{ $cer?->budget_ref }}">
-        <div class="row mt-4 budget">
+        <div class="row mt-4 budget {{ \App\Helpers\Helper::hasBudgeted($cer) ? '' : 'd-none' }}">
             <div class="col-md-4 d-flex justify-content-between align-items-start">
                 <h5>5. Budget</h5>
                 @if ($type != 'show')
@@ -236,7 +236,8 @@
                 </table>
             </div>
         </div>
-        <div class="row justify-content-end mt-4 unbudget d-none">
+        <div
+            class="row justify-content-end mt-4 unbudget {{ \App\Helpers\Helper::hasUnBudgeted($cer) ? '' : 'd-none' }}">
             <div class="col-md-4 d-flex justify-content-between align-items-start">
                 <h5>5. Unbudget</h5>
                 @if ($type != 'show')
@@ -295,7 +296,16 @@
                 </table>
             </div>
             <div class="col-md-8">
-                <input type="file" class="form-control" readonly name="file_ucr" placeholder="File UCR">
+                @if ($type == 'show')
+                    <a target="_blank" href="{{ asset('storage/' . $cer?->file_ucr) }}"
+                        class="btn btn-sm btn-success mb-1">
+                        <i class="ki-duotone ki-document fs-4">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>Document</a>
+                @else
+                    <input type="file" class="form-control" name="file_ucr" placeholder="File UCR">
+                @endif
             </div>
         </div>
         <div class="d-flex flex-column mt-4">

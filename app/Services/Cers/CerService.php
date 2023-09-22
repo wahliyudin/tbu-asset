@@ -7,6 +7,7 @@ use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
+use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Models\Employee;
 use App\Repositories\Cers\CerRepository;
@@ -32,8 +33,9 @@ class CerService
         return CerData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', AuthHelper::getNik());
     }
 
-    public function updateOrCreate(CerData $data)
+    public function updateOrCreate(CerRequest $request)
     {
+        $data = CerData::fromRequest($request);
         return DB::transaction(function () use ($data) {
             $cer = $this->cerRepository->updateOrCreate($data);
             if ($data->getKey()) {

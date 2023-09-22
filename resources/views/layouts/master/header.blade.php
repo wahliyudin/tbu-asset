@@ -14,10 +14,10 @@
 
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-            <a href="../../../index.html" class="d-lg-none">
-                <img alt="Logo" src="../../../assets/media/logos/default-small.svg"
+            <a href="{{ route('home') }}" class="d-lg-none">
+                <img alt="Logo" src="{{ asset('assets/media/logos/tbu-crop.png') }}"
                     class="theme-light-show h-30px" />
-                <img alt="Logo" src="../../../assets/media/logos/default-small-dark.svg"
+                <img alt="Logo" src="{{ asset('assets/media/logos/tbu-crop.png') }}"
                     class="theme-dark-show h-30px" />
             </a>
         </div>
@@ -25,7 +25,6 @@
 
         <!--begin::Header wrapper-->
         <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
-
 
             <!--begin::Menu wrapper-->
             <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true"

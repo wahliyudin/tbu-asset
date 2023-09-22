@@ -108,6 +108,9 @@ class CerData extends Data implements DataInterface
             return null;
         }
         $folder = 'cers';
+        if (count(Storage::disk('public')->allDirectories($folder)) > 0) {
+            Storage::disk('public')->makeDirectory($folder);
+        }
         $fileName = $noCer . '-' . time() . '.' . $uploadedFile->getClientOriginalExtension();
         $uploadedFile->storeAs("public/$folder", $fileName);
         return $folder . '/' . $fileName;

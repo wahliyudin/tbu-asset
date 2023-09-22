@@ -112,8 +112,7 @@ class CerController extends Controller
     public function store(CerRequest $request)
     {
         try {
-            $data = CerData::fromRequest($request);
-            $this->service->updateOrCreate($data);
+            $this->service->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
