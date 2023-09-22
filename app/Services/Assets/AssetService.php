@@ -207,16 +207,17 @@ class AssetService
     public function nextIdAssetUnitById($id)
     {
         $assetUnit = $this->assetUnitService->getByIdAndLatest($id);
-        if (!$assetUnit) {
-            $unit = Unit::query()->find($id);
-            return $unit->prefix . '-1';
+        $unit = Unit::query()->find($id);
+        $lastKode = $assetUnit?->kode;
+        $prefix = $unit->prefix . '-';
+        $length = 6;
+        $prefixLength = strlen($unit->prefix);
+        $idLength = $length - $prefixLength;
+        if (!$lastKode) {
+            return $prefix . str_pad(1, $idLength, '0', STR_PAD_LEFT);
         }
-        $kode = str($assetUnit->kode)->explode('-');
-        $next = $kode->last() + 1;
-        $kode = $kode->replace([
-            1 => $next
-        ]);
-        return $kode->implode('-');
+        $maxId = substr($lastKode, $prefixLength + 1, $idLength);
+        return $prefix . str_pad((int)$maxId + 1, $idLength, '0', STR_PAD_LEFT);
     }
 
     private function sendToElasticsearch(Asset $asset, $key)
