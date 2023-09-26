@@ -12,6 +12,7 @@ use App\Models\Masters\SubCluster;
 use App\Models\Masters\Uom;
 use App\Models\Project;
 use App\Models\Assets\AssetUnit;
+use App\Models\Employee;
 use App\Models\Masters\Activity;
 use App\Models\Masters\Condition;
 use App\Models\Masters\Lifetime;
@@ -116,5 +117,10 @@ class Asset extends Model implements ElasticsearchInterface
     public function department()
     {
         return $this->belongsTo(Department::class, 'dept_id', 'dept_id');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'nik', 'nik');
     }
 }

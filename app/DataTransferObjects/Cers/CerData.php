@@ -10,10 +10,12 @@ use App\Enums\Cers\Peruntukan;
 use App\Enums\Cers\SumberPendanaan;
 use App\Enums\Cers\TypeBudget;
 use App\Enums\Workflows\Status;
+use App\Helpers\AuthHelper;
 use App\Helpers\Helper;
 use App\Interfaces\DataInterface;
 use App\Models\Cers\Cer;
 use App\Services\API\TXIS\BudgetService;
+use App\Services\Cers\CerService;
 use App\Services\GlobalService;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -67,11 +69,6 @@ class CerData extends Data implements DataInterface
         }
     }
 
-    public static function generateNo()
-    {
-        return Str::random();
-    }
-
     public static function fromRequest(Request $request, bool $isDraft = false)
     {
         $items = [];
@@ -85,19 +82,24 @@ class CerData extends Data implements DataInterface
                 'uom_id' => $request->items[$i]['uom_id'],
             ];
         }
-        if ($id = $request->id && $request->hasFile('file_ucr')) {
+        $id = $request->id;
+        $cer = null;
+        if (!$id) {
+            $noCer = CerService::nextNoCer($request->department_id, AuthHelper::getNik());
+        } else {
             $cer = Cer::query()->find($id);
-            Storage::disk('public')->delete($cer->file_ucr);
         }
-
-        $noCer = self::generateNo();
+        if ($id && $request->hasFile('file_ucr')) {
+            Storage::disk('public')->delete($cer?->file_ucr);
+        }
         $file_ucr = self::storeFile($request->file('file_ucr'), $noCer);
-        $self = self::from(array_merge($request->toArray(), [
+        $additional = [
             'items' => $items,
             'file_ucr' => $file_ucr,
-            'no_cer' => $noCer,
+            'no_cer' => $id ? $cer?->no_cer : $noCer,
             'status' => $isDraft ? Status::DRAFT : Status::OPEN
-        ]));
+        ];
+        $self = self::from(array_merge($request->toArray(), $additional));
         if (!$file_ucr) {
             return $self->except('file_ucr');
         }

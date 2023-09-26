@@ -9,7 +9,9 @@ use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
+use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Project;
 use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\CerService as TXISCerService;
@@ -127,5 +129,37 @@ class CerService
             return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
         }
         return Elasticsearch::setModel(Cer::class)->created(CerData::from($cer));
+    }
+
+    public static function nextNumber()
+    {
+        $cer = Cer::select(['no_cer'])->orderBy('no_cer', 'DESC')->first();
+        $lastKode = str($cer?->no_cer)->explode('/')->first();
+        $prefix = 'CER';
+        $length = 7;
+        $prefixLength = strlen($prefix);
+        $idLength = $length - $prefixLength;
+        if (!$lastKode) {
+            return $prefix . str_pad(1, $idLength, '0', STR_PAD_LEFT);
+        }
+        $maxId = substr($lastKode, $prefixLength + 1, $idLength);
+        return $prefix . str_pad((int)$maxId + 1, $idLength, '0', STR_PAD_LEFT);
+    }
+
+    public static function nextNoCer($department_id, $nik)
+    {
+        $department = Department::select(['dept_code'])->where('dept_id', $department_id)->first();
+        $project = Project::query()->whereHas('positions', function ($query) use ($nik) {
+            $query->whereHas('employees', function ($query) use ($nik) {
+                $query->where('nik', $nik);
+            });
+        })
+            ->first();
+
+        return collect([
+            self::nextNumber(),
+            $department?->dept_code,
+            $project?->project_prefix
+        ])->implode('/');
     }
 }

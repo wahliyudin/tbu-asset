@@ -29,4 +29,9 @@ class Project extends Model
     {
         return $this->hasMany(Department::class, 'project_id', 'project_id');
     }
+
+    public function positions()
+    {
+        return $this->hasMany(Position::class, 'project_id', 'project_id');
+    }
 }
