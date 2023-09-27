@@ -17,7 +17,9 @@ class WorkflowData extends Data
         public string $last_action_date,
         public ?EmployeeData $employee,
     ) {
-        $employee = (new EmployeeService)->getByNik($this->nik);
-        $this->employee = EmployeeData::from(isset($employee['data']) ? $employee['data'] : [])->except('position');
+        if (!$this->employee) {
+            $employee = (new EmployeeService)->getByNik($this->nik);
+            $this->employee = EmployeeData::from(isset($employee['data']) ? $employee['data'] : [])->except('position');
+        }
     }
 }

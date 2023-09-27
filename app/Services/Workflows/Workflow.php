@@ -16,7 +16,6 @@ use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Spatie\LaravelData\DataCollection;
 
@@ -125,8 +124,9 @@ abstract class Workflow extends Checker
     public function store()
     {
         $workflowDatas = $this->approvals();
+        $this->model = WorkflowRepository::store($this->model, $workflowDatas->toArray());
         $this->handleStoreWorkflow();
-        return WorkflowRepository::store($this->model, $workflowDatas->toArray());
+        return $this->model;
     }
 
     public function lastAction(LastAction $lastAction)
@@ -136,12 +136,13 @@ abstract class Workflow extends Checker
             throw ValidationException::withMessages(['Anda tidak berhak melakukan aksi ini']);
         }
         $result = WorkflowRepository::updateLasAction($workflow, $lastAction);
-        if ($this->isLast() && $lastAction == LastAction::APPROV) {
+        $isLast = $this->isLast();
+        if ($isLast && $lastAction == LastAction::APPROV) {
             WorkflowRepository::updateStatus($this->model, Status::CLOSE);
             $this->handleIsLastAndApprov();
             $this->changeStatus($this->model, Status::CLOSE);
         }
-        if (!($this->isLast()) && $lastAction == LastAction::APPROV) {
+        if (!$isLast && $lastAction == LastAction::APPROV) {
             $this->handleIsNotLastAndApprov();
         }
         if ($lastAction == LastAction::REJECT) {

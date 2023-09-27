@@ -22,6 +22,7 @@ class CerWorkflowService extends Workflow
 
     protected function handleStoreWorkflow()
     {
+        dispatch(new ApprovalJob('emails.cer.approv', $this->model));
     }
 
     protected function handleIsLastAndApprov()

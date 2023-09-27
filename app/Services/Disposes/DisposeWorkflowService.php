@@ -20,6 +20,7 @@ class DisposeWorkflowService extends Workflow
 
     protected function handleStoreWorkflow()
     {
+        dispatch(new ApprovalJob('emails.dispose.approv', $this->model));
     }
 
     protected function handleIsLastAndApprov()

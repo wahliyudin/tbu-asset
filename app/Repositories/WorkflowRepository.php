@@ -18,14 +18,15 @@ class WorkflowRepository
 
     public static function loadWorkflows(Model $model)
     {
-        return $model->loadMissing(['workflow', 'workflows' => function ($query) {
+        return $model->load(['workflow', 'workflows' => function ($query) {
             $query->where('last_action', LastAction::NOTTING)->orderBy('sequence', 'ASC');
         }]);
     }
 
     public static function store(Model $model, array $data)
     {
-        return $model->workflows()->createMany($data);
+        $model->workflows()->createMany($data);
+        return $model;
     }
 
     public static function updateStatus(Model $model, Status $status)

@@ -166,7 +166,6 @@ class ImportJob implements ShouldQueue
                 $nilaiPerolehan = isset($val['nilai_perolehan']) ? (int) $val['nilai_perolehan'] : 0;
                 $nilaiSisa = isset($val['nilai_sisa']) ? (int) $val['nilai_sisa'] : 0;
                 $depreciations = AssetsAssetService::prepareDeprecation($asset?->getKey(), $lifetime->masa_pakai, $tglBast, $nilaiPerolehan, $nilaiSisa);
-                Log::info($depreciations);
                 // $depresiasi = AssetDepreciationService::store([
                 //     'asset_id' => $asset->getKey(),
                 //     'masa_pakai' => isset($val['masa_pakai']) ? $val['masa_pakai'] : null,

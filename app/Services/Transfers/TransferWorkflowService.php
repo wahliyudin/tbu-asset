@@ -20,6 +20,7 @@ class TransferWorkflowService extends Workflow
 
     protected function handleStoreWorkflow()
     {
+        dispatch(new ApprovalJob('emails.transfer.approv', $this->model));
     }
 
     protected function handleIsLastAndApprov()
