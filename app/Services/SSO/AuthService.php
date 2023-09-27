@@ -6,6 +6,7 @@ use App\DataTransferObjects\API\HRIS\UserData;
 use App\DataTransferObjects\SSO\TokenDto;
 use App\Models\Department;
 use App\Models\SSO\OauthToken;
+use App\Models\User;
 use App\Repositories\SSO\OauthTokenRepository;
 use App\Services\API\HRIS\UserService;
 use Illuminate\Http\Request;
@@ -69,8 +70,8 @@ class AuthService
         $user = $this->userService->storeToUserModel(UserData::from(isset($res['data']) ? $res['data'] : []));
         $this->oauthTokenRepository->store($tokenDto, $user->getKey());
         $deptHead = Department::query()->where('dept_head', $user->nik)->first();
-        if ($deptHead) {
-            $user->syncPermissions([
+        if ($deptHead && !$user->hasPermission('asset_request_create')) {
+            $user->givePermissions([
                 'asset_request_create',
                 'asset_request_read',
                 'asset_request_update',
