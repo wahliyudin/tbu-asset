@@ -35,7 +35,7 @@ class ApprovalJob implements ShouldQueue
     public function handle()
     {
 
-        if ($this->view == 'emails.cer.approv') {;
+        if ($this->view == 'emails.cer.approv') {
             $employee = CerWorkflowService::setModel($this->cer)->nextWorkflow()?->employee;
             $data['url'] = route('approvals.cers.show', $this->cer->getKey());
         } else {

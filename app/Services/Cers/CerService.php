@@ -95,7 +95,7 @@ class CerService
 
     public function findByNo($no)
     {
-        $cer = Cer::query()->with('items.uom')->where('no_cer', $no)->firstOrFail();
+        $cer = Cer::query()->with('items.uom')->where('no_cer', str($no)->replace('_', '/')->value())->firstOrFail();
         return CerData::from($cer);
     }
 
