@@ -85,10 +85,12 @@ class AuthService
     public function logout()
     {
         $oAuthToken = OauthToken::query()->where('user_id', auth()->user()->id)->first();
-        $response = Http::withHeaders([
-            "Accept" => "application/json",
-            "Authorization" => "Bearer " . $oAuthToken->access_token
-        ])->get(config('urls.hris') . 'api/logout');
-        $oAuthToken->delete();
+        if ($oAuthToken) {
+            $response = Http::withHeaders([
+                "Accept" => "application/json",
+                "Authorization" => "Bearer " . $oAuthToken->access_token
+            ])->get(config('urls.hris') . 'api/logout');
+            $oAuthToken->delete();
+        }
     }
 }
