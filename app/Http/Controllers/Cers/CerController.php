@@ -36,6 +36,9 @@ class CerController extends Controller
     public function datatable(Request $request)
     {
         return DataTables::of($this->service->all($request->get('search')))
+            ->editColumn('no_cer', function ($cer) {
+                return $cer->no_cer;
+            })
             ->editColumn('type_budget', function ($cer) {
                 return $cer->type_budget?->badge();
             })

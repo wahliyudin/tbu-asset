@@ -84,6 +84,7 @@ class CerData extends Data implements DataInterface
         }
         $id = $request->id;
         $cer = null;
+        $noCer = null;
         if (!$id) {
             $noCer = CerService::nextNoCer($request->department_id, AuthHelper::getNik());
         } else {

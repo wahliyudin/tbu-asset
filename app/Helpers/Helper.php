@@ -44,7 +44,7 @@ class Helper
         return $cer?->type_budget === TypeBudget::UNBUDGET;
     }
 
-    public function getRomawi(int $month)
+    public static function getRomawi(int $month)
     {
         switch ($month) {
             case 1:

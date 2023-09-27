@@ -7,6 +7,7 @@ use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
+use App\Helpers\Helper;
 use App\Http\Requests\Cers\CerRequest;
 use App\Models\Cers\Cer;
 use App\Models\Department;
@@ -131,10 +132,16 @@ class CerService
         return Elasticsearch::setModel(Cer::class)->created(CerData::from($cer));
     }
 
-    public static function nextNumber()
+    public static function nextNumber($projectPrefix)
     {
-        $cer = Cer::select(['no_cer'])->orderBy('no_cer', 'DESC')->first();
-        $lastKode = str($cer?->no_cer)->explode('/')->first();
+        $cer = Cer::select(['no_cer'])
+            ->where('no_cer', 'like', "%/$projectPrefix/%")
+            ->orderBy('no_cer', 'DESC')
+            ->first();
+        $lastKode = null;
+        if ($cer) {
+            $lastKode = str($cer?->no_cer)->explode('/')->first();
+        }
         $prefix = 'CER';
         $length = 7;
         $prefixLength = strlen($prefix);
@@ -157,9 +164,11 @@ class CerService
             ->first();
 
         return collect([
-            self::nextNumber(),
+            self::nextNumber($project->project_prefix),
             $department?->dept_code,
-            $project?->project_prefix
+            $project?->project_prefix,
+            Helper::getRomawi(now()->month),
+            now()->year,
         ])->implode('/');
     }
 }

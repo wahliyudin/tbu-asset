@@ -29,6 +29,10 @@ var CersList = function () {
             },
             columns: [
                 {
+                    name: 'no_cer',
+                    data: 'no_cer',
+                },
+                {
                     name: 'type_budget',
                     data: 'type_budget',
                 },
