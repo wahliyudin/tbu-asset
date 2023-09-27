@@ -28,7 +28,7 @@ class AssetRequest extends FormRequest
             'pr_number' => ['required'],
             'po_number' => ['required'],
             'gr_number' => ['required'],
-            'remark' => ['required'],
+            // 'remark' => ['required'],
             'status' => ['required'],
 
             'unit_unit_id' => ['required'],

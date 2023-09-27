@@ -319,13 +319,6 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'remark': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Remark is required'
-                            }
-                        }
-                    },
                     'status': {
                         validators: {
                             notEmpty: {

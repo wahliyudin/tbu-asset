@@ -125,7 +125,7 @@
                         <input type="text" class="form-control" placeholder="GR Number" name="gr_number" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Remark</label>
+                        <label class="fs-6 fw-semibold mb-2">Remark</label>
                         <input type="text" class="form-control" placeholder="Remark" name="remark" />
                     </div>
                     <div class="col-md-4 fv-row mb-7 status">
