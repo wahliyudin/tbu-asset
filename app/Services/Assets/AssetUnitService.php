@@ -22,6 +22,7 @@ class AssetUnitService
         return AssetUnit::query()->create([
             'unit_id' => $data['unit_id'],
             'kode' => $data['kode'],
+            'unit_id_owner' => $data['unit_id_owner'],
             'type' => $data['type'],
             'seri' => $data['seri'],
             'class' => $data['class'],

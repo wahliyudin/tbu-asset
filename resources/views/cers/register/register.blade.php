@@ -83,7 +83,7 @@
             $('select[name="status"]').val('{{ \App\Enums\Asset\Status::ACTIVE->value }}').trigger('change');
 
             $('select[name="unit_unit_id"]').val("{{ $cerItem->unit?->getKey() }}").trigger('change');
-            $('input[name="unit_kode"]').val("");
+            $('input[name="unit_kode"]').val("{{ $unitKode }}");
             $('input[name="unit_type"]').val("");
             $('input[name="unit_seri"]').val("");
             $('input[name="unit_class"]').val("");

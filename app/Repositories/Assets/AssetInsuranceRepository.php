@@ -16,6 +16,8 @@ class AssetInsuranceRepository
             'jangka_waktu' => $data->jangka_waktu,
             'biaya' => $data->biayaToInt(),
             'legalitas' => $data->legalitas,
+            'tanggal_awal' => $data->tanggal_awal,
+            'tanggal_akhir' => $data->tanggal_akhir,
         ]);
     }
 

@@ -161,7 +161,12 @@
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">ID Unit</label>
-                        <input type="text" class="form-control" placeholder="Kode" name="unit_kode" />
+                        <input type="text" class="form-control" placeholder="ID Unit" name="unit_kode" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">ID Unit Owner</label>
+                        <input type="text" class="form-control" placeholder="ID Unit Owner"
+                            name="unit_unit_id_owner" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
                         <label class="required fs-6 fw-semibold mb-2">Type</label>
@@ -261,12 +266,12 @@
                             id="tanggal_perolehan_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Tanggal Awal</label>
+                        <label class=" fs-6 fw-semibold mb-2">Tanggal Awal</label>
                         <input class="form-control" placeholder="Tanggal Awal" name="tanggal_awal_leasing"
                             id="tanggal_awal_leasing" />
                     </div>
                     <div class="col-md-4 fv-row mb-7">
-                        <label class="required fs-6 fw-semibold mb-2">Tanggal Akhir</label>
+                        <label class=" fs-6 fw-semibold mb-2">Tanggal Akhir</label>
                         <input class="form-control" readonly placeholder="Tanggal Akhir" name="tanggal_akhir_leasing"
                             id="tanggal_akhir_leasing" />
                     </div>
@@ -298,6 +303,16 @@
                         <label class="fs-6 fw-semibold mb-2">Nomor Asuransi</label>
                         <input type="text" class="form-control" placeholder="Nomor Asuransi"
                             name="legalitas_insurance" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class=" fs-6 fw-semibold mb-2">Tanggal Awal</label>
+                        <input class="form-control" placeholder="Tanggal Awal" name="tanggal_awal_insurance"
+                            id="tanggal_awal_insurance" />
+                    </div>
+                    <div class="col-md-4 fv-row mb-7">
+                        <label class=" fs-6 fw-semibold mb-2">Tanggal Akhir</label>
+                        <input class="form-control" readonly placeholder="Tanggal Akhir"
+                            name="tanggal_akhir_insurance" id="tanggal_akhir_insurance" />
                     </div>
                 </div>
             </div>

@@ -32,6 +32,7 @@ var AssetsList = function () {
 
         unit_unit_id: '',
         unit_kode: '',
+        unit_unit_id_owner: '',
         unit_type: '',
         unit_seri: '',
         unit_class: '',
@@ -446,20 +447,6 @@ var AssetsList = function () {
                             }
                         }
                     },
-                    'tanggal_awal_leasing': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Tanggal Awal is required'
-                            }
-                        }
-                    },
-                    'tanggal_akhir_leasing': {
-                        validators: {
-                            notEmpty: {
-                                message: 'Tanggal Akhir is required'
-                            }
-                        }
-                    },
 
                     'jangka_waktu_insurance': {
                         validators: {
@@ -629,6 +616,7 @@ var AssetsList = function () {
 
         attributes.unit_unit_id = $($(form).find('select[name="unit_unit_id"]')).val();
         attributes.unit_kode = $($(form).find('input[name="unit_kode"]')).val();
+        attributes.unit_unit_id_owner = $($(form).find('input[name="unit_unit_id_owner"]')).val();
         attributes.unit_type = $($(form).find('input[name="unit_type"]')).val();
         attributes.unit_seri = $($(form).find('input[name="unit_seri"]')).val();
         attributes.unit_class = $($(form).find('input[name="unit_class"]')).val();
@@ -678,6 +666,7 @@ var AssetsList = function () {
 
         attributes.unit_unit_id = '';
         attributes.unit_kode = '';
+        attributes.unit_unit_id_owner = '';
         attributes.unit_type = '';
         attributes.unit_seri = '';
         attributes.unit_class = '';
@@ -725,6 +714,7 @@ var AssetsList = function () {
 
         $($(form).find('select[name="unit_unit_id"]')).val(json === null ? attributes.unit_unit_id : json.asset_unit?.unit_id).trigger('change');
         $($(form).find('input[name="unit_kode"]')).val(json === null ? attributes.unit_kode : json.asset_unit?.kode);
+        $($(form).find('input[name="unit_unit_id_owner"]')).val(json === null ? attributes.unit_unit_id_owner : json.asset_unit?.unit_id_owner);
         $($(form).find('input[name="unit_type"]')).val(json === null ? attributes.unit_type : json.asset_unit?.type);
         $($(form).find('input[name="unit_seri"]')).val(json === null ? attributes.unit_seri : json.asset_unit?.seri);
         $($(form).find('input[name="unit_class"]')).val(json === null ? attributes.unit_class : json.asset_unit?.class);

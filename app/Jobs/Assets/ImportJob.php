@@ -79,6 +79,7 @@ class ImportJob implements ShouldQueue
             $assetUnit = AssetUnitService::store([
                 'kode' => isset($val['id_unit']) ? $val['id_unit'] : null,
                 'unit_id' => $unit?->getKey(),
+                'unit_id_owner' => null,
                 'type' => isset($val['unit_type']) ? $val['unit_type'] : null,
                 'seri' => isset($val['seri']) ? $val['seri'] : null,
                 'class' => isset($val['unit_class']) ? $val['unit_class'] : null,

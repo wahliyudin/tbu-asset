@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('unit_id')->nullable()->constrained();
             $table->string('kode')->nullable();
+            $table->string('unit_id_owner')->nullable();
             $table->string('type')->nullable();
             $table->string('seri')->nullable();
             $table->string('class')->nullable();

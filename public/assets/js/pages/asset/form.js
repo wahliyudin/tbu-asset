@@ -61,6 +61,20 @@ var form = function () {
             var date = $(this).val();
             $('input[name="tanggal_akhir_leasing"]').val(formatDateToYYYYMMDD(addMonths(date, month))).trigger('input');
         });
+        $('select[name="jangka_waktu_insurance"]').change(function (e) {
+            e.preventDefault();
+            var month = parseInt($(this).find(':selected').text());
+            var date = $('input[name="tanggal_awal_insurance"]').val();
+            if (date) {
+                $('input[name="tanggal_akhir_insurance"]').val(formatDateToYYYYMMDD(addMonths(date, month))).trigger('input');
+            }
+        });
+        $('input[name="tanggal_awal_insurance"]').change(function (e) {
+            e.preventDefault();
+            var month = parseInt($('select[name="jangka_waktu_insurance"]').find(':selected').text());
+            var date = $(this).val();
+            $('input[name="tanggal_akhir_insurance"]').val(formatDateToYYYYMMDD(addMonths(date, month))).trigger('input');
+        });
         $('input[name="harga_beli_leasing"]').keyup(function (e) {
             $('input[name="price"]').val($(this).val()).trigger('input');
         });
@@ -75,20 +89,6 @@ var form = function () {
         $('input[name="nilai_sisa"]').change(function (e) {
             e.preventDefault();
             generateDepre();
-        });
-        $('select[name="unit_unit_id"]').change(function (e) {
-            e.preventDefault();
-            var id = $('select[name="unit_unit_id"]').val();
-            if (id) {
-                $.ajax({
-                    type: "GET",
-                    url: `/asset-masters/${id}/next-id-asset-unit`,
-                    dataType: "JSON",
-                    success: function (response) {
-                        $('input[name="unit_kode"]').val(response.id);
-                    }
-                });
-            }
         });
     }
 
@@ -140,6 +140,8 @@ var form = function () {
         $("#tgl_bast").flatpickr();
         $("#tanggal_perolehan_leasing").flatpickr();
         $("#tanggal_awal_leasing").flatpickr();
+        $("#tanggal_perolehan_insurance").flatpickr();
+        $("#tanggal_awal_insurance").flatpickr();
         $('.uang').mask('0.000.000.000', {
             reverse: true
         });

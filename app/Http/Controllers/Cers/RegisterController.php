@@ -72,9 +72,11 @@ class RegisterController extends Controller
         ]);
         $data = CerItemData::from($cerItem);
         $cerItemDetail = $this->cerItemService->getByCerItemId($cerItem->id);
+        $kode = AssetService::nextKode($cerItemDetail['asset_number']);
         return view('cers.register.register', [
             'cerItem' => $data,
-            'kode' => AssetService::nextKode($cerItemDetail['asset_number']),
+            'kode' => $kode,
+            'unitKode' => substr($kode, -7),
             'cerItemDetail' => $cerItemDetail,
             'units' => UnitService::dataForSelect(),
             'lifetimes' => LifetimeService::dataForSelect(),

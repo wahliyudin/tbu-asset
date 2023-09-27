@@ -15,6 +15,8 @@ class AssetInsurance extends Model
         'jangka_waktu',
         'biaya',
         'legalitas',
+        'tanggal_awal',
+        'tanggal_akhir',
     ];
 
     public function asset(): BelongsTo

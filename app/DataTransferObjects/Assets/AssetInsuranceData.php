@@ -12,6 +12,8 @@ class AssetInsuranceData extends Data
         public ?string $jangka_waktu,
         public ?string $biaya,
         public ?string $legalitas,
+        public ?string $tanggal_awal,
+        public ?string $tanggal_akhir,
         public ?string $key = null,
     ) {
     }
@@ -22,6 +24,8 @@ class AssetInsuranceData extends Data
             $request->get('jangka_waktu_insurance'),
             $request->get('biaya_insurance'),
             $request->get('legalitas_insurance'),
+            $request->get('tanggal_awal_insurance'),
+            $request->get('tanggal_akhir_insurance'),
         );
     }
 

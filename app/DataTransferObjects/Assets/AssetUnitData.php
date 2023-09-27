@@ -11,6 +11,7 @@ class AssetUnitData extends Data
     public function __construct(
         public ?string $unit_id,
         public ?string $kode,
+        public ?string $unit_id_owner,
         public ?string $type,
         public ?string $seri,
         public ?string $class,
@@ -29,6 +30,7 @@ class AssetUnitData extends Data
         return new self(
             $request->get('unit_unit_id'),
             $request->get('unit_kode'),
+            $request->get('unit_unit_id_owner'),
             $request->get('unit_type'),
             $request->get('unit_seri'),
             $request->get('unit_class'),
