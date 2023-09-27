@@ -32,7 +32,7 @@
                                     <th>Kode</th>
                                     <th>Periode</th>
                                     <th>Description</th>
-                                    <th>Total</th>
+                                    <th>Remaining</th>
                                 </tr>
                             </thead>
                             <tbody class="fw-semibold text-gray-600">
