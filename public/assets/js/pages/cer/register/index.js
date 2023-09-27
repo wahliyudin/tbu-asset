@@ -74,7 +74,9 @@ var index = function () {
                     $('.nogr').text(response[2].no);
                     $('.grdate').text(response[2].date);
                     $('.statusgr').html(response[2].badge);
-                    $('.link-doc-bast').html(`<a target="_blank" href="${response[2].doc_bast}" class="badge badge-success fs-7">Document BAST</a>`);
+                    if (response[2].doc_bast) {
+                        $('.link-doc-bast').html(`<a target="_blank" href="${response[2].doc_bast}" class="badge badge-success fs-7">Document BAST</a>`);
+                    }
 
                     if (response['is_register']) {
                         $('.btn-register').removeClass('d-none');
