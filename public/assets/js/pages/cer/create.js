@@ -84,32 +84,36 @@ var KTModalCersAdd = function () {
             ],
             ajax: {
                 type: "POST",
-                url: "/budgets/datatable",
+                url: "http://202.148.22.198:8080/api/budgetdept/remaining",
                 data: {
-                    'deptcode': $('input[name="deptcode"').val()
+                    'deptcode': [$('input[name="deptcode"').val()]
                 }
             },
             columns: [{
-                name: 'action',
-                data: 'action',
+                data: null,
+                render: function (data, type, row) {
+                    return '<button type="button" data-budget="' + data.idbudget_detail + '" class="btn btn-sm btn-primary select-budget">select</button>';
+                },
                 orderable: false,
                 searchable: false
             },
             {
-                name: 'kode',
-                data: 'kode',
+                name: 'idbudget',
+                data: 'idbudget',
             },
             {
                 name: 'periode',
                 data: 'periode',
             },
             {
-                name: 'description',
-                data: 'description',
+                name: 'description_',
+                data: 'description_',
             },
             {
-                name: 'total',
-                data: 'total',
+                data: null,
+                render: function (data, type, row) {
+                    return formatRupiah(data.remaining);
+                }
             },],
         });
 
@@ -119,6 +123,13 @@ var KTModalCersAdd = function () {
         });
 
         initActionBudget();
+    }
+
+    function formatRupiah(angka) {
+        var bilangan = angka;
+        var reverse = bilangan.toString().split('').reverse().join('');
+        var ribuan = reverse.match(/\d{1,3}/g);
+        return ribuan.join('.').split('').reverse().join('');
     }
 
     var initActionBudget = () => {
