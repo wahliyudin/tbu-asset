@@ -27,6 +27,9 @@ class ApprovalCerController extends Controller
     public function datatable()
     {
         return DataTables::of(CerService::getByCurrentApproval())
+            ->editColumn('no_cer', function (Cer $cer) {
+                return $cer->no_cer;
+            })
             ->editColumn('type_budget', function (Cer $cer) {
                 return $cer->type_budget->badge();
             })

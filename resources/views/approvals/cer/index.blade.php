@@ -39,6 +39,7 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="approval_cer_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                        <th class="min-w-50px">No CER</th>
                         <th class="min-w-50px">Type Budget</th>
                         <th class="min-w-125px">Budget Ref</th>
                         <th class="min-w-125px">Peruntukan</th>

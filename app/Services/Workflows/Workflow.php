@@ -135,6 +135,7 @@ abstract class Workflow extends Checker
         if (!$workflow->nik == AuthHelper::getNik()) {
             throw ValidationException::withMessages(['Anda tidak berhak melakukan aksi ini']);
         }
+        $result = WorkflowRepository::updateLasAction($workflow, $lastAction);
         if ($this->isLast() && $lastAction == LastAction::APPROV) {
             WorkflowRepository::updateStatus($this->model, Status::CLOSE);
             $this->handleIsLastAndApprov();
@@ -148,7 +149,7 @@ abstract class Workflow extends Checker
             $this->changeStatus($this->model, Status::REJECT);
             $this->handleIsRejected();
         }
-        return WorkflowRepository::updateLasAction($workflow, $lastAction);
+        return $result;
     }
 
     public function addAdditionalParam(array $param)

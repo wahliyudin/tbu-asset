@@ -233,15 +233,19 @@ class AssetService
     {
         $arr = str($kode)->explode('-');
         $arr->pop();
-        $arr = $arr->replace([
+        $tmp = $arr->replace([
             1 => '%'
         ]);
-        $result = $arr->implode('-');
+        $result = $tmp->implode('-');
         $asset = Asset::query()
             ->select(['kode'])
             ->where('kode', 'like', "$result-%")
             ->orderBy('kode', 'DESC')
             ->first();
+        if (!$asset) {
+            $arr->push('0001');
+            return $arr->implode('-');
+        }
 
         $arr = str($asset?->kode)->explode('-');
         $num = (int) $arr->last();
