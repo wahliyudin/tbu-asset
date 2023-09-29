@@ -30,18 +30,18 @@ class CerController extends Controller
     public function updateStatusPr($noCer, Request $request)
     {
         try {
-            // $validator = Validator::make($request->all(), [
-            //     'status_pr' => 'required'
-            // ]);
-            // if ($validator->fails()) {
-            //     return $this->response($validator->messages(), false, '', 422);
-            // }
+            $validator = Validator::make($request->all(), [
+                'status' => 'required|boolean'
+            ]);
+            if ($validator->fails()) {
+                return $this->response($validator->messages(), false, '', 422);
+            }
             $cer = Cer::query()->with(['items', 'workflows'])->where('no_cer', str($noCer)->replace('_', '/')->value())->first();
             if (!$cer) {
                 return $this->response([], false, 'Not Found', 404);
             }
             $this->cerService->update($cer, [
-                'status_pr' => true
+                'status_pr' => $request->status
             ]);
             return $this->responseSuccess([
                 'message' => 'Berhasil di ubah'
