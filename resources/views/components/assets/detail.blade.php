@@ -4,6 +4,20 @@
             <div class="card" style="width: auto !important; display: inline-block;">
                 <div class="card-body py-4 px-4">
                     {!! QrCode::size(200)->generate(route('asset-masters.show-scan', $asset->kode)) !!}
+                    <table class="mt-1 text-start">
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">Project</td>
+                                <td class="fw-bold">:</td>
+                                <td>{{ $asset?->project?->project }}</td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">Id Asset</td>
+                                <td class="fw-bold">:</td>
+                                <td>{{ $asset?->kode }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
