@@ -19,7 +19,7 @@ var detail = function () {
         if (datatableDepre != null) {
             clearDatatableDepre();
         }
-        $.each(response, function (indexInArray, valueOfElement) {
+        $.each(response.result, function (indexInArray, valueOfElement) {
             $('.depresiasi-container').append(`
                 <tr>
                     <td>${++indexInArray}</td>

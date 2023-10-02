@@ -52,6 +52,8 @@ var AssetsList = function () {
         tanggal_awal_leasing: '',
         tanggal_akhir_leasing: '',
 
+        tanggal_awal_insurance: '',
+        tanggal_akhir_insurance: '',
         jangka_waktu_insurance: '',
         biaya_insurance: '',
         legalitas_insurance: '',
@@ -629,6 +631,8 @@ var AssetsList = function () {
         attributes.tanggal_awal_leasing = $($(form).find('input[name="tanggal_awal_leasing"]')).val();
         attributes.tanggal_akhir_leasing = $($(form).find('input[name="tanggal_akhir_leasing"]')).val();
 
+        attributes.tanggal_awal_insurance = $($(form).find('input[name="tanggal_awal_insurance"]')).val();
+        attributes.tanggal_akhir_insurance = $($(form).find('input[name="tanggal_akhir_insurance"]')).val();
         attributes.jangka_waktu_insurance = $($(form).find('select[name="jangka_waktu_insurance"]')).val();
         attributes.biaya_insurance = $($(form).find('input[name="biaya_insurance"]')).val();
         attributes.legalitas_insurance = $($(form).find('input[name="legalitas_insurance"]')).val();
@@ -679,6 +683,8 @@ var AssetsList = function () {
         attributes.tanggal_awal_leasing = '';
         attributes.tanggal_akhir_leasing = '';
 
+        attributes.tanggal_awal_insurance = '';
+        attributes.tanggal_akhir_insurance = '';
         attributes.jangka_waktu_insurance = '';
         attributes.biaya_insurance = '';
         attributes.legalitas_insurance = '';
@@ -727,6 +733,8 @@ var AssetsList = function () {
         $($(form).find('input[name="tanggal_awal_leasing"]')).val(json === null ? attributes.tanggal_awal_leasing : json.leasing?.tanggal_awal_leasing);
         $($(form).find('input[name="tanggal_akhir_leasing"]')).val(json === null ? attributes.tanggal_akhir_leasing : json.leasing?.tanggal_akhir_leasing);
 
+        $($(form).find('input[name="tanggal_awal_insurance"]')).val(json === null ? attributes.tanggal_awal_insurance : json.insurance?.tanggal_awal);
+        $($(form).find('input[name="tanggal_akhir_insurance"]')).val(json === null ? attributes.tanggal_akhir_insurance : json.insurance?.tanggal_akhir);
         $($(form).find('select[name="jangka_waktu_insurance"]')).val(json === null ? attributes.jangka_waktu_insurance : json.insurance?.jangka_waktu).trigger('change');
         $($(form).find('input[name="biaya_insurance"]')).val(json === null ? attributes.biaya_insurance : json.insurance?.biaya).trigger('input');
         $($(form).find('input[name="legalitas_insurance"]')).val(json === null ? attributes.legalitas_insurance : json.insurance?.legalitas);
