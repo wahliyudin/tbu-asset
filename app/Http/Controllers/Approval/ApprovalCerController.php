@@ -9,6 +9,7 @@ use App\Models\Cers\Cer;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\Cers\CerService;
 use App\Services\Cers\CerWorkflowService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApprovalCerController extends Controller
@@ -81,10 +82,13 @@ class ApprovalCerController extends Controller
         }
     }
 
-    public function reject(Cer $cer)
+    public function reject(Request $request, Cer $cer)
     {
         try {
             CerWorkflowService::setModel($cer)->lastAction(LastAction::REJECT);
+            $cer->update([
+                'note' => $request->note
+            ]);
             return response()->json([
                 'message' => 'Berhasil Direject.'
             ]);

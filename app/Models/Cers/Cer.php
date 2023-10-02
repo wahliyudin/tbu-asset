@@ -34,6 +34,7 @@ class Cer extends Model implements ModelThatHaveWorkflow, ElasticsearchInterface
         'justifikasi',
         'sumber_pendanaan',
         'cost_analyst',
+        'note',
         'file_ucr',
         'status_pr',
         'status',

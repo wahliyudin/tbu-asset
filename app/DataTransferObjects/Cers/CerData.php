@@ -40,6 +40,7 @@ class CerData extends Data implements DataInterface
         public ?string $cost_analyst = null,
         public ?string $deptcode = null,
         public ?string $file_ucr = null,
+        public ?string $note = null,
         public ?Status $status = null,
         public ?string $id = null,
         #[DataCollectionOf(CerItemData::class)]
