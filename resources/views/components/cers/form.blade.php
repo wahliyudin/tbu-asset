@@ -218,7 +218,7 @@
                 <table class="table table-bordered w-100 border-gray-300">
                     <tbody>
                         <tr>
-                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR</td>
+                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">IDR Balance</td>
                             <td class="w-250px">
                                 <input type="text" class="form-control" readonly
                                     value="{{ \App\Helpers\Helper::hasBudgeted($cer) ? \App\Helpers\Helper::formatRupiah($cer?->budget?->total) : null }}"
@@ -255,7 +255,7 @@
                 <table class="table table-bordered w-100 border-gray-300">
                     <tbody>
                         <tr>
-                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">UCR</td>
+                            <td class="fs-6 fw-semibold w-150px bg-secondary bg-opacity-50">No UCR</td>
                             <td class="w-250px">
                                 <input type="text" class="form-control unbudget_ref" readonly
                                     value="{{ \App\Helpers\Helper::hasUnBudgeted($cer) ? $cer?->budget_ref : null }}"
