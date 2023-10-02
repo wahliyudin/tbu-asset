@@ -37,7 +37,6 @@ class AssetMasterController extends Controller
 
     public function index()
     {
-        // dd($this->service->allNotElastic()->first());
         return view('assets.asset.index', [
             'uoms' => UomService::dataForSelect(),
             'subClusters' => SubClusterService::dataForSelect(),
@@ -200,7 +199,6 @@ class AssetMasterController extends Controller
         try {
             $lifetime_id = $request->get('lifetime_id');
             $price = $request->get('price');
-            $nilaiSisa = $request->get('nilai_sisa');
             $date = $request->get('date');
             if (!$lifetime_id || !$price || !$date) {
                 return response()->json([]);
@@ -209,7 +207,7 @@ class AssetMasterController extends Controller
                 'date' => ['date'],
             ]);
             $lifetime = Lifetime::query()->find($lifetime_id);
-            $depresiasi = $this->assetDepreciationService->generate($lifetime?->masa_pakai, CarbonHelper::convertDate($date), Helper::resetRupiah($price), Helper::resetRupiah($nilaiSisa));
+            $depresiasi = $this->assetDepreciationService->generate($lifetime?->masa_pakai, CarbonHelper::convertDate($date), Helper::resetRupiah($price));
             return response()->json($depresiasi);
         } catch (\Throwable $th) {
             throw $th;

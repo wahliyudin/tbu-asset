@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Facade;
  *
  * @method static \App\Services\Assets\AssetService import(array $data)
  * @method static string nextKode(string $kode)
- * @method static array prepareDeprecation($assetId, $masa_pakai, $date, $price, $nilaiSisa)
+ * @method static array prepareDeprecation($assetId, $masa_pakai, $date, $price)
  *
  * @see \App\Services\Assets\AssetService
  */

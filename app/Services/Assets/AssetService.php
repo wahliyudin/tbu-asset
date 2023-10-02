@@ -93,7 +93,7 @@ class AssetService
             $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey(), 'nilai_sisa' => $nilaiSisa]));
             $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
             $lifetime = Lifetime::query()->find($request->lifetime_id);
-            $deprecations = $this->prepareDeprecation($asset->getKey(), $lifetime->masa_pakai, $request->date, Helper::resetRupiah($request->price), $nilaiSisa ?? 0);
+            $deprecations = $this->prepareDeprecation($asset->getKey(), $lifetime->masa_pakai, $request->date, Helper::resetRupiah($request->price));
             $asset->depreciations()->delete();
             $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
@@ -102,11 +102,11 @@ class AssetService
         });
     }
 
-    public function prepareDeprecation($assetId, $masa_pakai, $date, $price, $nilaiSisa = 0)
+    public function prepareDeprecation($assetId, $masa_pakai, $date, $price)
     {
-        $depre = $this->assetDepreciationService->generate($masa_pakai, $date, $price, $nilaiSisa);
+        $depre = $this->assetDepreciationService->generate($masa_pakai, $date, $price);
         $results = [];
-        foreach ($depre as $key => $value) {
+        foreach ($depre['result'] as $key => $value) {
             $results[] = [
                 'asset_id' => $assetId,
                 'masa_pakai' => $masa_pakai,

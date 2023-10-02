@@ -19,7 +19,7 @@ var form = function () {
         if (datatableDepre != null) {
             clearDatatableDepre();
         }
-        $.each(response, function (indexInArray, valueOfElement) {
+        $.each(response.result, function (indexInArray, valueOfElement) {
             $('.depresiasi-container').append(`
                 <tr>
                     <td>${++indexInArray}</td>
@@ -29,6 +29,7 @@ var form = function () {
                 </tr>
             `);
         });
+        $('input[name="nilai_sisa"]').val(response.current_sisa).trigger('input');
         initialDatatableDepre()
     }
 

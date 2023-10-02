@@ -2,6 +2,7 @@
 
 namespace App\Services\API\HRIS\Contracts;
 
+use App\Helpers\AuthHelper;
 use App\Helpers\Helper;
 use App\Services\API\APIInterface;
 use Illuminate\Support\Facades\Http;
@@ -44,6 +45,6 @@ abstract class HRISService implements APIInterface
 
     private function token()
     {
-        return auth()->user()?->oatuhToken?->access_token;
+        return AuthHelper::loadMissing('oatuhToken')?->oatuhToken?->access_token;
     }
 }
