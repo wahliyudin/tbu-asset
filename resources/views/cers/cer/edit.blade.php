@@ -31,7 +31,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <x-cers.form :employee="$employee" :cer="$cer" :uoms="$uoms" />
+            <x-cers.form :employee="$employee" :cer="$cer" :lifetimes="$lifetimes" :uoms="$uoms" />
         </div>
     </div>
 @endsection

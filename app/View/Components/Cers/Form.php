@@ -22,6 +22,7 @@ class Form extends Component
         public EmployeeData $employee,
         public ?DataCollection $uoms = null,
         public ?Collection $departments = null,
+        public ?Collection $lifetimes = null,
         public string $type = '',
         public bool $isPJO = false,
         public bool $withWorkflow = false,

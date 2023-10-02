@@ -123,9 +123,9 @@
                             @php
                                 $subTotal += $item->qty * $item->price;
                             @endphp
-                            <x-cers.item :cerItem="$item" :uoms="$uoms" :type="$type" />
+                            <x-cers.item :cerItem="$item" :lifetimes="$lifetimes" :uoms="$uoms" :type="$type" />
                         @empty
-                            <x-cers.item :type="$type" :uoms="$uoms" />
+                            <x-cers.item :type="$type" :lifetimes="$lifetimes" :uoms="$uoms" />
                         @endforelse
                     </tbody>
                     <tfoot style="display: none;">

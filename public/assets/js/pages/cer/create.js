@@ -228,8 +228,8 @@ var KTModalCersAdd = function () {
         $($(currentItem).find('.asset')).val(key);
         $($(currentItem).find('.asset-description')).val(arrayTd[2].innerText);
         $($(currentItem).find('.asset-model')).val(arrayTd[3].innerText);
-        $($(currentItem).find('select')).val($($(arrayTd[4]).find('span')).data('id'));
-        $($(currentItem).find('.umur-asset')).val(arrayTd[5].innerText);
+        $($(currentItem).find('#uom select')).val($($(arrayTd[4]).find('span')).data('id'));
+        $($(currentItem).find('#est_umur select')).val(arrayTd[5].innerText);
         $($(currentItem).find('.price')).val(arrayTd[6].innerText).trigger('input').trigger('keyup');
         initTotalRepeater();
     }

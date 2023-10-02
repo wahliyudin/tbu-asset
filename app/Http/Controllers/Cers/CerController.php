@@ -15,6 +15,7 @@ use App\Models\Project;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
 use App\Services\Cers\CerService;
+use App\Services\Masters\LifetimeService;
 use App\Services\Masters\UomService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -108,6 +109,7 @@ class CerController extends Controller
     {
         return view('cers.cer.create', [
             'employee' => EmployeeData::from($this->service->getEmployee()),
+            'lifetimes' => LifetimeService::dataForSelect(),
             'uoms' => UomData::collection(UomService::dataForSelect()),
         ]);
     }
@@ -143,6 +145,7 @@ class CerController extends Controller
             $data = CerData::from($cer);
             return view('cers.cer.edit', [
                 'cer' => $data,
+                'lifetimes' => LifetimeService::dataForSelect(),
                 'employee' => $data->employee,
                 'uoms' => UomData::collection(UomService::dataForSelect()),
             ]);

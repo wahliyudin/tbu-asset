@@ -8,16 +8,23 @@
         <input type="text" @readonly($type == 'show') value="{{ $cerItem->model }}" name="model"
             class="form-control asset-model">
     </td>
-    <td>
-        <div class="input-group">
-            <input type="number" @readonly($type == 'show') value="{{ $cerItem->est_umur }}" name="est_umur" min="1"
-                class="form-control umur-asset">
-            <span class="input-group-text">Bulan</span>
-        </div>
+    <td id="est_umur">
+        <select @disabled($type == 'show') class="form-select" name="est_umur">
+            <option selected disabled value="">-Select-</option>
+            @if ($type == 'show')
+                <option selected>{{ $cerItem->est_umur }}</option>
+            @else
+                @foreach ($lifetimes as $lifetime)
+                    <option @selected($cerItem->est_umur == $lifetime->masa_pakai) value="{{ $lifetime->masa_pakai }}">
+                        {{ $lifetime->masa_pakai }}
+                    </option>
+                @endforeach
+            @endif
+        </select>
     </td>
     <td id="uom">
         <select @disabled($type == 'show') class="form-select" name="uom_id">
-            <option value="">-Select-</option>
+            <option selected disabled value="">-Select-</option>
             @if ($type == 'show')
                 <option selected>{{ $cerItem->uom?->name }}</option>
             @else
