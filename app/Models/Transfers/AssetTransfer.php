@@ -31,6 +31,7 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
         'request_transfer_date',
         'justifikasi',
         'remark',
+        'note',
         'transfer_date',
         'status',
     ];

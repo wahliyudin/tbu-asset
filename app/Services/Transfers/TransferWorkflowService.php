@@ -38,10 +38,10 @@ class TransferWorkflowService extends Workflow
         dispatch(new ApprovalJob('emails.transfer.reject', $this->model));
     }
 
-    protected function changeStatus(Model $assetTransfer, Status $status)
+    protected function handleChanges(Model $assetTransfer)
     {
         $assetTransfer->load(['asset', 'workflows']);
-        $data = AssetTransferData::from(array_merge($assetTransfer->toArray(), ['status' => $status->value]));
+        $data = AssetTransferData::from($assetTransfer);
         return Elasticsearch::setModel(AssetTransfer::class)->updated($data);
     }
 }

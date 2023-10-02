@@ -29,12 +29,12 @@
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Merk/Tipe/Model</td>
                         <td style="width: 10px;">:</td>
-                        <td id="merk_tipe_model">{{ $assetTransfer->asset?->unit?->brand }}</td>
+                        <td id="merk_tipe_model">{{ $assetTransfer->asset?->asset_unit?->brand }}</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Serial Number Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="serial_number">{{ $assetTransfer->asset?->unit?->serial_number }}</td>
+                        <td id="serial_number">{{ $assetTransfer->asset?->asset_unit?->serial_number }}</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nomor Asset</td>
@@ -52,7 +52,7 @@
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Kelengkapan Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="kelengkapan">{{ $assetTransfer->asset?->unit?->spesification }}</td>
+                        <td id="kelengkapan">{{ $assetTransfer->asset?->asset_unit?->spesification }}</td>
                     </tr>
                 </tbody>
             </table>

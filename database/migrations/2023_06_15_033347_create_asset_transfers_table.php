@@ -28,6 +28,7 @@ return new class extends Migration
             $table->dateTime('request_transfer_date')->useCurrent();
             $table->string('justifikasi');
             $table->string('remark')->nullable();
+            $table->text('note')->nullable();
             $table->date('transfer_date')->nullable();
             $table->string('status')->default('open');
             $table->timestamps();

@@ -83,15 +83,15 @@
                         <td>
                             <input type="hidden" name="asset_id" value="{{ $assetDispose?->asset_id }}">
                             <input type="text" readonly name="description"
-                                value="{{ $assetDispose?->asset?->unit?->spesification }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->asset_unit?->spesification }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="model_spesification"
-                                value="{{ $assetDispose?->asset?->unit?->model }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->asset_unit?->unit?->model }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="serial_no"
-                                value="{{ $assetDispose?->asset?->unit?->serial_number }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->asset_unit?->serial_number }}" class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="no_asset" value="{{ $assetDispose?->asset?->kode }}"
@@ -99,7 +99,8 @@
                         </td>
                         <td>
                             <input type="text" readonly name="tahun_buat"
-                                value="{{ $assetDispose?->asset?->unit?->tahun_pembuatan }}" class="form-control">
+                                value="{{ $assetDispose?->asset?->asset_unit?->tahun_pembuatan }}"
+                                class="form-control">
                         </td>
                         <td>
                             <input type="text" readonly name="nilai_buku"

@@ -58,19 +58,19 @@ class DisposeController extends Controller
     {
         return DataTables::of($this->assetService->all($request->get('search')))
             ->editColumn('description', function ($asset) {
-                return $asset->_source->unit?->spesification;
+                return $asset->_source->asset_unit?->spesification;
             })
             ->editColumn('model_spesification', function ($asset) {
-                return $asset->_source->unit?->model;
+                return $asset->_source->asset_unit?->unit?->model;
             })
             ->editColumn('serial_no', function ($asset) {
-                return $asset->_source->unit?->serial_number;
+                return $asset->_source->asset_unit?->serial_number;
             })
             ->editColumn('no_asset', function ($asset) {
                 return $asset->_source->kode;
             })
             ->editColumn('tahun_buat', function ($asset) {
-                return $asset->_source->unit?->tahun_pembuatan;
+                return $asset->_source->asset_unit?->tahun_pembuatan;
             })
             ->editColumn('nilai_buku', function ($asset) {
                 return Helper::formatRupiah($asset->_source->leasing?->harga_beli);

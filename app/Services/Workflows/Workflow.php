@@ -129,7 +129,7 @@ abstract class Workflow extends Checker
         return $this->model;
     }
 
-    public function lastAction(LastAction $lastAction)
+    public function lastAction(LastAction $lastAction, $note = null)
     {
         $workflow = $this->currentWorkflow();
         if (!$workflow->nik == AuthHelper::getNik()) {
@@ -138,16 +138,16 @@ abstract class Workflow extends Checker
         $result = WorkflowRepository::updateLasAction($workflow, $lastAction);
         $isLast = $this->isLast();
         if ($isLast && $lastAction == LastAction::APPROV) {
-            WorkflowRepository::updateStatus($this->model, Status::CLOSE);
+            $newModel = WorkflowRepository::updateStatusAndNote($this->model, Status::CLOSE, $note);
+            $this->handleChanges($newModel);
             $this->handleIsLastAndApprov();
-            $this->changeStatus($this->model, Status::CLOSE);
         }
         if (!$isLast && $lastAction == LastAction::APPROV) {
             $this->handleIsNotLastAndApprov();
         }
         if ($lastAction == LastAction::REJECT) {
-            WorkflowRepository::updateStatus($this->model, Status::REJECT);
-            $this->changeStatus($this->model, Status::REJECT);
+            $newModel = WorkflowRepository::updateStatusAndNote($this->model, Status::REJECT, $note);
+            $this->handleChanges($newModel);
             $this->handleIsRejected();
         }
         return $result;
@@ -179,5 +179,5 @@ abstract class Workflow extends Checker
 
     protected abstract function handleIsRejected();
 
-    protected abstract function changeStatus(Model $model, Status $status);
+    protected abstract function handleChanges(Model $model);
 }

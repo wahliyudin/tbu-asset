@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Transfers\AssetTransferService;
 use App\Services\Transfers\TransferWorkflowService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApprovalTransferController extends Controller
@@ -71,10 +72,10 @@ class ApprovalTransferController extends Controller
         }
     }
 
-    public function reject(AssetTransfer $assetTransfer)
+    public function reject(Request $request, AssetTransfer $assetTransfer)
     {
         try {
-            TransferWorkflowService::setModel($assetTransfer)->lastAction(LastAction::REJECT);
+            TransferWorkflowService::setModel($assetTransfer)->lastAction(LastAction::REJECT, $request->note);
             return response()->json([
                 'message' => 'Berhasil Direject.'
             ]);

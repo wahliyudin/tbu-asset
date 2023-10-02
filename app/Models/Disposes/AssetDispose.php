@@ -28,6 +28,7 @@ class AssetDispose extends Model implements ModelThatHaveWorkflow, Elasticsearch
         'justifikasi',
         'pelaksanaan',
         'remark',
+        'note',
         'status',
     ];
 

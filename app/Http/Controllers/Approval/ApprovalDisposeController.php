@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Disposes\AssetDispose;
 use App\Services\Disposes\AssetDisposeService;
 use App\Services\Disposes\DisposeWorkflowService;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ApprovalDisposeController extends Controller
@@ -75,10 +76,10 @@ class ApprovalDisposeController extends Controller
         }
     }
 
-    public function reject(AssetDispose $assetDispose)
+    public function reject(Request $request, AssetDispose $assetDispose)
     {
         try {
-            DisposeWorkflowService::setModel($assetDispose)->lastAction(LastAction::REJECT);
+            DisposeWorkflowService::setModel($assetDispose)->lastAction(LastAction::REJECT, $request->note);
             return response()->json([
                 'message' => 'Berhasil Direject.'
             ]);

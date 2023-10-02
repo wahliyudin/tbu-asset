@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('justifikasi');
             $table->string('pelaksanaan');
             $table->string('remark');
+            $table->text('note')->nullable();
             $table->string('status')->default('open');
             $table->timestamps();
         });

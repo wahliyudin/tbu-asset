@@ -85,10 +85,7 @@ class ApprovalCerController extends Controller
     public function reject(Request $request, Cer $cer)
     {
         try {
-            CerWorkflowService::setModel($cer)->lastAction(LastAction::REJECT);
-            $cer->update([
-                'note' => $request->note
-            ]);
+            CerWorkflowService::setModel($cer)->lastAction(LastAction::REJECT, $request->note);
             return response()->json([
                 'message' => 'Berhasil Direject.'
             ]);

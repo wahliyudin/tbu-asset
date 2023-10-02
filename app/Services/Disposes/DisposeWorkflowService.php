@@ -38,10 +38,10 @@ class DisposeWorkflowService extends Workflow
         dispatch(new ApprovalJob('emails.dispose.reject', $this->model));
     }
 
-    protected function changeStatus(Model $assetDispose, Status $status)
+    protected function handleChanges(Model $assetDispose)
     {
         $assetDispose->load(['asset', 'workflows']);
-        $data = AssetDisposeData::from(array_merge($assetDispose->toArray(), ['status' => $status->value]));
+        $data = AssetDisposeData::from($assetDispose);
         return Elasticsearch::setModel(AssetDispose::class)->updated($data);
     }
 }

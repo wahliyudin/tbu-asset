@@ -29,10 +29,12 @@ class WorkflowRepository
         return $model;
     }
 
-    public static function updateStatus(Model $model, Status $status)
+    public static function updateStatusAndNote(Model $model, Status $status, $note = null)
     {
-        return $model->update([
-            'status' => $status
+        $model->update([
+            'status' => $status,
+            'note' => $note
         ]);
+        return $model;
     }
 }

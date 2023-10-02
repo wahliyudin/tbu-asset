@@ -30,6 +30,7 @@ class AssetTransferData extends Data implements DataInterface
         public ?string $request_transfer_date,
         public ?string $justifikasi,
         public ?string $remark,
+        public ?string $note,
         public ?string $transfer_date,
         public ?string $created_at,
         public ?Status $status,

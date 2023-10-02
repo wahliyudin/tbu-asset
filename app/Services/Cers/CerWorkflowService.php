@@ -40,10 +40,10 @@ class CerWorkflowService extends Workflow
         dispatch(new ApprovalJob('emails.cer.reject', $this->model));
     }
 
-    protected function changeStatus(Model $cer, Status $status)
+    protected function handleChanges(Model $cer)
     {
         $cer->load(['items', 'workflows']);
-        $data = CerData::from(array_merge($cer->toArray(), ['status' => $status->value]));
+        $data = CerData::from($cer);
         return Elasticsearch::setModel(Cer::class)->updated($data);
     }
 }

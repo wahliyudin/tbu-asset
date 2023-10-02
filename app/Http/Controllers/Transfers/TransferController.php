@@ -55,13 +55,13 @@ class TransferController extends Controller
     {
         return DataTables::of($this->assetService->all($request->get('search')))
             ->editColumn('nama', function ($asset) {
-                return 'example';
+                return $asset->_source->asset_unit?->unit?->model;
             })
             ->editColumn('merk_tipe_model', function ($asset) {
-                return $asset->_source->unit?->brand;
+                return $asset->_source->asset_unit?->brand;
             })
             ->editColumn('serial_number', function ($asset) {
-                return $asset->_source->unit?->serial_number;
+                return $asset->_source->asset_unit?->serial_number;
             })
             ->editColumn('nomor_asset', function ($asset) {
                 return $asset->_source->kode;
@@ -70,7 +70,7 @@ class TransferController extends Controller
                 return Helper::formatRupiah($asset->_source->leasing?->harga_beli, true);
             })
             ->editColumn('kelengkapan', function ($asset) {
-                return $asset->_source->unit?->spesification;
+                return $asset->_source->asset_unit?->spesification;
             })
             ->editColumn('action', function ($asset) {
                 return '<button type="button" data-asset="' . $asset->_id . '" class="btn btn-sm btn-primary select-asset">select</button>';
