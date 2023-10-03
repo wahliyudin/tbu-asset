@@ -21,6 +21,7 @@ use App\Http\Controllers\Masters\SubClusterController;
 use App\Http\Controllers\Masters\SubClusterItemController;
 use App\Http\Controllers\Masters\UnitController;
 use App\Http\Controllers\Masters\UomController;
+use App\Http\Controllers\Reports\AssetMasterController as ReportsAssetMasterController;
 use App\Http\Controllers\Settings\AccessPermissionController;
 use App\Http\Controllers\Settings\SettingApprovalController;
 use App\Http\Controllers\SSO\AuthController;
@@ -196,6 +197,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('approvals/disposes/{assetDispose}/show', [ApprovalDisposeController::class, 'show'])->name('approvals.disposes.show')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
     Route::post('approvals/disposes/{assetDispose}/approv', [ApprovalDisposeController::class, 'approv'])->name('approvals.disposes.approv')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
     Route::post('approvals/disposes/{assetDispose}/reject', [ApprovalDisposeController::class, 'reject'])->name('approvals.disposes.reject')->middleware('permission:asset_dispose_approv|asset_dispose_reject');
+
+    Route::get('reports/asset-masters', [ReportsAssetMasterController::class, 'index'])->name('reports.asset-masters.index');
+    Route::post('reports/asset-masters/datatable', [ReportsAssetMasterController::class, 'datatable'])->name('reports.asset-masters.datatable');
+    Route::post('reports/asset-masters/export', [ReportsAssetMasterController::class, 'export'])->name('reports.asset-masters.export');
 
     Route::get('settings/approval', [SettingApprovalController::class, 'index'])->name('settings.approval.index')->middleware('permission:approval_read');
     Route::post('settings/approval/store', [SettingApprovalController::class, 'store'])->name('settings.approval.store')->middleware('permission:approval_update');

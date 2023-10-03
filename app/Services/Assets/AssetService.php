@@ -30,6 +30,7 @@ use App\Models\Masters\Unit;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -253,5 +254,41 @@ class AssetService
         $arr->pop();
         $arr->push($num);
         return $arr->implode('-');
+    }
+
+    public function dataForExport(Request $request)
+    {
+        return Asset::query()->with([
+            'assetUnit.unit',
+            'subCluster.cluster.category',
+            'employee',
+            'activity',
+            'project',
+            'department',
+            'condition',
+            'uom',
+            'uom',
+        ])
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->when($request->project, function ($query, $project) {
+                $query->where('asset_location', $project);
+            })
+            ->when($request->category, function ($query, $category) {
+                $query->whereHas('subCluster', function ($query) use ($category) {
+                    $query->whereHas('cluster', function ($query) use ($category) {
+                        $query->where('category_id', $category);
+                    });
+                });
+            })
+            ->when($request->cluster, function ($query, $cluster) {
+                $query->whereHas('subCluster', function ($query) use ($cluster) {
+                    $query->where('cluster_id', $cluster);
+                });
+            })
+            ->when($request->sub_cluster, function ($query, $sub_cluster) {
+                $query->where('sub_cluster_id', $sub_cluster);
+            })->get();
     }
 }

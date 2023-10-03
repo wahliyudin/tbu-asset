@@ -69,7 +69,7 @@ return [
             'child' => [
                 [
                     'title' => 'ASSET MASTER',
-                    'permissions' => 'c,r,u,d',
+                    'permissions' => 'c,r,u,d,report',
                 ],
             ]
         ],

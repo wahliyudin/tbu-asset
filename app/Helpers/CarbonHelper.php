@@ -8,31 +8,31 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class CarbonHelper
 {
-    public function dateFormatdFY(string $date)
+    public static function dateFormatdFY(?string $date)
     {
-        if (!$this->isValidDate($date)) {
+        if (!static::isValidDate($date)) {
             return '-';
         }
         return Carbon::make($date)->translatedFormat('d F Y');
     }
 
-    public function dateFormatY(string $date)
+    public static function dateFormatY(?string $date)
     {
-        if (!$this->isValidDate($date)) {
+        if (!static::isValidDate($date)) {
             return '-';
         }
         return Carbon::make($date)->format('Y');
     }
 
-    public function dateFormatYmd(string $date)
+    public static function dateFormatYmd(?string $date)
     {
-        if (!$this->isValidDate($date)) {
+        if (!static::isValidDate($date)) {
             return '-';
         }
         return Carbon::make($date)->format('Y-m-d');
     }
 
-    public function isValidDate($date)
+    public static function isValidDate($date)
     {
         $validator = Validator::make(['date_value' => $date], [
             'date_value' => 'date',
