@@ -46,6 +46,38 @@ class ApprovalSeeder extends Seeder
                 'nik' => null,
                 'title' => 'Approved',
             ],
+
+            [
+                'module' => Module::CER_SITE,
+                'approval' => Approval::OTHER,
+                'nik' => 11190651,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_SITE,
+                'approval' => Approval::GENERAL_MANAGER,
+                'nik' => null,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_SITE,
+                'approval' => Approval::GENERAL_MANAGER_OPERATION,
+                'nik' => null,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_SITE,
+                'approval' => Approval::OTHER,
+                'nik' => 11220836,
+                'title' => 'Approved',
+            ],
+            [
+                'module' => Module::CER_SITE,
+                'approval' => Approval::DIRECTOR,
+                'nik' => null,
+                'title' => 'Approved',
+            ],
+
             [
                 'module' => Module::TRANSFER,
                 'approval' => Approval::ATASAN_LANGSUNG,
