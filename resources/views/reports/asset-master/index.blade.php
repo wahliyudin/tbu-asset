@@ -188,9 +188,28 @@
                     <button type="reset" id="filter-asset_cancel" class="btn btn-light me-3">
                         Batal
                     </button>
-                    <button type="submit" data-asset="" id="filter-asset_submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-info ps-4 export me-3">
                         <span class="indicator-label">
-                            Filter
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="ki-duotone ki-file-up fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                </i>Export
+                            </div>
+                        </span>
+                        <span class="indicator-progress">
+                            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                    <button type="submit" data-asset="" id="filter-asset_submit" class="btn btn-primary ps-4">
+                        <span class="indicator-label">
+                            <div class="d-flex align-items-center gap-2">
+                                <i class="ki-duotone ki-filter fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                </i>
+                                Filter
+                            </div>
                         </span>
                         <span class="indicator-progress">
                             Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
