@@ -50,7 +50,7 @@ class AssetExport implements FromCollection, WithMapping, WithTitle, ShouldAutoS
             $row->uom?->name,
             $row->quantity,
             $row->lifetime?->masa_pakai,
-            Helper::formatRupiah($row->nilai_sisa, true),
+            Helper::formatRupiah($row->nilai_sisa),
             CarbonHelper::dateFormatdFY($row->tgl_bast),
             $row->hm,
             $row->pr_number,
@@ -59,6 +59,21 @@ class AssetExport implements FromCollection, WithMapping, WithTitle, ShouldAutoS
             $row->status_asset,
             $row->status?->badge(),
             $row->remark,
+
+            $row->leasing?->dealer?->name,
+            Helper::formatRupiah($row->leasing?->harga_beli),
+            $row->leasing?->jangka_waktu_leasing,
+            CarbonHelper::dateFormatdFY($row->leasing?->tanggal_awal_leasing),
+            CarbonHelper::dateFormatdFY($row->leasing?->tanggal_akhir_leasing),
+            Helper::formatRupiah($row->leasing?->biaya_leasing),
+            $row->leasing?->legalitas,
+            CarbonHelper::dateFormatdFY($row->leasing?->tanggal_perolehan),
+
+            $row->insurance?->jangka_waktu,
+            Helper::formatRupiah($row->insurance?->biaya),
+            $row->insurance?->legalitas,
+            CarbonHelper::dateFormatdFY($row->insurance?->tanggal_awal),
+            CarbonHelper::dateFormatdFY($row->insurance?->tanggal_akhir),
         ];
     }
 
@@ -95,6 +110,21 @@ class AssetExport implements FromCollection, WithMapping, WithTitle, ShouldAutoS
             'Status Asset',
             'Status',
             'Remark',
+
+            'Dealer',
+            'Harga Beli Leasing',
+            'Jangka Waktu Leasing',
+            'Tanggal Awal Leasing',
+            'Tanggal Akhir Leasing',
+            'Biaya Leasing',
+            'Nomor Kontrak',
+            'Tanggal Perolehan',
+
+            'Jangka Waktu Asuransi',
+            'Biaya Asuransi',
+            'Nomor Asuransi',
+            'Tanggal Awal Asuransi',
+            'Tanggal Akhir Asuransi',
         ];
     }
 
