@@ -25,4 +25,14 @@ enum Status: string
             self::NON_ACTIVE => '<span class="badge badge-danger">' . self::NON_ACTIVE->label() . '</span>',
         };
     }
+
+    public static function match($status)
+    {
+        return match ($status) {
+            self::ACTIVE->value => self::ACTIVE,
+            self::IDLE->value => self::IDLE,
+            self::NON_ACTIVE->value => self::NON_ACTIVE,
+            default => null,
+        };
+    }
 }

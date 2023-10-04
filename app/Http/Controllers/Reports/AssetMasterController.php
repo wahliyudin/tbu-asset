@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Reports;
 
+use App\Enums\Asset\Status;
 use App\Exports\Reports\AssetMaster\AssetExport;
 use App\Helpers\CarbonHelper;
 use App\Helpers\Helper;
@@ -36,45 +37,45 @@ class AssetMasterController extends Controller
     public function datatable(Request $request)
     {
         $data = $this->assetService->dataForExport($request);
-        return DataTables::of($data)
+        return DataTables::of(collect($data)->pluck('_source'))
             ->editColumn('kode', function ($asset) {
                 return $asset->kode;
             })
             ->editColumn('unit_kode', function ($asset) {
-                return $asset->assetUnit?->kode;
+                return $asset->asset_unit?->kode;
             })
             ->editColumn('unit_type', function ($asset) {
-                return $asset->assetUnit?->type;
+                return $asset->asset_unit?->type;
             })
             ->editColumn('unit_seri', function ($asset) {
-                return $asset->assetUnit?->seri;
+                return $asset->asset_unit?->seri;
             })
             ->editColumn('unit_class', function ($asset) {
-                return $asset->assetUnit?->class;
+                return $asset->asset_unit?->class;
             })
             ->editColumn('unit_brand', function ($asset) {
-                return $asset->assetUnit?->brand;
+                return $asset->asset_unit?->brand;
             })
             ->editColumn('unit_serial_number', function ($asset) {
-                return $asset->assetUnit?->serial_number;
+                return $asset->asset_unit?->serial_number;
             })
             ->editColumn('unit_spesification', function ($asset) {
-                return $asset->assetUnit?->spesification;
+                return $asset->asset_unit?->spesification;
             })
             ->editColumn('unit_tahun_pembuatan', function ($asset) {
-                return $asset->assetUnit?->tahun_pembuatan;
+                return $asset->asset_unit?->tahun_pembuatan;
             })
             ->editColumn('unit_kelengkapan_tambahan', function ($asset) {
-                return $asset->assetUnit?->kelengkapan_tambahan;
+                return $asset->asset_unit?->kelengkapan_tambahan;
             })
             ->editColumn('category', function ($asset) {
-                return $asset->subCluster?->cluster?->category?->name;
+                return $asset->sub_cluster?->cluster?->category?->name;
             })
             ->editColumn('cluster', function ($asset) {
-                return $asset->subCluster?->cluster?->name;
+                return $asset->sub_cluster?->cluster?->name;
             })
             ->editColumn('sub_cluster', function ($asset) {
-                return $asset->subCluster?->name;
+                return $asset->sub_cluster?->name;
             })
             ->editColumn('pic', function ($asset) {
                 return $asset->employee?->nama_karyawan;
@@ -122,7 +123,7 @@ class AssetMasterController extends Controller
                 return $asset->status_asset;
             })
             ->editColumn('status', function ($asset) {
-                return $asset->status?->badge();
+                return Status::match($asset->status)?->badge();
             })
             ->editColumn('remark', function ($asset) {
                 return $asset->remark;
@@ -134,6 +135,6 @@ class AssetMasterController extends Controller
     public function export(Request $request)
     {
         $assets = $this->assetService->dataForExport($request);
-        return Excel::download(new AssetExport($assets), 'assets.xlsx');
+        return Excel::download(new AssetExport(collect($assets)->pluck('_source')), 'assets.xlsx');
     }
 }

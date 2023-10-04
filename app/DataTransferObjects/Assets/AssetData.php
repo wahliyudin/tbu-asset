@@ -2,6 +2,7 @@
 
 namespace App\DataTransferObjects\Assets;
 
+use App\DataTransferObjects\API\HRIS\DepartmentData;
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\API\HRIS\ProjectData;
 use App\DataTransferObjects\Masters\ActivityData;
@@ -24,6 +25,7 @@ class AssetData extends Data implements DataInterface
         public ?string $pic,
         public ?string $activity_id,
         public ?string $asset_location,
+        public ?string $dept_id,
         public ?string $condition_id,
         public ?string $uom_id,
         public ?string $quantity,
@@ -46,6 +48,7 @@ class AssetData extends Data implements DataInterface
         public ?AssetUnitData $asset_unit,
         public ?UomData $uom,
         public ?LifetimeData $lifetime,
+        public ?DepartmentData $department,
         public ?ActivityData $activity,
         public ?ConditionData $condition,
         public ?ProjectData $project,

@@ -60,7 +60,7 @@ class AssetService
     {
         return Asset::query()->with([
             'assetUnit.unit',
-            'subCluster',
+            'subCluster.cluster.category', 'department',
             'insurance',
             'leasing',
             'uom', 'lifetime', 'activity', 'condition'
@@ -70,7 +70,7 @@ class AssetService
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['assetUnit.unit', 'subCluster', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom', 'lifetime', 'activity', 'condition'])
+            ->with(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom', 'lifetime', 'activity', 'condition'])
             ->where('kode', $kode)
             ->firstOrFail();
     }
@@ -218,7 +218,7 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'project', 'department'])->get();
+        return Asset::query()->with(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'project', 'department'])->get();
     }
 
     public function nextIdAssetUnitById($id)
@@ -239,7 +239,7 @@ class AssetService
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
-        $asset->load(['assetUnit.unit', 'subCluster', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition']);
+        $asset->load(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }
@@ -274,37 +274,25 @@ class AssetService
 
     public function dataForExport(Request $request)
     {
-        return Asset::query()->with([
-            'assetUnit.unit',
-            'subCluster.cluster.category',
-            'employee',
-            'activity',
-            'project',
-            'department',
-            'condition',
-            'uom',
-            'uom',
-        ])
-            ->when($request->status, function ($query, $status) {
-                $query->where('status', $status);
-            })
-            ->when($request->project, function ($query, $project) {
-                $query->where('asset_location', $project);
-            })
-            ->when($request->category, function ($query, $category) {
-                $query->whereHas('subCluster', function ($query) use ($category) {
-                    $query->whereHas('cluster', function ($query) use ($category) {
-                        $query->where('category_id', $category);
-                    });
-                });
-            })
-            ->when($request->cluster, function ($query, $cluster) {
-                $query->whereHas('subCluster', function ($query) use ($cluster) {
-                    $query->where('cluster_id', $cluster);
-                });
-            })
-            ->when($request->sub_cluster, function ($query, $sub_cluster) {
-                $query->where('sub_cluster_id', $sub_cluster);
-            })->get();
+        $matchs = [];
+        $terms = [];
+        $search  = isset($request->search['value']) ? $request->search['value'] : null;
+        if ($status = $request->status) {
+            $terms['status'] = $status;
+        }
+        if ($project = $request->project) {
+            $terms['asset_location'] = $project;
+        }
+        if ($category = $request->category) {
+            $terms['sub_cluster.cluster.category_id'] = $category;
+        }
+        if ($cluster = $request->cluster) {
+            $terms['sub_cluster.cluster_id'] = $cluster;
+        }
+        if ($sub_cluster = $request->sub_cluster) {
+            $terms['sub_cluster_id'] = $sub_cluster;
+        }
+        return Elasticsearch::setModel(Asset::class)
+            ->searchMultipleQuery($search, $matchs, $terms, 1000)->all();
     }
 }

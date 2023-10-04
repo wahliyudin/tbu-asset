@@ -138,6 +138,23 @@ class Elasticsearch extends ParamBuilder
         return $this;
     }
 
+    public function searchMultipleQuery($keyword = null, array $matchs = [], array $terms = [], int $size = 10)
+    {
+        $params = $this->withoutType()->size($size);
+        foreach ($matchs as $key => $value) {
+            $params->match($key, $value);
+        }
+        foreach ($terms as $key => $value) {
+            $params->term($key, $value);
+        }
+        if ($keyword) {
+            $params->queryStringBool($keyword);
+        }
+
+        $this->response = $this->clientBuilder->search($params->getParams())->asObject();
+        return $this;
+    }
+
     public function all(): array
     {
         return $this->response?->hits?->hits ?? [];

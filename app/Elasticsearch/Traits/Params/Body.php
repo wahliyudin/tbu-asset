@@ -4,7 +4,7 @@ namespace App\Elasticsearch\Traits\Params;
 
 trait Body
 {
-    use Setting, Query;
+    use Setting, Query, QueryBool;
 
     private array $body = [];
 
@@ -39,9 +39,16 @@ trait Body
 
     private function prepareQuery()
     {
+        $query = [];
         if (count($this->getQuery()) > 0) {
+            $query = array_merge($query, $this->getQuery());
+        }
+        if (count($this->getQueryBool()['must']) > 0) {
+            $query = array_merge($query, ['bool' => $this->getQueryBool()]);
+        }
+        if (count($query) > 0) {
             $this->body = array_merge($this->body, [
-                'query' => $this->getQuery()
+                'query' => $query
             ]);
         }
     }
