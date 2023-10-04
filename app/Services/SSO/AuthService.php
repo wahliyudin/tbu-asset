@@ -39,7 +39,8 @@ class AuthService
             'client_id' => config('sso.client_id'),
             'redirect_uri' => route('sso.callback'),
             'response_type' => 'code',
-            'state' => $state
+            'state' => $state,
+            'prompt' => 'consent',
         ]);
         return redirect($this->urlAuthorize($query));
     }
