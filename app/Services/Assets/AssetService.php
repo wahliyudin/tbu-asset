@@ -103,6 +103,22 @@ class AssetService
         });
     }
 
+    public function prepareDepreciationFromResult(array $depre, $assetId, $masa_pakai)
+    {
+        $results = [];
+        foreach (isset($depre['result']) ? $depre['result'] : [] as $key => $value) {
+            $results[] = [
+                'asset_id' => $assetId,
+                'masa_pakai' => $masa_pakai,
+                'umur_asset' => null,
+                'umur_pakai' => null,
+                'depresiasi' => Helper::resetRupiah($value['depreciation']),
+                'sisa' => Helper::resetRupiah($value['sisa']),
+            ];
+        }
+        return $results;
+    }
+
     public function prepareDeprecation($assetId, $masa_pakai, $date, $price)
     {
         $depre = $this->assetDepreciationService->generate($masa_pakai, $date, $price);

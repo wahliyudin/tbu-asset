@@ -8,6 +8,7 @@ use App\Helpers\CarbonHelper;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Project;
+use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetLeasingService;
 use App\Services\Assets\AssetService;
 use App\Services\Assets\AssetUnitService;
@@ -95,10 +96,6 @@ class ImportJob implements ShouldQueue
                 'name' => isset($val['uom']) ? $val['uom'] : null,
             ]);
 
-            // $dealer = (new DealerService)->store([
-            //     'name' => isset($val['suplier_dealer']) ? $val['suplier_dealer'] : null,
-            // ]);
-
             $leasing = (new LeasingService)->store(LeasingData::from(['name' => isset($val['vendor_leasing']) ? $val['vendor_leasing'] : null]));
 
             $pic = Employee::query()->where('nama_karyawan', $val['pic'])->first();
@@ -118,7 +115,13 @@ class ImportJob implements ShouldQueue
             $condition = ConditionService::store([
                 'name' => isset($val['kondisi']) ? $val['kondisi'] : null
             ]);
-
+            $tglBast = CarbonHelper::convertDate($val['tanggal_bast']);
+            $nilaiPerolehan = isset($val['nilai_perolehan']) ? (int) $val['nilai_perolehan'] : 0;
+            $nilaiSisa = 0;
+            if ($tglBast && $nilaiPerolehan && $lifetime?->masa_pakai) {
+                $depre = AssetDepreciationService::generate($lifetime->masa_pakai, $tglBast, $nilaiPerolehan);
+                $nilaiSisa = isset($depre['current_sisa']) ? $depre['current_sisa'] : 0;
+            }
             $asset = AssetService::store([
                 'kode' => isset($val['new_id_asset']) ? $val['new_id_asset'] : null,
                 'asset_unit_id' => $assetUnit?->getKey(),
@@ -131,7 +134,7 @@ class ImportJob implements ShouldQueue
                 'lifetime_id' => $lifetime?->getKey(),
                 'uom_id' => $uom?->getKey(),
                 'quantity' => isset($val['jumlah']) ? $val['jumlah'] : null,
-                'nilai_sisa' => isset($val['nilai_sisa']) ? (int) $val['nilai_sisa'] : 0,
+                'nilai_sisa' => $nilaiSisa,
                 'tgl_bast' => CarbonHelper::convertDate($val['tanggal_bast']),
                 'hm' => isset($val['hours_meter']) ? $val['hours_meter'] : null,
                 'pr_number' => isset($val['pr']) ? $val['pr'] : null,
@@ -161,91 +164,12 @@ class ImportJob implements ShouldQueue
                 'legalitas' => isset($val['legalitas']) ? $val['legalitas'] : null,
             ]);
 
-            $tglBast = CarbonHelper::convertDate($val['tanggal_bast']);
             if ($asset?->getKey() && $tglBast && $lifetime) {
-                $nilaiPerolehan = isset($val['nilai_perolehan']) ? (int) $val['nilai_perolehan'] : 0;
-                $depreciations = AssetsAssetService::prepareDeprecation($asset?->getKey(), $lifetime->masa_pakai, $tglBast, $nilaiPerolehan);
-                // $depresiasi = AssetDepreciationService::store([
-                //     'asset_id' => $asset->getKey(),
-                //     'masa_pakai' => isset($val['masa_pakai']) ? $val['masa_pakai'] : null,
-                //     'umur_asset' => isset($val['umur_asset']) ? $val['umur_asset'] : null,
-                //     'umur_pakai' => isset($val['umur_pakai']) ? $val['umur_pakai'] : null,
-                //     'depresiasi' => isset($val['depresiasi']) ? $val['depresiasi'] : null,
-                //     'sisa' => isset($val['nilai_sisa']) ? $val['nilai_sisa'] : null,
-                // ]);
-                $asset->depreciations()->createMany($depreciations);
+                $depreciations = AssetsAssetService::prepareDepreciationFromResult($depre, $asset?->getKey(), $lifetime->masa_pakai);
+                if (count($depreciations) >= 1) {
+                    $asset->depreciations()->createMany($depreciations);
+                }
             }
-
-            // $results[] =  [
-            //     'kode' => $val['id_asset_existing'],
-            //     'unit_id' => $unit?->getKey(),
-            //     'sub_cluster_id' => $subCluster?->getKey(),
-            //     'member_name' => null,
-            //     'pic' => $pic?->nik,
-            //     'activity' => $val['activity'],
-            //     'asset_location' => $pic?->position?->project?->project,
-            //     'kondisi' => $val['kondisi'],
-            //     'uom_id' => null,
-            //     'quantity' => $val['jumlah'],
-            //     'tgl_bast' => Carbon::instance(Date::excelToDateTimeObject($val['tanggal_bast']))->format('Y-m-d'),
-            //     'hm' => $val['hm'],
-            //     'pr_number' => $val['pr'],
-            //     'po_number' => $val['po'],
-            //     'gr_number' => $val['gr'],
-            //     'remark' => $val['keterangan'],
-            //     'status_asset' => $val['status'],
-            // ];
         }
-
-
-        // Asset::query()->upsert($results, 'id');
     }
-
-    /**
-     * [
-     * "no" => 1
-     * "asset_category" => "EQUIPMENT"
-     * "asset_cluster" => "MAIN EQUIPMENT"
-     * "asset_sub_cluster" => "DIGGER"
-     * "id_asset_existing" => "10-18-PLT-EX-2009"
-     * "new_id_asset" => "10-18-ENG-EX-2009"
-     * "id_unit" => "EX-2009"
-     * "unit_model" => "EXCAVATOR"
-     * "unit_type" => 330
-     * "seri" => "D2L"
-     * "unit_class" => "30 TON"
-     * "activity" => "COAL"
-     * "unit_merk_brand" => "CATERPILLAR"
-     * "serial_number" => "SZK10972"
-     * "detail_spesifikasi" => "Engine C7.1 Hyd. Excavator Cap. 30 Ton "
-     * "kelengkapan_tambahan" => "SKAT"
-     * "tahun_pembuatan" => 2018
-     * "tanggal_perolehan" => 43272
-     * "nilai_perolehan_harga_beli" => 337500000
-     * "suplier_dealer_toko" => "PT TRAKINDO UTAMA"
-     * "vendor_leasing" => "PT. Wargi santosa"
-     * "tanggal_bast" => 43279
-     * "jumlah" => 1
-     * "uom" => "Unit"
-     * "lokasi_asset" => "Ex. TBU-BEL, TBU-TAI"
-     * "tanggal_bast_2" => 44552
-     * "hours_meter_kilo_meter" => null
-     * "p_i_c" => "TULIS HARI SETIONO"
-     * "departemen" => "PRODUCTION"
-     * "kondisi" => "RFU"
-     * "status" => "OWNED"
-     * "jangka_waktu_leasing_sewa" => 44374
-     * "biaya_leasing_sewa_perbulan" => 0
-     * "legalitas" => "Invoice & faktur"
-     * "umur_pakai_on_hire_bulan" => "=IFERROR(IF(V2="","",DATEDIF(V2,NOW(),"M")+1),0)"
-     * "umur_asset" => "=IFERROR(IF(R2="","",DATEDIF(R2,NOW(),"M")+1),0)"
-     * "masa_pakai_asset_bulan" => 36
-     * "depresiasi" => "=IFERROR(S2/$AL2,"")"
-     * "nilai_sisa" => "=IF(AK2>=AL2,0,(AL2-AK2)*AM2)"
-     * "gr" => null
-     * "pr" => null
-     * "po" => null
-     * "keterangan" => "Sudah dibeli TBU 100%"
-     * ]
-     */
 }

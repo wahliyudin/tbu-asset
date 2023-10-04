@@ -73,11 +73,9 @@
                 <form class="form" action="#" id="create-condition_form">
                     <div class="modal-header" id="create-condition_header">
                         <h2 class="fw-bold title">Tambah Condition</h2>
-                        <div id="create-condition_close" class="btn btn-icon btn-sm btn-active-icon-primary">
-                            <i class="ki-duotone ki-cross fs-1">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
+                        <div id="create-condition_close" class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                            data-bs-dismiss="modal" aria-label="Close">
+                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
                         </div>
                     </div>
                     <div class="modal-body py-10 px-lg-17">
