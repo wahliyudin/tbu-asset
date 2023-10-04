@@ -467,7 +467,7 @@
                                     <label class="col-lg-4 fw-semibold text-muted">Nilai Sisa</label>
                                     <div class="col-lg-7">
                                         <span
-                                            class="fw-bold fs-6 text-gray-800">{{ \App\Helpers\Helper::formatRupiah($asset->nilai_sisa) ?? '-' }}</span>
+                                            class="fw-bold fs-6 text-gray-800 nilai_sisa">{{ \App\Helpers\Helper::formatRupiah($asset->nilai_sisa) ?? '-' }}</span>
                                     </div>
                                     <input type="hidden" name="nilai_sisa"
                                         value="{{ \App\Helpers\Helper::formatRupiah($asset->nilai_sisa) }}">
