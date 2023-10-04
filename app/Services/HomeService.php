@@ -20,7 +20,7 @@ class HomeService
     public static function assetByCategoryBookValue()
     {
         return DB::table('categories')
-            ->select(['categories.name as category', DB::raw('CAST(SUM(asset_leasings.harga_beli) as int) as value')])
+            ->select(['categories.name as category', DB::raw('SUM(asset_leasings.harga_beli) as value')])
             ->leftJoin('clusters', 'clusters.category_id', '=', 'categories.id')
             ->leftJoin('sub_clusters', 'sub_clusters.cluster_id', '=', 'clusters.id')
             ->leftJoin('assets', 'assets.sub_cluster_id', '=', 'sub_clusters.id')
