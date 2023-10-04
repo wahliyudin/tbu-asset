@@ -51,7 +51,7 @@ class AssetService
         return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project'])->get();
     }
 
-    public function all($search = null, $size = 2000)
+    public function all($search = null, $size = 50)
     {
         return Elasticsearch::setModel(Asset::class)->searchMultiMatch($search, $size)->all();
     }
