@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transfers;
 
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Enums\Transfers\Transfer\Status;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
@@ -41,13 +42,16 @@ class TransferController extends Controller
             ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->newPic?->nama_karyawan;
             })
+            ->editColumn('status_transfer', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->status_transfer?->badge();
+            })
             ->editColumn('status', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->status->badge();
+                return $assetTransfer->status?->badge();
             })
             ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('transfers.transfer.action', compact('assetTransfer'))->render();
             })
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['action', 'status', 'status_transfer'])
             ->make();
     }
 
@@ -81,7 +85,7 @@ class TransferController extends Controller
 
     public function show(AssetTransfer $assetTransfer)
     {
-        $assetTransfer->load(['asset.unit', 'asset.leasing', 'workflows' => function ($query) {
+        $assetTransfer->load(['asset.assetUnit.unit', 'asset.leasing', 'workflows' => function ($query) {
             $query->orderBy('sequence', 'ASC');
         }]);
         return view('transfers.transfer.show', [
@@ -110,10 +114,22 @@ class TransferController extends Controller
         }
     }
 
+    public function storeDraft(AssetTransferRequest $request)
+    {
+        try {
+            $this->service->updateOrCreate($request, true);
+            return response()->json([
+                'message' => 'Berhasil disimpan'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function edit(AssetTransfer $assetTransfer)
     {
         try {
-            $assetTransfer->loadMissing(['asset.unit', 'asset.leasing']);
+            $assetTransfer->loadMissing(['asset.assetUnit.unit', 'asset.leasing']);
             return view('transfers.transfer.edit', [
                 'assetTransfer' => AssetTransferData::from($assetTransfer)
             ]);
@@ -126,6 +142,18 @@ class TransferController extends Controller
     {
         try {
             $this->service->delete($assetTransfer);
+            return response()->json([
+                'message' => 'Berhasil dihapus'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function received(AssetTransfer $assetTransfer)
+    {
+        try {
+            $this->service->statusTransfer($assetTransfer, Status::RECEIVED);
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);

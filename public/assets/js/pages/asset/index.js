@@ -816,6 +816,7 @@ var AssetsList = function () {
                     $('.notif-progress').removeClass('d-none');
                     localStorage.setItem('message_asset', 'Successfully imported');
                     $('.notif-progress #title').text('Uploading...');
+                    $('.btn-sync-progress').attr('disabled', true);
                     localStorage.setItem('is_bulk', 0);
                     localStorage.setItem('batch_asset', response.id);
                 },

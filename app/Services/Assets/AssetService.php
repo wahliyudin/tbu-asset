@@ -7,6 +7,7 @@ use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
 use App\DataTransferObjects\Assets\AssetUnitData;
 use App\Enums\Asset\Status;
+use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Facades\Elasticsearch;
 use App\Facades\Masters\Category\CategoryService;
 use App\Facades\Masters\Cluster\ClusterService;
@@ -239,7 +240,7 @@ class AssetService
 
     private function sendToElasticsearch(Asset $asset, $key)
     {
-        $asset->load(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition']);
+        $asset->load(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'employee']);
         if ($key) {
             return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
         }
@@ -294,5 +295,21 @@ class AssetService
         }
         return Elasticsearch::setModel(Asset::class)
             ->searchMultipleQuery($search, $matchs, $terms, 1000)->all();
+    }
+
+    public function assetWithExistTransfers()
+    {
+        return Asset::query()->with(['assetUnit.unit', 'employee'])
+            ->withWhereHas('transfers', function ($query) {
+                $query->where('status_transfer', TransferStatus::RECEIVED);
+            })->get();
+    }
+
+    public function assetWithTransferById($id)
+    {
+        return Asset::query()->with(['assetUnit.unit', 'employee'])
+            ->withWhereHas('transfers', function ($query) {
+                $query->where('status_transfer', TransferStatus::RECEIVED);
+            })->findOrFail($id);
     }
 }

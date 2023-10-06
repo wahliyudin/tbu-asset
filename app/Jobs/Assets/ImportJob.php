@@ -118,6 +118,7 @@ class ImportJob implements ShouldQueue
             $tglBast = CarbonHelper::convertDate($val['tanggal_bast']);
             $nilaiPerolehan = isset($val['nilai_perolehan']) ? (int) $val['nilai_perolehan'] : 0;
             $nilaiSisa = 0;
+            $depre = [];
             if ($tglBast && $nilaiPerolehan && $lifetime?->masa_pakai) {
                 $depre = AssetDepreciationService::generate($lifetime->masa_pakai, $tglBast, $nilaiPerolehan);
                 $nilaiSisa = isset($depre['current_sisa']) ? $depre['current_sisa'] : 0;

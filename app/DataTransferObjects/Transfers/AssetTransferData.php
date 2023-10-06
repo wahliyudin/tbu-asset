@@ -5,6 +5,7 @@ namespace App\DataTransferObjects\Transfers;
 use App\DataTransferObjects\API\HRIS\EmployeeData;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\WorkflowData;
+use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Enums\Workflows\Status;
 use App\Interfaces\DataInterface;
 use App\Services\GlobalService;
@@ -33,6 +34,7 @@ class AssetTransferData extends Data implements DataInterface
         public ?string $note,
         public ?string $transfer_date,
         public ?string $created_at,
+        public ?TransferStatus $status_transfer,
         public ?Status $status,
         public ?string $id = null,
         public ?EmployeeData $oldPic,

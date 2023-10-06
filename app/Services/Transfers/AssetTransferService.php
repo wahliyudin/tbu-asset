@@ -3,6 +3,7 @@
 namespace App\Services\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
@@ -41,18 +42,27 @@ class AssetTransferService
         return $assetTransferData->toCollection()->where('nik', $userNik);
     }
 
-    public function updateOrCreate(AssetTransferRequest $request)
+    public function updateOrCreate(AssetTransferRequest $request, bool $isDraft = false)
     {
-        $data = AssetTransferData::from(array_merge($request->all(), ['status' => Status::OPEN]));
-        DB::transaction(function () use ($data) {
+        $additional = [
+            'status' => Status::OPEN,
+            'status_transfer' => TransferStatus::PENDING,
+        ];
+        if ($isDraft) {
+            $additional['status'] = Status::DRAFT;
+        }
+        $data = AssetTransferData::from(array_merge($request->all(), $additional));
+        DB::transaction(function () use ($data, $isDraft) {
             $assetTransfer = $this->assetTransferRepository->updateOrCreate($data);
             if ($data->getKey()) {
                 $assetTransfer->workflows()->delete();
             }
-            TransferWorkflowService::setModel($assetTransfer)
-                ->setAdditionalParams(
-                    $this->additionalParams($data)
-                )->store();
+            if (!$isDraft) {
+                TransferWorkflowService::setModel($assetTransfer)
+                    ->setAdditionalParams(
+                        $this->additionalParams($data)
+                    )->store();
+            }
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $data->getKey());
         });
     }
@@ -93,6 +103,17 @@ class AssetTransferService
             $assetTransfer->workflows()->delete();
             $this->assetTransferRepository->deleteFromElasticsearch($assetTransfer);
             return $assetTransfer->delete();
+        });
+    }
+
+    public function statusTransfer(AssetTransfer $assetTransfer, TransferStatus $status)
+    {
+        return DB::transaction(function () use ($assetTransfer, $status) {
+            $assetTransfer->update([
+                'status_transfer' => $status
+            ]);
+            $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
+            return $assetTransfer;
         });
     }
 

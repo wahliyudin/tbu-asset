@@ -16,6 +16,7 @@ use App\Models\Employee;
 use App\Models\Masters\Activity;
 use App\Models\Masters\Condition;
 use App\Models\Masters\Lifetime;
+use App\Models\Transfers\AssetTransfer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -121,6 +122,11 @@ class Asset extends Model implements ElasticsearchInterface
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'nik', 'nik');
+        return $this->belongsTo(Employee::class, 'pic', 'nik');
+    }
+
+    public function transfers()
+    {
+        return $this->hasMany(AssetTransfer::class);
     }
 }

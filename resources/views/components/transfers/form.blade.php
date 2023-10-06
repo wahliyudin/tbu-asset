@@ -146,7 +146,7 @@
                 <tbody>
                     <tr class="text-center">
                         @foreach (str(\Carbon\Carbon::make($assetTransfer?->created_at ?? now()->format('d-m-Y'))->format('d-m-Y'))->split(1) as $value)
-                            <td class="p-1 w-50px">{{ $value }}</td>
+                            <td class="p-1" style="width: 10px !important;">{{ $value }}</td>
                         @endforeach
                     </tr>
                 </tbody>
@@ -161,55 +161,6 @@
             @else
                 <div id="justifikasi" class="w-100">{!! $assetTransfer->justifikasi !!}</div>
             @endif
-        </div>
-    </div>
-    <div class="row mt-4">
-        <h5>Pemindahan (Transfer) Asset Perusahaan : </h5>
-        <div class="d-flex flex-column gap-2 ps-10">
-            <div class="form-check form-check-custom">
-                <input class="form-check-input" name="pelaksanaan" type="radio" value="" id="" />
-                <label class="form-check-label fs-6 fw-semibold text-black" for="">
-                    Disetujui
-                </label>
-            </div>
-            <div class="form-check form-check-custom">
-                <input class="form-check-input" name="pelaksanaan" type="radio" value="" id="" />
-                <label class="form-check-label fs-6 fw-semibold text-black" for="">
-                    Tidak Disetujui, karena alasan sebagai berikut :
-                </label>
-            </div>
-            <div class="ps-10">
-                <textarea name="" id="" class="form-control"></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <h5>Tanggal Pemindahan (Transfer) :</h5>
-        <div class="col-md-5 ps-14">
-            <table class="table table-bordered border-gray-400 m-0">
-                <thead class="border-0">
-                    <tr class="text-center border-0">
-                        <th colspan="2" class="border-0">Tgl.</th>
-                        <th colspan="4" class="border-0">Bln</th>
-                        <th colspan="4" class="border-0">Tahun</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="text-center">
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px">-</td>
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px">-</td>
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px"></td>
-                        <td class="p-1 w-50px"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="m-0">(Diisi apabila proses transfer disetujui)</p>
         </div>
     </div>
     @if ($type == 'show' && $withWorkflow)
@@ -252,10 +203,30 @@
         </div>
     @endif
     @if ($type != 'show')
-        <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-primary simpan-form-transfer">
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-warning simpan-draft-form-transfer ps-4">
                 <span class="indicator-label">
-                    Simpan
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="ki-duotone ki-archive-tick fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                        <span>Simpan Draft</span>
+                    </div>
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+            <button type="button" class="btn btn-primary simpan-form-transfer ps-4">
+                <span class="indicator-label">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="ki-duotone ki-save-2 fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                        <span>Submit</span>
+                    </div>
                 </span>
                 <span class="indicator-progress">
                     Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

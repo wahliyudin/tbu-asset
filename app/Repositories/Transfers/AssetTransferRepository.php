@@ -28,6 +28,7 @@ class AssetTransferRepository
             'justifikasi' => $data->justifikasi,
             'remark' => $data->remark,
             'transfer_date' => $data->transfer_date,
+            'status_transfer' => $data->status_transfer,
             'status' => $data->status,
         ]);
     }

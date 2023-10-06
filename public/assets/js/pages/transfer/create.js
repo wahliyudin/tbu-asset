@@ -192,6 +192,46 @@ var KTModalAdd = function () {
                 }
             });
         });
+        $(`.form-transfer`).on('click', `.simpan-draft-form-transfer`, function (e) {
+            e.preventDefault();
+            var postData = new FormData($(`.form-transfer`)[0]);
+            postData.append('justifikasi', justifikasi.getData());
+            $(`.simpan-draft-form-transfer`).attr("data-kt-indicator", "on");
+            $.ajax({
+                type: 'POST',
+                url: "/asset-transfers/store/draft",
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function (response) {
+                    $(`.simpan-draft-form-transfer`).removeAttr("data-kt-indicator");
+                    Swal.fire(
+                        'Success!',
+                        response.message,
+                        'success'
+                    ).then(function () {
+                        window.location.href = "/asset-transfers";
+                    });
+                },
+                error: function (jqXHR, xhr, textStatus, errorThrow, exception) {
+                    $(`.simpan-draft-form-transfer`).removeAttr("data-kt-indicator");
+                    if (jqXHR.status == 422) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan!',
+                            text: JSON.parse(jqXHR.responseText)
+                                .message,
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: jqXHR.responseText,
+                        })
+                    }
+                }
+            });
+        });
     }
 
     function numberFromString(s) {

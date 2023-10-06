@@ -243,9 +243,8 @@
                     </div>
                 @endpermission
                 @permission('asset_transfer_read')
-                    <div class="menu-item">
-                        <a class="menu-link {{ request()->routeIs('asset-transfers.index', 'asset-transfers.create', 'asset-transfers.show', 'asset-transfers.edit') ? 'active' : '' }}"
-                            href="{{ route('asset-transfers.index') }}">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link">
                             <span class="menu-icon">
                                 <i class="ki-duotone ki-share fs-2">
                                     <i class="path1"></i>
@@ -257,7 +256,46 @@
                                 </i>
                             </span>
                             <span class="menu-title">Asset Transfer</span>
-                        </a>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs(
+                                'asset-transfers.index',
+                                'asset-transfers.create',
+                                'asset-transfers.show',
+                                'asset-transfers.edit',
+                                'asset-transfers.histories.index',
+                            )
+                                ? 'hover show'
+                                : '' }}">
+                            @permission('asset_transfer_read')
+                                <div class="menu-item">
+                                    <a class="menu-link {{ request()->routeIs(
+                                        'asset-transfers.index',
+                                        'asset-transfers.create',
+                                        'asset-transfers.show',
+                                        'asset-transfers.edit',
+                                    )
+                                        ? 'active'
+                                        : '' }}"
+                                        href="{{ route('asset-transfers.index') }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">List</span>
+                                    </a>
+                                </div>
+                            @endpermission
+                            <div class="menu-item">
+                                <a class="menu-link {{ request()->routeIs('asset-transfers.histories.index') ? 'active' : '' }}"
+                                    href="{{ route('asset-transfers.histories.index') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">History</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 @endpermission
                 @permission('asset_dispose_read')

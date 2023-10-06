@@ -3,7 +3,9 @@
 namespace App\Models\Transfers;
 
 use App\Elasticsearch\Contracts\ElasticsearchInterface;
+use App\Enums\Transfers\Transfer\Status;
 use App\Enums\Workflows\LastAction;
+use App\Enums\Workflows\Status as WorkflowsStatus;
 use App\Models\Assets\Asset;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -33,7 +35,13 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
         'remark',
         'note',
         'transfer_date',
+        'status_transfer',
         'status',
+    ];
+
+    protected $casts = [
+        'status_transfer' => Status::class,
+        'status' => WorkflowsStatus::class
     ];
 
     public function indexName(): string

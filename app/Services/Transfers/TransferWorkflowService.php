@@ -2,10 +2,10 @@
 
 namespace App\Services\Transfers;
 
-use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Enums\Workflows\Module;
-use App\Enums\Workflows\Status;
-use App\Facades\Elasticsearch;
+use App\Facades\Transfers\AssetTransferRepository;
+use App\Facades\Transfers\AssetTransferService;
 use App\Jobs\Transfers\ApprovalJob;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Workflows\Workflow;
@@ -25,6 +25,7 @@ class TransferWorkflowService extends Workflow
 
     protected function handleIsLastAndApprov()
     {
+        AssetTransferService::statusTransfer($this->model, TransferStatus::PROCESS);
         dispatch(new ApprovalJob('emails.transfer.close', $this->model));
     }
 
@@ -40,8 +41,6 @@ class TransferWorkflowService extends Workflow
 
     protected function handleChanges(Model $assetTransfer)
     {
-        $assetTransfer->load(['asset', 'workflows']);
-        $data = AssetTransferData::from($assetTransfer);
-        return Elasticsearch::setModel(AssetTransfer::class)->updated($data);
+        return AssetTransferRepository::sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
     }
 }
