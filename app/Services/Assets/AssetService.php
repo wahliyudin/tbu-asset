@@ -301,7 +301,9 @@ class AssetService
     {
         return Asset::query()->with(['assetUnit.unit', 'employee'])
             ->withWhereHas('transfers', function ($query) {
-                $query->where('status_transfer', TransferStatus::RECEIVED);
+                $query->whereHas('statusTransfer', function ($query) {
+                    $query->where('status', TransferStatus::RECEIVED);
+                });
             })->get();
     }
 
@@ -309,7 +311,9 @@ class AssetService
     {
         return Asset::query()->with(['assetUnit.unit', 'employee'])
             ->withWhereHas('transfers', function ($query) {
-                $query->where('status_transfer', TransferStatus::RECEIVED);
+                $query->whereHas('statusTransfer', function ($query) {
+                    $query->where('status', TransferStatus::RECEIVED);
+                });
             })->findOrFail($id);
     }
 }
