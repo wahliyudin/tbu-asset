@@ -35,7 +35,6 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
         'remark',
         'note',
         'transfer_date',
-        'status_transfer',
         'status',
     ];
 
@@ -71,5 +70,15 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
     public function workflows(): HasMany
     {
         return $this->hasMany(TransferWorkflow::class);
+    }
+
+    public function statusTransfer()
+    {
+        return $this->hasOne(StatusTransfer::class)->latestOfMany();
+    }
+
+    public function statusTransfers()
+    {
+        return $this->hasMany(StatusTransfer::class);
     }
 }

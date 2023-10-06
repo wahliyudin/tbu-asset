@@ -30,7 +30,6 @@ return new class extends Migration
             $table->string('remark')->nullable();
             $table->text('note')->nullable();
             $table->date('transfer_date')->nullable();
-            $table->string('status_transfer')->default('pending');
             $table->string('status')->default('open');
             $table->timestamps();
         });

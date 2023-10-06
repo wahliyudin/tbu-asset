@@ -10,6 +10,7 @@ use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Models\Transfers\AssetTransfer;
+use App\Models\Transfers\StatusTransfer;
 use App\Repositories\Transfers\AssetTransferRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -46,7 +47,6 @@ class AssetTransferService
     {
         $additional = [
             'status' => Status::OPEN,
-            'status_transfer' => TransferStatus::PENDING,
         ];
         if ($isDraft) {
             $additional['status'] = Status::DRAFT;
@@ -56,6 +56,8 @@ class AssetTransferService
             $assetTransfer = $this->assetTransferRepository->updateOrCreate($data);
             if ($data->getKey()) {
                 $assetTransfer->workflows()->delete();
+            } else {
+                $this->storeStatusTransfer($assetTransfer->getKey(), TransferStatus::PENDING);
             }
             if (!$isDraft) {
                 TransferWorkflowService::setModel($assetTransfer)
@@ -65,6 +67,15 @@ class AssetTransferService
             }
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $data->getKey());
         });
+    }
+
+    public function storeStatusTransfer($transfer_id, TransferStatus $status)
+    {
+        return StatusTransfer::query()->create([
+            'asset_transfer_id' => $transfer_id,
+            'status' => $status,
+            'date' => now(),
+        ]);
     }
 
     private function additionalParams(AssetTransferData $assetTransferData)
@@ -109,9 +120,7 @@ class AssetTransferService
     public function statusTransfer(AssetTransfer $assetTransfer, TransferStatus $status)
     {
         return DB::transaction(function () use ($assetTransfer, $status) {
-            $assetTransfer->update([
-                'status_transfer' => $status
-            ]);
+            $this->storeStatusTransfer($assetTransfer->getKey(), $status);
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
             return $assetTransfer;
         });

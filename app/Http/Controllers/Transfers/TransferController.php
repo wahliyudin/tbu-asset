@@ -43,7 +43,7 @@ class TransferController extends Controller
                 return $assetTransfer->newPic?->nama_karyawan;
             })
             ->editColumn('status_transfer', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->status_transfer?->badge();
+                return $assetTransfer->status_transfer?->status?->badge();
             })
             ->editColumn('status', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->status?->badge();

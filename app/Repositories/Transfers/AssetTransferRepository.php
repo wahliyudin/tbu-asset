@@ -41,7 +41,7 @@ class AssetTransferRepository
 
     public function sendToElasticsearch(AssetTransfer $assetTransfer, $key)
     {
-        $assetTransfer->load(['asset', 'workflows']);
+        $assetTransfer->load(['asset', 'workflows', 'statusTransfer']);
         if ($key) {
             return Elasticsearch::setModel(AssetTransfer::class)->updated(AssetTransferData::from($assetTransfer));
         }
