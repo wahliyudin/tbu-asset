@@ -63,7 +63,7 @@
 @push('modal')
     <div class="modal fade" id="timeline" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" id="timeline_header">
                     <h2 class="fw-bold">History Asset Transfer</h2>
@@ -73,649 +73,662 @@
                     </div>
                 </div>
                 <div class="modal-body py-5 px-lg-5">
-                    <div class="px-4 py-4 mh-500px scroll-y ">
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
-                                <div class="timeline-icon symbol symbol-circle symbol-40px">
-                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
-                                        <i class="ki-duotone ki-check fs-2"></i>
-                                    </div>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="pb-5 pe-3">
-                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
-                                            <!--begin::Info-->
-                                            <div class="d-flex flex-stack mb-3">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-3">
-                                                    <!--begin::Icon-->
-                                                    <img src="../assets/media/stock/ecommerce/210.gif"
-                                                        class="w-50px ms-n1 me-1" alt="">
-                                                    <!--end::Icon-->
-
-                                                    <!--begin::Title-->
-                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
-                                                        1802</a>
-                                                    <!--end::Title-->
-                                                </div>
-                                                <!--end::Wrapper-->
-
-                                                <!--begin::Action-->
-                                                <div class="m-0">
-                                                    <!--begin::Menu-->
-                                                    <button
-                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
-                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                                        data-kt-menu-overflow="true">
-
-                                                        <i class="ki-duotone ki-dots-square fs-1"><span
-                                                                class="path1"></span><span class="path2"></span><span
-                                                                class="path3"></span><span class="path4"></span></i>
-                                                    </button>
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                                        data-kt-menu="true" style="">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
-                                                                Quick Actions</div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mb-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Ticket
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Customer
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                                            data-kt-menu-placement="right-start">
-                                                            <!--begin::Menu item-->
-                                                            <a href="#" class="menu-link px-3">
-                                                                <span class="menu-title">New Group</span>
-                                                                <span class="menu-arrow"></span>
-                                                            </a>
-                                                            <!--end::Menu item-->
-
-                                                            <!--begin::Menu sub-->
-                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Admin Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Staff Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Member Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-                                                            </div>
-                                                            <!--end::Menu sub-->
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Contact
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mt-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content px-3 py-3">
-                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
-                                                                    Generate Reports
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-
-                                                    <!--begin::Menu 2-->
-
-                                                    <!--end::Menu 2-->
-
-                                                    <!--end::Menu-->
-                                                </div>
-                                                <!--end::Action-->
-                                            </div>
-                                            <!--end::Info-->
-
-                                            <!--begin::Customer-->
-                                            <div class="d-flex flex-stack">
-                                                <!--begin::Name-->
-                                                <span class="text-gray-400 fw-bold">To:
-                                                    <a href="../apps/ecommerce/sales/details.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">
-                                                        Jason Bourne </a>
-                                                </span>
-                                                <!--end::Name-->
-
-                                                <!--begin::Label-->
-                                                <span class="badge badge-light-success">Delivered</span>
-                                                <!--end::Label-->
-                                            </div>
-                                            <!--end::Customer-->
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="px-4 py-4 mh-500px scroll-y">
+                        <div class="overlay overlay-block card-rounded loading">
+                            <div class="overlay-wrapper p-5">
+                                Please wait...
                             </div>
-                            <div class="timeline-item">
-                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
-                                <div class="timeline-icon symbol symbol-circle symbol-40px">
-                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
-                                        <i class="ki-duotone ki-check fs-2"></i>
-                                    </div>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="pb-5 pe-3">
-                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
-                                            <!--begin::Info-->
-                                            <div class="d-flex flex-stack mb-3">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-3">
-                                                    <!--begin::Icon-->
-                                                    <img src="../assets/media/stock/ecommerce/210.gif"
-                                                        class="w-50px ms-n1 me-1" alt="">
-                                                    <!--end::Icon-->
-
-                                                    <!--begin::Title-->
-                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
-                                                        1802</a>
-                                                    <!--end::Title-->
-                                                </div>
-                                                <!--end::Wrapper-->
-
-                                                <!--begin::Action-->
-                                                <div class="m-0">
-                                                    <!--begin::Menu-->
-                                                    <button
-                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
-                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                                        data-kt-menu-overflow="true">
-
-                                                        <i class="ki-duotone ki-dots-square fs-1"><span
-                                                                class="path1"></span><span class="path2"></span><span
-                                                                class="path3"></span><span class="path4"></span></i>
-                                                    </button>
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                                        data-kt-menu="true" style="">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
-                                                                Quick Actions</div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mb-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Ticket
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Customer
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                                            data-kt-menu-placement="right-start">
-                                                            <!--begin::Menu item-->
-                                                            <a href="#" class="menu-link px-3">
-                                                                <span class="menu-title">New Group</span>
-                                                                <span class="menu-arrow"></span>
-                                                            </a>
-                                                            <!--end::Menu item-->
-
-                                                            <!--begin::Menu sub-->
-                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Admin Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Staff Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Member Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-                                                            </div>
-                                                            <!--end::Menu sub-->
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Contact
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mt-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content px-3 py-3">
-                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
-                                                                    Generate Reports
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-
-                                                    <!--begin::Menu 2-->
-
-                                                    <!--end::Menu 2-->
-
-                                                    <!--end::Menu-->
-                                                </div>
-                                                <!--end::Action-->
-                                            </div>
-                                            <!--end::Info-->
-
-                                            <!--begin::Customer-->
-                                            <div class="d-flex flex-stack">
-                                                <!--begin::Name-->
-                                                <span class="text-gray-400 fw-bold">To:
-                                                    <a href="../apps/ecommerce/sales/details.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">
-                                                        Jason Bourne </a>
-                                                </span>
-                                                <!--end::Name-->
-
-                                                <!--begin::Label-->
-                                                <span class="badge badge-light-success">Delivered</span>
-                                                <!--end::Label-->
-                                            </div>
-                                            <!--end::Customer-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
-                                <div class="timeline-icon symbol symbol-circle symbol-40px">
-                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
-                                        <i class="ki-duotone ki-check fs-2"></i>
-                                    </div>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="pb-5 pe-3">
-                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
-                                            <!--begin::Info-->
-                                            <div class="d-flex flex-stack mb-3">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-3">
-                                                    <!--begin::Icon-->
-                                                    <img src="../assets/media/stock/ecommerce/210.gif"
-                                                        class="w-50px ms-n1 me-1" alt="">
-                                                    <!--end::Icon-->
-
-                                                    <!--begin::Title-->
-                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
-                                                        1802</a>
-                                                    <!--end::Title-->
-                                                </div>
-                                                <!--end::Wrapper-->
-
-                                                <!--begin::Action-->
-                                                <div class="m-0">
-                                                    <!--begin::Menu-->
-                                                    <button
-                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
-                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                                        data-kt-menu-overflow="true">
-
-                                                        <i class="ki-duotone ki-dots-square fs-1"><span
-                                                                class="path1"></span><span class="path2"></span><span
-                                                                class="path3"></span><span class="path4"></span></i>
-                                                    </button>
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                                        data-kt-menu="true" style="">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
-                                                                Quick Actions</div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mb-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Ticket
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Customer
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                                            data-kt-menu-placement="right-start">
-                                                            <!--begin::Menu item-->
-                                                            <a href="#" class="menu-link px-3">
-                                                                <span class="menu-title">New Group</span>
-                                                                <span class="menu-arrow"></span>
-                                                            </a>
-                                                            <!--end::Menu item-->
-
-                                                            <!--begin::Menu sub-->
-                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Admin Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Staff Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Member Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-                                                            </div>
-                                                            <!--end::Menu sub-->
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Contact
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mt-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content px-3 py-3">
-                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
-                                                                    Generate Reports
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-
-                                                    <!--begin::Menu 2-->
-
-                                                    <!--end::Menu 2-->
-
-                                                    <!--end::Menu-->
-                                                </div>
-                                                <!--end::Action-->
-                                            </div>
-                                            <!--end::Info-->
-
-                                            <!--begin::Customer-->
-                                            <div class="d-flex flex-stack">
-                                                <!--begin::Name-->
-                                                <span class="text-gray-400 fw-bold">To:
-                                                    <a href="../apps/ecommerce/sales/details.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">
-                                                        Jason Bourne </a>
-                                                </span>
-                                                <!--end::Name-->
-
-                                                <!--begin::Label-->
-                                                <span class="badge badge-light-success">Delivered</span>
-                                                <!--end::Label-->
-                                            </div>
-                                            <!--end::Customer-->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
-                                <div class="timeline-icon symbol symbol-circle symbol-40px">
-                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
-                                        <i class="ki-duotone ki-check fs-2"></i>
-                                    </div>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="pb-5 pe-3">
-                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
-                                            <!--begin::Info-->
-                                            <div class="d-flex flex-stack mb-3">
-                                                <!--begin::Wrapper-->
-                                                <div class="me-3">
-                                                    <!--begin::Icon-->
-                                                    <img src="../assets/media/stock/ecommerce/210.gif"
-                                                        class="w-50px ms-n1 me-1" alt="">
-                                                    <!--end::Icon-->
-
-                                                    <!--begin::Title-->
-                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
-                                                        1802</a>
-                                                    <!--end::Title-->
-                                                </div>
-                                                <!--end::Wrapper-->
-
-                                                <!--begin::Action-->
-                                                <div class="m-0">
-                                                    <!--begin::Menu-->
-                                                    <button
-                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
-                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
-                                                        data-kt-menu-overflow="true">
-
-                                                        <i class="ki-duotone ki-dots-square fs-1"><span
-                                                                class="path1"></span><span class="path2"></span><span
-                                                                class="path3"></span><span class="path4"></span></i>
-                                                    </button>
-                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                                        data-kt-menu="true" style="">
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
-                                                                Quick Actions</div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mb-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Ticket
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Customer
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                                            data-kt-menu-placement="right-start">
-                                                            <!--begin::Menu item-->
-                                                            <a href="#" class="menu-link px-3">
-                                                                <span class="menu-title">New Group</span>
-                                                                <span class="menu-arrow"></span>
-                                                            </a>
-                                                            <!--end::Menu item-->
-
-                                                            <!--begin::Menu sub-->
-                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Admin Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Staff Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-
-                                                                <!--begin::Menu item-->
-                                                                <div class="menu-item px-3">
-                                                                    <a href="#" class="menu-link px-3">
-                                                                        Member Group
-                                                                    </a>
-                                                                </div>
-                                                                <!--end::Menu item-->
-                                                            </div>
-                                                            <!--end::Menu sub-->
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3">
-                                                                New Contact
-                                                            </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu separator-->
-                                                        <div class="separator mt-3 opacity-75"></div>
-                                                        <!--end::Menu separator-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <div class="menu-content px-3 py-3">
-                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
-                                                                    Generate Reports
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-
-                                                    <!--begin::Menu 2-->
-
-                                                    <!--end::Menu 2-->
-
-                                                    <!--end::Menu-->
-                                                </div>
-                                                <!--end::Action-->
-                                            </div>
-                                            <!--end::Info-->
-
-                                            <!--begin::Customer-->
-                                            <div class="d-flex flex-stack">
-                                                <!--begin::Name-->
-                                                <span class="text-gray-400 fw-bold">To:
-                                                    <a href="../apps/ecommerce/sales/details.html"
-                                                        class="text-gray-800 text-hover-primary fw-bold">
-                                                        Jason Bourne </a>
-                                                </span>
-                                                <!--end::Name-->
-
-                                                <!--begin::Label-->
-                                                <span class="badge badge-light-success">Delivered</span>
-                                                <!--end::Label-->
-                                            </div>
-                                            <!--end::Customer-->
-                                        </div>
-                                    </div>
+                            <div class="overlay-layer card-rounded bg-dark bg-opacity-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
                                 </div>
                             </div>
                         </div>
+                        <div class="accordion accordion-icon-toggle" id="list-history">
+
+                        </div>
+                        {{-- <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
+                                <div class="timeline-icon symbol symbol-circle symbol-40px">
+                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
+                                        <i class="ki-duotone ki-check fs-2"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="pb-5 pe-3">
+                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
+                                            <!--begin::Info-->
+                                            <div class="d-flex flex-stack mb-3">
+                                                <!--begin::Wrapper-->
+                                                <div class="me-3">
+                                                    <!--begin::Icon-->
+                                                    <img src="../assets/media/stock/ecommerce/210.gif"
+                                                        class="w-50px ms-n1 me-1" alt="">
+                                                    <!--end::Icon-->
+
+                                                    <!--begin::Title-->
+                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
+                                                        1802</a>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Wrapper-->
+
+                                                <!--begin::Action-->
+                                                <div class="m-0">
+                                                    <!--begin::Menu-->
+                                                    <button
+                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
+                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
+                                                        data-kt-menu-overflow="true">
+
+                                                        <i class="ki-duotone ki-dots-square fs-1"><span
+                                                                class="path1"></span><span class="path2"></span><span
+                                                                class="path3"></span><span class="path4"></span></i>
+                                                    </button>
+                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
+                                                        data-kt-menu="true" style="">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
+                                                                Quick Actions</div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mb-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Ticket
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Customer
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
+                                                            data-kt-menu-placement="right-start">
+                                                            <!--begin::Menu item-->
+                                                            <a href="#" class="menu-link px-3">
+                                                                <span class="menu-title">New Group</span>
+                                                                <span class="menu-arrow"></span>
+                                                            </a>
+                                                            <!--end::Menu item-->
+
+                                                            <!--begin::Menu sub-->
+                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Admin Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Staff Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Member Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+                                                            </div>
+                                                            <!--end::Menu sub-->
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Contact
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mt-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content px-3 py-3">
+                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
+                                                                    Generate Reports
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+
+                                                    <!--begin::Menu 2-->
+
+                                                    <!--end::Menu 2-->
+
+                                                    <!--end::Menu-->
+                                                </div>
+                                                <!--end::Action-->
+                                            </div>
+                                            <!--end::Info-->
+
+                                            <!--begin::Customer-->
+                                            <div class="d-flex flex-stack">
+                                                <!--begin::Name-->
+                                                <span class="text-gray-400 fw-bold">To:
+                                                    <a href="../apps/ecommerce/sales/details.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">
+                                                        Jason Bourne </a>
+                                                </span>
+                                                <!--end::Name-->
+
+                                                <!--begin::Label-->
+                                                <span class="badge badge-light-success">Delivered</span>
+                                                <!--end::Label-->
+                                            </div>
+                                            <!--end::Customer-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
+                                <div class="timeline-icon symbol symbol-circle symbol-40px">
+                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
+                                        <i class="ki-duotone ki-check fs-2"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="pb-5 pe-3">
+                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
+                                            <!--begin::Info-->
+                                            <div class="d-flex flex-stack mb-3">
+                                                <!--begin::Wrapper-->
+                                                <div class="me-3">
+                                                    <!--begin::Icon-->
+                                                    <img src="../assets/media/stock/ecommerce/210.gif"
+                                                        class="w-50px ms-n1 me-1" alt="">
+                                                    <!--end::Icon-->
+
+                                                    <!--begin::Title-->
+                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
+                                                        1802</a>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Wrapper-->
+
+                                                <!--begin::Action-->
+                                                <div class="m-0">
+                                                    <!--begin::Menu-->
+                                                    <button
+                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
+                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
+                                                        data-kt-menu-overflow="true">
+
+                                                        <i class="ki-duotone ki-dots-square fs-1"><span
+                                                                class="path1"></span><span class="path2"></span><span
+                                                                class="path3"></span><span class="path4"></span></i>
+                                                    </button>
+                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
+                                                        data-kt-menu="true" style="">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
+                                                                Quick Actions</div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mb-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Ticket
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Customer
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
+                                                            data-kt-menu-placement="right-start">
+                                                            <!--begin::Menu item-->
+                                                            <a href="#" class="menu-link px-3">
+                                                                <span class="menu-title">New Group</span>
+                                                                <span class="menu-arrow"></span>
+                                                            </a>
+                                                            <!--end::Menu item-->
+
+                                                            <!--begin::Menu sub-->
+                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Admin Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Staff Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Member Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+                                                            </div>
+                                                            <!--end::Menu sub-->
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Contact
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mt-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content px-3 py-3">
+                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
+                                                                    Generate Reports
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+
+                                                    <!--begin::Menu 2-->
+
+                                                    <!--end::Menu 2-->
+
+                                                    <!--end::Menu-->
+                                                </div>
+                                                <!--end::Action-->
+                                            </div>
+                                            <!--end::Info-->
+
+                                            <!--begin::Customer-->
+                                            <div class="d-flex flex-stack">
+                                                <!--begin::Name-->
+                                                <span class="text-gray-400 fw-bold">To:
+                                                    <a href="../apps/ecommerce/sales/details.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">
+                                                        Jason Bourne </a>
+                                                </span>
+                                                <!--end::Name-->
+
+                                                <!--begin::Label-->
+                                                <span class="badge badge-light-success">Delivered</span>
+                                                <!--end::Label-->
+                                            </div>
+                                            <!--end::Customer-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
+                                <div class="timeline-icon symbol symbol-circle symbol-40px">
+                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
+                                        <i class="ki-duotone ki-check fs-2"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="pb-5 pe-3">
+                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
+                                            <!--begin::Info-->
+                                            <div class="d-flex flex-stack mb-3">
+                                                <!--begin::Wrapper-->
+                                                <div class="me-3">
+                                                    <!--begin::Icon-->
+                                                    <img src="../assets/media/stock/ecommerce/210.gif"
+                                                        class="w-50px ms-n1 me-1" alt="">
+                                                    <!--end::Icon-->
+
+                                                    <!--begin::Title-->
+                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
+                                                        1802</a>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Wrapper-->
+
+                                                <!--begin::Action-->
+                                                <div class="m-0">
+                                                    <!--begin::Menu-->
+                                                    <button
+                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
+                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
+                                                        data-kt-menu-overflow="true">
+
+                                                        <i class="ki-duotone ki-dots-square fs-1"><span
+                                                                class="path1"></span><span class="path2"></span><span
+                                                                class="path3"></span><span class="path4"></span></i>
+                                                    </button>
+                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
+                                                        data-kt-menu="true" style="">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
+                                                                Quick Actions</div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mb-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Ticket
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Customer
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
+                                                            data-kt-menu-placement="right-start">
+                                                            <!--begin::Menu item-->
+                                                            <a href="#" class="menu-link px-3">
+                                                                <span class="menu-title">New Group</span>
+                                                                <span class="menu-arrow"></span>
+                                                            </a>
+                                                            <!--end::Menu item-->
+
+                                                            <!--begin::Menu sub-->
+                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Admin Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Staff Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Member Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+                                                            </div>
+                                                            <!--end::Menu sub-->
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Contact
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mt-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content px-3 py-3">
+                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
+                                                                    Generate Reports
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+
+                                                    <!--begin::Menu 2-->
+
+                                                    <!--end::Menu 2-->
+
+                                                    <!--end::Menu-->
+                                                </div>
+                                                <!--end::Action-->
+                                            </div>
+                                            <!--end::Info-->
+
+                                            <!--begin::Customer-->
+                                            <div class="d-flex flex-stack">
+                                                <!--begin::Name-->
+                                                <span class="text-gray-400 fw-bold">To:
+                                                    <a href="../apps/ecommerce/sales/details.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">
+                                                        Jason Bourne </a>
+                                                </span>
+                                                <!--end::Name-->
+
+                                                <!--begin::Label-->
+                                                <span class="badge badge-light-success">Delivered</span>
+                                                <!--end::Label-->
+                                            </div>
+                                            <!--end::Customer-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-line w-40px" style="border-left-color: var(--bs-gray-400);"></div>
+                                <div class="timeline-icon symbol symbol-circle symbol-40px">
+                                    <div class="symbol-label" style="background-color: var(--bs-gray-200) !important;">
+                                        <i class="ki-duotone ki-check fs-2"></i>
+                                    </div>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="pb-5 pe-3">
+                                        <div class="border border-dashed border-gray-300 rounded px-7 py-3">
+                                            <!--begin::Info-->
+                                            <div class="d-flex flex-stack mb-3">
+                                                <!--begin::Wrapper-->
+                                                <div class="me-3">
+                                                    <!--begin::Icon-->
+                                                    <img src="../assets/media/stock/ecommerce/210.gif"
+                                                        class="w-50px ms-n1 me-1" alt="">
+                                                    <!--end::Icon-->
+
+                                                    <!--begin::Title-->
+                                                    <a href="../apps/ecommerce/catalog/edit-product.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">Elephant
+                                                        1802</a>
+                                                    <!--end::Title-->
+                                                </div>
+                                                <!--end::Wrapper-->
+
+                                                <!--begin::Action-->
+                                                <div class="m-0">
+                                                    <!--begin::Menu-->
+                                                    <button
+                                                        class="btn btn-icon btn-color-gray-400 btn-active-color-primary justify-content-end"
+                                                        data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end"
+                                                        data-kt-menu-overflow="true">
+
+                                                        <i class="ki-duotone ki-dots-square fs-1"><span
+                                                                class="path1"></span><span class="path2"></span><span
+                                                                class="path3"></span><span class="path4"></span></i>
+                                                    </button>
+                                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
+                                                        data-kt-menu="true" style="">
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content fs-6 text-dark fw-bold px-3 py-4">
+                                                                Quick Actions</div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mb-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Ticket
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Customer
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3" data-kt-menu-trigger="hover"
+                                                            data-kt-menu-placement="right-start">
+                                                            <!--begin::Menu item-->
+                                                            <a href="#" class="menu-link px-3">
+                                                                <span class="menu-title">New Group</span>
+                                                                <span class="menu-arrow"></span>
+                                                            </a>
+                                                            <!--end::Menu item-->
+
+                                                            <!--begin::Menu sub-->
+                                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Admin Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Staff Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+
+                                                                <!--begin::Menu item-->
+                                                                <div class="menu-item px-3">
+                                                                    <a href="#" class="menu-link px-3">
+                                                                        Member Group
+                                                                    </a>
+                                                                </div>
+                                                                <!--end::Menu item-->
+                                                            </div>
+                                                            <!--end::Menu sub-->
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <a href="#" class="menu-link px-3">
+                                                                New Contact
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Menu item-->
+
+                                                        <!--begin::Menu separator-->
+                                                        <div class="separator mt-3 opacity-75"></div>
+                                                        <!--end::Menu separator-->
+
+                                                        <!--begin::Menu item-->
+                                                        <div class="menu-item px-3">
+                                                            <div class="menu-content px-3 py-3">
+                                                                <a class="btn btn-primary  btn-sm px-4" href="#">
+                                                                    Generate Reports
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::Menu item-->
+                                                    </div>
+
+                                                    <!--begin::Menu 2-->
+
+                                                    <!--end::Menu 2-->
+
+                                                    <!--end::Menu-->
+                                                </div>
+                                                <!--end::Action-->
+                                            </div>
+                                            <!--end::Info-->
+
+                                            <!--begin::Customer-->
+                                            <div class="d-flex flex-stack">
+                                                <!--begin::Name-->
+                                                <span class="text-gray-400 fw-bold">To:
+                                                    <a href="../apps/ecommerce/sales/details.html"
+                                                        class="text-gray-800 text-hover-primary fw-bold">
+                                                        Jason Bourne </a>
+                                                </span>
+                                                <!--end::Name-->
+
+                                                <!--begin::Label-->
+                                                <span class="badge badge-light-success">Delivered</span>
+                                                <!--end::Label-->
+                                            </div>
+                                            <!--end::Customer-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -725,5 +738,6 @@
 
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
     <script src="{{ asset('assets/js/pages/transfer/history/index.js') }}"></script>
 @endpush

@@ -311,9 +311,9 @@ class AssetService
     {
         return Asset::query()->with(['assetUnit.unit', 'employee'])
             ->withWhereHas('transfers', function ($query) {
-                $query->whereHas('statusTransfer', function ($query) {
+                $query->with(['oldPic', 'newPic'])->whereHas('statusTransfer', function ($query) {
                     $query->where('status', TransferStatus::RECEIVED);
-                });
+                })->latest();
             })->findOrFail($id);
     }
 }

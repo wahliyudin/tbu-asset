@@ -40,10 +40,20 @@ class HistoryController extends Controller
             ->make();
     }
 
-    public function show($id)
+    public function detail($id)
     {
         return view('transfers.history.show', [
             'asset' => $this->assetService->assetWithTransferById($id)
         ]);
+    }
+
+    public function show($id)
+    {
+        try {
+            $asset = $this->assetService->assetWithTransferById($id);
+            return response()->json($asset->transfers);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

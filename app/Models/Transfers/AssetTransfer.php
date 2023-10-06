@@ -7,6 +7,7 @@ use App\Enums\Transfers\Transfer\Status;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status as WorkflowsStatus;
 use App\Models\Assets\Asset;
+use App\Models\Employee;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -80,5 +81,15 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
     public function statusTransfers()
     {
         return $this->hasMany(StatusTransfer::class);
+    }
+
+    public function oldPic()
+    {
+        return $this->belongsTo(Employee::class, 'old_pic', 'nik');
+    }
+
+    public function newPic()
+    {
+        return $this->belongsTo(Employee::class, 'new_pic', 'nik');
     }
 }
