@@ -51,7 +51,7 @@ class ApprovalTransferController extends Controller
     public function show(AssetTransfer $assetTransfer)
     {
         $isCurrentWorkflow = TransferWorkflowService::setModel($assetTransfer)->isCurrentWorkflow();
-        $assetTransfer->load(['asset.unit', 'asset.leasing', 'workflows' => function ($query) {
+        $assetTransfer->load(['asset.assetUnit.unit', 'asset.leasing', 'workflows' => function ($query) {
             $query->orderBy('sequence', 'ASC');
         }]);
         return view('approvals.transfer.show', [

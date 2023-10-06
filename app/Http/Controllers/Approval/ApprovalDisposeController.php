@@ -53,7 +53,7 @@ class ApprovalDisposeController extends Controller
     public function show(AssetDispose $assetDispose)
     {
         $isCurrentWorkflow = DisposeWorkflowService::setModel($assetDispose)->isCurrentWorkflow();
-        $assetDispose->load(['asset.unit', 'workflows' => function ($query) {
+        $assetDispose->load(['asset.assetUnit.unit', 'workflows' => function ($query) {
             $query->orderBy('sequence', 'ASC');
         }]);
         $data = AssetDisposeData::from($assetDispose);

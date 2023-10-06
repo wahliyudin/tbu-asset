@@ -84,7 +84,7 @@ class DisposeController extends Controller
 
     public function show(AssetDispose $assetDispose)
     {
-        $assetDispose->load(['asset.unit', 'workflows' => function ($query) {
+        $assetDispose->load(['asset.assetUnit.unit', 'workflows' => function ($query) {
             $query->orderBy('sequence', 'ASC');
         }]);
         $data = AssetDisposeData::from($assetDispose);
@@ -116,7 +116,7 @@ class DisposeController extends Controller
     public function edit(AssetDispose $assetDispose)
     {
         try {
-            $assetDispose->loadMissing(['asset.unit']);
+            $assetDispose->loadMissing(['asset.assetUnit.unit']);
             $data = AssetDisposeData::from($assetDispose);
             return view('disposes.dispose.edit', [
                 'assetDispose' => $data,
