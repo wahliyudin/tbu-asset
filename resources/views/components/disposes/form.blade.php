@@ -158,10 +158,30 @@
         </div>
     </div>
     @if ($type != 'show')
-        <div class="d-flex justify-content-end mt-4">
-            <button type="button" class="btn btn-primary simpan-form-dispose">
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="button" class="btn btn-warning simpan-draft-form-dispose ps-4">
                 <span class="indicator-label">
-                    Simpan
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="ki-duotone ki-archive-tick fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                        <span>Simpan Draft</span>
+                    </div>
+                </span>
+                <span class="indicator-progress">
+                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+            </button>
+            <button type="button" class="btn btn-primary simpan-form-dispose ps-4">
+                <span class="indicator-label">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="ki-duotone ki-save-2 fs-2">
+                            <i class="path1"></i>
+                            <i class="path2"></i>
+                        </i>
+                        <span>Submit</span>
+                    </div>
                 </span>
                 <span class="indicator-progress">
                     Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>

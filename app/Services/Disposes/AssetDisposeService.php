@@ -27,15 +27,22 @@ class AssetDisposeService
         return AssetDisposeData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', auth()->user()?->nik);
     }
 
-    public function updateOrCreate(AssetDisposeRequest $request)
+    public function updateOrCreate(AssetDisposeRequest $request, $isDraft = false)
     {
-        $data = AssetDisposeData::from(array_merge($request->all(), ['status' => Status::OPEN]))->except('employee');
-        DB::transaction(function () use ($data) {
+        $additional = ['status' => Status::OPEN];
+        if ($isDraft) {
+            $additional['status'] = Status::DRAFT;
+        }
+        $data = AssetDisposeData::from(array_merge($request->all(), $additional))
+            ->except('employee');
+        DB::transaction(function () use ($data, $isDraft) {
             $assetDispose = (new AssetDisposeRepository)->updateOrCreate($data);
             if ($data->getKey()) {
                 $assetDispose->workflows()->delete();
             }
-            DisposeWorkflowService::setModel($assetDispose)->store();
+            if ($isDraft) {
+                DisposeWorkflowService::setModel($assetDispose)->store();
+            }
             $this->assetDisposeRepository->sendToElasticsearch($assetDispose, $data->getKey());
         });
     }

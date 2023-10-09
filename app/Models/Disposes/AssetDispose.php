@@ -34,7 +34,7 @@ class AssetDispose extends Model implements ModelThatHaveWorkflow, Elasticsearch
 
     public function indexName(): string
     {
-        return 'tbu_asset_transfers';
+        return 'tbu_asset_disposes';
     }
 
     protected $casts = [

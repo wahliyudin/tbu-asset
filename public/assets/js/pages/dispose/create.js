@@ -134,6 +134,45 @@ var KTModalAdd = function () {
                 }
             });
         });
+        $(`.form-dispose`).on('click', `.simpan-draft-form-dispose`, function (e) {
+            e.preventDefault();
+            var postData = new FormData($(`.form-dispose`)[0]);
+            $(`.simpan-draft-form-dispose`).attr("data-kt-indicator", "on");
+            $.ajax({
+                type: 'POST',
+                url: "/asset-disposes/store",
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function (response) {
+                    $(`.simpan-draft-form-dispose`).removeAttr("data-kt-indicator");
+                    Swal.fire(
+                        'Success!',
+                        response.message,
+                        'success'
+                    ).then(function () {
+                        window.location.href = "/asset-disposes";
+                    });
+                },
+                error: function (jqXHR, xhr, textStatus, errorThrow, exception) {
+                    $(`.simpan-draft-form-dispose`).removeAttr("data-kt-indicator");
+                    if (jqXHR.status == 422) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Peringatan!',
+                            text: JSON.parse(jqXHR.responseText)
+                                .message,
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: jqXHR.responseText,
+                        })
+                    }
+                }
+            });
+        });
     }
 
     function numberFromString(s) {
