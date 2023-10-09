@@ -40,7 +40,7 @@ class AssetDisposeService
             if ($data->getKey()) {
                 $assetDispose->workflows()->delete();
             }
-            if ($isDraft) {
+            if (!$isDraft) {
                 DisposeWorkflowService::setModel($assetDispose)->store();
             }
             $this->assetDisposeRepository->sendToElasticsearch($assetDispose, $data->getKey());

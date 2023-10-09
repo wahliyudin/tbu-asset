@@ -140,7 +140,7 @@ var KTModalAdd = function () {
             $(`.simpan-draft-form-dispose`).attr("data-kt-indicator", "on");
             $.ajax({
                 type: 'POST',
-                url: "/asset-disposes/store",
+                url: "/asset-disposes/store/draft",
                 processData: false,
                 contentType: false,
                 data: postData,

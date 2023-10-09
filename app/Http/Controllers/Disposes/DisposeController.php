@@ -113,6 +113,18 @@ class DisposeController extends Controller
         }
     }
 
+    public function storeDraft(AssetDisposeRequest $request)
+    {
+        try {
+            $this->service->updateOrCreate($request, true);
+            return response()->json([
+                'message' => 'Berhasil disimpan'
+            ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function edit(AssetDispose $assetDispose)
     {
         try {
