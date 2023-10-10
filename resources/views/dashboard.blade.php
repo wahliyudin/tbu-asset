@@ -52,6 +52,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" name="user" value="{{ auth()->user()?->id }}">
     </div>
 @endsection
 
@@ -62,5 +63,6 @@
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    @vite('resources/js/app.js')
     <script src="{{ asset('assets/js/pages/home/index.js') }}"></script>
 @endpush

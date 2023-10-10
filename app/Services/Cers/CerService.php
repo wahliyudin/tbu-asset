@@ -32,8 +32,10 @@ class CerService
 
     public function all($search = null)
     {
-        $data = Elasticsearch::setModel(Cer::class)->searchMultiMatch($search, 50)->all();
-        return CerData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', AuthHelper::getNik());
+        $data = Elasticsearch::setModel(Cer::class)->searchMultipleQuery($search, terms: [
+            "nik" => AuthHelper::getNik()
+        ])->all();
+        return CerData::collection(Arr::pluck($data, '_source'))->toCollection();
     }
 
     public function updateOrCreate(CerRequest $request, bool $isDraft = false)

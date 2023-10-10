@@ -223,10 +223,30 @@ var KTGeneralAmCharts = function () {
         });
     }
 
+    var initPusher = () => {
+        var user = $('input[name="user"]').val();
+        var privateChannel = window.Echo.private(`test-channel.${user}`);
+        privateChannel.subscribed(function () {
+            console.log('subcribed!!');
+        }).listen(`.test-private`, (response) => {
+            console.log(response);
+        });
+
+        var joinChannel = window.Echo.join(`test-presence-channel`);
+        joinChannel.subscribed(function () {
+            console.log('joined!!');
+        }).here(function (users) {
+            console.log(users);
+        }).listen(`.test-presence`, (response) => {
+            console.log(response);
+        });
+    }
+
     return {
         init: function () {
             initData();
             demo3();
+            initPusher();
         }
     };
 }();
