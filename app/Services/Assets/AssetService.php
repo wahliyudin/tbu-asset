@@ -17,7 +17,9 @@ use App\Facades\Masters\Unit\UnitService;
 use App\Facades\Masters\Uom\UomService;
 use App\Helpers\Helper;
 use App\Http\Requests\Assets\AssetRequest;
+use App\Jobs\Assets\BulkCompleted;
 use App\Jobs\Assets\BulkJob;
+use App\Jobs\Assets\ImportCompleted;
 use App\Jobs\Assets\ImportJob;
 use App\Jobs\Masters\Category\BulkJob as CategoryBulkJob;
 use App\Jobs\Masters\Cluster\BulkJob as ClusterBulkJob;
@@ -31,6 +33,7 @@ use App\Models\Masters\Unit;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
+use Illuminate\Bus\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
@@ -192,6 +195,7 @@ class AssetService
         foreach (array_chunk($data, 10) as $assets) {
             $batch->add(new ImportJob($assets));
         }
+        dispatch(new ImportCompleted($batch->id));
         return $batch;
     }
 
@@ -208,6 +212,7 @@ class AssetService
         $batch = SubClusterService::instanceBulk($batch);
         $batch = UnitService::instanceBulk($batch);
         $batch = UomService::instanceBulk($batch);
+        dispatch(new BulkCompleted($batch->id));
         return $batch;
     }
 

@@ -985,12 +985,43 @@ var AssetsList = function () {
         }
     }
 
-    // var initEvent = () => {
-    //     window.Echo.channel('coba-channel')
-    //         .listen('.import-event', (e) => {
-    //             toast(e.status, e.title, e.message);
-    //         });
-    // }
+    var initEvent = () => {
+        $('.btn-sync-progress').click(function (e) {
+            e.preventDefault();
+            $(this).attr('disabled', true);
+            bulkProcess();
+        });
+        $('.btn-close-progress').click(function (e) {
+            e.preventDefault();
+            $('.notif-progress-line').width('0%');
+            $('.notif-progress-line').text('0%');
+            $('.notif-progress').addClass('d-none');
+        });
+        var echo = window.Echo.channel('progress-channel');
+        var user = $('input[name="user"]').val();
+        echo.listen(`.progress.assets.import`, (response) => {
+            if ($('.notif-progress').hasClass('d-none')) {
+                $('.notif-progress').removeClass('d-none');
+            }
+            if (response.processedJobs + response.failedJobs == response.totalJobs) {
+                $('.btn-sync-progress').attr('disabled', false);
+            } else {
+                $('.btn-sync-progress').attr('disabled', true);
+            }
+            $('.notif-progress #title').text('Uploading...');
+            $('.notif-progress-line').width(response.progress + '%');
+            $('.notif-progress-line').text(response.progress + '%');
+            $('.notif-progress #desc').text(`Success: ${response.processedJobs}, Failed: ${response.failedJobs}, From: ${response.totalJobs}`);
+        }).listen(`.progress.assets.bulk`, (response) => {
+            if ($('.notif-progress').hasClass('d-none')) {
+                $('.notif-progress').removeClass('d-none');
+            }
+            $('.notif-progress #title').text('Synchronize...');
+            $('.notif-progress-line').width(response.progress + '%');
+            $('.notif-progress-line').text(response.progress + '%');
+            $('.notif-progress #desc').text(`Success: ${response.processedJobs}, Failed: ${response.failedJobs}, From: ${response.totalJobs}`);
+        });
+    }
 
     return {
         init: function () {
@@ -1028,7 +1059,8 @@ var AssetsList = function () {
                 $('.modal-backdrop').remove(); // Menghapus backdrop secara manual
             });
 
-            initInterval();
+            // initInterval();
+            initEvent();
         }
     }
 }();

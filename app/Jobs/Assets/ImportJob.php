@@ -21,6 +21,7 @@ use App\Services\Masters\LifetimeService;
 use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
+use App\Websockets\PusherBrodcast;
 use Carbon\Carbon;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -29,6 +30,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Log;
 
 class ImportJob implements ShouldQueue
@@ -172,5 +174,7 @@ class ImportJob implements ShouldQueue
                 }
             }
         }
+        $batch = Bus::findBatch($this->batchId);
+        PusherBrodcast::send('progress-channel', 'progress.assets.import', $batch->toArray());
     }
 }

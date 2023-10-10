@@ -14,6 +14,7 @@ use App\Services\Masters\SubClusterService;
 use App\Services\Masters\UnitService;
 use App\Services\Masters\UomService;
 use App\Services\Transfers\AssetTransferService;
+use App\Websockets\Pusher\PusherBrodcast;
 use Illuminate\Support\ServiceProvider;
 
 class FacadeServiceProvider extends ServiceProvider
@@ -24,6 +25,7 @@ class FacadeServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind('elasticsearch', Elasticsearch::class);
+        $this->app->bind('pusher_websocket', PusherBrodcast::class);
         $this->app->bind('asset_service', AssetService::class);
         $this->app->bind('category_service', CategoryService::class);
         $this->app->bind('cluster_service', ClusterService::class);

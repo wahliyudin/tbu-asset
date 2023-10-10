@@ -3,6 +3,7 @@
 namespace App\Jobs\Assets;
 
 use App\Services\Assets\AssetService;
+use App\Websockets\PusherBrodcast;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -10,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Bus;
 
 class BulkJob implements ShouldQueue
 {
@@ -30,5 +32,8 @@ class BulkJob implements ShouldQueue
     {
         // leasing, uom, unit, sub cluster, cluster, category
         AssetService::bulk($this->assets);
+
+        $batch = Bus::findBatch($this->batchId);
+        PusherBrodcast::send('progress-channel', 'progress.assets.bulk', $batch->toArray());
     }
 }
