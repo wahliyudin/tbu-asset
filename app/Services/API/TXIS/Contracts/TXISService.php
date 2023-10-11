@@ -27,4 +27,11 @@ abstract class TXISService implements APIInterface
             'Accept' => 'application/json'
         ])->get($url, $query);
     }
+
+    protected function post($url, $data = [])
+    {
+        return Http::withHeaders([
+            'Accept' => 'application/json'
+        ])->post($url, $data);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\API\TXIS;
 
+use App\DataTransferObjects\API\TXIS\BudgetTransferData;
 use App\Services\API\TXIS\Contracts\TXISService;
 
 class BudgetService extends TXISService
@@ -26,5 +27,10 @@ class BudgetService extends TXISService
         return $this->get($this->url(self::SECOND_PREFIX), [
             'budgetcode' => $code
         ])->json();
+    }
+
+    public function sendTransfer(BudgetTransferData $data)
+    {
+        return $this->post($this->url('/transferbudget'), $data->toArray());
     }
 }

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Elasticsearch\Elasticsearch;
 use App\Elasticsearch\ElasticsearchBuilder;
 use App\Repositories\Transfers\AssetTransferRepository;
+use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
 use App\Services\HRIS\EmployeeService;
 use App\Services\Masters\CategoryService;
@@ -36,6 +37,7 @@ class FacadeServiceProvider extends ServiceProvider
         $this->app->bind('employee_service', EmployeeService::class);
         $this->app->bind('asset_transfer_service', AssetTransferService::class);
         $this->app->bind('asset_transfer_repository', AssetTransferRepository::class);
+        $this->app->bind('txis_budget_service', BudgetService::class);
     }
 
     /**
