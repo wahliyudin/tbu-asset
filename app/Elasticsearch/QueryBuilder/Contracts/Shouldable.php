@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Elasticsearch\Builder\Contracts;
+namespace App\Elasticsearch\QueryBuilder\Contracts;
 
 interface Shouldable extends Parentable
 {

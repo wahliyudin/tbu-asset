@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Elasticsearch\Builder;
+namespace App\Elasticsearch\QueryBuilder;
 
-use App\Elasticsearch\Builder\Contracts\Nestedable;
-use App\Elasticsearch\Builder\Contracts\Queryable;
-use App\Elasticsearch\Builder\Traits\QueryTrait;
+use App\Elasticsearch\QueryBuilder\Contracts\Nestedable;
+use App\Elasticsearch\QueryBuilder\Contracts\Queryable;
+use App\Elasticsearch\QueryBuilder\Traits\QueryTrait;
 
 class Nested extends QueryParent implements Queryable
 {

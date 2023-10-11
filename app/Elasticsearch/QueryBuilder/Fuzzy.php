@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Elasticsearch\Builder;
+namespace App\Elasticsearch\QueryBuilder;
 
-use App\Elasticsearch\Builder\Contracts\Shouldable;
-use App\Elasticsearch\Builder\Traits\QueryTrait;
+use App\Elasticsearch\QueryBuilder\Contracts\Shouldable;
+use App\Elasticsearch\QueryBuilder\Traits\QueryTrait;
 
 class Fuzzy implements Shouldable
 {

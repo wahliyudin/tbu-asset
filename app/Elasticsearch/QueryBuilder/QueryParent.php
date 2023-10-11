@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Elasticsearch\Builder;
+namespace App\Elasticsearch\QueryBuilder;
 
-use App\Elasticsearch\Builder\Contracts\Parentable;
+use App\Elasticsearch\QueryBuilder\Contracts\Parentable;
 
 class QueryParent
 {

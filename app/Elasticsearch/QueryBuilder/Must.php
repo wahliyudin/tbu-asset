@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Elasticsearch\Builder;
+namespace App\Elasticsearch\QueryBuilder;
 
-use App\Elasticsearch\Builder\Contracts\Mustable;
-use App\Elasticsearch\Builder\Contracts\Boolable;
-use App\Elasticsearch\Builder\Traits\QueryTrait;
+use App\Elasticsearch\QueryBuilder\Contracts\Mustable;
+use App\Elasticsearch\QueryBuilder\Contracts\Boolable;
+use App\Elasticsearch\QueryBuilder\Traits\QueryTrait;
 
 class Must extends QueryParent implements Boolable
 {

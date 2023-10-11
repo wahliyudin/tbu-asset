@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Elasticsearch\Builder;
+namespace App\Elasticsearch\QueryBuilder;
 
-use App\Elasticsearch\Builder\Contracts\Filterable;
-use App\Elasticsearch\Builder\Contracts\Queryable;
-use App\Elasticsearch\Builder\Traits\QueryTrait;
+use App\Elasticsearch\QueryBuilder\Contracts\Filterable;
+use App\Elasticsearch\QueryBuilder\Contracts\Queryable;
+use App\Elasticsearch\QueryBuilder\Traits\QueryTrait;
 
 class Filter extends QueryParent implements Queryable
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Elasticsearch\Builder\Traits;
+namespace App\Elasticsearch\QueryBuilder\Traits;
 
 trait QueryTrait
 {

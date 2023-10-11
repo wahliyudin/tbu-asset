@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Elasticsearch\Builder;
+namespace App\Elasticsearch\QueryBuilder;
 
-use App\Elasticsearch\Builder\Contracts\MustNotable;
-use App\Elasticsearch\Builder\Traits\QueryTrait;
+use App\Elasticsearch\QueryBuilder\Contracts\MustNotable;
+use App\Elasticsearch\QueryBuilder\Traits\QueryTrait;
 
 class Term implements MustNotable
 {
