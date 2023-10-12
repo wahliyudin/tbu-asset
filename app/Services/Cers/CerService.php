@@ -3,6 +3,7 @@
 namespace App\Services\Cers;
 
 use App\DataTransferObjects\Cers\CerData;
+use App\Elasticsearch\QueryBuilder\Term;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
@@ -33,7 +34,7 @@ class CerService
     public function all($search = null)
     {
         $data = Elasticsearch::setModel(Cer::class)->searchMultipleQuery($search, terms: [
-            "nik" => AuthHelper::getNik()
+            new Term('nik', AuthHelper::getNik())
         ])->all();
         return CerData::collection(Arr::pluck($data, '_source'))->toCollection();
     }

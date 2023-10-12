@@ -6,6 +6,7 @@ use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Assets\AssetInsuranceData;
 use App\DataTransferObjects\Assets\AssetLeasingData;
 use App\DataTransferObjects\Assets\AssetUnitData;
+use App\Elasticsearch\QueryBuilder\Term;
 use App\Enums\Asset\Status;
 use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Facades\Elasticsearch;
@@ -284,19 +285,19 @@ class AssetService
         $terms = [];
         $search  = isset($request->search['value']) ? $request->search['value'] : null;
         if ($status = $request->status) {
-            $terms['status'] = $status;
+            $terms[] = new Term('status', $status);
         }
         if ($project = $request->project) {
-            $terms['asset_location'] = $project;
+            $terms[] = new Term('asset_location', $project);
         }
         if ($category = $request->category) {
-            $terms['sub_cluster.cluster.category_id'] = $category;
+            $terms[] = new Term('sub_cluster.cluster.category_id', $category);
         }
         if ($cluster = $request->cluster) {
-            $terms['sub_cluster.cluster_id'] = $cluster;
+            $terms[] = new Term('sub_cluster.cluster_id', $cluster);
         }
         if ($sub_cluster = $request->sub_cluster) {
-            $terms['sub_cluster_id'] = $sub_cluster;
+            $terms[] = new Term('sub_cluster_id', $sub_cluster);
         }
         return Elasticsearch::setModel(Asset::class)
             ->searchMultipleQuery($search, $matchs, $terms, 1000)->all();

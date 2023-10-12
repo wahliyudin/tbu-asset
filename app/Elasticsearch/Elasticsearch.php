@@ -27,8 +27,9 @@ class Elasticsearch extends ParamBuilder
 
     private string $key;
 
-    public function __construct()
-    {
+    public function __construct(
+        protected Builder $builder
+    ) {
         $this->clientBuilder = ClientBuilder::create()
             ->setHosts(config('database.connections.elasticsearch.hosts'))
             ->setBasicAuthentication(config('database.connections.elasticsearch.username'), config('database.connections.elasticsearch.password'))
@@ -52,21 +53,18 @@ class Elasticsearch extends ParamBuilder
         if (count(isset($params['body']) ? $params['body'] : []) <= 0) {
             return;
         }
-        return $params;
         $this->clientBuilder->bulk($params);
     }
 
     public function find($id)
     {
-        return $this->clientBuilder->get($this->setKey($id)->withId()->getParams());
+        return $this->clientBuilder->get($this->builder->buildFind($this->getIndex(), $id));
     }
 
     public function created(DataInterface $data = null)
     {
-        $this->setData($data);
-        return $this->withId()->setAttributes($this->data->toArray())->getParams();
         try {
-            $this->clientBuilder->index($this->withId()->setAttributes($this->data->toArray())->getParams());
+            $this->clientBuilder->index($this->builder->buildCreate($this->getIndex(), $data->getKey(), $data->toArray()));
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), in_array($th->getCode(), [500, 404, 422]) ? $th->getCode() : 500);
         }
@@ -75,10 +73,8 @@ class Elasticsearch extends ParamBuilder
 
     public function updated(DataInterface $data = null)
     {
-        $this->setData($data);
-        return $this->withId()->setDoc($this->data->toArray())->getParams();
         try {
-            $this->clientBuilder->update($this->withId()->setDoc($this->data->toArray())->getParams());
+            $this->clientBuilder->update($this->builder->buildUpdated($this->getIndex(), $data->toArray(), $data->getKey()));
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), in_array($th->getCode(), [500, 404, 422]) ? $th->getCode() : 500);
         }
@@ -87,10 +83,8 @@ class Elasticsearch extends ParamBuilder
 
     public function deleted(DataInterface $data = null)
     {
-        $this->setData($data);
-        return $this->withId()->getParams();
         try {
-            $this->clientBuilder->delete($this->withId()->getParams());
+            $this->clientBuilder->delete($this->builder->buildDeleted($this->getIndex(), $data->getKey()));
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), in_array($th->getCode(), [500, 404, 422]) ? $th->getCode() : 500);
         }
@@ -100,7 +94,7 @@ class Elasticsearch extends ParamBuilder
     public function cleared()
     {
         return DB::transaction(function () {
-            $this->clientBuilder->deleteByQuery($this->withoutType()->matchAll()->getParams());
+            $this->clientBuilder->deleteByQuery($this->builder->buildCleared($this->getIndex(),));
             $this->model->delete();
             return $this;
         });
@@ -108,10 +102,10 @@ class Elasticsearch extends ParamBuilder
 
     public function createIndex()
     {
-        if ($this->clientBuilder->indices()->exists($this->withoutType()->getParams())->asBool()) {
+        if ($this->clientBuilder->indices()->exists($this->builder->buildCheckIndex($this->getIndex(),))->asBool()) {
             return;
         }
-        $params = $this->numberOfShards(5)->numberOfReplicas(2)->withoutType()->getParams();
+        $params = $this->builder->buildCreateIndex($this->getIndex(), 5, 2);
         $this->clientBuilder->indices()->create($params);
         return $this;
     }
@@ -124,39 +118,19 @@ class Elasticsearch extends ParamBuilder
 
     public function searchQueryString($keyword = null, int $size = 10)
     {
-        $params = $this->withoutType()->size($size)->getParams();
-        if ($keyword) {
-            $params = array_merge($params, $this->queryString($keyword)->getParams());
-        }
-        return $params;
-        $this->response = $this->clientBuilder->search($params)->asObject();
+        $this->response = $this->clientBuilder->search($this->builder->buildSearchQueryString($this->getIndex(), $keyword, $size))->asObject();
         return $this;
     }
 
     public function searchMultiMatch($keyword = null, int $size = 10)
     {
-        $params = $this->withoutType()->size($size)->getParams();
-        if ($keyword) {
-            $params = array_merge($params, $this->multiMatch($keyword)->getParams());
-        }
-        $this->response = $this->clientBuilder->search($params)->asObject();
+        $this->response = $this->clientBuilder->search($this->builder->buildSearchMultiMatch($this->getIndex(), $keyword, $size))->asObject();
         return $this;
     }
 
     public function searchMultipleQuery($keyword = null, array $matchs = [], array $terms = [], int $size = 10)
     {
-        $params = $this->withoutType()->size($size);
-        foreach ($matchs as $key => $value) {
-            $params->match($key, $value);
-        }
-        foreach ($terms as $key => $value) {
-            $params->term($key, $value);
-        }
-        if ($keyword) {
-            $params->queryStringBool($keyword);
-        }
-
-        $this->response = $this->clientBuilder->search($params->getParams())->asObject();
+        $this->response = $this->clientBuilder->search($this->builder->buildSearchMultipleQuery($this->getIndex(), $keyword, $matchs, $terms, $size))->asObject();
         return $this;
     }
 
