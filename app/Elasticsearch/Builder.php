@@ -14,14 +14,15 @@ use App\Elasticsearch\QueryBuilder\Query;
 use App\Elasticsearch\QueryBuilder\QueryBool;
 use App\Elasticsearch\QueryBuilder\QueryMatch;
 use App\Elasticsearch\QueryBuilder\QueryString;
+use App\Elasticsearch\QueryBuilder\Range;
 use App\Elasticsearch\QueryBuilder\Term;
 
-class Builder
+trait Builder
 {
-    public function buildCreate(string $index, $id, array $data)
+    public function buildCreate($id, array $data)
     {
         $parent = new Build(
-            new Index($index, $id, type: '_doc'),
+            new Index($this->index, $id, type: '_doc'),
             new Body(
                 new Document($data)
             )
@@ -29,10 +30,10 @@ class Builder
         return $parent->build();
     }
 
-    public function buildUpdated(string $index, array $data, $id)
+    public function buildUpdated(array $data, $id)
     {
         $parent = new Build(
-            new Index($index, $id, '_doc'),
+            new Index($this->index, $id, '_doc'),
             new Body(
                 new Document($data, true)
             )
@@ -40,34 +41,34 @@ class Builder
         return $parent->build();
     }
 
-    public function buildDeleted(string $index, $id)
+    public function buildDeleted($id)
     {
         $parent = new Build(
-            new Index($index, $id, '_doc')
+            new Index($this->index, $id, '_doc')
         );
         return $parent->build();
     }
 
-    public function buildCheckIndex(string $index,)
+    public function buildCheckIndex()
     {
         $parent = new Build(
-            new Index($index)
+            new Index($this->index)
         );
         return $parent->build();
     }
 
-    public function buildFind(string $index, $id)
+    public function buildFind($id)
     {
         $parent = new Build(
-            new Index($index, $id, '_doc')
+            new Index($this->index, $id, '_doc')
         );
         return $parent->build();
     }
 
-    public function buildCreateIndex(string $index, int $number_of_shards, int $number_of_replicas)
+    public function buildCreateIndex(int $number_of_shards, int $number_of_replicas)
     {
         $parent = new Build(
-            new Index($index),
+            new Index($this->index),
             new Body(
                 new Settings($number_of_shards, $number_of_replicas)
             )
@@ -75,10 +76,10 @@ class Builder
         return $parent->build();
     }
 
-    public function buildCleared(string $index,)
+    public function buildCleared()
     {
         $parent = new Build(
-            new Index($index),
+            new Index($this->index),
             new Body(
                 new Query(
                     new MatchAll()
@@ -88,7 +89,7 @@ class Builder
         return $parent->build();
     }
 
-    public function buildSearchMultiMatch(string $index, $keyword, $size)
+    public function buildSearchMultiMatch($keyword, $size)
     {
         $query = [];
         if ($keyword) {
@@ -97,20 +98,20 @@ class Builder
             );
         }
         $parent = new Build(
-            new Index($index),
+            new Index($this->index),
             (new Body(...$query))->size($size)
         );
         return $parent->build();
     }
 
-    public function buildSearchQueryString(string $index, $keyword, $size)
+    public function buildSearchQueryString($keyword, $size)
     {
         $query = [];
         if ($keyword) {
             $query[] = new QueryString($keyword);
         }
         $parent = new Build(
-            new Index($index),
+            new Index($this->index),
             (new Body(
                 new Query(
                     ...$query
@@ -128,14 +129,14 @@ class Builder
      *
      * @return array
      */
-    public function buildSearchMultipleQuery(string $index, string $keyword = null, array $matchs = [], array $terms = [], int $size = 10)
+    public function buildSearchMultipleQuery(string $keyword = null, array $matchs = [], array $terms = [], int $size = 10)
     {
         $query = [];
         if ($keyword) {
             $query[] = new QueryString($keyword);
         }
         $parent = new Build(
-            new Index($index),
+            new Index($this->index),
             (new Body(
                 new Query(
                     new QueryBool(
@@ -151,16 +152,29 @@ class Builder
         return $parent->build();
     }
 
-    public function buildBulk(string $index, array $documents)
+    public function buildBulk(array $documents)
     {
         $childs = [];
         foreach ($documents as $key => $document) {
-            $childs[] = new Index($index, $key, isMultiple: true);
+            $childs[] = new Index($this->index, $key, isMultiple: true);
             $childs[] = new Document($document);
         }
         $parent = new Body(
             ...$childs
         );
         return $parent->build();
+    }
+
+    public function buildSearchBetween(string $field, $gte, $lte, int $size)
+    {
+        $query = new Build(
+            new Index($this->index),
+            (new Body(
+                new Query(
+                    new Range($field, $gte, $lte)
+                )
+            ))->size($size)
+        );
+        return $query->build();
     }
 }
