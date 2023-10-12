@@ -52,6 +52,7 @@ class Elasticsearch extends ParamBuilder
         if (count(isset($params['body']) ? $params['body'] : []) <= 0) {
             return;
         }
+        return $params;
         $this->clientBuilder->bulk($params);
     }
 
@@ -63,6 +64,7 @@ class Elasticsearch extends ParamBuilder
     public function created(DataInterface $data = null)
     {
         $this->setData($data);
+        return $this->withId()->setAttributes($this->data->toArray())->getParams();
         try {
             $this->clientBuilder->index($this->withId()->setAttributes($this->data->toArray())->getParams());
         } catch (\Throwable $th) {
@@ -74,6 +76,7 @@ class Elasticsearch extends ParamBuilder
     public function updated(DataInterface $data = null)
     {
         $this->setData($data);
+        return $this->withId()->setDoc($this->data->toArray())->getParams();
         try {
             $this->clientBuilder->update($this->withId()->setDoc($this->data->toArray())->getParams());
         } catch (\Throwable $th) {
@@ -85,6 +88,7 @@ class Elasticsearch extends ParamBuilder
     public function deleted(DataInterface $data = null)
     {
         $this->setData($data);
+        return $this->withId()->getParams();
         try {
             $this->clientBuilder->delete($this->withId()->getParams());
         } catch (\Throwable $th) {
@@ -124,6 +128,7 @@ class Elasticsearch extends ParamBuilder
         if ($keyword) {
             $params = array_merge($params, $this->queryString($keyword)->getParams());
         }
+        return $params;
         $this->response = $this->clientBuilder->search($params)->asObject();
         return $this;
     }

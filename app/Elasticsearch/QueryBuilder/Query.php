@@ -2,11 +2,12 @@
 
 namespace App\Elasticsearch\QueryBuilder;
 
+use App\Elasticsearch\BodyBuilder\Contracts\Bodyable;
 use App\Elasticsearch\QueryBuilder\Contracts\Nestedable;
 use App\Elasticsearch\QueryBuilder\Contracts\Queryable;
 use App\Elasticsearch\QueryBuilder\Traits\QueryTrait;
 
-class Query extends QueryParent implements Nestedable
+class Query extends QueryParent implements Nestedable, Bodyable
 {
     use QueryTrait;
 
