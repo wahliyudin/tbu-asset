@@ -124,6 +124,12 @@ var Form = function () {
         });
     }
 
+    var initPlugin = () => {
+        $('input[name="transfer_date"]').flatpickr({
+            dateFormat: "d F Y"
+        });
+    }
+
     return {
         init: function () {
             $.ajaxSetup({
@@ -132,6 +138,7 @@ var Form = function () {
                 }
             });
             initAction();
+            initPlugin();
         }
     };
 }();

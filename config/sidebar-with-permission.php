@@ -71,6 +71,10 @@ return [
                     'title' => 'ASSET MASTER',
                     'permissions' => 'c,r,u,d,report',
                 ],
+                [
+                    'title' => 'ASSET IDLE',
+                    'permissions' => 'r',
+                ],
             ]
         ],
         [

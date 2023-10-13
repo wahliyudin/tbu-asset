@@ -61,6 +61,15 @@ class AssetService
         return Elasticsearch::setModel(Asset::class)->searchMultiMatch($search, $size)->all();
     }
 
+    public function assetIdle($search = null, $size = 50)
+    {
+        return Elasticsearch::setModel(Asset::class)
+            ->searchMultipleQuery($search, terms: [
+                new Term('status', Status::IDLE->value)
+            ], size: $size)
+            ->all();
+    }
+
     public function getById($id)
     {
         return Asset::query()->with([
@@ -75,7 +84,25 @@ class AssetService
     public function getByKode($kode)
     {
         return Asset::query()
-            ->with(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'insurance', 'leasing.dealer', 'leasing.leasing', 'uom', 'lifetime', 'activity', 'condition'])
+            ->with([
+                'assetUnit.unit',
+                'subCluster.cluster.category',
+                'department',
+                'insurance',
+                'leasing.dealer',
+                'leasing.leasing',
+                'uom',
+                'lifetime',
+                'activity',
+                'condition',
+                'employee.position' => function ($query) {
+                    $query->with([
+                        'divisi',
+                        'project',
+                        'department',
+                    ]);
+                }
+            ])
             ->where('kode', $kode)
             ->firstOrFail();
     }

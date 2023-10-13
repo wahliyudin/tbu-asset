@@ -90,7 +90,7 @@ abstract class Workflow extends Checker
             'title' => $approval->title
         ];
         foreach ($this->additionalParams as $param) {
-            if (isset($param['sequence']) ? $param['sequence'] : null == $sequence) {
+            if ((isset($param['sequence']) ? $param['sequence'] : null) == $sequence) {
                 $payload = array_merge($payload, $param);
             }
         }

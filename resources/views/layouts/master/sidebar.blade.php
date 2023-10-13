@@ -208,6 +208,20 @@
                         </a>
                     </div>
                 @endpermission
+                @permission('asset_idle_read')
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('asset-idles.index', 'asset-idles.show') ? 'active' : '' }}"
+                            href="{{ route('asset-idles.index') }}">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-watch fs-2">
+                                    <i class="path1"></i>
+                                    <i class="path2"></i>
+                                </i>
+                            </span>
+                            <span class="menu-title">Asset IDLE</span>
+                        </a>
+                    </div>
+                @endpermission
                 @permission('asset_register_read')
                     <div class="menu-item">
                         <a class="menu-link {{ request()->routeIs('asset-registers.index', 'asset-registers.create') ? 'active' : '' }}"
@@ -282,7 +296,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">List</span>
+                                        <span class="menu-title">Transfer</span>
                                     </a>
                                 </div>
                             @endpermission

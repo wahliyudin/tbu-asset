@@ -2,7 +2,7 @@
     <input type="hidden" name="id" value="{{ $assetTransfer->id }}">
     <input type="hidden" name="no_transaksi" value="{{ $assetTransfer->no_transaksi }}">
     <input type="hidden" name="nik" value="{{ $assetTransfer->nik }}">
-    <input type="hidden" name="asset_id" value="{{ $assetTransfer->asset_id }}">
+    <input type="hidden" name="asset_id" value="{{ $assetTransfer->asset_id ?? $asset?->getKey() }}">
     <x-form-header title="TRANSFER ASSET" nomor="TBU-FM-AST-003" tanggal="12-04-2023" revisi="00"
         halaman="1 dari 1" />
     <hr>
@@ -24,35 +24,42 @@
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nama Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="nama">{{ $assetTransfer->asset?->kode }}</td>
+                        <td id="nama">
+                            {{ $assetTransfer->asset?->asset_unit?->unit?->model ?? $asset?->assetUnit?->unit?->model }}
+                        </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Merk/Tipe/Model</td>
                         <td style="width: 10px;">:</td>
-                        <td id="merk_tipe_model">{{ $assetTransfer->asset?->asset_unit?->brand }}</td>
+                        <td id="merk_tipe_model">
+                            {{ $assetTransfer->asset?->asset_unit?->brand ?? $asset?->assetUnit?->brand }}</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Serial Number Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="serial_number">{{ $assetTransfer->asset?->asset_unit?->serial_number }}</td>
+                        <td id="serial_number">
+                            {{ $assetTransfer->asset?->asset_unit?->serial_number ?? $asset?->assetUnit?->serial_number }}
+                        </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nomor Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="nomor_asset">{{ $assetTransfer->asset?->kode }}</td>
+                        <td id="nomor_asset">{{ $assetTransfer->asset?->kode ?? $asset?->kode }}</td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Nilai Akuisisi / Nilai Buku
                         </td>
                         <td style="width: 10px;">:</td>
                         <td id="niali_buku">
-                            {{ \App\Helpers\Helper::formatRupiah($assetTransfer->asset?->leasing?->harga_beli, true) }}
+                            {{ $assetTransfer->asset?->nilai_sisa ? \App\Helpers\Helper::formatRupiah($assetTransfer->asset?->nilai_sisa, true) : \App\Helpers\Helper::formatRupiah($asset?->nilai_sisa, true) }}
                         </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: top;" class="fs-6 fw-semibold w-200px">Kelengkapan Asset</td>
                         <td style="width: 10px;">:</td>
-                        <td id="kelengkapan">{{ $assetTransfer->asset?->asset_unit?->spesification }}</td>
+                        <td id="kelengkapan">
+                            {{ $assetTransfer->asset?->asset_unit?->spesification ?? $asset?->assetUnit?->spesification }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -60,7 +67,7 @@
     </div>
     <div class="row mt-8">
         <div class="col-md-12 ps-12">
-            <input type="hidden" name="old_pic" value="{{ $assetTransfer->oldPic?->nik }}">
+            <input type="hidden" name="old_pic" value="{{ $assetTransfer->oldPic?->nik ?? $asset->pic }}">
             <input type="hidden" name="new_pic" value="{{ $assetTransfer->newPic?->nik }}">
             <table class="table table-bordered border-gray-300">
                 <thead class="border-0">
@@ -75,7 +82,7 @@
                         <th class="bg-secondary bg-opacity-50 w-200px">Nama Pemegang Asset</th>
                         <td class="w-450px">
                             <input type="text" class="form-control" readonly name="old_nama_karyawan"
-                                value="{{ $assetTransfer->oldPic?->nama_karyawan ?? '-' }}">
+                                value="{{ $assetTransfer->oldPic?->nama_karyawan ?? $asset?->employee?->nama_karyawan }}">
                         </td>
                         <td>
                             <input type="text" class="form-control" readonly name="new_nama_karyawan"
@@ -86,7 +93,7 @@
                         <th class="bg-secondary bg-opacity-50 w-200px">Department</th>
                         <td class="w-450px">
                             <input type="text" class="form-control" readonly name="old_department"
-                                value="{{ $assetTransfer->oldPic?->position?->department?->department_name ?? '-' }}">
+                                value="{{ $assetTransfer->oldPic?->position?->department?->department_name ?? $asset?->employee?->position?->department?->department_name }}">
                         </td>
                         <td>
                             <input type="text" class="form-control" readonly name="new_department"
@@ -97,7 +104,7 @@
                         <th class="bg-secondary bg-opacity-50 w-200px">Division</th>
                         <td class="w-450px">
                             <input type="text" class="form-control" readonly name="old_divisi"
-                                value="{{ $assetTransfer->oldPic?->position?->divisi?->division_name ?? '-' }}">
+                                value="{{ $assetTransfer->oldPic?->position?->divisi?->division_name ?? $asset?->employee?->position?->divisi?->division_name }}">
                         </td>
                         <td>
                             <input type="text" class="form-control" readonly name="new_divisi"
@@ -108,7 +115,7 @@
                         <th class="bg-secondary bg-opacity-50 w-200px">Project</th>
                         <td class="w-450px">
                             <input type="text" class="form-control" readonly name="old_project"
-                                value="{{ $assetTransfer->oldPic?->position?->project?->project ?? '-' }}">
+                                value="{{ $assetTransfer->oldPic?->position?->project?->project ?? $asset?->employee?->position?->project?->project }}">
                         </td>
                         <td>
                             <input type="text" class="form-control" readonly name="new_project"
@@ -119,7 +126,7 @@
                         <th class="bg-secondary bg-opacity-50 w-200px">Lokasi</th>
                         <td class="w-450px">
                             <input type="text" class="form-control" readonly name="old_location"
-                                value="{{ $assetTransfer->oldPic?->position?->project?->location ?? '-' }}">
+                                value="{{ $assetTransfer->oldPic?->position?->project?->location ?? $asset?->employee?->position?->project?->location }}">
                         </td>
                         <td>
                             <input type="text" class="form-control" readonly name="new_location"
@@ -132,25 +139,20 @@
     </div>
     <div class="row mt-4 align-items-end ps-8">
         <div class="col-md-5">
-            <h5>Tanggal Permintaan Pemindahan (Transfer)</h5>
+            <h5>Tanggal Pemindahan (Transfer)</h5>
         </div>
-        <div class="col-md-5">
-            <table class="table table-bordered border-gray-400 m-0">
-                <thead class="border-0">
-                    <tr class="text-center border-0">
-                        <th colspan="2" class="border-0">Tgl.</th>
-                        <th colspan="4" class="border-0">Bln</th>
-                        <th colspan="4" class="border-0">Tahun</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="text-center">
-                        @foreach (str(\Carbon\Carbon::make($assetTransfer?->created_at ?? now()->format('d-m-Y'))->format('d-m-Y'))->split(1) as $value)
-                            <td class="p-1" style="width: 10px !important;">{{ $value }}</td>
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-md-3">
+            <div class="input-group">
+                <input type="text" {{ $type == 'show' ? 'disabled' : '' }} class="form-control"
+                    value="{{ \Carbon\Carbon::parse($assetTransfer->transfer_date)->format('d F Y') }}"
+                    placeholder="Tanggal Pemindahan" name="transfer_date" id="transfer_date">
+                <span class="input-group-text">
+                    <i class="ki-duotone ki-calendar fs-2">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                    </i>
+                </span>
+            </div>
         </div>
     </div>
     <div class="row mt-4">
@@ -265,8 +267,6 @@
         <script src="{{ asset('assets/js/pages/transfer/create.js') }}"></script>
     @endpush
 @endif
-@if ($type == 'show')
-    @push('js')
-        <script src="{{ asset('assets/js/pages/transfer/form.js') }}"></script>
-    @endpush
-@endif
+@push('js')
+    <script src="{{ asset('assets/js/pages/transfer/form.js') }}"></script>
+@endpush

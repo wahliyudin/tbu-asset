@@ -3,6 +3,7 @@
 use App\Http\Controllers\Approval\ApprovalCerController;
 use App\Http\Controllers\Approval\ApprovalDisposeController;
 use App\Http\Controllers\Approval\ApprovalTransferController;
+use App\Http\Controllers\Assets\AssetIdleController;
 use App\Http\Controllers\Assets\AssetMasterController;
 use App\Http\Controllers\Cers\CerController;
 use App\Http\Controllers\Cers\RegisterController;
@@ -145,6 +146,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-masters/bulk', [AssetMasterController::class, 'bulk'])->name('asset-masters.bulk');
     Route::get('asset-masters/{id}/next-id-asset-unit', [AssetMasterController::class, 'nextIdAssetUnit'])->name('asset-masters.next-id-asset-unit');
 
+    Route::get('asset-idles', [AssetIdleController::class, 'index'])->name('asset-idles.index')->middleware('permission:asset_idle_read');
+    Route::post('asset-idles/datatable', [AssetIdleController::class, 'datatable'])->name('asset-idles.datatable')->middleware('permission:asset_idle_read');
 
     Route::get('asset-requests', [CerController::class, 'index'])->name('asset-requests.index')->middleware('permission:asset_request_read');
     Route::post('asset-requests/datatable', [CerController::class, 'datatable'])->name('asset-requests.datatable')->middleware('permission:asset_request_read');

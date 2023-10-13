@@ -3,6 +3,7 @@
 namespace App\View\Components\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Models\Assets\Asset;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -14,6 +15,7 @@ class Form extends Component
      */
     public function __construct(
         public ?AssetTransferData $assetTransfer,
+        public ?Asset $asset,
         public string $type = '',
         public bool $withWorkflow = false,
         public bool $isCurrentWorkflow = false,

@@ -27,8 +27,16 @@ class AssetTransferRequest extends FormRequest
             'new_department' => ['required'],
             // 'request_transfer_date' => ['required'],
             'justifikasi' => ['required'],
+            'transfer_date' => ['required'],
             // 'remark' => ['required'],
             // 'transfer_date' => ['required'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'transfer_date.required' => 'Tanggal Pemindahan wajib diisi'
         ];
     }
 }

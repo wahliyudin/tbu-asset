@@ -8,11 +8,14 @@ use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
+use App\Helpers\CarbonHelper;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Models\Transfers\AssetTransfer;
 use App\Models\Transfers\StatusTransfer;
 use App\Repositories\Transfers\AssetTransferRepository;
+use App\Services\Assets\AssetService;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -20,7 +23,8 @@ use Illuminate\Validation\ValidationException;
 class AssetTransferService
 {
     public function __construct(
-        protected AssetTransferRepository $assetTransferRepository
+        protected AssetTransferRepository $assetTransferRepository,
+        protected AssetService $assetService
     ) {
     }
 
@@ -47,6 +51,7 @@ class AssetTransferService
     {
         $additional = [
             'status' => Status::OPEN,
+            'transfer_date' => CarbonHelper::convertDate($request->transfer_date),
         ];
         if ($isDraft) {
             $additional['status'] = Status::DRAFT;
@@ -136,5 +141,10 @@ class AssetTransferService
             })
             ->get();
         return AssetTransferData::collection($data)->toCollection();
+    }
+
+    public function checkAsset(Request $request)
+    {
+        return $request->get('asset') ? $this->assetService->getByKode($request->get('asset')) : null;
     }
 }

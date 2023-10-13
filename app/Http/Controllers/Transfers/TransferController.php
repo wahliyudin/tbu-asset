@@ -71,7 +71,7 @@ class TransferController extends Controller
                 return $asset->_source->kode;
             })
             ->editColumn('niali_buku', function ($asset) {
-                return Helper::formatRupiah($asset->_source->leasing?->harga_beli, true);
+                return Helper::formatRupiah($asset->_source->nilai_sisa, true);
             })
             ->editColumn('kelengkapan', function ($asset) {
                 return $asset->_source->asset_unit?->spesification;
@@ -93,12 +93,13 @@ class TransferController extends Controller
         ]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         return view('transfers.transfer.create', [
             'assetTransfer' => AssetTransferData::from([
-                'new_pic' => auth()->user()->nik
-            ])
+                'new_pic' => auth()->user()?->nik
+            ]),
+            'asset' => $this->service->checkAsset($request)
         ]);
     }
 

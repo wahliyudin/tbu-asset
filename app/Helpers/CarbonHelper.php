@@ -78,6 +78,9 @@ class CarbonHelper
             if (Carbon::hasFormat($date, "m/d/Y")) {
                 return Carbon::createFromFormat("m/d/Y", $date)->format($format);
             }
+            if (Carbon::hasFormat($date, "d F Y")) {
+                return Carbon::createFromFormat("d F Y", $date)->format($format);
+            }
         } catch (\Throwable $th) {
             return null;
         }
