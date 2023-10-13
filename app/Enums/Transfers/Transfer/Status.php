@@ -12,7 +12,7 @@ enum Status: string
     {
         return match ($this) {
             self::PENDING => 'Pending',
-            self::PROCESS => 'Process',
+            self::PROCESS => 'Delivery Process',
             self::RECEIVED => 'Received',
         };
     }

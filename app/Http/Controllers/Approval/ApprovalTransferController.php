@@ -38,13 +38,16 @@ class ApprovalTransferController extends Controller
             ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->newPic?->nama_karyawan;
             })
+            ->editColumn('status_transfer', function (AssetTransferData $assetTransfer) {
+                return $assetTransfer->status_transfer?->status?->badge();
+            })
             ->editColumn('status', function (AssetTransferData $assetTransfer) {
                 return $assetTransfer->status->badge();
             })
             ->editColumn('action', function (AssetTransferData $assetTransfer) {
                 return view('approvals.transfer.action', compact('assetTransfer'))->render();
             })
-            ->rawColumns(['action', 'status'])
+            ->rawColumns(['action', 'status', 'status_transfer'])
             ->make();
     }
 

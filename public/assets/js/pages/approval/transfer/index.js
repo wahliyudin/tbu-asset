@@ -37,6 +37,10 @@ var list = function () {
                     data: 'new_pic',
                 },
                 {
+                    name: 'status_transfer',
+                    data: 'status_transfer',
+                },
+                {
                     name: 'status',
                     data: 'status',
                 },
