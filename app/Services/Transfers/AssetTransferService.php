@@ -9,7 +9,9 @@ use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Helpers\CarbonHelper;
+use App\Helpers\Helper;
 use App\Http\Requests\Transfers\AssetTransferRequest;
+use App\Models\Employee;
 use App\Models\Transfers\AssetTransfer;
 use App\Models\Transfers\StatusTransfer;
 use App\Repositories\Transfers\AssetTransferRepository;
@@ -146,5 +148,41 @@ class AssetTransferService
     public function checkAsset(Request $request)
     {
         return $request->get('asset') ? $this->assetService->getByKode($request->get('asset')) : null;
+    }
+
+    public function nextNoTransfer($nik)
+    {
+        $employee = Employee::query()->with(['position' => function ($query) {
+            $query->with(['department', 'project']);
+        }])->where('nik', $nik)->first();
+
+        return collect([
+            $this->nextNumber($employee->position?->project?->project_prefix),
+            $employee->position?->department?->dept_code,
+            $employee->position?->project?->project_prefix,
+            Helper::getRomawi(now()->month),
+            now()->year,
+        ])->implode('/');
+    }
+
+    public function nextNumber($projectPrefix)
+    {
+        $cer = AssetTransfer::select(['no_transaksi'])
+            ->where('no_transaksi', 'like', "%/$projectPrefix/%")
+            ->orderBy('no_transaksi', 'DESC')
+            ->first();
+        $lastKode = null;
+        if ($cer) {
+            $lastKode = str($cer?->no_transaksi)->explode('/')->first();
+        }
+        $prefix = 'TFR';
+        $length = 7;
+        $prefixLength = strlen($prefix);
+        $idLength = $length - $prefixLength;
+        if (!$lastKode) {
+            return $prefix . str_pad(1, $idLength, '0', STR_PAD_LEFT);
+        }
+        $maxId = substr($lastKode, $prefixLength + 1, $idLength);
+        return $prefix . str_pad((int)$maxId + 1, $idLength, '0', STR_PAD_LEFT);
     }
 }

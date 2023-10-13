@@ -51,8 +51,7 @@ class AssetTransferData extends Data implements DataInterface
     private function setDefaultValue()
     {
         if (is_null($this->id)) {
-            $this->nik = auth()->user()->nik;
-            $this->no_transaksi = Str::random();
+            $this->nik = auth()->user()?->nik;
         }
         if (is_null($this->request_transfer_date)) {
             $this->request_transfer_date = now();

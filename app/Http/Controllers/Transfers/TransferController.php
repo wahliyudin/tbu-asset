@@ -95,11 +95,13 @@ class TransferController extends Controller
 
     public function create(Request $request)
     {
+        $nik = auth()->user()?->nik;
         return view('transfers.transfer.create', [
             'assetTransfer' => AssetTransferData::from([
-                'new_pic' => auth()->user()?->nik
+                'new_pic' => $nik
             ]),
-            'asset' => $this->service->checkAsset($request)
+            'asset' => $this->service->checkAsset($request),
+            'noTransaksi' => $this->service->nextNoTransfer($nik)
         ]);
     }
 
