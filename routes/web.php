@@ -176,6 +176,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('asset-transfers/{assetTransfer}/destroy', [TransferController::class, 'destroy'])->name('asset-transfers.destroy')->middleware('permission:asset_transfer_delete');
     Route::post('asset-transfers/{assetTransfer}/received', [TransferController::class, 'received'])->name('asset-transfers.received');
     Route::get('asset-transfers/{asset}/employee', [TransferController::class, 'employeeByAsset'])->name('asset-transfers.employee-by-asset');
+    Route::post('asset-transfers/{transfer}/datatable-budget', [TransferController::class, 'datatableBudget'])->name('asset-transfers.datatable-budget');
 
     Route::get('asset-transfers/histories', [HistoryController::class, 'index'])->name('asset-transfers.histories.index');
     Route::post('asset-transfers/histories/datatable', [HistoryController::class, 'datatable'])->name('asset-transfers.histories.datatable');

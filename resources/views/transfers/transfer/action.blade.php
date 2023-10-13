@@ -1,18 +1,16 @@
 <div class="d-flex align-items-center gap-2">
-    @if (
-        $assetTransfer->status === \App\Enums\Workflows\Status::CLOSE &&
-            $assetTransfer->status_transfer?->status !== \App\Enums\Transfers\Transfer\Status::RECEIVED)
-        <button type="button" data-transfer="{{ $assetTransfer->id }}" class="btn btn-sm btn-success ps-4 btn-received">
-            <span class="indicator-label">
-                <div class="d-flex align-items-center gap-2">
-                    <i class="ki-duotone ki-check fs-3"></i>Received
-                </div>
-            </span>
-            <span class="indicator-progress">
-                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-            </span>
-        </button>
-    @endif
+    {{-- @if ($assetTransfer->status === \App\Enums\Workflows\Status::CLOSE && $assetTransfer->status_transfer?->status !== \App\Enums\Transfers\Transfer\Status::RECEIVED) --}}
+    <button type="button" data-transfer="{{ $assetTransfer->id }}" class="btn btn-sm btn-success ps-4 btn-received">
+        <span class="indicator-label">
+            <div class="d-flex align-items-center gap-2">
+                <i class="ki-duotone ki-check fs-3"></i>Received
+            </div>
+        </span>
+        <span class="indicator-progress">
+            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+    </button>
+    {{-- @endif --}}
     @if ($assetTransfer->status === \App\Enums\Workflows\Status::DRAFT)
         @permission('asset_transfer_update')
             <a href="{{ route('asset-transfers.edit', $assetTransfer->id) }}" class="btn btn-sm btn-primary ps-4 d-flex"><i

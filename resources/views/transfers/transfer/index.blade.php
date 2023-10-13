@@ -73,10 +73,10 @@
 
 @push('modal')
     <div class="modal fade" id="received" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-top">
+        <div class="modal-dialog modal-dialog-top modal-lg">
             <div class="modal-content">
                 <div class="modal-header" id="received_header">
-                    <h2 class="fw-bold">Import Asset</h2>
+                    <h2 class="fw-bold">Form Received</h2>
                     <div id="received_close" class="btn btn-icon btn-sm btn-active-light-primary ms-2"
                         data-bs-dismiss="modal" aria-label="Close">
                         <i class="ki-duotone ki-cross fs-1">
@@ -85,15 +85,15 @@
                         </i>
                     </div>
                 </div>
-                <div class="modal-body px-lg-17">
+                <div class="modal-body">
                     <form class="form" action="#" id="received_form">
                         <div class="row">
-                            <div class="col-md-12 mb-7">
+                            <div class="col-md-6 mb-7">
                                 <label class="required fw-semibold mb-2">Tanggal BAST</label>
                                 <input class="form-control" placeholder="Tanggal BAST" name="tanggal_bast"
                                     id="tanggal_bast" />
                             </div>
-                            <div class="col-md-12 mb-7">
+                            <div class="col-md-6 mb-7">
                                 <label class="required fw-semibold mb-2">No BAST</label>
                                 <input class="form-control" placeholder="No BAST" name="no_bast" id="no_bast" />
                             </div>
@@ -102,6 +102,25 @@
                                 <input type="file" name="file_bast" class="form-control" accept=".doc, .docx, .pdf">
                             </div>
                         </div>
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <i class="ki-duotone ki-magnifier fs-4 position-absolute ms-5">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                            </i>
+                            <input type="text" data-kt-budget-table-filter="search" name="search"
+                                class="form-control text-sm w-250px ps-13" placeholder="Cari Budget" />
+                        </div>
+                        <table class="table align-middle table-row-dashed fs-6 gy-5" id="budgets_table">
+                            <thead>
+                                <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
+                                    <th class="min-w-125px">Remaining</th>
+                                    <th class="min-w-125px">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-semibold text-gray-600">
+
+                            </tbody>
+                        </table>
                     </form>
                 </div>
                 <div class="modal-footer flex-center">

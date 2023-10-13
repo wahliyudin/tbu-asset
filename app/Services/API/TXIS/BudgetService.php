@@ -33,4 +33,12 @@ class BudgetService extends TXISService
     {
         return $this->post($this->url('/transferbudget'), $data->toArray());
     }
+
+    public function budgets($unitId, $projectFrom)
+    {
+        return $this->post($this->url('/mutasibudget/viewbudget'), [
+            'unitid' => $unitId,
+            'project_from' => $projectFrom,
+        ]);
+    }
 }

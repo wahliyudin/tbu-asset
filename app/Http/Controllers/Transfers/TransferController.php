@@ -10,9 +10,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Http\Requests\Transfers\ReceivedRequest;
 use App\Models\Transfers\AssetTransfer;
+use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
 use App\Services\Transfers\AssetTransferService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransferController extends Controller
@@ -81,6 +83,19 @@ class TransferController extends Controller
                 return '<button type="button" data-asset="' . $asset->_id . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
             ->rawColumns(['action'])
+            ->make();
+    }
+
+    public function datatableBudget($id, BudgetService $budgetService)
+    {
+        $data = Arr::get($budgetService->budgets('LV-2076', 5001)->json(), 'data');
+        return DataTables::of($data)
+            ->editColumn('remaining', function ($budget) {
+                return Helper::formatRupiah((int)str($budget['remaining'])->replace(',', '')->value(), true);
+            })
+            ->editColumn('description', function ($budget) {
+                return $budget['description_'];
+            })
             ->make();
     }
 
