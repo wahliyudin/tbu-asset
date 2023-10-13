@@ -11,6 +11,7 @@ use App\Helpers\AuthHelper;
 use App\Helpers\CarbonHelper;
 use App\Helpers\Helper;
 use App\Http\Requests\Transfers\AssetTransferRequest;
+use App\Http\Requests\Transfers\ReceivedRequest;
 use App\Models\Employee;
 use App\Models\Transfers\AssetTransfer;
 use App\Models\Transfers\StatusTransfer;
@@ -18,8 +19,10 @@ use App\Repositories\Transfers\AssetTransferRepository;
 use App\Services\Assets\AssetService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AssetTransferService
@@ -122,6 +125,36 @@ class AssetTransferService
             $this->assetTransferRepository->deleteFromElasticsearch($assetTransfer);
             return $assetTransfer->delete();
         });
+    }
+
+    public function received(ReceivedRequest $request, AssetTransfer $assetTransfer)
+    {
+        return DB::transaction(function () use ($request, $assetTransfer) {
+            $fileName = $this->storeFile($request->file('file_bast'), $assetTransfer->no_transaksi, $request->no_bast);
+            $assetTransfer->update([
+                'tanggal_bast' => $request->tanggal_bast,
+                'no_bast' => $request->no_bast,
+                'file_bast' => $fileName,
+            ]);
+            $this->statusTransfer($assetTransfer, TransferStatus::RECEIVED);
+            $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
+        });
+    }
+
+    public function storeFile(?UploadedFile $uploadedFile, $noTransaksi, $noBast)
+    {
+        if (!$uploadedFile) {
+            return null;
+        }
+        $folder = 'transfers';
+        if (count(Storage::disk('public')->allDirectories($folder)) > 0) {
+            Storage::disk('public')->makeDirectory($folder);
+        }
+        $noBast = str($noBast)->snake('-')->value();
+        $noTransaksi = str($noTransaksi)->replace('/', '-')->value();
+        $fileName = $noTransaksi . '-' . $noBast . '.' . $uploadedFile->getClientOriginalExtension();
+        $uploadedFile->storeAs("public/$folder", $fileName);
+        return $folder . '/' . $fileName;
     }
 
     public function statusTransfer(AssetTransfer $assetTransfer, TransferStatus $status)

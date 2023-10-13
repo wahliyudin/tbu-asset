@@ -30,6 +30,9 @@ return new class extends Migration
             $table->string('remark')->nullable();
             $table->text('note')->nullable();
             $table->date('transfer_date')->nullable();
+            $table->date('tanggal_bast')->nullable();
+            $table->string('no_bast')->nullable();
+            $table->string('file_bast')->nullable();
             $table->string('status')->default('open');
             $table->timestamps();
         });

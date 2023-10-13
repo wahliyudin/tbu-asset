@@ -8,6 +8,7 @@ use App\Enums\Transfers\Transfer\Status;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
+use App\Http\Requests\Transfers\ReceivedRequest;
 use App\Models\Transfers\AssetTransfer;
 use App\Services\Assets\AssetService;
 use App\Services\Transfers\AssetTransferService;
@@ -153,12 +154,12 @@ class TransferController extends Controller
         }
     }
 
-    public function received(AssetTransfer $assetTransfer)
+    public function received(ReceivedRequest $request, AssetTransfer $assetTransfer)
     {
         try {
-            $this->service->statusTransfer($assetTransfer, Status::RECEIVED);
+            $this->service->received($request, $assetTransfer);
             return response()->json([
-                'message' => 'Berhasil dihapus'
+                'message' => 'Berhasil di received'
             ]);
         } catch (\Throwable $th) {
             throw $th;

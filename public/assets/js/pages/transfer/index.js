@@ -75,59 +75,100 @@ var TransfersList = function () {
     }
 
     var handleReceived = () => {
+        $('#received').on('hidden.bs.modal', function () {
+            $('#received_submit').data('transfer', '');
+        });
         $('#transfer_table').on('click', '.btn-received', function () {
             var transfer = $(this).data('transfer');
             var target = this;
+            // $(target).attr("data-kt-indicator", "on");
+            $('#received_submit').data('transfer', transfer);
+            $('#received').modal('show');
+            // Swal.fire({
+            //     text: "Are you sure you want to received ?",
+            //     icon: "warning",
+            //     showCancelButton: true,
+            //     buttonsStyling: false,
+            //     confirmButtonText: "Yes, received!",
+            //     cancelButtonText: "No, cancel",
+            //     customClass: {
+            //         confirmButton: "btn fw-bold btn-success",
+            //         cancelButton: "btn fw-bold btn-active-light-primary"
+            //     }
+            // }).then(function (result) {
+            //     if (result.value) {
+            //         $.ajax({
+            //             type: "POST",
+            //             url: `/asset-transfers/${transfer}/received`,
+            //             dataType: "JSON",
+            //             success: function (response) {
+            //                 $(target).removeAttr("data-kt-indicator");
+            //                 Swal.fire({
+            //                     text: "You have received !.",
+            //                     icon: "success",
+            //                     buttonsStyling: false,
+            //                     confirmButtonText: "Ok, got it!",
+            //                     customClass: {
+            //                         confirmButton: "btn fw-bold btn-primary",
+            //                     }
+            //                 }).then(function () {
+            //                     datatable.ajax.reload();
+            //                 });
+            //             },
+            //             error: handleError
+            //         });
+            //     } else if (result.dismiss === 'cancel') {
+            //         Swal.fire({
+            //             text: "was not received.",
+            //             icon: "error",
+            //             buttonsStyling: false,
+            //             confirmButtonText: "Ok, got it!",
+            //             customClass: {
+            //                 confirmButton: "btn fw-bold btn-primary",
+            //             }
+            //         }).then(function () {
+            //             $(target).removeAttr("data-kt-indicator");
+            //         });
+            //     }
+            // });
+
+        });
+        $('#received_submit').click(function (e) {
+            e.preventDefault();
+            var transfer = $(this).data('transfer');
+            var target = this;
+            var postData = new FormData($(`#received_form`)[0]);
             $(target).attr("data-kt-indicator", "on");
-            Swal.fire({
-                text: "Are you sure you want to received ?",
-                icon: "warning",
-                showCancelButton: true,
-                buttonsStyling: false,
-                confirmButtonText: "Yes, received!",
-                cancelButtonText: "No, cancel",
-                customClass: {
-                    confirmButton: "btn fw-bold btn-success",
-                    cancelButton: "btn fw-bold btn-active-light-primary"
-                }
-            }).then(function (result) {
-                if (result.value) {
-                    $.ajax({
-                        type: "POST",
-                        url: `/asset-transfers/${transfer}/received`,
-                        dataType: "JSON",
-                        success: function (response) {
-                            $(target).removeAttr("data-kt-indicator");
-                            Swal.fire({
-                                text: "You have received !.",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn fw-bold btn-primary",
-                                }
-                            }).then(function () {
-                                datatable.ajax.reload();
-                            });
-                        },
-                        error: handleError
-                    });
-                } else if (result.dismiss === 'cancel') {
+            $.ajax({
+                type: 'POST',
+                url: `/asset-transfers/${transfer}/received`,
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function (response) {
+                    $(target).removeAttr('data-kt-indicator');
                     Swal.fire({
-                        text: "was not received.",
-                        icon: "error",
+                        text: "Form has been successfully submitted!",
+                        icon: "success",
                         buttonsStyling: false,
                         confirmButtonText: "Ok, got it!",
                         customClass: {
-                            confirmButton: "btn fw-bold btn-primary",
+                            confirmButton: "btn btn-primary"
                         }
-                    }).then(function () {
-                        $(target).removeAttr("data-kt-indicator");
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                        }
                     });
+                },
+                error: function (jqXHR) {
+                    handleError(jqXHR, target);
                 }
             });
-
         });
+    }
+
+    var initPlugins = () => {
+        $('#tanggal_bast').flatpickr();
     }
 
     var handleDeleteRow = () => {
@@ -166,7 +207,9 @@ var TransfersList = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: handleError
+                        error: function (jqXHR) {
+                            handleError(jqXHR, target);
+                        }
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -186,10 +229,12 @@ var TransfersList = function () {
         });
     }
 
-    var handleError = function (jqXHR) {
-        submitButton.removeAttribute('data-kt-indicator');
-        submitButton.disabled = false;
-        if (jqXHR.status == 422) {
+    var handleError = function (jqXHR, target) {
+        $(target).removeAttr("data-kt-indicator");
+        if (target) {
+            target.disabled = false;
+        }
+        if (jqXHR.status == 422 || jqXHR.responseJSON.message.includes("404")) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Peringatan!',
@@ -225,6 +270,7 @@ var TransfersList = function () {
             initTransferList();
             handleSearchDatatable();
             handleDeleteRow();
+            initPlugins();
 
             $(".date").flatpickr();
         }

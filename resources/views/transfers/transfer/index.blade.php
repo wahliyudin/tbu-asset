@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
 @push('css')
+    <style>
+        .swal2-container {
+            z-index: 999999 !important;
+        }
+    </style>
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
@@ -65,6 +70,57 @@
         </div>
     </div>
 @endsection
+
+@push('modal')
+    <div class="modal fade" id="received" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-top">
+            <div class="modal-content">
+                <div class="modal-header" id="received_header">
+                    <h2 class="fw-bold">Import Asset</h2>
+                    <div id="received_close" class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <i class="ki-duotone ki-cross fs-1">
+                            <span class="path1"></span>
+                            <span class="path2"></span>
+                        </i>
+                    </div>
+                </div>
+                <div class="modal-body px-lg-17">
+                    <form class="form" action="#" id="received_form">
+                        <div class="row">
+                            <div class="col-md-12 mb-7">
+                                <label class="required fw-semibold mb-2">Tanggal BAST</label>
+                                <input class="form-control" placeholder="Tanggal BAST" name="tanggal_bast"
+                                    id="tanggal_bast" />
+                            </div>
+                            <div class="col-md-12 mb-7">
+                                <label class="required fw-semibold mb-2">No BAST</label>
+                                <input class="form-control" placeholder="No BAST" name="no_bast" id="no_bast" />
+                            </div>
+                            <div class="col-md-12 mb-7">
+                                <label class="required fw-semibold mb-2">File BAST</label>
+                                <input type="file" name="file_bast" class="form-control" accept=".doc, .docx, .pdf">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer flex-center">
+                    <button type="reset" id="received_cancel" class="btn btn-light me-3">
+                        Discard
+                    </button>
+                    <button type="button" id="received_submit" data-transfer="" class="btn btn-primary">
+                        <span class="indicator-label">
+                            Submit
+                        </span>
+                        <span class="indicator-progress">
+                            Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endpush
 
 @push('js')
     <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>

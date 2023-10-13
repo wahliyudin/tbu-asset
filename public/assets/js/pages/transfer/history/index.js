@@ -73,10 +73,10 @@ var historyTransfer = function () {
         });
     }
 
-    var tamestampToFormat = (inputDate) => {
+    var tamestampToFormat = (inputDate, format = "D MMMM YYYY, HH:mm:ss") => {
         var parsedDate = moment(inputDate);
         parsedDate.locale('id');
-        return parsedDate.format("D MMMM YYYY, HH:mm:ss");
+        return parsedDate.format(format);
     }
 
     var historyItem = (transfer) => {
@@ -142,34 +142,53 @@ var historyTransfer = function () {
                             </tr>
                         </table>
                     </div>
-                    <div class="flex-equal ">
-                    <table class="table table-flush fw-semibold gy-1">
-                        <tr>
-                            <td class="text-muted min-w-125px w-125px">
-                                PIC</td>
-                            <td class="text-gray-800">${transfer.new_pic.nama_karyawan}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-muted min-w-125px w-125px">
-                                Location</td>
-                            <td class="text-gray-800">${transfer.new_location}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-muted min-w-125px w-125px">
-                                Divisi</td>
-                            <td class="text-gray-800">${transfer.new_divisi}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-muted min-w-125px w-125px">
-                                Department</td>
-                            <td class="text-gray-800">${transfer.new_department}</td>
-                        </tr>
-                    </table>
+                    <div class="flex-equal">
+                        <table class="table table-flush fw-semibold gy-1">
+                            <tr>
+                                <td class="text-muted min-w-125px w-125px">
+                                    PIC</td>
+                                <td class="text-gray-800">${transfer.new_pic.nama_karyawan}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted min-w-125px w-125px">
+                                    Location</td>
+                                <td class="text-gray-800">${transfer.new_location}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted min-w-125px w-125px">
+                                    Divisi</td>
+                                <td class="text-gray-800">${transfer.new_divisi}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted min-w-125px w-125px">
+                                    Department</td>
+                                <td class="text-gray-800">${transfer.new_department}</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
+                <table class="table table-flush fw-semibold gy-1">
+                    <tr>
+                        <td class="text-muted min-w-70px w-70px">
+                            File BAST</td>
+                        <td class="text-gray-800">
+                            <a target="_blank" href="/storage/${transfer.file_bast}" class="badge badge-success fs-7">Document BAST</a>
+                        </td>
+                        <td class="text-muted min-w-70px w-70px">
+                            No BAST</td>
+                        <td class="text-gray-800">
+                            ${transfer.no_bast}
+                        </td>
+                        <td class="text-muted min-w-100px w-100px">
+                            Tanggal BAST</td>
+                        <td class="text-gray-800">
+                            ${tamestampToFormat(transfer.tanggal_bast, 'D MMMM YYYY')}
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="separator separator-dashed"></div>
