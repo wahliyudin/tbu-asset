@@ -97,4 +97,9 @@ class AssetTransfer extends Model implements ModelThatHaveWorkflow, Elasticsearc
     {
         return $this->belongsTo(Employee::class, 'new_pic', 'nik');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'nik', 'nik');
+    }
 }

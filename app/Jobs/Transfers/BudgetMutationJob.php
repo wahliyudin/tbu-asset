@@ -2,7 +2,7 @@
 
 namespace App\Jobs\Transfers;
 
-use App\Facades\BudgetService;
+use App\Facades\API\TXIS\BudgetService;
 use App\Models\Transfers\AssetTransfer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -19,10 +19,10 @@ class BudgetMutationJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct( protected string $view,
-    protected AssetTransfer $transfer)
-    {
-
+    public function __construct(
+        protected string $view,
+        protected AssetTransfer $transfer
+    ) {
     }
 
     /**
@@ -34,7 +34,7 @@ class BudgetMutationJob implements ShouldQueue
         $data['history'] = BudgetService::historyTransfer($this->transfer->no_transaksi);
 
         $data['email'] = 'finance@tbu.co.id';
-        $data['title']= "Notification Budget Mutatation FROM Asset Transfer";
+        $data['title'] = "Notification Budget Mutatation FROM Asset Transfer";
 
         Mail::send($this->view, $data, function ($message) use ($data) {
             $message->to($data["email"])
