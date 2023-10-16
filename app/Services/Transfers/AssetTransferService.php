@@ -7,7 +7,7 @@ use App\Elasticsearch\QueryBuilder\Term;
 use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
-use App\Facades\BudgetService;
+use App\Facades\API\TXIS\BudgetService;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Helpers\CarbonHelper;

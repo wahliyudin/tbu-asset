@@ -108,6 +108,7 @@ var TransfersList = function () {
                         }
                     }).then(function (result) {
                         if (result.isConfirmed) {
+                            location.reload();
                         }
                     });
                 },

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Facades;
+namespace App\Facades\API\TXIS;
 
 use App\DataTransferObjects\API\TXIS\BudgetTransferData;
 use Illuminate\Support\Facades\Facade;
@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @mixin \App\Services\API\TXIS\BudgetService
  *
- * @method static \App\Services\API\TXIS\BudgetService sendTransfer($noTransfer, $assetId)
+ * @method static \Illuminate\Http\Client\Response sendTransfer($noTransfer, $assetId)
  *
  * @see \App\Services\API\TXIS\BudgetService
  */
