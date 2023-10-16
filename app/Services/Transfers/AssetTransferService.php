@@ -41,6 +41,11 @@ class AssetTransferService
         return AssetTransfer::query()->where('nik', AuthHelper::getNik())->with('asset')->get();
     }
 
+    public function finById($id)
+    {
+        return AssetTransfer::query()->with(['asset.assetUnit.unit'])->findOrFail($id);
+    }
+
     public function allToAssetTransferData($search = null, $length = 50)
     {
         $data = Elasticsearch::setModel(AssetTransfer::class)->searchMultipleQuery($search, terms: [
