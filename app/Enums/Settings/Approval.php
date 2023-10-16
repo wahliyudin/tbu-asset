@@ -12,6 +12,7 @@ enum Approval: string
     case FINANCE = 'FINANCE';
     case HCA = 'HCA';
     case GENERAL_MANAGER_OPERATION = 'GENERAL_MANAGER_OPERATION';
+    case DIVISION_HEAD = 'DIVISION_HEAD';
     case OTHER = 'OTHER';
 
     public function valueByHRIS()
@@ -26,6 +27,7 @@ enum Approval: string
             self::HCA => 7,
             self::GENERAL_MANAGER_OPERATION => 8,
             self::OTHER => 9,
+            self::DIVISION_HEAD => 10,
         };
     }
 
@@ -41,6 +43,7 @@ enum Approval: string
             self::HCA => 'HCA',
             self::GENERAL_MANAGER_OPERATION => 'General Manager Operation',
             self::OTHER => 'Other',
+            self::DIVISION_HEAD => 'Division Head',
         };
     }
 
@@ -56,6 +59,7 @@ enum Approval: string
             self::HCA->value => self::HCA,
             self::GENERAL_MANAGER_OPERATION->value => self::GENERAL_MANAGER_OPERATION,
             self::OTHER->value => self::OTHER,
+            self::DIVISION_HEAD->value => self::DIVISION_HEAD,
             default => null
         };
     }

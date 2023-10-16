@@ -104,15 +104,11 @@ class AssetTransferService
         }
         return [
             [
-                'sequence' => 2,
+                'sequence' => 0,
                 'dept_id' => $deptId,
             ],
             [
-                'sequence' => 4,
-                'project_id' => $newProjectId,
-            ],
-            [
-                'sequence' => 5,
+                'sequence' => 3,
                 'project_id' => $projectId,
             ],
         ];
