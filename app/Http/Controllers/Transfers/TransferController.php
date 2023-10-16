@@ -91,7 +91,7 @@ class TransferController extends Controller
     public function datatableBudget($id, BudgetService $budgetService)
     {
         $assetTransfer = $this->service->finById($id);
-        $data = Arr::get($budgetService->budgets($assetTransfer?->asset?->assetUnit?->kode, $assetTransfer->new_project)->json(), 'data');
+        $data = Arr::get($budgetService->budgets($assetTransfer?->asset?->assetUnit?->kode, $assetTransfer->old_project)->json(), 'data');
         return DataTables::of($data)
             ->editColumn('remaining', function ($budget) {
                 return Helper::formatRupiah((int)str($budget['remaining'])->replace(',', '')->value(), true);
