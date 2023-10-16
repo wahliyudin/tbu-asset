@@ -21,7 +21,8 @@ class BudgetMutationJob implements ShouldQueue
      */
     public function __construct(
         protected string $view,
-        protected AssetTransfer $transfer
+        protected AssetTransfer $transfer,
+        protected $budgets,
     ) {
     }
 
@@ -31,7 +32,7 @@ class BudgetMutationJob implements ShouldQueue
     public function handle(): void
     {
         $data['transfer'] = $this->transfer;
-        $data['history'] = BudgetService::historyTransfer($this->transfer->no_transaksi);
+        $data['histories'] = $this->budgets;
 
         $data['email'] = 'finance@tbu.co.id';
         $data['title'] = "Notification Budget Mutatation FROM Asset Transfer";

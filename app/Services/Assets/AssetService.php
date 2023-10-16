@@ -357,6 +357,7 @@ class AssetService
                 'asset_location' => $toProject,
                 'pic' => $toPIC
             ]);
+            $this->sendToElasticsearch($asset, $asset->getKey());
         });
     }
 }

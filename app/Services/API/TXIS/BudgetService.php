@@ -29,9 +29,12 @@ class BudgetService extends TXISService
         ])->json();
     }
 
-    public function sendTransfer($noTransfer, $assetId)
+    public function sendTransfer($unitId, $projectFrom, $projectTo, $noTransfer, $assetId)
     {
-        return $this->post($this->url('/transferbudget'), [
+        return $this->post($this->url('/mutasibudget'), [
+            'unitid' => $unitId,
+            'project_from' => $projectFrom,
+            'project_to' => $projectTo,
             'no_transfer_asset' => $noTransfer,
             'asset_id' => $assetId
         ]);

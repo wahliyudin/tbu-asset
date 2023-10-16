@@ -19,7 +19,7 @@ class WorkflowRepository
     public static function loadWorkflows(Model $model)
     {
         return $model->load(['workflow', 'workflows' => function ($query) {
-            $query->where('last_action', LastAction::NOTTING)->orderBy('sequence', 'ASC');
+            $query->with('employee')->where('last_action', LastAction::NOTTING)->orderBy('sequence', 'ASC');
         }]);
     }
 

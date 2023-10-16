@@ -134,7 +134,7 @@ class AssetTransferService
 
     public function received(ReceivedRequest $request, AssetTransfer $assetTransfer)
     {
-        return DB::transaction(function () use ($request, $assetTransfer) {
+        DB::transaction(function () use ($request, $assetTransfer) {
             $fileName = $this->storeFile($request->file('file_bast'), $assetTransfer->no_transaksi, $request->no_bast);
             $assetTransfer->update([
                 'tanggal_bast' => $request->tanggal_bast,
@@ -143,8 +143,9 @@ class AssetTransferService
             ]);
             $this->statusTransfer($assetTransfer, TransferStatus::RECEIVED);
             $this->assetService->transfer($assetTransfer->asset, $assetTransfer->new_project, $assetTransfer->new_pic);
-            BudgetService::sendTransfer($assetTransfer->no_transaksi, $assetTransfer->asset_id);
-            dispatch(new BudgetMutationJob('emails.transfer.finance', $assetTransfer));
+            BudgetService::sendTransfer($assetTransfer?->asset?->assetUnit?->kode, $assetTransfer->old_project, $assetTransfer->new_project, $assetTransfer->no_transaksi, $assetTransfer->asset_id);
+            $budgets = BudgetService::historyTransfer($assetTransfer->no_transaksi)->json();
+            dispatch(new BudgetMutationJob('emails.transfers.finance', $assetTransfer, Arr::pluck($budgets, 'data')));
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
         });
     }

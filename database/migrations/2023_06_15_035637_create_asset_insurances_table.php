@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Asset::class);
             $table->integer('jangka_waktu');
             $table->bigInteger('biaya');
-            $table->string('legalitas');
+            $table->string('legalitas')->nullable();
             $table->date('tanggal_awal')->nullable();
             $table->date('tanggal_akhir')->nullable();
             $table->timestamps();

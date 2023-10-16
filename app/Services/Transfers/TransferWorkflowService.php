@@ -20,23 +20,23 @@ class TransferWorkflowService extends Workflow
 
     protected function handleStoreWorkflow()
     {
-        dispatch(new ApprovalJob('emails.transfer.approv', $this->model));
+        dispatch(new ApprovalJob('emails.transfers.approv', $this->model));
     }
 
     protected function handleIsLastAndApprov()
     {
         AssetTransferService::statusTransfer($this->model, TransferStatus::PROCESS);
-        dispatch(new ApprovalJob('emails.transfer.close', $this->model));
+        dispatch(new ApprovalJob('emails.transfers.close', $this->model));
     }
 
     protected function handleIsNotLastAndApprov()
     {
-        dispatch(new ApprovalJob('emails.transfer.approv', $this->model));
+        dispatch(new ApprovalJob('emails.transfers.approv', $this->model));
     }
 
     protected function handleIsRejected()
     {
-        dispatch(new ApprovalJob('emails.transfer.reject', $this->model));
+        dispatch(new ApprovalJob('emails.transfers.reject', $this->model));
     }
 
     protected function handleChanges(Model $assetTransfer)

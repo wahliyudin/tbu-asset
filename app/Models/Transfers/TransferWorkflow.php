@@ -3,6 +3,7 @@
 namespace App\Models\Transfers;
 
 use App\Enums\Workflows\LastAction;
+use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +28,10 @@ class TransferWorkflow extends Model
     public function assetTransfer(): BelongsTo
     {
         return $this->belongsTo(AssetTransfer::class);
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'nik', 'nik');
     }
 }
