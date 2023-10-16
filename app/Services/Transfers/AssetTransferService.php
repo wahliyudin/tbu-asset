@@ -70,8 +70,10 @@ class AssetTransferService
             if (!$isDraft) {
                 TransferWorkflowService::setModel($assetTransfer)
                     ->setAdditionalParams(
-                        $this->additionalParams($data)
-                    )->store();
+                        $this->additionalParams($data),
+                    )
+                    ->setBarrier($assetTransfer?->asset?->subCluster?->cluster?->category?->name)
+                    ->store();
             }
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $data->getKey());
         });

@@ -10,7 +10,7 @@ class AssetTransferRepository
 {
     public function updateOrCreate(AssetTransferData $data)
     {
-        return AssetTransfer::query()->updateOrCreate([
+        return AssetTransfer::query()->with('asset.subCluster.cluster.category')->updateOrCreate([
             'id' => $data->id
         ], [
             'no_transaksi' => $data->no_transaksi,
