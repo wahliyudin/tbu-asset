@@ -349,4 +349,14 @@ class AssetService
                 })->latest();
             })->findOrFail($id);
     }
+
+    public function transfer(Asset $asset, $toProject, $toPIC)
+    {
+        return DB::transaction(function () use ($asset, $toProject, $toPIC) {
+            $asset->update([
+                'asset_location' => $toProject,
+                'pic' => $toPIC
+            ]);
+        });
+    }
 }

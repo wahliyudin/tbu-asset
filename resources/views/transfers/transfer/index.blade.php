@@ -102,6 +102,7 @@
                                 <input type="file" name="file_bast" class="form-control" accept=".doc, .docx, .pdf">
                             </div>
                         </div>
+                        <div class="separator separator-dashed mb-7"></div>
                         <div class="d-flex align-items-center position-relative my-1">
                             <i class="ki-duotone ki-magnifier fs-4 position-absolute ms-5">
                                 <span class="path1"></span>

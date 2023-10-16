@@ -9,6 +9,7 @@ class PositionData extends Data
     public function __construct(
         public ?int $position_id,
         public ?string $position_name,
+        public ?string $project_id,
         public ?int $jabatan_atasan_langsung,
         public ?int $jabatan_atasan_tidak_langsung,
         public ?DivisiData $divisi,

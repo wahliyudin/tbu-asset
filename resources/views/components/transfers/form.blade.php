@@ -67,7 +67,7 @@
     </div>
     <div class="row mt-8">
         <div class="col-md-12 ps-12">
-            <input type="hidden" name="old_pic" value="{{ $assetTransfer->oldPic?->nik ?? $asset->pic }}">
+            <input type="hidden" name="old_pic" value="{{ $assetTransfer->oldPic?->nik ?? $asset?->pic }}">
             <input type="hidden" name="new_pic" value="{{ $assetTransfer->newPic?->nik }}">
             <table class="table table-bordered border-gray-300">
                 <thead class="border-0">
@@ -114,11 +114,15 @@
                     <tr>
                         <th class="bg-secondary bg-opacity-50 w-200px">Project</th>
                         <td class="w-450px">
-                            <input type="text" class="form-control" readonly name="old_project"
+                            <input type="hidden" name="old_project"
+                                value="{{ $assetTransfer->oldPic?->position?->project?->project_id ?? $asset?->employee?->position?->project?->project_id }}">
+                            <input type="text" class="form-control" readonly name="old_project_name"
                                 value="{{ $assetTransfer->oldPic?->position?->project?->project ?? $asset?->employee?->position?->project?->project }}">
                         </td>
                         <td>
-                            <input type="text" class="form-control" readonly name="new_project"
+                            <input type="hidden" name="new_project"
+                                value="{{ $assetTransfer->newPic?->position?->project_id }}">
+                            <input type="text" class="form-control" readonly name="new_project_name"
                                 value="{{ $assetTransfer->newPic?->position?->project?->project ?? '-' }}">
                         </td>
                     </tr>

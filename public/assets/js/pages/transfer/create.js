@@ -137,7 +137,8 @@ var KTModalAdd = function () {
         $('input[name="old_nama_karyawan"]').val(employee?.nama_karyawan ?? '-');
         $('input[name="old_department"]').val(employee?.position?.department?.department_name ?? '-');
         $('input[name="old_divisi"]').val(employee?.position?.divisi?.division_name ?? '-');
-        $('input[name="old_project"]').val(employee?.position?.project?.project ?? '-');
+        $('input[name="old_project_name"]').val(employee?.position?.project?.project ?? '-');
+        $('input[name="old_project"]').val(employee?.position?.project?.project_id ?? '-');
         $('input[name="old_location"]').val(employee?.position?.project?.location ?? '-');
     }
 

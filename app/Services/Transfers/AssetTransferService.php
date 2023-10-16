@@ -3,9 +3,11 @@
 namespace App\Services\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
+use App\Elasticsearch\QueryBuilder\Term;
 use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
+use App\Facades\BudgetService;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Helpers\CarbonHelper;
@@ -40,16 +42,12 @@ class AssetTransferService
 
     public function allToAssetTransferData($search = null, $length = 50)
     {
-        $data = Elasticsearch::setModel(AssetTransfer::class)
-            ->searchMultiMatch($search, $length)
-            ->all();
-
-        $assetTransferData = AssetTransferData::collection(
-            collect($data)->pluck('_source')
-        );
-
-        $userNik = AuthHelper::getNik();
-        return $assetTransferData->toCollection()->where('nik', $userNik);
+        $data = Elasticsearch::setModel(AssetTransfer::class)->searchMultipleQuery($search, terms: [
+            new Term('nik', AuthHelper::getNik())
+        ], size: $length)->all();
+        return $data;
+        // return Arr::pluck($data, '_source');
+        // return AssetTransferData::collection(Arr::pluck($data, '_source'))->toCollection();
     }
 
     public function updateOrCreate(AssetTransferRequest $request, bool $isDraft = false)
@@ -137,6 +135,8 @@ class AssetTransferService
                 'file_bast' => $fileName,
             ]);
             $this->statusTransfer($assetTransfer, TransferStatus::RECEIVED);
+            $this->assetService->transfer($assetTransfer->asset, $assetTransfer->new_project, $assetTransfer->new_pic);
+            BudgetService::sendTransfer($assetTransfer->no_transaksi, $assetTransfer->asset_id);
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
         });
     }

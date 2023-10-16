@@ -12,4 +12,20 @@ class EmployeeService
         $employees = Employee::select($attributes)->get();
         return EmployeeData::collection($employees)->toCollection();
     }
+
+    public function findByNik($nik)
+    {
+        return Employee::query()
+            ->with([
+                'position' => function ($query) {
+                    $query->with([
+                        'divisi',
+                        'project',
+                        'department',
+                    ]);
+                }
+            ])
+            ->where('nik', $nik)
+            ->first();
+    }
 }

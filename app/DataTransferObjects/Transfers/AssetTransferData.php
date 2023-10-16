@@ -7,6 +7,7 @@ use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\WorkflowData;
 use App\Enums\Transfers\Transfer\Status as TransferStatus;
 use App\Enums\Workflows\Status;
+use App\Facades\HRIS\EmployeeService;
 use App\Interfaces\DataInterface;
 use App\Services\GlobalService;
 use Spatie\LaravelData\Data;
@@ -21,10 +22,12 @@ class AssetTransferData extends Data implements DataInterface
         public ?string $nik,
         public ?string $asset_id,
         public ?string $old_pic,
+        public ?string $old_project,
         public ?string $old_location,
         public ?string $old_divisi,
         public ?string $old_department,
         public ?string $new_pic,
+        public ?string $new_project,
         public ?string $new_location,
         public ?string $new_divisi,
         public ?string $new_department,
@@ -47,8 +50,8 @@ class AssetTransferData extends Data implements DataInterface
         public ?DataCollection $workflows,
     ) {
         $this->setDefaultValue();
-        $this->oldPic = EmployeeData::from(GlobalService::getEmployee($this->old_pic));
-        $this->newPic = EmployeeData::from(GlobalService::getEmployee($this->new_pic));
+        $this->oldPic = EmployeeData::from(EmployeeService::findByNik($this->old_pic) ?? []);
+        $this->newPic = EmployeeData::from(EmployeeService::findByNik($this->new_pic) ?? []);
     }
 
     private function setDefaultValue()

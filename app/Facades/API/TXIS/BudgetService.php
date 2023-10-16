@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Facade;
 /**
  * @mixin \App\Services\API\TXIS\BudgetService
  *
- * @method static \App\Services\API\TXIS\BudgetService sendTransfer(BudgetTransferData $data)
+ * @method static \App\Services\API\TXIS\BudgetService sendTransfer($noTransfer, $assetId)
  *
  * @see \App\Services\API\TXIS\BudgetService
  */

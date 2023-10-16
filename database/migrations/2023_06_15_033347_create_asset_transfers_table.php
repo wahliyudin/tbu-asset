@@ -18,10 +18,12 @@ return new class extends Migration
             $table->unsignedBigInteger('nik');
             $table->foreignIdFor(Asset::class);
             $table->unsignedBigInteger('old_pic');
+            $table->string('old_project');
             $table->string('old_location');
             $table->string('old_divisi');
             $table->string('old_department');
             $table->unsignedBigInteger('new_pic');
+            $table->string('new_project');
             $table->string('new_location');
             $table->string('new_divisi');
             $table->string('new_department');

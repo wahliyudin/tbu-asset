@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Transfers;
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Enums\Transfers\Transfer\Status;
+use App\Enums\Workflows\Status as WorkflowsStatus;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
@@ -33,25 +34,25 @@ class TransferController extends Controller
     public function datatable(Request $request)
     {
         return DataTables::of($this->service->allToAssetTransferData($request->get('search')))
-            ->editColumn('no_transaksi', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->no_transaksi;
+            ->editColumn('no_transaksi', function ($assetTransfer) {
+                return $assetTransfer->_source?->no_transaksi;
             })
-            ->editColumn('asset', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->asset?->kode;
+            ->editColumn('asset', function ($assetTransfer) {
+                return $assetTransfer->_source?->asset?->kode;
             })
-            ->editColumn('old_pic', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->oldPic?->nama_karyawan;
+            ->editColumn('old_pic', function ($assetTransfer) {
+                return $assetTransfer->_source?->oldPic?->nama_karyawan;
             })
-            ->editColumn('new_pic', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->newPic?->nama_karyawan;
+            ->editColumn('new_pic', function ($assetTransfer) {
+                return $assetTransfer->_source?->newPic?->nama_karyawan;
             })
-            ->editColumn('status_transfer', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->status_transfer?->status?->badge();
+            ->editColumn('status_transfer', function ($assetTransfer) {
+                return Status::tryFrom($assetTransfer->_source?->status_transfer?->status)?->badge();
             })
-            ->editColumn('status', function (AssetTransferData $assetTransfer) {
-                return $assetTransfer->status?->badge();
+            ->editColumn('status', function ($assetTransfer) {
+                return WorkflowsStatus::tryFrom($assetTransfer->_source?->status)?->badge();
             })
-            ->editColumn('action', function (AssetTransferData $assetTransfer) {
+            ->editColumn('action', function ($assetTransfer) {
                 return view('transfers.transfer.action', compact('assetTransfer'))->render();
             })
             ->rawColumns(['action', 'status', 'status_transfer'])
