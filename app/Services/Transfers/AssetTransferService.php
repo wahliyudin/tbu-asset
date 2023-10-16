@@ -68,6 +68,7 @@ class AssetTransferService
                 $this->storeStatusTransfer($assetTransfer->getKey(), TransferStatus::PENDING);
             }
             if (!$isDraft) {
+                $assetTransfer->loadMissing('asset.subCluster.cluster.category');
                 TransferWorkflowService::setModel($assetTransfer)
                     ->setAdditionalParams(
                         $this->additionalParams($data),

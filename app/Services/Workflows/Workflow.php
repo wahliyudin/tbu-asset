@@ -79,10 +79,7 @@ abstract class Workflow extends Checker
         if ($settingApproval->approval === Approval::DIRECTOR) {
             return $this->barrier >= 25_000_000 || $this->barrier != 'NON EQUIPMENT';
         }
-        if ($settingApproval->approval === Approval::GENERAL_MANAGER) {
-            return $this->barrier != 'EQUIPMENT';
-        }
-        if ($settingApproval->approval === Approval::GENERAL_MANAGER_OPERATION) {
+        if ($settingApproval->approval === Approval::DIVISION_HEAD) {
             return $this->barrier != 'EQUIPMENT';
         }
         return true;
