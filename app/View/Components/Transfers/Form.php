@@ -16,7 +16,6 @@ class Form extends Component
     public function __construct(
         public ?AssetTransferData $assetTransfer,
         public ?Asset $asset = null,
-        public ?string $noTransaksi = null,
         public string $type = '',
         public bool $withWorkflow = false,
         public bool $isCurrentWorkflow = false,

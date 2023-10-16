@@ -23,7 +23,7 @@ abstract class Workflow extends Checker
 {
     protected array $additionalParams = [];
 
-    protected int $barrier = 0;
+    protected int|string $barrier;
 
     public function __construct(
         protected Model $model,
@@ -60,10 +60,10 @@ abstract class Workflow extends Checker
     {
         $data = [];
         foreach ($approvals as $key => $approval) {
+            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
             if (!$this->delimiterCheck($approval)) {
                 break;
             }
-            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
         }
         return $data;
     }
@@ -71,16 +71,16 @@ abstract class Workflow extends Checker
     private function delimiterCheck(SettingApproval $settingApproval)
     {
         if ($settingApproval->approval === Approval::DEPARTMENT_HEAD) {
-            return $this->barrier < 10_000_000;
+            return (is_string($this->barrier) ? 0 : $this->barrier) < 10_000_000;
         }
         // if ($this->barrier > 10_000_000 && $this->barrier <= 25_000_000 && $settingApproval->approval === Approval::DIVISION_HEAD) {
         //     return true;
         // }
         if ($settingApproval->approval === Approval::DIRECTOR) {
-            return $this->barrier >= 25_000_000 || $this->barrier != 'NON EQUIPMENT';
+            return (is_string($this->barrier) ? 0 : $this->barrier) >= 25_000_000 || $this->barrier != 'EQUIPMENT';
         }
         if ($settingApproval->approval === Approval::DIVISION_HEAD) {
-            return $this->barrier != 'EQUIPMENT';
+            return $this->barrier != 'NON EQUIPMENT';
         }
         return true;
     }
@@ -168,7 +168,7 @@ abstract class Workflow extends Checker
         return $this;
     }
 
-    public function setBarrier(int $barrier)
+    public function setBarrier(string $barrier)
     {
         $this->barrier = $barrier;
         return $this;

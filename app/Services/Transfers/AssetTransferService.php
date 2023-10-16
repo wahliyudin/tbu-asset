@@ -60,6 +60,9 @@ class AssetTransferService
         if ($isDraft) {
             $additional['status'] = Status::DRAFT;
         }
+        if (!$request->get('no_transaksi')) {
+            $additional['no_transaksi'] = $this->nextNoTransfer(AuthHelper::getNik());
+        }
         $data = AssetTransferData::from(array_merge($request->all(), $additional));
         DB::transaction(function () use ($data, $isDraft) {
             $assetTransfer = $this->assetTransferRepository->updateOrCreate($data);

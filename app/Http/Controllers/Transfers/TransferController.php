@@ -6,6 +6,7 @@ use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Enums\Transfers\Transfer\Status;
 use App\Enums\Workflows\Status as WorkflowsStatus;
+use App\Helpers\AuthHelper;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transfers\AssetTransferRequest;
@@ -112,13 +113,11 @@ class TransferController extends Controller
 
     public function create(Request $request)
     {
-        $nik = auth()->user()?->nik;
         return view('transfers.transfer.create', [
             'assetTransfer' => AssetTransferData::from([
-                'new_pic' => $nik
+                'new_pic' => AuthHelper::getNik()
             ]),
-            'asset' => $this->service->checkAsset($request),
-            'noTransaksi' => $this->service->nextNoTransfer($nik)
+            'asset' => $this->service->checkAsset($request)
         ]);
     }
 

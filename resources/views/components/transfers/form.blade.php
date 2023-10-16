@@ -1,6 +1,6 @@
 <form action="" class="form-transfer">
     <input type="hidden" name="id" value="{{ $assetTransfer->id }}">
-    <input type="hidden" name="no_transaksi" value="{{ $assetTransfer->no_transaksi ?? $noTransaksi }}">
+    <input type="hidden" name="no_transaksi" value="{{ $assetTransfer->no_transaksi }}">
     <input type="hidden" name="nik" value="{{ $assetTransfer->nik }}">
     <input type="hidden" name="asset_id" value="{{ $assetTransfer->asset_id ?? $asset?->getKey() }}">
     <x-form-header title="TRANSFER ASSET" nomor="TBU-FM-AST-003" tanggal="12-04-2023" revisi="00"

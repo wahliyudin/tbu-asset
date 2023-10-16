@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('asset_transfers', function (Blueprint $table) {
             $table->id();
-            $table->string('no_transaksi');
+            $table->string('no_transaksi')->unique();
             $table->unsignedBigInteger('nik');
             $table->foreignIdFor(Asset::class);
             $table->unsignedBigInteger('old_pic');

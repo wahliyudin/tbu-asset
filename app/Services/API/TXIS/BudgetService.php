@@ -47,7 +47,7 @@ class BudgetService extends TXISService
 
     public function historyTransfer($noTransfer)
     {
-        return $this->post($this->url('/mutasibudget/viewbudget'), [
+        return $this->post($this->url('/mutasibudget/history'), [
             'no_transfer_asset' => $noTransfer,
         ]);
     }
