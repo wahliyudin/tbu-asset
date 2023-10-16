@@ -14,6 +14,7 @@ use App\Helpers\CarbonHelper;
 use App\Helpers\Helper;
 use App\Http\Requests\Transfers\AssetTransferRequest;
 use App\Http\Requests\Transfers\ReceivedRequest;
+use App\Jobs\Transfers\BudgetMutationJob;
 use App\Models\Employee;
 use App\Models\Transfers\AssetTransfer;
 use App\Models\Transfers\StatusTransfer;
@@ -68,7 +69,6 @@ class AssetTransferService
                 $this->storeStatusTransfer($assetTransfer->getKey(), TransferStatus::PENDING);
             }
             if (!$isDraft) {
-                $assetTransfer->loadMissing('asset.subCluster.cluster.category');
                 TransferWorkflowService::setModel($assetTransfer)
                     ->setAdditionalParams(
                         $this->additionalParams($data),
@@ -136,6 +136,7 @@ class AssetTransferService
             $this->statusTransfer($assetTransfer, TransferStatus::RECEIVED);
             $this->assetService->transfer($assetTransfer->asset, $assetTransfer->new_project, $assetTransfer->new_pic);
             BudgetService::sendTransfer($assetTransfer->no_transaksi, $assetTransfer->asset_id);
+            dispatch(new BudgetMutationJob('emails.transfer.finance', $assetTransfer));
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
         });
     }

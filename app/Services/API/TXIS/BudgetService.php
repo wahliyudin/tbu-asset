@@ -44,4 +44,11 @@ class BudgetService extends TXISService
             'project_from' => $projectFrom,
         ]);
     }
+
+    public function historyTransfer($noTransfer)
+    {
+        return $this->post($this->url('/mutasibudget/viewbudget'), [
+            'no_transfer_asset' => $noTransfer,
+        ]);
+    }
 }
