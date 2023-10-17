@@ -29,8 +29,10 @@ use App\Jobs\Masters\SubCluster\BulkJob as SubClusterBulkJob;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
+use App\Models\Employee;
 use App\Models\Masters\Lifetime;
 use App\Models\Masters\Unit;
+use App\Models\Project;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
@@ -59,6 +61,26 @@ class AssetService
     public function all($search = null, $size = 50)
     {
         return Elasticsearch::setModel(Asset::class)->searchMultiMatch($search, $size)->all();
+    }
+
+    public function datatable(Request $request)
+    {
+        $assets = Asset::query()->with(['project', 'employee', 'assetUnit.unit']);
+        if ($search = $request->get('custom_search')) {
+            $niks = Employee::select('nik')->where('nama_karyawan', 'like', "%$search%")->pluck('nik');
+            $projects = Project::select('project_id')->where('project', 'like', "%$search%")->pluck('project_id');
+            $assets->where('kode', 'like', "%$search%")
+                ->orWhereHas('assetUnit', function ($query) use ($search) {
+                    $query->where('kode', 'like', "%$search%")
+                        ->orWhereHas('unit', function ($query) use ($search) {
+                            $query->where('model', 'like', "%$search%");
+                        })
+                        ->orWhere('type', 'like', "%$search%");
+                })
+                ->orWhereIn('pic', $niks->toArray())
+                ->orWhereIn('asset_location', $projects->toArray());
+        }
+        return $assets;
     }
 
     public function assetIdle($search = null, $size = 50)

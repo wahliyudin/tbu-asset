@@ -3,19 +3,32 @@
 
 <head>
     <title>TBU</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            /* Atur mode collapse */
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            /* Tambahkan batas ke sel dan header */
+            padding: 8px;
+        }
+    </style>
 </head>
 
 <body>
     <div class="greeting" style="margin-bottom : 20px">
         <span>
-            <strong>Dear Dept Finace,</strong>
+            <strong>Dear Dept Finance,</strong>
         </span>
     </div>
     <div class="body">
         Budget planning with the costcode below has been moved from {{ $transfer->oldProject?->project }} to
         {{ $transfer->newProject?->project }} :
         <br>
-        <table>
+        <table style="margin-top: 10px;">
             <thead>
                 <tr>
                     <th>Costcode</th>
@@ -26,9 +39,9 @@
             <tbody>
                 @foreach ($histories as $history)
                     <tr>
-                        <td>{{ $history['budgetcode'] }}</td>
-                        <td>{{ $history['description_budget'] }}</td>
-                        <td>{{ number_format($history['remaining_budget']) }}</td>
+                        <td style="padding: 0 10px;">{{ $history['budgetcode'] }}</td>
+                        <td style="padding: 0 10px;">{{ $history['description_budget'] }}</td>
+                        <td style="padding: 0 10px;">{{ 'Rp. ' . number_format($history['remaining_budget']) }}</td>
                     </tr>
                 @endforeach
             </tbody>

@@ -64,21 +64,21 @@ var AssetsList = function () {
     };
 
     var initCategoryList = function () {
-        const tableRows = table.querySelectorAll('tbody tr');
-        tableRows.forEach(row => {
-            const dateRow = row.querySelectorAll('td');
-            const realDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
-            dateRow[5].setAttribute('data-order', realDate);
-        });
+        // const tableRows = table.querySelectorAll('tbody tr');
+        // tableRows.forEach(row => {
+        //     const dateRow = row.querySelectorAll('td');
+        //     const realDate = moment(dateRow[5].innerHTML, "DD MMM YYYY, LT").format(); // select date from 5th column in table
+        //     dateRow[5].setAttribute('data-order', realDate);
+        // });
         datatable = $(table).DataTable({
             processing: true,
-            // serverSide: true,
+            serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
                 url: "/asset-masters/datatable",
                 data: function (d) {
-                    d.search = $('input[name="search"]').val();
+                    d.custom_search = $('input[name="search"]').val();
                 }
             },
             columns: [
@@ -103,8 +103,8 @@ var AssetsList = function () {
                     data: 'asset_location',
                 },
                 {
-                    name: 'pic',
-                    data: 'pic',
+                    name: 'employee',
+                    data: 'employee',
                 },
                 {
                     name: 'action',
@@ -149,7 +149,7 @@ var AssetsList = function () {
         const filterSearch = document.querySelector('[data-kt-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
             // datatable.search(e.target.value).draw();
-            datatable.ajax.reload();
+            datatable.draw();
         });
     }
 

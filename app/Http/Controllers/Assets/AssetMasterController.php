@@ -11,17 +11,11 @@ use App\Http\Requests\Assets\AssetRequest;
 use App\Http\Requests\Assets\ImportRequest;
 use App\Imports\Assets\AssetImport;
 use App\Models\Assets\Asset;
+use App\Models\Employee;
 use App\Models\Masters\Lifetime;
+use App\Models\Project;
 use App\Services\Assets\AssetDepreciationService;
 use App\Services\Assets\AssetService;
-use App\Services\GlobalService;
-use App\Services\Masters\ActivityService;
-use App\Services\Masters\ConditionService;
-use App\Services\Masters\LeasingService;
-use App\Services\Masters\LifetimeService;
-use App\Services\Masters\SubClusterService;
-use App\Services\Masters\UnitService;
-use App\Services\Masters\UomService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Maatwebsite\Excel\Facades\Excel;
@@ -70,35 +64,31 @@ class AssetMasterController extends Controller
             ->make();
     }
 
-
     public function datatable(Request $request)
     {
-        return DataTables::collection($this->service->all($request->get('search')))
-            ->editColumn('kode', function ($asset) {
-                return $asset->_source->kode;
+        return datatables()
+            ->eloquent($this->service->datatable($request))
+            ->addColumn('kode_unit', function ($asset) {
+                return $asset->assetUnit?->kode;
             })
-            ->editColumn('kode_unit', function ($asset) {
-                return $asset->_source->asset_unit?->kode;
+            ->addColumn('unit_model', function ($asset) {
+                return $asset->assetUnit?->unit?->model;
             })
-            ->editColumn('unit_model', function ($asset) {
-                return $asset->_source->asset_unit?->unit?->model;
+            ->addColumn('unit_type', function ($asset) {
+                return $asset->assetUnit?->type;
             })
-            ->editColumn('unit_type', function ($asset) {
-                return $asset->_source->asset_unit?->type;
+            ->addColumn('asset_location', function ($asset) {
+                return $asset->project?->project;
             })
-            ->editColumn('asset_location', function ($asset) {
-                return $asset->_source->project?->project;
+            ->addColumn('employee', function ($asset) {
+                return $asset->employee?->nama_karyawan ?? $asset->pic;
             })
-            ->editColumn('pic', function ($asset) {
-                return $asset->_source->employee?->nama_karyawan ?? $asset->_source->pic;
-            })
-            ->editColumn('action', function ($asset) {
-                $key = $asset->_source->id;
-                $kode = $asset->_source->kode;
+            ->addColumn('action', function ($asset) {
+                $key = $asset->id;
+                $kode = $asset->kode;
                 return view('assets.asset.action', compact('key', 'kode'))->render();
             })
-            ->rawColumns(['action'])
-            ->make();
+            ->toJson();
     }
 
     public function show($kode)
