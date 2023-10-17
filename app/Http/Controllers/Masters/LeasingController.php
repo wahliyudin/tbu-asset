@@ -66,4 +66,14 @@ class LeasingController extends Controller
             throw $th;
         }
     }
+
+    public function dataForSelect()
+    {
+        try {
+            $data = $this->service->dataForSelect();
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }

@@ -38,66 +38,36 @@
                         <label class="required fs-6 fw-semibold mb-2">Sub Cluster</label>
                         <select class="form-select form-select" name="sub_cluster_id" data-control="select2"
                             data-placeholder="Sub Cluster" data-dropdown-parent=".sub-cluster">
-                            <option></option>
-                            @foreach ($subClusters as $subCluster)
-                                <option value="{{ $subCluster->getKey() }}">{{ $subCluster->name }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 pic">
                         <label class="required fs-6 fw-semibold mb-2">PIC</label>
                         <select class="form-select form-select" name="pic" data-control="select2"
                             data-placeholder="PIC" data-dropdown-parent=".pic">
-                            <option></option>
-                            @foreach ($employees as $employee)
-                                <option value="{{ $employee->nik }}">{{ $employee->nama_karyawan }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 activity">
                         <label class="required fs-6 fw-semibold mb-2">Activity</label>
                         <select class="form-select form-select" name="activity_id" data-control="select2"
                             data-placeholder="Activity" data-dropdown-parent=".activity">
-                            <option></option>
-                            @foreach ($activities as $activity)
-                                <option value="{{ $activity->getKey() }}">{{ $activity->name }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 asset_location">
                         <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
                         <select class="form-select form-select" name="asset_location" data-control="select2"
                             data-placeholder="Asset Location" data-dropdown-parent=".asset_location">
-                            <option></option>
-                            @foreach ($projects as $project)
-                                <option value="{{ $project->project_id }}">{{ $project->project }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 condition">
                         <label class="required fs-6 fw-semibold mb-2">Kondisi</label>
                         <select class="form-select form-select" name="condition_id" data-control="select2"
                             data-placeholder="Kondisi" data-dropdown-parent=".condition">
-                            <option></option>
-                            @foreach ($conditions as $condition)
-                                <option value="{{ $condition->getKey() }}">{{ $condition->name }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 uom">
                         <label class="required fs-6 fw-semibold mb-2">UOM</label>
                         <select class="form-select form-select" name="uom_id" data-control="select2"
                             data-placeholder="UOM" data-dropdown-parent=".uom">
-                            <option></option>
-                            @foreach ($uoms as $uom)
-                                <option value="{{ $uom->getKey() }}">{{ $uom->name }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -151,12 +121,6 @@
                         <label class="required fs-6 fw-semibold mb-2">Unit Model</label>
                         <select class="form-select form-select" name="unit_unit_id" data-control="select2"
                             data-placeholder="Unit" data-dropdown-parent=".unit">
-                            <option></option>
-                            @foreach ($units as $unit)
-                                <option data-prefix="{{ $unit->prefix }}" value="{{ $unit->getKey() }}">
-                                    {{ $unit->model }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -216,22 +180,12 @@
                         <label class="required fs-6 fw-semibold mb-2">Dealer</label>
                         <select class="form-select form-select" name="dealer_id_leasing" data-control="select2"
                             data-placeholder="Dealer" data-dropdown-parent=".dealer">
-                            <option></option>
-                            @foreach ($dealers as $dealer)
-                                <option value="{{ $dealer->vendorid }}">{{ $dealer->vendorname }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 leasing">
                         <label class="required fs-6 fw-semibold mb-2">Leasing</label>
                         <select class="form-select form-select" name="leasing_id_leasing" data-control="select2"
                             data-placeholder="Leasing" data-dropdown-parent=".leasing">
-                            <option></option>
-                            @foreach ($leasings as $leasing)
-                                <option value="{{ $leasing->getKey() }}">{{ $leasing->name }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -244,10 +198,6 @@
                         <select class="form-select form-select" name="jangka_waktu_leasing" data-control="select2"
                             data-placeholder="Jangka Waktu" data-dropdown-parent=".jangka_waktu_leasing">
                             <option></option>
-                            @foreach ($lifetimes as $lifetime)
-                                <option value="{{ $lifetime->masa_pakai }}">{{ $lifetime->masa_pakai }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -288,10 +238,6 @@
                         <select class="form-select form-select" name="jangka_waktu_insurance" data-control="select2"
                             data-placeholder="Jangka Waktu" data-dropdown-parent=".jangka_waktu_insurance">
                             <option></option>
-                            @foreach ($lifetimes as $lifetime)
-                                <option value="{{ $lifetime->masa_pakai }}">{{ $lifetime->masa_pakai }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -342,10 +288,6 @@
                         <select class="form-select form-select" name="lifetime_id" data-control="select2"
                             data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime">
                             <option></option>
-                            @foreach ($lifetimes as $lifetime)
-                                <option value="{{ $lifetime->getKey() }}">{{ $lifetime->masa_pakai }}
-                                </option>
-                            @endforeach
                         </select>
                     </div>
                 </div>

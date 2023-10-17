@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Masters;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\DealerStoreRequest;
 use App\Models\Masters\Dealer;
+use App\Services\GlobalService;
 use App\Services\Masters\DealerService;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -62,6 +63,16 @@ class DealerController extends Controller
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function dataForSelect()
+    {
+        try {
+            $data = GlobalService::vendorForSelect();
+            return response()->json($data);
         } catch (\Throwable $th) {
             throw $th;
         }

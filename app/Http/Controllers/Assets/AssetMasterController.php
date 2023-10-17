@@ -37,18 +37,7 @@ class AssetMasterController extends Controller
 
     public function index()
     {
-        return view('assets.asset.index', [
-            'uoms' => UomService::dataForSelect(),
-            'subClusters' => SubClusterService::dataForSelect(),
-            'units' => UnitService::dataForSelect(),
-            'lifetimes' => LifetimeService::dataForSelect(),
-            'activities' => ActivityService::dataForSelect(),
-            'conditions' => ConditionService::dataForSelect(),
-            'dealers' => GlobalService::vendorForSelect(),
-            'leasings' => LeasingService::dataForSelect(),
-            'projects' => GlobalService::getProjects(),
-            'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection()
-        ]);
+        return view('assets.asset.index');
     }
 
     public function datatablePG(Request $request)

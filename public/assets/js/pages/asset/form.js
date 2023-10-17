@@ -165,6 +165,135 @@ var form = function () {
         });
     }
 
+    var initAllSelects = () => {
+        var uom = {
+            url: 'master/uoms/data-for-select',
+            field: 'uom_id',
+            key: 'id',
+            value: 'name',
+            selected: null
+        }
+        initSelect(...Object.values(uom));
+        var subCluster = {
+            url: 'master/sub-clusters/data-for-select',
+            field: 'sub_cluster_id',
+            key: 'id',
+            value: 'name',
+            selected: null
+        }
+        initSelect(...Object.values(subCluster));
+        var unit = {
+            url: 'master/units/data-for-select',
+            field: 'unit_unit_id',
+            key: 'id',
+            value: 'model',
+            selected: null,
+            keyData: 'prefix'
+        }
+        initSelect(...Object.values(unit));
+        var activity = {
+            url: 'master/activities/data-for-select',
+            field: 'activity_id',
+            key: 'id',
+            value: 'name',
+            selected: null
+        }
+        initSelect(...Object.values(activity));
+        var condition = {
+            url: 'master/conditions/data-for-select',
+            field: 'condition_id',
+            key: 'id',
+            value: 'name',
+            selected: null
+        }
+        initSelect(...Object.values(condition));
+        var dealer = {
+            url: 'master/dealers/data-for-select',
+            field: 'dealer_id_leasing',
+            key: 'vendorid',
+            value: 'vendorname',
+            selected: null
+        }
+        initSelect(...Object.values(dealer));
+        var leasing = {
+            url: 'master/leasings/data-for-select',
+            field: 'leasing_id_leasing',
+            key: 'id',
+            value: 'name',
+            selected: null
+        }
+        initSelect(...Object.values(leasing));
+        var project = {
+            url: 'global/projects/data-for-select',
+            field: 'asset_location',
+            key: 'project_id',
+            value: 'project',
+            selected: null
+        }
+        initSelect(...Object.values(project));
+        var employee = {
+            url: 'global/employees/data-for-select',
+            field: 'pic',
+            key: 'nik',
+            value: 'nama_karyawan',
+            selected: null
+        }
+        initSelect(...Object.values(employee));
+        var lifetime = {
+            url: 'master/lifetimes/data-for-select',
+            field: [
+                'jangka_waktu_leasing',
+                'jangka_waktu_insurance',
+                'lifetime_id',
+            ],
+            key: 'masa_pakai',
+            value: 'masa_pakai',
+            selected: null
+        }
+        initSelect(...Object.values(lifetime));
+    }
+
+    var initSelect = (url, field, key, value, selected, keyData) => {
+        $.ajax({
+            url: url,
+            method: "POST",
+            type: 'application/json',
+            success: function (data) {
+                if (Array.isArray(field)) {
+                    $.each(field, function (index, fiel) {
+                        $(`select[name="${fiel}"]`).empty();
+                        $(`select[name="${fiel}"]`).append(`<option></option>`)
+                        $.each(data, function (index, dat) {
+                            var attr = `data-${keyData}="${getValueFromJSON(dat, keyData)}"`;
+                            var dataKey = getValueFromJSON(dat, key);
+                            $(`select[name="${fiel}"]`).append(
+                                `<option ${keyData ? attr : ''} value="${dataKey}" ${selected == dataKey ? 'selected' : ''}>${getValueFromJSON(dat, value)}</option>`
+                            );
+                        })
+                    });
+                } else {
+                    $(`select[name="${field}"]`).empty();
+                    $(`select[name="${field}"]`).append(`<option></option>`)
+                    $.each(data, function (index, dat) {
+                        var attr = `data-${keyData}="${getValueFromJSON(dat, keyData)}"`;
+                        var dataKey = getValueFromJSON(dat, key);
+                        $(`select[name="${field}"]`).append(
+                            `<option ${keyData ? attr : ''} value="${dataKey}" ${selected == dataKey ? 'selected' : ''}>${getValueFromJSON(dat, value)}</option>`
+                        );
+                    })
+                }
+            }
+        });
+    }
+
+    function getValueFromJSON(json, key) {
+        if (json.hasOwnProperty(key)) {
+            return json[key];
+        } else {
+            return null;
+        }
+    }
+
     return {
         init: function () {
             $.ajaxSetup({
@@ -174,6 +303,7 @@ var form = function () {
             });
             initEvents();
             initPlugins();
+            initAllSelects();
         }
     }
 }();

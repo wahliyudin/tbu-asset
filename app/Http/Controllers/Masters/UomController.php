@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Masters;
 
-use App\DataTransferObjects\Masters\UomData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\UomStoreRequest;
 use App\Models\Masters\Uom;
@@ -66,6 +65,16 @@ class UomController extends Controller
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function dataForSelect()
+    {
+        try {
+            $data = $this->service->dataForSelect();
+            return response()->json($data);
         } catch (\Throwable $th) {
             throw $th;
         }

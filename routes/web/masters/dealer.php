@@ -10,4 +10,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/dealers/store', [DealerController::class, 'store'])->name('masters.dealers.store')->middleware('permission:dealer_create');
     Route::post('master/dealers/{dealer}/edit', [DealerController::class, 'edit'])->name('masters.dealers.edit')->middleware('permission:dealer_update');
     Route::delete('master/dealers/{dealer}/destroy', [DealerController::class, 'destroy'])->name('masters.dealers.destroy')->middleware('permission:dealer_delete');
+
+    Route::post('master/dealers/data-for-select', [DealerController::class, 'dataForSelect'])->name('masters.dealers.data-for-select');
 });

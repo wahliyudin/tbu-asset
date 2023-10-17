@@ -11,4 +11,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/conditions/store', [ConditionController::class, 'store'])->name('masters.conditions.store')->middleware('permission:condition_create');
     Route::post('master/conditions/{condition}/edit', [ConditionController::class, 'edit'])->name('masters.conditions.edit')->middleware('permission:condition_update');
     Route::delete('master/conditions/{condition}/destroy', [ConditionController::class, 'destroy'])->name('masters.conditions.destroy')->middleware('permission:condition_delete');
+
+    Route::post('master/conditions/data-for-select', [ConditionController::class, 'dataForSelect'])->name('masters.conditions.data-for-select');
 });

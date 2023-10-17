@@ -107,10 +107,6 @@ class AssetTransferService
         if (!$projectId) {
             throw ValidationException::withMessages(['Old PIC belum mempunyai project']);
         }
-        $newProjectId = $assetTransferData?->newPic?->position?->project?->project_id;
-        if (!$newProjectId) {
-            throw ValidationException::withMessages(['New PIC belum mempunyai project']);
-        }
         return [
             [
                 'sequence' => 0,

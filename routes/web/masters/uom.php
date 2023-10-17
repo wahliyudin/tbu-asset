@@ -10,4 +10,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/uoms/store', [UomController::class, 'store'])->name('masters.uoms.store')->middleware('permission:uom_create');
     Route::post('master/uoms/{uom}/edit', [UomController::class, 'edit'])->name('masters.uoms.edit')->middleware('permission:uom_update');
     Route::delete('master/uoms/{uom}/destroy', [UomController::class, 'destroy'])->name('masters.uoms.destroy')->middleware('permission:uom_delete');
+
+    Route::post('master/uoms/data-for-select', [UomController::class, 'dataForSelect'])->name('masters.uoms.data-for-select');
 });

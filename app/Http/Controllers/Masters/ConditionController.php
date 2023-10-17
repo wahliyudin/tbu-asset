@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\ConditionRequest;
 use App\Models\Masters\Condition;
 use App\Services\Masters\ConditionService;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class ConditionController extends Controller
@@ -62,6 +61,16 @@ class ConditionController extends Controller
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function dataForSelect()
+    {
+        try {
+            $data = $this->service->dataForSelect();
+            return response()->json($data);
         } catch (\Throwable $th) {
             throw $th;
         }

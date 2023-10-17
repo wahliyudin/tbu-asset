@@ -4,6 +4,13 @@
     <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endpush
 
+@push('js')
+    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
+    @vite('resources/js/app.js')
+    <script src="{{ asset('assets/js/pages/asset/index.js') }}"></script>
+@endpush
+
 @section('title', 'Asset')
 
 @section('toolbar')
@@ -119,9 +126,7 @@
                 </div>
                 <div class="modal-body px-lg-17" style="min-height: 761px;">
                     <form class="form" action="#" id="create-asset_form">
-                        <x-assets.form :activities="$activities" :conditions="$conditions" :lifetimes="$lifetimes" :projects="$projects"
-                            :uoms="$uoms" :units="$units" :subClusters="$subClusters" :employees="$employees" :dealers="$dealers"
-                            :leasings="$leasings" />
+                        <x-assets.form />
                     </form>
                 </div>
                 <div class="modal-footer flex-center">
@@ -172,11 +177,4 @@
             </div>
         </div>
     </div>
-@endpush
-
-@push('js')
-    <script src="{{ asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
-    <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
-    @vite('resources/js/app.js')
-    <script src="{{ asset('assets/js/pages/asset/index.js') }}"></script>
 @endpush

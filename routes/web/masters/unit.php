@@ -11,4 +11,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('master/units/store', [UnitController::class, 'store'])->name('masters.units.store')->middleware('permission:unit_create');
     Route::post('master/units/{unit}/edit', [UnitController::class, 'edit'])->name('masters.units.edit')->middleware('permission:unit_update');
     Route::delete('master/units/{unit}/destroy', [UnitController::class, 'destroy'])->name('masters.units.destroy')->middleware('permission:unit_delete');
+
+    Route::post('master/units/data-for-select', [UnitController::class, 'dataForSelect'])->name('masters.units.data-for-select');
 });
