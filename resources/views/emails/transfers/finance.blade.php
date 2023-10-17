@@ -12,16 +12,16 @@
         </span>
     </div>
     <div class="body">
-        Budget planning with the costcode below has been moved from {{ $transfer->old_location }} to
-        {{ $transfer->new_location }} :
+        Budget planning with the costcode below has been moved from {{ $transfer->oldProject?->project }} to
+        {{ $transfer->newProject?->project }} :
         <br>
         <table>
             <thead>
-                <th>
-                <td>Costcode</td>
-                <td>Description</td>
-                <td>Remaining</td>
-                </th>
+                <tr>
+                    <th>Costcode</th>
+                    <th>Description</th>
+                    <th>Remaining</th>
+                </tr>
             </thead>
             <tbody>
                 @foreach ($histories as $history)

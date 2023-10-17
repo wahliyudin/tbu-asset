@@ -141,7 +141,8 @@ class AssetTransferService
             $this->assetService->transfer($assetTransfer->asset, $assetTransfer->new_project, $assetTransfer->new_pic);
             BudgetService::sendTransfer($assetTransfer?->asset?->assetUnit?->kode, $assetTransfer->old_project, $assetTransfer->new_project, $assetTransfer->no_transaksi, $assetTransfer->asset_id);
             $budgets = BudgetService::historyTransfer($assetTransfer->no_transaksi)->json();
-            dispatch(new BudgetMutationJob('emails.transfers.finance', $assetTransfer, Arr::pluck($budgets, 'data')));
+            $assetTransfer->load(['oldProject', 'newProject']);
+            dispatch(new BudgetMutationJob('emails.transfers.finance', $assetTransfer, isset($budgets['data']) ? $budgets['data'] : []));
             $this->assetTransferRepository->sendToElasticsearch($assetTransfer, $assetTransfer->getKey());
         });
     }
