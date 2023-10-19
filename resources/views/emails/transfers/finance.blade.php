@@ -21,7 +21,7 @@
 <body>
     <div class="greeting" style="margin-bottom : 20px">
         <span>
-            <strong>Dear Dept Finance,</strong>
+            <strong>Dear Dept Finace,</strong>
         </span>
     </div>
     <div class="body">
