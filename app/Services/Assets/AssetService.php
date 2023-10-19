@@ -136,8 +136,9 @@ class AssetService
 
     public function getDataForEdit($id): array
     {
-        $asset = Elasticsearch::setModel(Asset::class)->find($id)->asArray();
-        return $asset['_source'];
+        return Asset::query()->with(['assetUnit', 'leasing', 'insurance'])->findOrFail($id)->toArray();
+        // $asset = Elasticsearch::setModel(Asset::class)->find($id)->asArray();
+        // return $asset['_source'];
     }
 
     public function updateOrCreate(AssetRequest $request)
@@ -153,7 +154,7 @@ class AssetService
             $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
             $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
-            $this->sendToElasticsearch($asset, $data->getKey());
+            // $this->sendToElasticsearch($asset, $data->getKey());
         });
     }
 
@@ -230,7 +231,7 @@ class AssetService
             $this->assetUnitService->delete($asset->assetUnit);
             $this->assetInsuranceRepository->delete($asset->insurance);
             $this->assetLeasingRepository->delete($asset->leasing);
-            Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
+            // Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
             return $asset->delete();
         });
     }
@@ -240,7 +241,7 @@ class AssetService
         Asset::truncate();
         AssetLeasing::truncate();
         Depreciation::truncate();
-        Elasticsearch::setModel(Asset::class)->cleared();
+        // Elasticsearch::setModel(Asset::class)->cleared();
         $batch = Bus::batch([])->dispatch();
         foreach (array_chunk($data, 10) as $assets) {
             $batch->add(new ImportJob($assets));
@@ -379,7 +380,7 @@ class AssetService
                 'asset_location' => $toProject,
                 'pic' => $toPIC
             ]);
-            $this->sendToElasticsearch($asset, $asset->getKey());
+            // $this->sendToElasticsearch($asset, $asset->getKey());
         });
     }
 }

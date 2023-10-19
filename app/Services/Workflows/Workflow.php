@@ -70,17 +70,31 @@ abstract class Workflow extends Checker
 
     private function delimiterCheck(SettingApproval $settingApproval)
     {
-        if ($settingApproval->approval === Approval::DEPARTMENT_HEAD) {
-            return (is_string($this->barrier) ? 0 : $this->barrier) < 10_000_000;
+        $barrier = (int) $this->barrier;
+        if ($barrier == 0) {
+            return $this->barrierString($this->barrier, $settingApproval->approval);
         }
-        // if ($this->barrier > 10_000_000 && $this->barrier <= 25_000_000 && $settingApproval->approval === Approval::DIVISION_HEAD) {
-        //     return true;
-        // }
-        if ($settingApproval->approval === Approval::DIRECTOR) {
-            return (is_string($this->barrier) ? 0 : $this->barrier) >= 25_000_000 || $this->barrier != 'EQUIPMENT';
+        return $this->barrierInt($barrier, $settingApproval->approval);
+    }
+
+    private function barrierInt($barrier, $approval)
+    {
+        if ($approval === Approval::DEPARTMENT_HEAD) {
+            return $this->barrier < 10_000_000;
         }
-        if ($settingApproval->approval === Approval::DIVISION_HEAD) {
-            return $this->barrier != 'NON EQUIPMENT';
+        if ($approval === Approval::DIRECTOR) {
+            return $barrier >= 25_000_000;
+        }
+        return true;
+    }
+
+    private function barrierString($barrier, $approval)
+    {
+        if ($approval === Approval::DIRECTOR) {
+            return $barrier != 'EQUIPMENT';
+        }
+        if ($approval === Approval::DIVISION_HEAD) {
+            return $barrier != 'NON EQUIPMENT';
         }
         return true;
     }
