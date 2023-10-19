@@ -37,37 +37,37 @@
                     <div class="col-md-4 fv-row mb-7 sub-cluster">
                         <label class="required fs-6 fw-semibold mb-2">Sub Cluster</label>
                         <select class="form-select form-select" name="sub_cluster_id" data-control="select2"
-                            data-placeholder="Sub Cluster" data-dropdown-parent=".sub-cluster">
+                            data-placeholder="Loading..." data-dropdown-parent=".sub-cluster">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 pic">
                         <label class="required fs-6 fw-semibold mb-2">PIC</label>
                         <select class="form-select form-select" name="pic" data-control="select2"
-                            data-placeholder="PIC" data-dropdown-parent=".pic">
+                            data-placeholder="Loading..." data-dropdown-parent=".pic">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 activity">
                         <label class="required fs-6 fw-semibold mb-2">Activity</label>
                         <select class="form-select form-select" name="activity_id" data-control="select2"
-                            data-placeholder="Activity" data-dropdown-parent=".activity">
+                            data-placeholder="Loading..." data-dropdown-parent=".activity">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 asset_location">
                         <label class="required fs-6 fw-semibold mb-2">Asset Location</label>
                         <select class="form-select form-select" name="asset_location" data-control="select2"
-                            data-placeholder="Asset Location" data-dropdown-parent=".asset_location">
+                            data-placeholder="Loading..." data-dropdown-parent=".asset_location">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 condition">
                         <label class="required fs-6 fw-semibold mb-2">Kondisi</label>
                         <select class="form-select form-select" name="condition_id" data-control="select2"
-                            data-placeholder="Kondisi" data-dropdown-parent=".condition">
+                            data-placeholder="Loading..." data-dropdown-parent=".condition">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 uom">
                         <label class="required fs-6 fw-semibold mb-2">UOM</label>
                         <select class="form-select form-select" name="uom_id" data-control="select2"
-                            data-placeholder="UOM" data-dropdown-parent=".uom">
+                            data-placeholder="Loading..." data-dropdown-parent=".uom">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -120,7 +120,7 @@
                     <div class="col-md-4 fv-row mb-7 unit">
                         <label class="required fs-6 fw-semibold mb-2">Unit Model</label>
                         <select class="form-select form-select" name="unit_unit_id" data-control="select2"
-                            data-placeholder="Unit" data-dropdown-parent=".unit">
+                            data-placeholder="Loading..." data-dropdown-parent=".unit">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -179,13 +179,13 @@
                     <div class="col-md-4 fv-row mb-7 dealer">
                         <label class="required fs-6 fw-semibold mb-2">Dealer</label>
                         <select class="form-select form-select" name="dealer_id_leasing" data-control="select2"
-                            data-placeholder="Dealer" data-dropdown-parent=".dealer">
+                            data-placeholder="Loading..." data-dropdown-parent=".dealer">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7 leasing">
                         <label class="required fs-6 fw-semibold mb-2">Leasing</label>
                         <select class="form-select form-select" name="leasing_id_leasing" data-control="select2"
-                            data-placeholder="Leasing" data-dropdown-parent=".leasing">
+                            data-placeholder="Loading..." data-dropdown-parent=".leasing">
                         </select>
                     </div>
                     <div class="col-md-4 fv-row mb-7">
@@ -196,7 +196,7 @@
                     <div class="col-md-4 fv-row mb-7 jangka_waktu_leasing">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
                         <select class="form-select form-select" name="jangka_waktu_leasing" data-control="select2"
-                            data-placeholder="Jangka Waktu" data-dropdown-parent=".jangka_waktu_leasing">
+                            data-placeholder="Loading..." data-dropdown-parent=".jangka_waktu_leasing">
                             <option></option>
                         </select>
                     </div>
@@ -236,7 +236,7 @@
                     <div class="col-md-4 fv-row mb-7 jangka_waktu_insurance">
                         <label class="required fs-6 fw-semibold mb-2">Jangka Waktu</label>
                         <select class="form-select form-select" name="jangka_waktu_insurance" data-control="select2"
-                            data-placeholder="Jangka Waktu" data-dropdown-parent=".jangka_waktu_insurance">
+                            data-placeholder="Loading..." data-dropdown-parent=".jangka_waktu_insurance">
                             <option></option>
                         </select>
                     </div>
@@ -286,7 +286,7 @@
                     <div class="col-md-2 fv-row mb-7 lifetime">
                         <label class="required fs-6 fw-semibold mb-2">Masa Pakai</label>
                         <select class="form-select form-select" name="lifetime_id" data-control="select2"
-                            data-placeholder="Masa Pakai" data-dropdown-parent=".lifetime">
+                            data-placeholder="Loading..." data-dropdown-parent=".lifetime">
                             <option></option>
                         </select>
                     </div>
