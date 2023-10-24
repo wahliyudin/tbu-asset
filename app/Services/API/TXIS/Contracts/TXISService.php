@@ -23,14 +23,14 @@ abstract class TXISService implements APIInterface
     protected function get($url, array $query = null)
     {
         $query = http_build_query($query);
-        return Http::withHeaders([
+        return Http::withoutVerifying()->withHeaders([
             'Accept' => 'application/json'
         ])->get($url, $query);
     }
 
     protected function post($url, $data = [])
     {
-        return Http::withHeaders([
+        return Http::withoutVerifying()->withHeaders([
             'Accept' => 'application/json'
         ])->post($url, $data);
     }
