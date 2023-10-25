@@ -16,17 +16,14 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryService
 {
-    protected static CategoryRepository $categoryRepository;
-
     public function __construct(
-        CategoryRepository $categoryRepository
+        protected CategoryRepository $categoryRepository
     ) {
-        self::$categoryRepository = $categoryRepository;
     }
 
     public function all()
     {
-        return self::$categoryRepository->instance();
+        return $this->categoryRepository->instance();
     }
 
     public static function dataForSelect(...$others)
@@ -37,7 +34,7 @@ class CategoryService
     public function updateOrCreate(CategoryStoreRequest $request)
     {
         return DB::transaction(function () use ($request) {
-            $category = self::$categoryRepository->updateOrCreate($request->all());
+            $category = $this->categoryRepository->updateOrCreate($request->all());
             $this->sendToElasticsearch($category, $request->key);
             return $category;
         });
@@ -61,13 +58,13 @@ class CategoryService
     {
         return DB::transaction(function () use ($category) {
             Message::deleted(Topic::CATEGORY, 'id', $category->getKey(), Nested::CATEGORY);
-            return self::$categoryRepository->destroy($category);
+            return $this->categoryRepository->destroy($category);
         });
     }
 
     public function getDataForEdit($id): array
     {
-        return self::$categoryRepository->findOrFail($id)?->toArray();
+        return $this->categoryRepository->findOrFail($id)?->toArray();
     }
 
     private function sendToElasticsearch(Category $category, $key)
@@ -91,7 +88,7 @@ class CategoryService
 
     public function instanceBulk(Batch $batch)
     {
-        $categories = self::$categoryRepository->getAllDataWithRelations()->toArray();
+        $categories = $this->categoryRepository->getAllDataWithRelations()->toArray();
         foreach (array_chunk($categories, 10) as $categories) {
             $batch->add(new BulkJob($categories));
         }
