@@ -10,5 +10,6 @@ enum Topic: string
     case UNIT = 'asset_unit';
     case LEASING = 'asset_leasing';
     case ACTIVITY = 'asset_activity';
+    case UOM = 'asset_uom';
     case ASSET = 'asset_asset';
 }

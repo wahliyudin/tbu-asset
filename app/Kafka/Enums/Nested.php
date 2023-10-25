@@ -9,5 +9,6 @@ enum Nested: string
     case UNIT = 'unit';
     case LEASING = 'leasing';
     case ACTIVITY = 'activity';
+    case UOM = 'uom';
     case SUB_CLUSTER = 'sub_cluster';
 }

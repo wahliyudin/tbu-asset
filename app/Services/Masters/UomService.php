@@ -6,30 +6,36 @@ use App\DataTransferObjects\Masters\UomData;
 use App\Facades\Elasticsearch;
 use App\Http\Requests\Masters\UomStoreRequest;
 use App\Jobs\Masters\Uom\BulkJob;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\Uom;
+use App\Repositories\Masters\UomRepository;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class UomService
 {
-    public function all($search = null, $length = 50)
+    public function __construct(
+        protected UomRepository $uomRepository
+    ) {
+    }
+
+    public function all()
     {
-        return Elasticsearch::setModel(Uom::class)->searchMultiMatch($search, $length)->all();
+        return $this->uomRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return Uom::select(array_merge(['id', 'name'], $others))->get();
+        return (new UomRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(UomStoreRequest $request)
     {
-        $data = UomData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            $uom = Uom::query()->updateOrCreate([
-                'id' => $data->id
-            ], $data->toArray());
-            $this->sendToElasticsearch($uom, $data->getKey());
+        return DB::transaction(function () use ($request) {
+            $uom = $this->uomRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($uom, $request->id);
             return $uom;
         });
     }
@@ -40,7 +46,7 @@ class UomService
             return null;
         }
 
-        $uom = Uom::query()->where('name', $data['name'])->first();
+        $uom = $this->uomRepository->check($data['name']);
         if ($uom) {
             return $uom;
         }
@@ -54,28 +60,27 @@ class UomService
     public function delete(Uom $uom)
     {
         return DB::transaction(function () use ($uom) {
-            Elasticsearch::setModel(Uom::class)->deleted(UomData::from($uom));
-            return $uom->delete();
+            Message::deleted(Topic::UOM, 'id', $uom->getKey(), Nested::UOM);
+            return $this->uomRepository->destroy($uom);
         });
     }
 
     public function getDataForEdit($id): array
     {
-        $asset = Elasticsearch::setModel(Uom::class)->find($id)->asArray();
-        return $asset['_source'];
+        return $this->uomRepository->findOrFail($id)?->toArray();
     }
 
     private function sendToElasticsearch(Uom $uom, $key)
     {
         if ($key) {
-            return Elasticsearch::setModel(Uom::class)->updated(UomData::from($uom));
+            Message::updated(
+                Topic::UOM,
+                'id',
+                $uom->getKey(),
+                Nested::UOM,
+                $uom->toArray()
+            );
         }
-        return Elasticsearch::setModel(Uom::class)->created(UomData::from($uom));
-    }
-
-    public function getAllDataWithRelations()
-    {
-        return Uom::query()->get();
     }
 
     public function bulk(array $clusters = [])
@@ -86,7 +91,7 @@ class UomService
 
     public function instanceBulk(Batch $batch)
     {
-        $units = $this->getAllDataWithRelations()->toArray();
+        $units = $this->uomRepository->getAllDataWithRelations()->toArray();
         foreach (array_chunk($units, 10) as $units) {
             $batch->add(new BulkJob($units));
         }
