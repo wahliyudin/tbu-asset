@@ -13,7 +13,7 @@ class UnitRepository
 
     public function selectByAttributes($others)
     {
-        return Unit::select(array_merge(['id', 'name'], $others))->get();
+        return Unit::select(array_merge(['id', 'prefix', 'model'], $others))->get();
     }
 
     public function updateOrCreate($data)

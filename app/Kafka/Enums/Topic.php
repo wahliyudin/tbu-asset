@@ -8,5 +8,6 @@ enum Topic: string
     case CLUSTER = 'asset_cluster';
     case SUB_CLUSTER = 'asset_sub_cluster';
     case UNIT = 'asset_unit';
+    case LEASING = 'asset_leasing';
     case ASSET = 'asset_asset';
 }
