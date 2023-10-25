@@ -2,46 +2,46 @@
 
 namespace App\Repositories\Masters;
 
-use App\Models\Masters\Activity;
+use App\Models\Masters\Condition;
 
-class ActivityRepository
+class ConditionRepository
 {
     public function instance()
     {
-        return Activity::query()->get();
+        return Condition::query()->get();
     }
 
     public function selectByAttributes($others)
     {
-        return Activity::select(array_merge(['id', 'name'], $others))->get();
+        return Condition::select(array_merge(['id', 'name'], $others))->get();
     }
 
     public function updateOrCreate($data)
     {
-        return Activity::query()->updateOrCreate([
+        return Condition::query()->updateOrCreate([
             'id' => $data['key']
         ], $data);
     }
 
     public function check($name)
     {
-        return Activity::query()
+        return Condition::query()
             ->orWhere('name', trim($name))
             ->first();
     }
 
-    public function destroy(Activity $activity)
+    public function destroy(Condition $condition)
     {
-        return $activity->delete();
+        return $condition->delete();
     }
 
     public function findOrFail($id)
     {
-        return Activity::query()->findOrFail($id);
+        return Condition::query()->findOrFail($id);
     }
 
     public function getAllDataWithRelations()
     {
-        return Activity::query()->get();
+        return Condition::query()->get();
     }
 }

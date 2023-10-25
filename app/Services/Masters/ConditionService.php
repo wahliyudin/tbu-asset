@@ -2,37 +2,45 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\ConditionData;
 use App\Http\Requests\Masters\ConditionRequest;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\Condition;
+use App\Repositories\Masters\ConditionRepository;
 use Illuminate\Support\Facades\DB;
 
 class ConditionService
 {
+    public function __construct(
+        protected ConditionRepository $conditionRepository
+    ) {
+    }
+
     public function all()
     {
-        return Condition::query()->get();
+        return $this->conditionRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return Condition::select(array_merge(['id', 'name'], $others))->get();
+        return (new ConditionRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(ConditionRequest $request)
     {
-        $data = ConditionData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            return Condition::query()->updateOrCreate([
-                'id' => $data->key
-            ], $data->toArray());
+        return DB::transaction(function () use ($request) {
+            $condition = $this->conditionRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($condition, $request->key);
+            return $condition;
         });
     }
 
-    public function delete(Condition $lifetime)
+    public function delete(Condition $condition)
     {
-        return DB::transaction(function () use ($lifetime) {
-            return $lifetime->delete();
+        return DB::transaction(function () use ($condition) {
+            Message::deleted(Topic::CONDITION, 'id', $condition->getKey(), Nested::CONDITION);
+            return $this->conditionRepository->destroy($condition);
         });
     }
 
@@ -41,11 +49,24 @@ class ConditionService
         if (!$data['name']) {
             return null;
         }
-        if ($lifetime = Condition::query()->where('name', $data['name'])->first()) {
-            return $lifetime;
+        if ($condition = (new ConditionRepository)->check($data['name'])) {
+            return $condition;
         }
         return Condition::query()->create([
             'name' => $data['name']
         ]);
+    }
+
+    private function sendToElasticsearch(Condition $condition, $key)
+    {
+        if ($key) {
+            Message::updated(
+                Topic::CONDITION,
+                'id',
+                $condition->getKey(),
+                Nested::CONDITION,
+                $condition->toArray()
+            );
+        }
     }
 }

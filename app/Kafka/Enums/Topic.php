@@ -12,4 +12,5 @@ enum Topic: string
     case ACTIVITY = 'asset_activity';
     case UOM = 'asset_uom';
     case ASSET = 'asset_asset';
+    case CONDITION = 'asset_condition';
 }
