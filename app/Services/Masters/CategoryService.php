@@ -31,7 +31,7 @@ class CategoryService
 
     public static function dataForSelect(...$others)
     {
-        return self::$categoryRepository->selectByAttributes($others);
+        return (new CategoryRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(CategoryStoreRequest $request)
@@ -48,7 +48,7 @@ class CategoryService
         if (!isset($data['id']) || !isset($data['name'])) {
             return null;
         }
-        if ($category = self::$categoryRepository->check($data['name'])) {
+        if ($category = (new CategoryRepository)->check($data['name'])) {
             return $category;
         }
         return Category::query()->create([

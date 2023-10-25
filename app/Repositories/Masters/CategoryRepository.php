@@ -11,7 +11,7 @@ class CategoryRepository
         return Category::query();
     }
 
-    public function selectByAttributes(...$others)
+    public function selectByAttributes($others)
     {
         return Category::select(array_merge(['id', 'name'], $others))->get();
     }
