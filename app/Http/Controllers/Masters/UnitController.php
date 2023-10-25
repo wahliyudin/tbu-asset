@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Models\Masters\Unit;
 use App\Services\Masters\UnitService;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class UnitController extends Controller
 {
@@ -21,15 +19,9 @@ class UnitController extends Controller
         return view('masters.unit.index');
     }
 
-    public function datatable(Request $request)
+    public function datatable()
     {
-        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
-            ->editColumn('prefix', function ($unit) {
-                return $unit->_source->prefix;
-            })
-            ->editColumn('model', function ($unit) {
-                return $unit->_source->model;
-            })
+        return datatables()->of($this->service->all())
             ->editColumn('action', function ($unit) {
                 return view('masters.unit.action', compact('unit'))->render();
             })
@@ -52,7 +44,8 @@ class UnitController extends Controller
     public function edit($id)
     {
         try {
-            return response()->json($this->service->getDataForEdit($id));
+            $unit = $this->service->getDataForEdit($id);
+            return response()->json($unit);
         } catch (\Throwable $th) {
             throw $th;
         }
