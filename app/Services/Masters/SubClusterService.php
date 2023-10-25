@@ -6,30 +6,36 @@ use App\DataTransferObjects\Masters\SubClusterData;
 use App\Http\Requests\Masters\SubClusterStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Jobs\Masters\SubCluster\BulkJob;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\SubCluster;
+use App\Repositories\Masters\SubClusterRepository;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class SubClusterService
 {
-    public function all($search = null, $length = 50)
+    public function __construct(
+        protected SubClusterRepository $subClusterRepository
+    ) {
+    }
+
+    public function all()
     {
-        return Elasticsearch::setModel(SubCluster::class)->searchMultiMatch($search, $length)->all();
+        return $this->subClusterRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return SubCluster::select(array_merge(['id', 'name'], $others))->get();
+        return (new SubClusterRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(SubClusterStoreRequest $request)
     {
-        $data = SubClusterData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            $subCluster = SubCluster::query()->updateOrCreate([
-                'id' => $data->key
-            ], $data->toArray());
-            $this->sendToElasticsearch($subCluster, $data->getKey());
+        return DB::transaction(function () use ($request) {
+            $subCluster = $this->subClusterRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($subCluster, $request->key);
             return $subCluster;
         });
     }
@@ -39,7 +45,7 @@ class SubClusterService
         if (!isset($data['id']) || !isset($data['name']) || !isset($data['cluster_id'])) {
             return null;
         }
-        if ($subCluster = SubCluster::query()->where('id', trim($data['id']))->orWhere('cluster_id', trim($data['cluster_id']))->first()) {
+        if ($subCluster = (new SubClusterRepository)->check($data['name'], $data['cluster_id'])) {
             return $subCluster;
         }
         return SubCluster::query()->create([
@@ -52,29 +58,27 @@ class SubClusterService
     public function delete(SubCluster $subCluster)
     {
         return DB::transaction(function () use ($subCluster) {
-            Elasticsearch::setModel(SubCluster::class)->deleted(SubClusterData::from($subCluster));
-            return $subCluster->delete();
+            Message::deleted(Topic::SUB_CLUSTER, 'id', $subCluster->getKey(), Nested::SUB_CLUSTER);
+            return $this->subClusterRepository->destroy($subCluster);
         });
     }
 
     public function getDataForEdit($id): array
     {
-        $asset = Elasticsearch::setModel(SubCluster::class)->find($id)->asArray();
-        return $asset['_source'];
+        return $this->subClusterRepository->findOrFail($id)?->toArray();
     }
 
     private function sendToElasticsearch(SubCluster $subCluster, $key)
     {
-        $subCluster->load(['cluster.category', 'subClusterItems']);
         if ($key) {
-            return Elasticsearch::setModel(SubCluster::class)->updated(SubClusterData::from($subCluster));
+            Message::updated(
+                Topic::SUB_CLUSTER,
+                'id',
+                $subCluster->getKey(),
+                Nested::SUB_CLUSTER,
+                $subCluster->toArray()
+            );
         }
-        return Elasticsearch::setModel(SubCluster::class)->created(SubClusterData::from($subCluster));
-    }
-
-    public function getAllDataWithRelations()
-    {
-        return SubCluster::query()->with(['cluster.category', 'subClusterItems'])->get();
     }
 
     public function bulk(array $clusters = [])
@@ -85,7 +89,7 @@ class SubClusterService
 
     public function instanceBulk(Batch $batch)
     {
-        $subClusters = $this->getAllDataWithRelations()->toArray();
+        $subClusters = $this->subClusterRepository->getAllDataWithRelations()->toArray();
         foreach (array_chunk($subClusters, 10) as $subClusters) {
             $batch->add(new BulkJob($subClusters));
         }
