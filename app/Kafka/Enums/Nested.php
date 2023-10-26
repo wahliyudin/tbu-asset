@@ -12,4 +12,5 @@ enum Nested: string
     case UOM = 'uom';
     case SUB_CLUSTER = 'sub_cluster';
     case CONDITION = 'condition';
+    case ASSET = 'asset';
 }

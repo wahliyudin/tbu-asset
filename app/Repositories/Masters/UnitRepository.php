@@ -41,6 +41,11 @@ class UnitRepository
         return Unit::query()->findOrFail($id);
     }
 
+    public function find($id)
+    {
+        return Unit::query()->find($id);
+    }
+
     public function getAllDataWithRelations()
     {
         return Unit::query()->with(['clusters.subClusters.subClusterItems'])->get();
