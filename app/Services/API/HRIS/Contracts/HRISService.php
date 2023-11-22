@@ -28,7 +28,7 @@ abstract class HRISService implements APIInterface
     protected function get($url, $query = null, $token = null)
     {
         $token = $this->token() ?? $token;
-        return Http::withHeaders([
+        return Http::withoutVerifying()->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => "Bearer $token",
         ])->get($url, $query);
@@ -37,7 +37,7 @@ abstract class HRISService implements APIInterface
     protected function post($url, $data = [], $token = null)
     {
         $token = $this->token() ?? $token;
-        return Http::withHeaders([
+        return Http::withoutVerifying()->withHeaders([
             'Accept' => 'application/json',
             'Authorization' => "Bearer $token",
         ])->post($url, $data);

@@ -55,7 +55,7 @@ class AssetService
 
     public function allNotElastic()
     {
-        return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project'])->get();
+        return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project', 'lifetime'])->get();
     }
 
     public function all($search = null, $size = 50)
@@ -90,6 +90,11 @@ class AssetService
                 new Term('status', Status::IDLE->value)
             ], size: $size)
             ->all();
+    }
+
+    public function assetIdleNotElastic()
+    {
+        return Asset::query()->with(['assetUnit.unit', 'leasing', 'insurance', 'project'])->where('status', Status::IDLE->value)->get();
     }
 
     public function getById($id)
@@ -222,6 +227,7 @@ class AssetService
             'gr_number' => $data['gr_number'],
             'remark' => $data['remark'],
             'status_asset' => $data['status_asset'],
+            'status' => $data['status']
         ]);
     }
 

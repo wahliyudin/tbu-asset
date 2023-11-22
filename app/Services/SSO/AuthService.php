@@ -49,7 +49,7 @@ class AuthService
     {
         $state = $request->session()->pull('state');
         throw_unless(strlen($state) > 0 && $state == $request->state, InvalidArgumentException::class);
-        $response = Http::asForm()->post(
+        $response = Http::withoutVerifying()->asForm()->post(
             $this->urlCallback(),
             [
                 'grant_type' => 'authorization_code',
@@ -87,7 +87,7 @@ class AuthService
     {
         $oAuthToken = OauthToken::query()->where('user_id', auth()->user()->id)->first();
         if ($oAuthToken) {
-            $response = Http::withHeaders([
+            $response = Http::withoutVerifying()->withHeaders([
                 "Accept" => "application/json",
                 "Authorization" => "Bearer " . $oAuthToken->access_token
             ])->get(config('urls.hris') . 'api/logout');

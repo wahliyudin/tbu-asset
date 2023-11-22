@@ -78,16 +78,16 @@ class RegisterController extends Controller
             'kode' => $kode,
             'unitKode' => substr($kode, -7),
             'cerItemDetail' => $cerItemDetail,
-            'units' => UnitService::dataForSelect(),
-            'lifetimes' => LifetimeService::dataForSelect(),
-            'activities' => ActivityService::dataForSelect(),
-            'conditions' => ConditionService::dataForSelect(),
-            'uoms' => UomService::dataForSelect(),
-            'subClusters' => SubClusterService::dataForSelect(),
-            'dealers' => GlobalService::vendorForSelect(),
-            'leasings' => LeasingService::dataForSelect(),
-            'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection(),
-            'projects' => GlobalService::getProjects(),
+            // 'units' => UnitService::dataForSelect(),
+            // 'lifetimes' => LifetimeService::dataForSelect(),
+            // 'activities' => ActivityService::dataForSelect(),
+            // 'conditions' => ConditionService::dataForSelect(),
+            // 'uoms' => UomService::dataForSelect(),
+            // 'subClusters' => SubClusterService::dataForSelect(),
+            // 'dealers' => GlobalService::vendorForSelect(),
+            // 'leasings' => LeasingService::dataForSelect(),
+            // 'employees' => GlobalService::getEmployees(['nik', 'nama_karyawan'])->toCollection(),
+            // 'projects' => GlobalService::getProjects(),
         ]);
     }
 
@@ -107,7 +107,6 @@ class RegisterController extends Controller
     {
         try {
             $response = $this->cerItemService->getByCerItemId($id);
-            // dd($response);
             return response()->json([
                 'is_register' => isset($response['gr']['status_gr']) ? $response['gr']['status_gr'] : false,
                 [
