@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\ConditionRequest;
 use App\Models\Masters\Condition;
 use App\Services\Masters\ConditionService;
-use Yajra\DataTables\Facades\DataTables;
 
 class ConditionController extends Controller
 {
@@ -22,10 +21,7 @@ class ConditionController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('name', function ($condition) {
-                return $condition->name;
-            })
+        return datatables()->of($this->service->all())
             ->editColumn('action', function ($condition) {
                 return view('masters.condition.action', compact('condition'))->render();
             })

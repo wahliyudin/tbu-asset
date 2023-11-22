@@ -32,8 +32,7 @@
     <div class="card">
         <div class="card-body">
             <form action="" method="post" class="form-asset">
-                <x-assets.form :activities="$activities" :conditions="$conditions" :lifetimes="$lifetimes" :units="$units" :subClusters="$subClusters"
-                    :employees="$employees" :dealers="$dealers" :leasings="$leasings" :projects="$projects" :uoms="$uoms" />
+                <x-assets.form />
                 <div class="d-flex justify-content-end">
                     <button type="button" data-cer-item="{{ $cerItem->id }}" class="btn btn-sm btn-primary ps-4 simpan">
                         <span class="indicator-label">
@@ -59,7 +58,7 @@
     <script src="{{ asset('assets/plugins/custom/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('assets/js/pages/cer/register/register.js') }}"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ajaxStop(function() {
             $('input[name="kode"]').val("{{ $kode }}");
             $('select[name="sub_cluster_id"]').val('').trigger('change');
             $('select[name="pic"]').val('{{ $cerItem->cer?->nik }}').trigger('change');

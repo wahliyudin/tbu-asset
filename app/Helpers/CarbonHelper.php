@@ -57,30 +57,25 @@ class CarbonHelper
     public static function convertDate($date, $format = 'Y-m-d')
     {
         try {
+            $dateFormats = [
+                "d/m/Y",
+                "Y-m-d",
+                "Y/m/d",
+                "d-m-Y",
+                "m-d-Y",
+                "m/d/Y",
+                "d F Y",
+            ];
+
             if (is_int($date)) {
                 return Date::excelToDateTimeObject($date)->format($format);
             }
-            if (Carbon::hasFormat($date, "d/m/Y")) {
-                return Carbon::createFromFormat("d/m/Y", $date)->format($format);
+            foreach ($dateFormats as $dateFormat) {
+                if (Carbon::hasFormat($date, $dateFormat)) {
+                    return Carbon::createFromFormat($dateFormat, $date)->format($format);
+                }
             }
-            if (Carbon::hasFormat($date, "Y-m-d")) {
-                return Carbon::createFromFormat("Y-m-d", $date)->format($format);
-            }
-            if (Carbon::hasFormat($date, "Y/m/d")) {
-                return Carbon::createFromFormat("Y/m/d", $date)->format($format);
-            }
-            if (Carbon::hasFormat($date, "d-m-Y")) {
-                return Carbon::createFromFormat("d-m-Y", $date)->format($format);
-            }
-            if (Carbon::hasFormat($date, "m-d-Y")) {
-                return Carbon::createFromFormat("m-d-Y", $date)->format($format);
-            }
-            if (Carbon::hasFormat($date, "m/d/Y")) {
-                return Carbon::createFromFormat("m/d/Y", $date)->format($format);
-            }
-            if (Carbon::hasFormat($date, "d F Y")) {
-                return Carbon::createFromFormat("d F Y", $date)->format($format);
-            }
+            return null;
         } catch (\Throwable $th) {
             return null;
         }

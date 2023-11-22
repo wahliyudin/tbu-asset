@@ -6,45 +6,46 @@ use App\DataTransferObjects\Masters\UnitData;
 use App\Http\Requests\Masters\UnitStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Jobs\Masters\Unit\BulkJob;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\Unit;
+use App\Repositories\Masters\UnitRepository;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class UnitService
 {
-    public function all($search = null, $length = 50)
+    public function __construct(
+        protected UnitRepository $unitRepository
+    ) {
+    }
+
+    public function all()
     {
-        return Elasticsearch::setModel(Unit::class)->searchMultiMatch($search, $length)->all();
+        return $this->unitRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return Unit::select(array_merge(['id', 'prefix', 'model'], $others))->get();
+        return (new UnitRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(UnitStoreRequest $request)
     {
-        $data = UnitData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            $unit = Unit::query()->updateOrCreate([
-                'id' => $data->key
-            ], $data->toArray());
-            $this->sendToElasticsearch($unit, $data->getKey());
+        return DB::transaction(function () use ($request) {
+            $unit = $this->unitRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($unit, $request->key);
             return $unit;
         });
     }
-
 
     public static function store(array $data)
     {
         if (!isset($data['prefix']) || !isset($data['model'])) {
             return null;
         }
-        if ($unit = Unit::query()
-            ->where('prefix', trim(isset($data['prefix']) ? $data['prefix'] : null))
-            ->orWhere('model', trim(isset($data['model']) ? $data['model'] : null))
-            ->first()
-        ) {
+        if ($unit = (new UnitRepository)->check($data['prefix'], $data['model'])) {
             return $unit;
         }
         return Unit::query()->create([
@@ -56,28 +57,27 @@ class UnitService
     public function delete(Unit $unit)
     {
         return DB::transaction(function () use ($unit) {
-            Elasticsearch::setModel(Unit::class)->deleted(UnitData::from($unit));
-            return $unit->delete();
+            Message::deleted(Topic::UNIT, 'id', $unit->getKey(), Nested::UNIT);
+            return $this->unitRepository->destroy($unit);
         });
     }
 
     public function getDataForEdit($id): array
     {
-        $asset = Elasticsearch::setModel(Unit::class)->find($id)->asArray();
-        return $asset['_source'];
+        return $this->unitRepository->findOrFail($id)?->toArray();
     }
 
     private function sendToElasticsearch(Unit $unit, $key)
     {
         if ($key) {
-            return Elasticsearch::setModel(Unit::class)->updated(UnitData::from($unit));
+            Message::updated(
+                Topic::UNIT,
+                'id',
+                $unit->getKey(),
+                Nested::UNIT,
+                $unit->toArray()
+            );
         }
-        return Elasticsearch::setModel(Unit::class)->created(UnitData::from($unit));
-    }
-
-    public function getAllDataWithRelations()
-    {
-        return Unit::query()->get();
     }
 
     public function bulk(array $clusters = [])
@@ -88,7 +88,7 @@ class UnitService
 
     public function instanceBulk(Batch $batch)
     {
-        $units = $this->getAllDataWithRelations()->toArray();
+        $units = $this->unitRepository->getAllDataWithRelations()->toArray();
         foreach (array_chunk($units, 10) as $units) {
             $batch->add(new BulkJob($units));
         }

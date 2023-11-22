@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\CategoryStoreRequest;
 use App\Models\Masters\Category;
 use App\Services\Masters\CategoryService;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
     public function __construct(
-        private CategoryService $service
+        private CategoryService $service,
     ) {
     }
 
@@ -21,11 +19,11 @@ class CategoryController extends Controller
         return view('masters.category.index');
     }
 
-    public function datatable(Request $request)
+    public function datatable()
     {
-        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
+        return datatables()->of($this->service->all())
             ->editColumn('name', function ($category) {
-                return $category->_source->name;
+                return $category->name;
             })
             ->editColumn('action', function ($category) {
                 return view('masters.category.action', compact('category'))->render();
@@ -49,7 +47,8 @@ class CategoryController extends Controller
     public function edit($id)
     {
         try {
-            return response()->json($this->service->getDataForEdit($id));
+            $category = $this->service->getDataForEdit($id);
+            return response()->json($category);
         } catch (\Throwable $th) {
             throw $th;
         }

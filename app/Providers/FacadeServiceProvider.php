@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Elasticsearch\Elasticsearch;
 use App\Elasticsearch\ElasticsearchBuilder;
+use App\Kafka\Message;
 use App\Repositories\Transfers\AssetTransferRepository;
 use App\Services\API\TXIS\BudgetService;
 use App\Services\Assets\AssetService;
@@ -20,24 +21,30 @@ use Illuminate\Support\ServiceProvider;
 
 class FacadeServiceProvider extends ServiceProvider
 {
+    protected $facades = [
+        'elasticsearch' => Elasticsearch::class,
+        'pusher_websocket' => PusherBrodcast::class,
+        'asset_service' => AssetService::class,
+        'category_service' => CategoryService::class,
+        'cluster_service' => ClusterService::class,
+        'leasing_service' => LeasingService::class,
+        'sub_cluster_service' => SubClusterService::class,
+        'unit_service' => UnitService::class,
+        'uom_service' => UomService::class,
+        'employee_service' => EmployeeService::class,
+        'asset_transfer_service' => AssetTransferService::class,
+        'asset_transfer_repository' => AssetTransferRepository::class,
+        'txis_budget_service' => BudgetService::class,
+        'kafka_message' => Message::class,
+    ];
     /**
      * Register services.
      */
     public function register(): void
     {
-        $this->app->bind('elasticsearch', Elasticsearch::class);
-        $this->app->bind('pusher_websocket', PusherBrodcast::class);
-        $this->app->bind('asset_service', AssetService::class);
-        $this->app->bind('category_service', CategoryService::class);
-        $this->app->bind('cluster_service', ClusterService::class);
-        $this->app->bind('leasing_service', LeasingService::class);
-        $this->app->bind('sub_cluster_service', SubClusterService::class);
-        $this->app->bind('unit_service', UnitService::class);
-        $this->app->bind('uom_service', UomService::class);
-        $this->app->bind('employee_service', EmployeeService::class);
-        $this->app->bind('asset_transfer_service', AssetTransferService::class);
-        $this->app->bind('asset_transfer_repository', AssetTransferRepository::class);
-        $this->app->bind('txis_budget_service', BudgetService::class);
+        foreach ($this->facades as $abstract => $concrete) {
+            $this->app->bind($abstract, $concrete);
+        }
     }
 
     /**

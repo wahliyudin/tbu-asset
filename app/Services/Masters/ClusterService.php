@@ -6,30 +6,36 @@ use App\DataTransferObjects\Masters\ClusterData;
 use App\Http\Requests\Masters\ClusterStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Jobs\Masters\Cluster\BulkJob;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\Cluster;
+use App\Repositories\Masters\ClusterRepository;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class ClusterService
 {
-    public function all($search = null, $length = 50)
+    public function __construct(
+        protected ClusterRepository $clusterRepository
+    ) {
+    }
+
+    public function all()
     {
-        return Elasticsearch::setModel(Cluster::class)->searchMultiMatch($search, $length)->all();
+        return $this->clusterRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return Cluster::select(array_merge(['id', 'name'], $others))->get();
+        return (new ClusterRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(ClusterStoreRequest $request)
     {
-        $data = ClusterData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            $cluster = Cluster::query()->updateOrCreate([
-                'id' => $data->key
-            ], $data->toArray());
-            $this->sendToElasticsearch($cluster, $data->getKey());
+        return DB::transaction(function () use ($request) {
+            $cluster = $this->clusterRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($cluster, $request->key);
             return $cluster;
         });
     }
@@ -39,7 +45,7 @@ class ClusterService
         if (!isset($data['id']) || !isset($data['name']) || !isset($data['category_id'])) {
             return null;
         }
-        if ($cluster = Cluster::query()->where('name', trim($data['name']))->where('category_id', trim($data['category_id']))->first()) {
+        if ($cluster = (new ClusterRepository)->check($data['name'], $data['category_id'])) {
             return $cluster;
         }
         return Cluster::query()->create([
@@ -52,29 +58,27 @@ class ClusterService
     public function delete(Cluster $cluster)
     {
         return DB::transaction(function () use ($cluster) {
-            Elasticsearch::setModel(Cluster::class)->deleted(ClusterData::from($cluster));
-            return $cluster->delete();
+            Message::deleted(Topic::CLUSTER, 'id', $cluster->getKey(), Nested::CLUSTER);
+            return $this->clusterRepository->destroy($cluster);
         });
     }
 
     public function getDataForEdit($id): array
     {
-        $asset = Elasticsearch::setModel(Cluster::class)->find($id)->asArray();
-        return $asset['_source'];
+        return $this->clusterRepository->findOrFail($id)?->toArray();
     }
 
     private function sendToElasticsearch(Cluster $cluster, $key)
     {
-        $cluster->load(['subClusters.subClusterItems', 'category']);
         if ($key) {
-            return Elasticsearch::setModel(Cluster::class)->updated(ClusterData::from($cluster));
+            Message::updated(
+                Topic::CLUSTER,
+                'id',
+                $cluster->getKey(),
+                Nested::CLUSTER,
+                $cluster->toArray()
+            );
         }
-        return Elasticsearch::setModel(Cluster::class)->created(ClusterData::from($cluster));
-    }
-
-    public function getAllDataWithRelations()
-    {
-        return Cluster::query()->with(['subClusters.subClusterItems', 'category'])->get();
     }
 
     public function bulk(array $clusters = [])
@@ -85,7 +89,7 @@ class ClusterService
 
     public function instanceBulk(Batch $batch)
     {
-        $clusters = $this->getAllDataWithRelations()->toArray();
+        $clusters = $this->clusterRepository->getAllDataWithRelations()->toArray();
         foreach (array_chunk($clusters, 10) as $clusters) {
             $batch->add(new BulkJob($clusters));
         }

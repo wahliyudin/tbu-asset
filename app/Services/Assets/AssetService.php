@@ -22,10 +22,9 @@ use App\Jobs\Assets\BulkCompleted;
 use App\Jobs\Assets\BulkJob;
 use App\Jobs\Assets\ImportCompleted;
 use App\Jobs\Assets\ImportJob;
-use App\Jobs\Masters\Category\BulkJob as CategoryBulkJob;
-use App\Jobs\Masters\Cluster\BulkJob as ClusterBulkJob;
-use App\Jobs\Masters\Leasing\BulkJob as LeasingBulkJob;
-use App\Jobs\Masters\SubCluster\BulkJob as SubClusterBulkJob;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Assets\Asset;
 use App\Models\Assets\AssetLeasing;
 use App\Models\Assets\Depreciation;
@@ -36,11 +35,10 @@ use App\Models\Project;
 use App\Repositories\Assets\AssetInsuranceRepository;
 use App\Repositories\Assets\AssetLeasingRepository;
 use App\Repositories\Assets\AssetRepository;
-use Illuminate\Bus\Batch;
+use App\Repositories\Masters\UnitRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class AssetService
 {
@@ -50,6 +48,7 @@ class AssetService
         protected AssetLeasingRepository $assetLeasingRepository,
         protected AssetUnitService $assetUnitService,
         protected AssetDepreciationService $assetDepreciationService,
+        protected UnitRepository $unitRepository,
     ) {
     }
 
@@ -65,22 +64,9 @@ class AssetService
 
     public function datatable(Request $request)
     {
-        $assets = Asset::query()->with(['project', 'employee', 'assetUnit.unit']);
-        if ($search = $request->get('custom_search')) {
-            $niks = Employee::select('nik')->where('nama_karyawan', 'like', "%$search%")->pluck('nik');
-            $projects = Project::select('project_id')->where('project', 'like', "%$search%")->pluck('project_id');
-            $assets->where('kode', 'like', "%$search%")
-                ->orWhereHas('assetUnit', function ($query) use ($search) {
-                    $query->where('kode', 'like', "%$search%")
-                        ->orWhereHas('unit', function ($query) use ($search) {
-                            $query->where('model', 'like', "%$search%");
-                        })
-                        ->orWhere('type', 'like', "%$search%");
-                })
-                ->orWhereIn('pic', $niks->toArray())
-                ->orWhereIn('asset_location', $projects->toArray());
-        }
-        return $assets;
+        $searchTerm = $request->get('custom_search');
+        $query = $this->assetRepository->instance();
+        return $this->assetRepository->applySearchFilters($searchTerm, $query);
     }
 
     public function assetIdle($search = null, $size = 50)
@@ -99,51 +85,22 @@ class AssetService
 
     public function getById($id)
     {
-        return Asset::query()->with([
-            'assetUnit.unit',
-            'subCluster.cluster.category', 'department',
-            'insurance',
-            'leasing',
-            'uom', 'lifetime', 'activity', 'condition'
-        ])->find($id);
+        return $this->assetRepository->findById($id);
     }
 
     public function getByKode($kode)
     {
-        return Asset::query()
-            ->with([
-                'assetUnit.unit',
-                'subCluster.cluster.category',
-                'department',
-                'insurance',
-                'leasing.dealer',
-                'leasing.leasing',
-                'uom',
-                'lifetime',
-                'activity',
-                'condition',
-                'employee.position' => function ($query) {
-                    $query->with([
-                        'divisi',
-                        'project',
-                        'department',
-                    ]);
-                }
-            ])
-            ->where('kode', $kode)
-            ->firstOrFail();
+        return $this->assetRepository->findByKode($kode);
     }
 
     public function getByStatus(Status $status)
     {
-        return Asset::query()->where('status', $status)->get();
+        return $this->assetRepository->getByStatus($status);
     }
 
     public function getDataForEdit($id): array
     {
-        return Asset::query()->with(['assetUnit', 'leasing', 'insurance'])->findOrFail($id)->toArray();
-        // $asset = Elasticsearch::setModel(Asset::class)->find($id)->asArray();
-        // return $asset['_source'];
+        return $this->assetRepository->dataForEditById($id)?->toArray();
     }
 
     public function updateOrCreate(AssetRequest $request)
@@ -159,7 +116,7 @@ class AssetService
             $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
             $this->assetLeasingRepository->updateOrCreateByAsset(AssetLeasingData::fromRequest($request), $asset);
-            // $this->sendToElasticsearch($asset, $data->getKey());
+            $this->sendToElasticsearch($asset, $data->getKey());
         });
     }
 
@@ -167,16 +124,26 @@ class AssetService
     {
         $results = [];
         foreach (isset($depre['result']) ? $depre['result'] : [] as $key => $value) {
-            $results[] = [
-                'asset_id' => $assetId,
-                'masa_pakai' => $masa_pakai,
-                'umur_asset' => null,
-                'umur_pakai' => null,
-                'depresiasi' => Helper::resetRupiah($value['depreciation']),
-                'sisa' => Helper::resetRupiah($value['sisa']),
-            ];
+            $results[] = $this->populateDepreciation(
+                $assetId,
+                $masa_pakai,
+                $value['depreciation'],
+                $value['sisa']
+            );
         }
         return $results;
+    }
+
+    public function populateDepreciation($assetId, $masaPakai, $depreciation, $sisa, $umurAsset = null, $umurPakai = null)
+    {
+        return [
+            'asset_id' => $assetId,
+            'masa_pakai' => $masaPakai,
+            'umur_asset' => $umurAsset,
+            'umur_pakai' => $umurPakai,
+            'depresiasi' => Helper::resetRupiah($depreciation),
+            'sisa' => Helper::resetRupiah($sisa),
+        ];
     }
 
     public function prepareDeprecation($assetId, $masa_pakai, $date, $price)
@@ -184,14 +151,12 @@ class AssetService
         $depre = $this->assetDepreciationService->generate($masa_pakai, $date, $price);
         $results = [];
         foreach ($depre['result'] as $key => $value) {
-            $results[] = [
-                'asset_id' => $assetId,
-                'masa_pakai' => $masa_pakai,
-                'umur_asset' => null,
-                'umur_pakai' => null,
-                'depresiasi' => Helper::resetRupiah($value['depreciation']),
-                'sisa' => Helper::resetRupiah($value['sisa']),
-            ];
+            $results[] = $this->populateDepreciation(
+                $assetId,
+                $masa_pakai,
+                $value['depreciation'],
+                $value['sisa']
+            );
         }
         return $results;
     }
@@ -201,34 +166,13 @@ class AssetService
         if (!isset($data['kode'])) {
             return null;
         }
-
-        $asset = Asset::query()->where('kode', $data['kode'])->first();
+        $assetRepository = new AssetRepository;
+        $asset = $assetRepository->findByKode($data['kode']);
         if ($asset) {
             return $asset;
         }
 
-        return Asset::query()->create([
-            'kode' => $data['kode'],
-            'asset_unit_id' => $data['asset_unit_id'],
-            'sub_cluster_id' => $data['sub_cluster_id'],
-            'pic' => $data['pic'],
-            'activity_id' => $data['activity_id'],
-            'asset_location' => $data['asset_location'],
-            'dept_id' => $data['dept_id'],
-            'condition_id' => $data['condition_id'],
-            'lifetime_id' => $data['lifetime_id'],
-            'uom_id' => $data['uom_id'],
-            'quantity' => $data['quantity'],
-            'nilai_sisa' => $data['nilai_sisa'],
-            'tgl_bast' => $data['tgl_bast'],
-            'hm' => $data['hm'],
-            'pr_number' => $data['pr_number'],
-            'po_number' => $data['po_number'],
-            'gr_number' => $data['gr_number'],
-            'remark' => $data['remark'],
-            'status_asset' => $data['status_asset'],
-            'status' => $data['status']
-        ]);
+        return $assetRepository->insertByImport($data);
     }
 
     public function delete(Asset $asset)
@@ -237,7 +181,7 @@ class AssetService
             $this->assetUnitService->delete($asset->assetUnit);
             $this->assetInsuranceRepository->delete($asset->insurance);
             $this->assetLeasingRepository->delete($asset->leasing);
-            // Elasticsearch::setModel(Asset::class)->deleted(AssetData::from($asset));
+            Message::deleted(Topic::ASSET, 'id', $asset->getKey(), Nested::ASSET);
             return $asset->delete();
         });
     }
@@ -281,13 +225,13 @@ class AssetService
 
     private static function getDataBulk()
     {
-        return Asset::query()->with(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'project', 'department'])->get();
+        return (new AssetRepository)->getWithAllRelations();
     }
 
     public function nextIdAssetUnitById($id)
     {
         $assetUnit = $this->assetUnitService->getByIdAndLatest($id);
-        $unit = Unit::query()->find($id);
+        $unit = $this->unitRepository->find($id);
         $lastKode = $assetUnit?->kode;
         $prefix = $unit->prefix . '-';
         $length = 6;
@@ -303,10 +247,7 @@ class AssetService
     private function sendToElasticsearch(Asset $asset, $key)
     {
         $asset->load(['assetUnit.unit', 'subCluster.cluster.category', 'department', 'depreciations', 'depreciation', 'insurance', 'leasing', 'uom', 'lifetime', 'activity', 'condition', 'employee']);
-        if ($key) {
-            return Elasticsearch::setModel(Asset::class)->updated(AssetData::from($asset));
-        }
-        return Elasticsearch::setModel(Asset::class)->created(AssetData::from($asset));
+        return Message::updateOrCreate(Topic::ASSET, $asset->getKey(), $asset->toArray());
     }
 
     public function nextKode(string $kode)
@@ -386,7 +327,7 @@ class AssetService
                 'asset_location' => $toProject,
                 'pic' => $toPIC
             ]);
-            // $this->sendToElasticsearch($asset, $asset->getKey());
+            $this->sendToElasticsearch($asset, $asset->getKey());
         });
     }
 }

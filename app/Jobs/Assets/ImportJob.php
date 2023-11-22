@@ -48,7 +48,7 @@ class ImportJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(UomService $uomService, LeasingService $leasingService): void
     {
         $results = [];
         foreach ($this->assets as $i => $val) {
@@ -91,11 +91,11 @@ class ImportJob implements ShouldQueue
             ]);
 
 
-            $uom = (new UomService)->store([
+            $uom = $uomService->store([
                 'name' => isset($val['uom']) ? $val['uom'] : null,
             ]);
 
-            $leasing = (new LeasingService)->store(LeasingData::from(['name' => isset($val['vendor_leasing']) ? $val['vendor_leasing'] : null]));
+            $leasing = $leasingService->store(LeasingData::from(['name' => isset($val['vendor_leasing']) ? $val['vendor_leasing'] : null]));
 
             $pic = Employee::query()->where('nama_karyawan', $val['pic'])->first();
 

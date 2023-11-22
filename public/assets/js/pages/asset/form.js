@@ -166,81 +166,148 @@ var form = function () {
     }
 
     var initAllSelects = () => {
+        selectUom();
+        selectSubCluster();
+        selectUnit();
+        selectActivity();
+        selectCondition();
+        selectDealer();
+        selectLeasing();
+        selectProject();
+        selectEmployee();
+        selectLifetime();
+    }
+
+    var selectUom = () => {
         var uom = {
-            url: 'master/uoms/data-for-select',
+            url: '/master/uoms/data-for-select',
             field: 'uom_id',
             key: 'id',
             value: 'name',
             selected: null
         }
-        initSelect(...Object.values(uom));
+        var request = initSelect(...Object.values(uom));
+        $.when(request).done(function () {
+            $('select[name="uom_id"').data('placeholder', 'UOM');
+        });
+    }
+
+    var selectSubCluster = () => {
         var subCluster = {
-            url: 'master/sub-clusters/data-for-select',
+            url: '/master/sub-clusters/data-for-select',
             field: 'sub_cluster_id',
             key: 'id',
             value: 'name',
             selected: null
         }
-        initSelect(...Object.values(subCluster));
+        var request = initSelect(...Object.values(subCluster));
+        $.when(request).done(function () {
+            $('select[name="sub_cluster_id"').data('placeholder', 'Sub Cluster');
+        });
+    }
+
+    var selectUnit = () => {
         var unit = {
-            url: 'master/units/data-for-select',
+            url: '/master/units/data-for-select',
             field: 'unit_unit_id',
             key: 'id',
             value: 'model',
             selected: null,
             keyData: 'prefix'
         }
-        initSelect(...Object.values(unit));
+        var request = initSelect(...Object.values(unit));
+        $.when(request).done(function () {
+            $('select[name="unit_unit_id"').data('placeholder', 'Unit');
+        });
+    }
+
+    var selectActivity = () => {
         var activity = {
-            url: 'master/activities/data-for-select',
+            url: '/master/activities/data-for-select',
             field: 'activity_id',
             key: 'id',
             value: 'name',
             selected: null
         }
-        initSelect(...Object.values(activity));
+        var request = initSelect(...Object.values(activity));
+        $.when(request).done(function () {
+            $('select[name="activity_id"').data('placeholder', 'Activity');
+        });
+    }
+
+    var selectCondition = () => {
         var condition = {
-            url: 'master/conditions/data-for-select',
+            url: '/master/conditions/data-for-select',
             field: 'condition_id',
             key: 'id',
             value: 'name',
             selected: null
         }
-        initSelect(...Object.values(condition));
+        var request = initSelect(...Object.values(condition));
+        $.when(request).done(function () {
+            $('select[name="condition_id"').data('placeholder', 'Kondisi');
+        });
+    }
+
+    var selectDealer = () => {
         var dealer = {
-            url: 'master/dealers/data-for-select',
+            url: '/master/dealers/data-for-select',
             field: 'dealer_id_leasing',
             key: 'vendorid',
             value: 'vendorname',
             selected: null
         }
-        initSelect(...Object.values(dealer));
+        var request = initSelect(...Object.values(dealer));
+        $.when(request).done(function () {
+            $('select[name="dealer_id_leasing"').data('placeholder', 'Dealer');
+        });
+    }
+
+    var selectLeasing = () => {
         var leasing = {
-            url: 'master/leasings/data-for-select',
+            url: '/master/leasings/data-for-select',
             field: 'leasing_id_leasing',
             key: 'id',
             value: 'name',
             selected: null
         }
-        initSelect(...Object.values(leasing));
+        var request = initSelect(...Object.values(leasing));
+        $.when(request).done(function () {
+            $('select[name="leasing_id_leasing"').data('placeholder', 'Leasing');
+        });
+    }
+
+    var selectProject = () => {
         var project = {
-            url: 'global/projects/data-for-select',
+            url: '/global/projects/data-for-select',
             field: 'asset_location',
             key: 'project_id',
             value: 'project',
             selected: null
         }
-        initSelect(...Object.values(project));
+        var request = initSelect(...Object.values(project));
+        $.when(request).done(function () {
+            $('select[name="asset_location"').data('placeholder', 'Asset Location');
+        });
+    }
+
+    var selectEmployee = () => {
         var employee = {
-            url: 'global/employees/data-for-select',
+            url: '/global/employees/data-for-select',
             field: 'pic',
             key: 'nik',
             value: 'nama_karyawan',
             selected: null
         }
-        initSelect(...Object.values(employee));
+        var request = initSelect(...Object.values(employee));
+        $.when(request).done(function () {
+            $('select[name="pic"').data('placeholder', 'PIC');
+        });
+    }
+
+    var selectLifetime = () => {
         var lifetime = {
-            url: 'master/lifetimes/data-for-select',
+            url: '/master/lifetimes/data-for-select',
             field: [
                 'jangka_waktu_leasing',
                 'jangka_waktu_insurance',
@@ -250,11 +317,16 @@ var form = function () {
             value: 'masa_pakai',
             selected: null
         }
-        initSelect(...Object.values(lifetime));
+        var request = initSelect(...Object.values(lifetime));
+        $.when(request).done(function () {
+            $('select[name="jangka_waktu_leasing"').data('placeholder', 'Jangka Waktu');
+            $('select[name="jangka_waktu_insurance"').data('placeholder', 'Jangka Waktu');
+            $('select[name="lifetime_id"').data('placeholder', 'Masa Pakai');
+        });
     }
 
     var initSelect = (url, field, key, value, selected, keyData) => {
-        $.ajax({
+        return $.ajax({
             url: url,
             method: "POST",
             type: 'application/json',

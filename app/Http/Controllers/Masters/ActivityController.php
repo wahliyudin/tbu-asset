@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Masters\ActivityRequest;
 use App\Models\Masters\Activity;
 use App\Services\Masters\ActivityService;
-use Yajra\DataTables\Facades\DataTables;
 
 class ActivityController extends Controller
 {
@@ -22,10 +21,7 @@ class ActivityController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->service->all())
-            ->editColumn('name', function ($activity) {
-                return $activity->name;
-            })
+        return datatables()->of($this->service->all())
             ->editColumn('action', function ($activity) {
                 return view('masters.activity.action', compact('activity'))->render();
             })

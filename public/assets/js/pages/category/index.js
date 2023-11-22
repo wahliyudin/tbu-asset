@@ -19,15 +19,11 @@ var CategorysList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            // serverSide: true,
+            serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/categories/datatable",
-                data: function (d) {
-                    d.search = $('input[name="search"]').val();
-                    d.length = $('select[name="category_table_length"]').val();
-                }
+                url: "/master/categories/datatable"
             },
             columns: [
                 {
@@ -51,14 +47,7 @@ var CategorysList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-category-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.ajax.reload();
-        });
-
-        $('select[name="category_table_length"]').change(function (e) {
-            e.preventDefault();
-            if (datatable.data().count() < $(this).val()) {
-                datatable.ajax.reload();
-            }
+            datatable.search(e.target.value).draw();
         });
     }
 
@@ -98,7 +87,9 @@ var CategorysList = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: handleError
+                        error: function (jqXHR) {
+                            handleError(target, jqXHR);
+                        }
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -175,7 +166,9 @@ var CategorysList = function () {
                                     }
                                 });
                             },
-                            error: handleError
+                            error: function (jqXHR) {
+                                handleError(submitButton, jqXHR);
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -255,9 +248,9 @@ var CategorysList = function () {
         })
     }
 
-    var handleError = function (jqXHR) {
-        submitButton.removeAttribute('data-kt-indicator');
-        submitButton.disabled = false;
+    var handleError = function (target, jqXHR) {
+        target.removeAttribute('data-kt-indicator');
+        target.disabled = false;
         if (jqXHR.status == 422) {
             Swal.fire({
                 icon: 'warning',
@@ -297,7 +290,9 @@ var CategorysList = function () {
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
-                error: handleError
+                error: function (jqXHR) {
+                    handleError(target, jqXHR);
+                }
             });
         });
     }

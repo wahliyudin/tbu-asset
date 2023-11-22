@@ -19,20 +19,16 @@ var ClustersList = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            // serverSide: true,
+            serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
-                url: "/master/clusters/datatable",
-                data: function (d) {
-                    d.search = $('input[name="search"]').val();
-                    d.length = $('select[name="cluster_table_length"]').val();
-                }
+                url: "/master/clusters/datatable"
             },
             columns: [
                 {
-                    name: 'category',
-                    data: 'category',
+                    name: 'category.name',
+                    data: 'category.name',
                 },
                 {
                     name: 'name',
@@ -55,14 +51,7 @@ var ClustersList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-cluster-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.ajax.reload();
-        });
-
-        $('select[name="cluster_table_length"]').change(function (e) {
-            e.preventDefault();
-            if (datatable.data().count() < $(this).val()) {
-                datatable.ajax.reload();
-            }
+            datatable.search(e.target.value).draw();
         });
     }
 
@@ -102,7 +91,9 @@ var ClustersList = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: handleError
+                        error: function (jqXHR) {
+                            handleError(target, jqXHR);
+                        }
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -187,7 +178,9 @@ var ClustersList = function () {
                                     }
                                 });
                             },
-                            error: handleError
+                            error: function (jqXHR) {
+                                handleError(submitButton, jqXHR);
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -267,9 +260,9 @@ var ClustersList = function () {
         })
     }
 
-    var handleError = function (jqXHR) {
-        submitButton.removeAttribute('data-kt-indicator');
-        submitButton.disabled = false;
+    var handleError = function (target, jqXHR) {
+        target.removeAttribute('data-kt-indicator');
+        target.disabled = false;
         if (jqXHR.status == 422) {
             Swal.fire({
                 icon: 'warning',
@@ -311,7 +304,9 @@ var ClustersList = function () {
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
-                error: handleError
+                error: function (jqXHR) {
+                    handleError(target, jqXHR);
+                }
             });
         });
     }

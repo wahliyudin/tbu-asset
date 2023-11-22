@@ -2,37 +2,45 @@
 
 namespace App\Services\Masters;
 
-use App\DataTransferObjects\Masters\ActivityData;
 use App\Http\Requests\Masters\ActivityRequest;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\Activity;
+use App\Repositories\Masters\ActivityRepository;
 use Illuminate\Support\Facades\DB;
 
 class ActivityService
 {
+    public function __construct(
+        protected ActivityRepository $activityRepository
+    ) {
+    }
+
     public function all()
     {
-        return Activity::query()->get();
+        return $this->activityRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return Activity::select(array_merge(['id', 'name'], $others))->get();
+        return (new ActivityRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(ActivityRequest $request)
     {
-        $data = ActivityData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            return Activity::query()->updateOrCreate([
-                'id' => $data->key
-            ], $data->toArray());
+        return DB::transaction(function () use ($request) {
+            $activity = $this->activityRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($activity, $request->key);
+            return $activity;
         });
     }
 
-    public function delete(Activity $lifetime)
+    public function delete(Activity $activity)
     {
-        return DB::transaction(function () use ($lifetime) {
-            return $lifetime->delete();
+        return DB::transaction(function () use ($activity) {
+            Message::deleted(Topic::ACTIVITY, 'id', $activity->getKey(), Nested::ACTIVITY);
+            return $this->activityRepository->destroy($activity);
         });
     }
 
@@ -41,11 +49,24 @@ class ActivityService
         if (!$data['name']) {
             return null;
         }
-        if ($lifetime = Activity::query()->where('name', $data['name'])->first()) {
-            return $lifetime;
+        if ($activity = (new ActivityRepository)->check($data['name'])) {
+            return $activity;
         }
         return Activity::query()->create([
             'name' => $data['name']
         ]);
+    }
+
+    private function sendToElasticsearch(Activity $activity, $key)
+    {
+        if ($key) {
+            Message::updated(
+                Topic::ACTIVITY,
+                'id',
+                $activity->getKey(),
+                Nested::ACTIVITY,
+                $activity->toArray()
+            );
+        }
     }
 }

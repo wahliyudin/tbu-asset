@@ -19,7 +19,7 @@ var condition = function () {
         });
         datatable = $(table).DataTable({
             processing: true,
-            // serverSide: true,
+            serverSide: true,
             order: [[0, 'asc']],
             ajax: {
                 type: "POST",
@@ -87,7 +87,9 @@ var condition = function () {
                                 datatable.ajax.reload();
                             });
                         },
-                        error: handleError
+                        error: function (jqXHR) {
+                            handleError(target, jqXHR);
+                        }
                     });
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
@@ -164,7 +166,9 @@ var condition = function () {
                                     }
                                 });
                             },
-                            error: handleError
+                            error: function (jqXHR) {
+                                handleError(submitButton, jqXHR);
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -244,9 +248,9 @@ var condition = function () {
         })
     }
 
-    var handleError = function (jqXHR) {
-        submitButton.removeAttribute('data-kt-indicator');
-        submitButton.disabled = false;
+    var handleError = function (target, jqXHR) {
+        target.removeAttribute('data-kt-indicator');
+        target.disabled = false;
         if (jqXHR.status == 422) {
             Swal.fire({
                 icon: 'warning',
@@ -286,7 +290,9 @@ var condition = function () {
                     $(target).removeAttr("data-kt-indicator");
                     modal.show();
                 },
-                error: handleError
+                error: function (jqXHR) {
+                    handleError(target, jqXHR);
+                }
             });
         });
     }

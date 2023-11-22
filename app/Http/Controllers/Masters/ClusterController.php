@@ -7,13 +7,11 @@ use App\Http\Requests\Masters\ClusterStoreRequest;
 use App\Models\Masters\Cluster;
 use App\Services\Masters\CategoryService;
 use App\Services\Masters\ClusterService;
-use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class ClusterController extends Controller
 {
     public function __construct(
-        private ClusterService $service,
+        private ClusterService $clusterService,
     ) {
     }
 
@@ -24,14 +22,11 @@ class ClusterController extends Controller
         ]);
     }
 
-    public function datatable(Request $request)
+    public function datatable()
     {
-        return DataTables::of($this->service->all($request->get('search'), $request->get('length')))
-            ->editColumn('category', function ($cluster) {
-                return $cluster->_source->category?->name;
-            })
+        return datatables()->of($this->clusterService->all())
             ->editColumn('name', function ($cluster) {
-                return $cluster->_source->name;
+                return $cluster->name;
             })
             ->editColumn('action', function ($cluster) {
                 return view('masters.cluster.action', compact('cluster'))->render();
@@ -43,7 +38,7 @@ class ClusterController extends Controller
     public function store(ClusterStoreRequest $request)
     {
         try {
-            $this->service->updateOrCreate($request);
+            $this->clusterService->updateOrCreate($request);
             return response()->json([
                 'message' => 'Berhasil disimpan'
             ]);
@@ -55,7 +50,8 @@ class ClusterController extends Controller
     public function edit($id)
     {
         try {
-            return response()->json($this->service->getDataForEdit($id));
+            $cluster = $this->clusterService->getDataForEdit($id);
+            return response()->json($cluster);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -64,7 +60,7 @@ class ClusterController extends Controller
     public function destroy(Cluster $cluster)
     {
         try {
-            $this->service->delete($cluster);
+            $this->clusterService->delete($cluster);
             return response()->json([
                 'message' => 'Berhasil dihapus'
             ]);

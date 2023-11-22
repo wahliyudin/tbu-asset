@@ -6,30 +6,36 @@ use App\DataTransferObjects\Masters\LeasingData;
 use App\Http\Requests\Masters\LeasingStoreRequest;
 use App\Facades\Elasticsearch;
 use App\Jobs\Masters\Leasing\BulkJob;
+use App\Kafka\Enums\Nested;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Masters\Leasing;
+use App\Repositories\Masters\LeasingRepository;
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\DB;
 
 class LeasingService
 {
-    public function all($search = null, $length = 50)
+    public function __construct(
+        protected LeasingRepository $leasingRepository
+    ) {
+    }
+
+    public function all()
     {
-        return Elasticsearch::setModel(Leasing::class)->searchMultiMatch($search, $length)->all();
+        return $this->leasingRepository->instance();
     }
 
     public static function dataForSelect(...$others)
     {
-        return Leasing::select(array_merge(['id', 'name'], $others))->get();
+        return (new LeasingRepository)->selectByAttributes($others);
     }
 
     public function updateOrCreate(LeasingStoreRequest $request)
     {
-        $data = LeasingData::from($request->all());
-        return DB::transaction(function () use ($data) {
-            $leasing = Leasing::query()->updateOrCreate([
-                'id' => $data->key
-            ], $data->toArray());
-            $this->sendToElasticsearch($leasing, $data->getKey());
+        return DB::transaction(function () use ($request) {
+            $leasing = $this->leasingRepository->updateOrCreate($request->all());
+            $this->sendToElasticsearch($leasing, $request->key);
             return $leasing;
         });
     }
@@ -39,7 +45,7 @@ class LeasingService
         if (!isset($data->name)) {
             return null;
         }
-        $leasing = Leasing::query()->where('name', $data->name)->first();
+        $leasing = $this->leasingRepository->check($data->name);
         if ($leasing) {
             return $leasing;
         }
@@ -48,13 +54,6 @@ class LeasingService
             'name' => $data->name,
         ]);
     }
-
-    // public static function store(LeasingData $data)
-    // {
-    //     return Leasing::query()->create([
-    //         'name' => $data->name,
-    //     ]);
-    // }
 
     public function delete(Leasing $leasing)
     {
@@ -66,21 +65,20 @@ class LeasingService
 
     public function getDataForEdit($id): array
     {
-        $asset = Elasticsearch::setModel(Leasing::class)->find($id)->asArray();
-        return $asset['_source'];
+        return $this->leasingRepository->findOrFail($id)?->toArray();
     }
 
-    private function sendToElasticsearch(Leasing $cluster, $key)
+    private function sendToElasticsearch(Leasing $leasing, $key)
     {
         if ($key) {
-            return Elasticsearch::setModel(Leasing::class)->updated(LeasingData::from($cluster));
+            Message::updated(
+                Topic::LEASING,
+                'id',
+                $leasing->getKey(),
+                Nested::LEASING,
+                $leasing->toArray()
+            );
         }
-        return Elasticsearch::setModel(Leasing::class)->created(LeasingData::from($cluster));
-    }
-
-    public function getAllDataWithRelations()
-    {
-        return Leasing::query()->get();
     }
 
     public function bulk(array $clusters = [])
@@ -91,7 +89,7 @@ class LeasingService
 
     public function instanceBulk(Batch $batch)
     {
-        $leasings = $this->getAllDataWithRelations()->toArray();
+        $leasings = $this->leasingRepository->getAllDataWithRelations()->toArray();
         foreach (array_chunk($leasings, 10) as $leasings) {
             $batch->add(new BulkJob($leasings));
         }
