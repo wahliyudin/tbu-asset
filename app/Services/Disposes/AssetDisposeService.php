@@ -3,14 +3,13 @@
 namespace App\Services\Disposes;
 
 use App\DataTransferObjects\Disposes\AssetDisposeData;
-use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Http\Requests\Disposes\AssetDisposeRequest;
 use App\Models\Disposes\AssetDispose;
 use App\Repositories\Disposes\AssetDisposeRepository;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -70,5 +69,10 @@ class AssetDisposeService
                 $query->where('nik', AuthHelper::getNik());
             })
             ->get();
+    }
+
+    public function dataForExport(Request $request)
+    {
+        return AssetDispose::query()->get();
     }
 }

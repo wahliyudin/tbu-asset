@@ -405,7 +405,7 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <div
-                            class="menu-sub menu-sub-accordion {{ request()->routeIs('reports.asset-masters.index', 'reports.asset-requests.index', 'reports.asset-transfers.index') ? 'hover show' : '' }}">
+                            class="menu-sub menu-sub-accordion {{ request()->routeIs('reports.asset-masters.index', 'reports.asset-requests.index', 'reports.asset-transfers.index', 'reports.asset-disposes.index') ? 'hover show' : '' }}">
                             @permission('asset_master_report')
                                 <div class="menu-item">
                                     <a class="menu-link {{ request()->routeIs('reports.asset-masters.index') ? 'active' : '' }}"
@@ -441,7 +441,8 @@
                             @endpermission
                             @permission('asset_dispose_report')
                                 <div class="menu-item">
-                                    <a class="menu-link" href="">
+                                    <a class="menu-link {{ request()->routeIs('reports.asset-disposes.index') ? 'active' : '' }}"
+                                        href="{{ route('reports.asset-disposes.index') }}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
