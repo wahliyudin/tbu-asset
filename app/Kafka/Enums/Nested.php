@@ -13,4 +13,7 @@ enum Nested: string
     case SUB_CLUSTER = 'sub_cluster';
     case CONDITION = 'condition';
     case ASSET = 'asset';
+    case ASSET_REQUEST = 'asset_request';
+    case ASSET_TRANSFER = 'asset_transfer';
+    case ASSET_DISPOSE = 'asset_dispose';
 }

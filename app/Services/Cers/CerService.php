@@ -4,14 +4,11 @@ namespace App\Services\Cers;
 
 use App\DataTransferObjects\Cers\CerData;
 use App\Elasticsearch\QueryBuilder\Term;
-use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Helpers\Helper;
 use App\Http\Requests\Cers\CerRequest;
-use App\Kafka\Enums\Topic;
-use App\Kafka\Facades\Message;
 use App\Models\Cers\Cer;
 use App\Models\Department;
 use App\Models\Employee;
@@ -20,7 +17,6 @@ use App\Repositories\Cers\CerRepository;
 use App\Services\API\HRIS\EmployeeService;
 use App\Services\API\TXIS\CerService as TXISCerService;
 use App\Services\UserService;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -61,7 +57,7 @@ class CerService
                     ->setBarrier($data->grandTotal())
                     ->store();
             }
-            $this->sendToElasticsearch($cer, $data->getKey());
+            $this->cerRepository->sendToElasticsearch($cer, $data->getKey());
             return $cer;
         });
     }
@@ -71,7 +67,7 @@ class CerService
         return DB::transaction(function () use ($cer) {
             $cer->items()->delete();
             $cer->workflows()->delete();
-            // return Message::deleted(Topic::ASSET_REQUEST, 'id', $cer->getKey(), Nested::ASSET_REQUEST);
+            $this->cerRepository->destroyFromElastic($cer);
             return $cer->delete();
         });
     }
@@ -99,8 +95,10 @@ class CerService
 
     public function update(Cer $cer, array $data)
     {
-        $cer->update($data);
-        $this->sendToElasticsearch($cer, $cer->getKey());
+        return DB::transaction(function () use ($cer, $data) {
+            $cer->update($data);
+            $this->cerRepository->sendToElasticsearch($cer, $cer->getKey());
+        });
     }
 
     public function findByNo($no)
@@ -131,12 +129,6 @@ class CerService
     {
         $data = (new TXISCerService)->getByCode($code);
         return isset($data['data']) ? $data['data'] : [];
-    }
-
-    private function sendToElasticsearch(Cer $cer, $key)
-    {
-        $cer->load(['items', 'workflows']);
-        // return Message::updateOrCreate(Topic::ASSET_REQUEST, $cer->getKey(), $cer->toArray());
     }
 
     public static function nextNumber($projectPrefix)

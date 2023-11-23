@@ -13,4 +13,7 @@ enum Topic: string
     case UOM = 'asset_uom';
     case ASSET = 'asset_asset';
     case CONDITION = 'asset_condition';
+    case ASSET_REQUEST = 'asset_request';
+    case ASSET_TRANSFER = 'asset_transfer';
+    case ASSET_DISPOSE = 'asset_dispose';
 }
