@@ -34,9 +34,10 @@ class CerController extends Controller
         return view('cers.cer.index');
     }
 
-    public function datatable(Request $request)
+    public function datatable()
     {
-        return DataTables::of($this->service->allNotElastic())
+        $data = $this->service->datatable();
+        return datatables()->of($data)
             ->editColumn('no_cer', function ($cer) {
                 return $cer->no_cer;
             })
@@ -67,7 +68,7 @@ class CerController extends Controller
 
     public function datatableAssetIdle()
     {
-        return DataTables::of($this->assetService->allNotElastic())
+        return datatables()->of($this->assetService->assetIdle())
             ->editColumn('kode', function (Asset $asset) {
                 return $asset->kode;
             })

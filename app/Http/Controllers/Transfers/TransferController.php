@@ -63,7 +63,7 @@ class TransferController extends Controller
 
     public function datatableAsset()
     {
-        $data = $this->assetService->datatableForTransfers();
+        $data = $this->assetService->datatableForSelect();
         return datatables()->of($data)
             ->editColumn('nama', function ($asset) {
                 return $asset->assetUnit?->unit?->model;

@@ -27,6 +27,11 @@ class AssetDisposeService
         return AssetDisposeData::collection(Arr::pluck($data, '_source'))->toCollection()->where('nik', auth()->user()?->nik);
     }
 
+    public function datatable()
+    {
+        return AssetDispose::query()->get();
+    }
+
     public function updateOrCreate(AssetDisposeRequest $request, $isDraft = false)
     {
         $additional = ['status' => Status::OPEN];

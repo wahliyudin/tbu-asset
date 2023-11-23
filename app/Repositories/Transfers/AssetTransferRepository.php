@@ -4,6 +4,7 @@ namespace App\Repositories\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Facades\Elasticsearch;
+use App\Kafka\Enums\Nested;
 use App\Kafka\Enums\Topic;
 use App\Kafka\Facades\Message;
 use App\Models\Transfers\AssetTransfer;
@@ -39,8 +40,7 @@ class AssetTransferRepository
 
     public function deleteFromElasticsearch(AssetTransfer $assetTransfer)
     {
-        $assetTransferData = AssetTransferData::from($assetTransfer);
-        return Elasticsearch::setModel(AssetTransfer::class)->deleted($assetTransferData);
+        // return Message::deleted(Topic::ASSET_TRANSFER, 'id', $assetTransfer->getKey(), Nested::ASSET_TRANSFER);
     }
 
     public function sendToElasticsearch(AssetTransfer $assetTransfer, $key)

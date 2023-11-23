@@ -69,11 +69,12 @@ class AssetService
         return $this->assetRepository->applySearchFilters($searchTerm, $query);
     }
 
-    public function datatableForTransfers()
+    public function datatableForSelect()
     {
         return Asset::query()->with([
             'assetUnit',
             'assetUnit.unit',
+            'leasing',
         ])->get();
     }
 

@@ -10,6 +10,8 @@ use App\Facades\Elasticsearch;
 use App\Helpers\AuthHelper;
 use App\Helpers\Helper;
 use App\Http\Requests\Cers\CerRequest;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Cers\Cer;
 use App\Models\Department;
 use App\Models\Employee;
@@ -39,11 +41,10 @@ class CerService
         return CerData::collection(Arr::pluck($data, '_source'))->toCollection();
     }
 
-    public function allNotElastic($search = null)
+    public function datatable()
     {
         return Cer::query()->where('nik', AuthHelper::getNik())->get();
     }
-    
 
     public function updateOrCreate(CerRequest $request, bool $isDraft = false)
     {
@@ -70,7 +71,7 @@ class CerService
         return DB::transaction(function () use ($cer) {
             $cer->items()->delete();
             $cer->workflows()->delete();
-            Elasticsearch::setModel(Cer::class)->deleted(CerData::from($cer));
+            // return Message::deleted(Topic::ASSET_REQUEST, 'id', $cer->getKey(), Nested::ASSET_REQUEST);
             return $cer->delete();
         });
     }
@@ -99,7 +100,7 @@ class CerService
     public function update(Cer $cer, array $data)
     {
         $cer->update($data);
-        return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
+        $this->sendToElasticsearch($cer, $cer->getKey());
     }
 
     public function findByNo($no)
@@ -135,10 +136,7 @@ class CerService
     private function sendToElasticsearch(Cer $cer, $key)
     {
         $cer->load(['items', 'workflows']);
-        if ($key) {
-            return Elasticsearch::setModel(Cer::class)->updated(CerData::from($cer));
-        }
-        return Elasticsearch::setModel(Cer::class)->created(CerData::from($cer));
+        // return Message::updateOrCreate(Topic::ASSET_REQUEST, $cer->getKey(), $cer->toArray());
     }
 
     public static function nextNumber($projectPrefix)
