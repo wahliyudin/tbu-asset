@@ -17,4 +17,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('asset-transfers/{assetTransfer}/received', [TransferController::class, 'received'])->name('asset-transfers.received');
     Route::get('asset-transfers/{asset}/employee', [TransferController::class, 'employeeByAsset'])->name('asset-transfers.employee-by-asset');
     Route::post('asset-transfers/{transfer}/datatable-budget', [TransferController::class, 'datatableBudget'])->name('asset-transfers.datatable-budget');
+    Route::get('asset-transfers/{assetTransfer}/download-file-bast', [TransferController::class, 'downloadFileBast'])->name('asset-transfers.download-file-bast');
 });

@@ -188,8 +188,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(uom));
         $.when(request).done(function () {
-            console.log($('select[name="uom_id"] ~ .select2-selection__placeholder'));
-            $('select[name="uom_id"] ~ .select2-selection__placeholder').text('UOM');
+            $('select[name="uom_id"]').next().find('.select2-selection__placeholder').text('UOM')
         });
     }
 
@@ -203,7 +202,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(subCluster));
         $.when(request).done(function () {
-            $('select[name="sub_cluster_id"] ~ .select2-selection__placeholder').text('Sub Cluster');
+            $('select[name="sub_cluster_id"]').next().find('.select2-selection__placeholder').text('Sub Cluster')
         });
     }
 
@@ -218,7 +217,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(unit));
         $.when(request).done(function () {
-            $('select[name="unit_unit_id"] ~ .select2-selection__placeholder').text('Unit');
+            $('select[name="unit_unit_id"]').next().find('.select2-selection__placeholder').text('Unit')
         });
     }
 
@@ -232,7 +231,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(activity));
         $.when(request).done(function () {
-            $('select[name="activity_id"] ~ .select2-selection__placeholder').text('Activity');
+            $('select[name="activity_id"]').next().find('.select2-selection__placeholder').text('Activity')
         });
     }
 
@@ -246,7 +245,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(condition));
         $.when(request).done(function () {
-            $('select[name="condition_id"] ~ .select2-selection__placeholder').text('Kondisi');
+            $('select[name="condition_id"]').next().find('.select2-selection__placeholder').text('Kondisi')
         });
     }
 
@@ -260,7 +259,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(dealer));
         $.when(request).done(function () {
-            $('select[name="dealer_id_leasing"] ~ .select2-selection__placeholder').text('Dealer');
+            $('select[name="dealer_id_leasing"]').next().find('.select2-selection__placeholder').text('Dealer')
         });
     }
 
@@ -274,7 +273,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(leasing));
         $.when(request).done(function () {
-            $('select[name="leasing_id_leasing"] ~ .select2-selection__placeholder').text('Leasing');
+            $('select[name="leasing_id_leasing"]').next().find('.select2-selection__placeholder').text('Leasing')
         });
     }
 
@@ -288,7 +287,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(project));
         $.when(request).done(function () {
-            $('select[name="asset_location"] ~ .select2-selection__placeholder').text('Asset Location');
+            $('select[name="asset_location"]').next().find('.select2-selection__placeholder').text('Asset Location')
         });
     }
 
@@ -303,7 +302,6 @@ var form = function () {
         var request = initSelect(...Object.values(employee));
         $.when(request).done(function () {
             $('select[name="pic"]').next().find('.select2-selection__placeholder').text('PIC')
-            // $('select[name="pic"] ~ .select2-selection__placeholder').text('PIC');
         });
     }
 
@@ -321,9 +319,9 @@ var form = function () {
         }
         var request = initSelect(...Object.values(lifetime));
         $.when(request).done(function () {
-            $('select[name="jangka_waktu_leasing"] ~ .select2-selection__placeholder').text('Jangka Waktu');
-            $('select[name="jangka_waktu_insurance"] ~ .select2-selection__placeholder').text('Jangka Waktu');
-            $('select[name="lifetime_id"] ~ .select2-selection__placeholder').text('Masa Pakai');
+            $('select[name="jangka_waktu_leasing"]').next().find('.select2-selection__placeholder').text('Jangka Waktu')
+            $('select[name="jangka_waktu_insurance"]').next().find('.select2-selection__placeholder').text('Jangka Waktu')
+            $('select[name="lifetime_id"]').next().find('.select2-selection__placeholder').text('Masa Pakai')
         });
     }
 

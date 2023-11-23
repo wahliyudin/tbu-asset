@@ -28,17 +28,17 @@ class AssetTransferController extends Controller
             ->editColumn('no_transaksi', function ($data) {
                 return $data->no_transaksi;
             })
-            ->editColumn('nik', function ($data) {
-                return $data->nik;
+            ->editColumn('employee', function ($data) {
+                return $data->employee?->nama_karyawan;
             })
             ->editColumn('asset_id', function ($data) {
-                return $data->asset_id;
+                return $data->asset?->kode;
             })
             ->editColumn('old_project', function ($data) {
-                return $data->old_project;
+                return $data->oldProject?->project;
             })
             ->editColumn('old_pic', function ($data) {
-                return $data->old_pic;
+                return $data->oldPic?->nama_karyawan;
             })
             ->editColumn('old_location', function ($data) {
                 return $data->old_location;
@@ -50,10 +50,10 @@ class AssetTransferController extends Controller
                 return $data->old_department;
             })
             ->editColumn('new_project', function ($data) {
-                return $data->new_project;
+                return $data->newProject?->project;
             })
             ->editColumn('new_pic', function ($data) {
-                return $data->new_pic;
+                return $data->newPic?->nama_karyawan;
             })
             ->editColumn('new_location', function ($data) {
                 return $data->new_location;
@@ -86,12 +86,14 @@ class AssetTransferController extends Controller
                 return $data->no_bast;
             })
             ->editColumn('file_bast', function ($data) {
-                return $data->file_bast;
+                return view('transfers.transfer.buttons.file-bast', [
+                    'asset_transfer_id' => $data->getKey()
+                ])->render();
             })
             ->editColumn('status', function ($data) {
                 return $data->status?->badge();
             })
-            ->rawColumns(['status', 'justifikasi'])
+            ->rawColumns(['status', 'justifikasi', 'file_bast'])
             ->make();
     }
 

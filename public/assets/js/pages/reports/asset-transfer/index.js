@@ -13,6 +13,10 @@ var index = function () {
                 url: `/reports/asset-transfers/datatable`,
                 data: function (data) {
                     data.status = $('select[name="status"]').val();
+                    data.old_project = $('select[name="old_project"]').val();
+                    data.old_pic = $('select[name="old_pic"]').val();
+                    data.new_project = $('select[name="new_project"]').val();
+                    data.new_pic = $('select[name="new_pic"]').val();
                 }
             },
             columns: [
@@ -21,8 +25,8 @@ var index = function () {
                     data: 'no_transaksi',
                 },
                 {
-                    name: 'nik',
-                    data: 'nik',
+                    name: 'employee',
+                    data: 'employee',
                 },
                 {
                     name: 'asset_id',
@@ -172,6 +176,88 @@ var index = function () {
         }
     }
 
+    var buildSelect = () => {
+        selectProject();
+        selectEmployee();
+    }
+
+    var selectProject = () => {
+        var project = {
+            url: '/global/projects/data-for-select',
+            field: [
+                'old_project',
+                'new_project',
+            ],
+            key: 'project_id',
+            value: 'project',
+            selected: null
+        }
+        var request = initSelect(...Object.values(project));
+        $.when(request).done(function () {
+            $('select[name="old_project"]').next().find('.select2-selection__placeholder').text('Old Project')
+            $('select[name="new_project"]').next().find('.select2-selection__placeholder').text('New Project')
+        });
+    }
+
+    var selectEmployee = () => {
+        var employee = {
+            url: '/global/employees/data-for-select',
+            field: [
+                'old_pic',
+                'new_pic',
+            ],
+            key: 'nik',
+            value: 'nama_karyawan',
+            selected: null
+        }
+        var request = initSelect(...Object.values(employee));
+        $.when(request).done(function () {
+            $('select[name="old_pic"]').next().find('.select2-selection__placeholder').text('Old PIC')
+            $('select[name="new_pic"]').next().find('.select2-selection__placeholder').text('New PIC')
+        });
+    }
+
+    var initSelect = (url, field, key, value, selected, keyData) => {
+        return $.ajax({
+            url: url,
+            method: "POST",
+            type: 'application/json',
+            success: function (data) {
+                if (Array.isArray(field)) {
+                    $.each(field, function (index, fiel) {
+                        $(`select[name="${fiel}"]`).empty();
+                        $(`select[name="${fiel}"]`).append(`<option></option>`)
+                        $.each(data, function (index, dat) {
+                            var attr = `data-${keyData}="${getValueFromJSON(dat, keyData)}"`;
+                            var dataKey = getValueFromJSON(dat, key);
+                            $(`select[name="${fiel}"]`).append(
+                                `<option ${keyData ? attr : ''} value="${dataKey}" ${selected == dataKey ? 'selected' : ''}>${getValueFromJSON(dat, value)}</option>`
+                            );
+                        })
+                    });
+                } else {
+                    $(`select[name="${field}"]`).empty();
+                    $(`select[name="${field}"]`).append(`<option></option>`)
+                    $.each(data, function (index, dat) {
+                        var attr = `data-${keyData}="${getValueFromJSON(dat, keyData)}"`;
+                        var dataKey = getValueFromJSON(dat, key);
+                        $(`select[name="${field}"]`).append(
+                            `<option ${keyData ? attr : ''} value="${dataKey}" ${selected == dataKey ? 'selected' : ''}>${getValueFromJSON(dat, value)}</option>`
+                        );
+                    })
+                }
+            }
+        });
+    }
+
+    function getValueFromJSON(json, key) {
+        if (json.hasOwnProperty(key)) {
+            return json[key];
+        } else {
+            return null;
+        }
+    }
+
     return {
         init: function () {
             $.ajaxSetup({
@@ -182,6 +268,7 @@ var index = function () {
             initDatatable();
             handleSearchDatatable();
             handleEvents();
+            buildSelect()
         }
     }
 }();
