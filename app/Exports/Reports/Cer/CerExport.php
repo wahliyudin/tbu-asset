@@ -39,7 +39,7 @@ class CerExport implements FromCollection, WithMapping, WithTitle, ShouldAutoSiz
             $row->sumber_pendanaan?->label(),
             $row->cost_analyst,
             $row->note,
-            url($row->file_ucr),
+            asset('storage/' . $row->file_ucr),
             $row->status_pr,
             $row->status?->label(),
         ];

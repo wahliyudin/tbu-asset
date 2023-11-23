@@ -59,7 +59,7 @@ class CerController extends Controller
                 return $data->note;
             })
             ->editColumn('file_ucr', function ($data) {
-                return url($data->file_ucr);
+                return asset('storage/' . $data->file_ucr);
             })
             ->editColumn('status_pr', function ($data) {
                 return $data->status_pr;
@@ -67,7 +67,7 @@ class CerController extends Controller
             ->editColumn('status', function ($data) {
                 return $data->status?->badge();
             })
-            ->rawColumns(['status', 'status_pr', 'cost_analyst'])
+            ->rawColumns(['status', 'type_budget', 'peruntukan', 'sumber_pendanaan', 'status_pr', 'cost_analyst'])
             ->make();
     }
 
