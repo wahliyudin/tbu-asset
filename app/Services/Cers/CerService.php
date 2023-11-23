@@ -170,4 +170,9 @@ class CerService
             now()->year,
         ])->implode('/');
     }
+
+    public function dataForExport(Request $request)
+    {
+        return Cer::query()->get();
+    }
 }
