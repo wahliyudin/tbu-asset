@@ -24,10 +24,40 @@ class AssetDisposeController extends Controller
     {
         $data = $this->assetDisposeService->dataForExport($request);
         return datatables()->of($data)
-            ->editColumn('kode', function ($asset) {
-                return $asset->kode;
+            ->editColumn('asset_id', function ($data) {
+                return $data->asset_id;
             })
-            ->rawColumns(['status'])
+            ->editColumn('no_dispose', function ($data) {
+                return $data->no_dispose;
+            })
+            ->editColumn('nik', function ($data) {
+                return $data->nik;
+            })
+            ->editColumn('nilai_buku', function ($data) {
+                return $data->nilai_buku;
+            })
+            ->editColumn('est_harga_pasar', function ($data) {
+                return $data->est_harga_pasar;
+            })
+            ->editColumn('notes', function ($data) {
+                return $data->notes;
+            })
+            ->editColumn('justifikasi', function ($data) {
+                return $data->justifikasi;
+            })
+            ->editColumn('pelaksanaan', function ($data) {
+                return $data->pelaksanaan;
+            })
+            ->editColumn('remark', function ($data) {
+                return $data->remark;
+            })
+            ->editColumn('note', function ($data) {
+                return $data->note;
+            })
+            ->editColumn('status', function ($data) {
+                return $data->status;
+            })
+            ->rawColumns(['status', 'justifikasi'])
             ->make();
     }
 

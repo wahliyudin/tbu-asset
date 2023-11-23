@@ -68,7 +68,28 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="asset_transfer_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="min-w-125px">Id Asset</th>
+                        <th class="min-w-125px">No Transfer</th>
+                        <th class="min-w-125px">Employee</th>
+                        <th class="min-w-125px">Kode Asset</th>
+                        <th class="min-w-125px">Old Project</th>
+                        <th class="min-w-125px">Old PIC</th>
+                        <th class="min-w-125px">Old Location</th>
+                        <th class="min-w-125px">Old Divisi</th>
+                        <th class="min-w-125px">Old Department</th>
+                        <th class="min-w-125px">New Project</th>
+                        <th class="min-w-125px">New PIC</th>
+                        <th class="min-w-125px">New Location</th>
+                        <th class="min-w-125px">New Divisi</th>
+                        <th class="min-w-125px">New Department</th>
+                        <th class="min-w-125px">Tanggal Pemindahan</th>
+                        <th class="min-w-125px">Justifikasi</th>
+                        <th class="min-w-125px">Remark</th>
+                        <th class="min-w-125px">Note</th>
+                        <th class="min-w-125px">Transfer Date</th>
+                        <th class="min-w-125px">Tanggal BAST</th>
+                        <th class="min-w-125px">No BAST</th>
+                        <th class="min-w-125px">File BAST</th>
+                        <th class="min-w-125px">Status</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
@@ -126,7 +147,8 @@
                             Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                         </span>
                     </button>
-                    <button type="submit" data-asset="" id="filter-asset_transfer_submit" class="btn btn-primary ps-4">
+                    <button type="submit" data-asset="" id="filter-asset_transfer_submit"
+                        class="btn btn-primary ps-4">
                         <span class="indicator-label">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="ki-duotone ki-filter fs-2">

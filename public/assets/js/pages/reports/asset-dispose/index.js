@@ -17,8 +17,48 @@ var index = function () {
             },
             columns: [
                 {
-                    name: 'kode',
-                    data: 'kode',
+                    name: 'asset_id',
+                    data: 'asset_id',
+                },
+                {
+                    name: 'no_dispose',
+                    data: 'no_dispose',
+                },
+                {
+                    name: 'nik',
+                    data: 'nik',
+                },
+                {
+                    name: 'nilai_buku',
+                    data: 'nilai_buku',
+                },
+                {
+                    name: 'est_harga_pasar',
+                    data: 'est_harga_pasar',
+                },
+                {
+                    name: 'notes',
+                    data: 'notes',
+                },
+                {
+                    name: 'justifikasi',
+                    data: 'justifikasi',
+                },
+                {
+                    name: 'pelaksanaan',
+                    data: 'pelaksanaan',
+                },
+                {
+                    name: 'remark',
+                    data: 'remark',
+                },
+                {
+                    name: 'note',
+                    data: 'note',
+                },
+                {
+                    name: 'status',
+                    data: 'status',
                 },
             ],
         });
@@ -57,7 +97,7 @@ var index = function () {
                     var a = document.createElement('a');
                     var url = window.URL.createObjectURL(data);
                     a.href = url;
-                    a.download = 'assets.xlsx';
+                    a.download = 'asset-disposes.xlsx';
                     document.body.append(a);
                     a.click();
                     a.remove();

@@ -17,8 +17,92 @@ var index = function () {
             },
             columns: [
                 {
-                    name: 'kode',
-                    data: 'kode',
+                    name: 'no_transaksi',
+                    data: 'no_transaksi',
+                },
+                {
+                    name: 'nik',
+                    data: 'nik',
+                },
+                {
+                    name: 'asset_id',
+                    data: 'asset_id',
+                },
+                {
+                    name: 'old_project',
+                    data: 'old_project',
+                },
+                {
+                    name: 'old_pic',
+                    data: 'old_pic',
+                },
+                {
+                    name: 'old_location',
+                    data: 'old_location',
+                },
+                {
+                    name: 'old_divisi',
+                    data: 'old_divisi',
+                },
+                {
+                    name: 'old_department',
+                    data: 'old_department',
+                },
+                {
+                    name: 'new_project',
+                    data: 'new_project',
+                },
+                {
+                    name: 'new_pic',
+                    data: 'new_pic',
+                },
+                {
+                    name: 'new_location',
+                    data: 'new_location',
+                },
+                {
+                    name: 'new_divisi',
+                    data: 'new_divisi',
+                },
+                {
+                    name: 'new_department',
+                    data: 'new_department',
+                },
+                {
+                    name: 'request_transfer_date',
+                    data: 'request_transfer_date',
+                },
+                {
+                    name: 'justifikasi',
+                    data: 'justifikasi',
+                },
+                {
+                    name: 'remark',
+                    data: 'remark',
+                },
+                {
+                    name: 'note',
+                    data: 'note',
+                },
+                {
+                    name: 'transfer_date',
+                    data: 'transfer_date',
+                },
+                {
+                    name: 'tanggal_bast',
+                    data: 'tanggal_bast',
+                },
+                {
+                    name: 'no_bast',
+                    data: 'no_bast',
+                },
+                {
+                    name: 'file_bast',
+                    data: 'file_bast',
+                },
+                {
+                    name: 'status',
+                    data: 'status',
                 },
             ],
         });
@@ -57,7 +141,7 @@ var index = function () {
                     var a = document.createElement('a');
                     var url = window.URL.createObjectURL(data);
                     a.href = url;
-                    a.download = 'assets.xlsx';
+                    a.download = 'asset-transfers.xlsx';
                     document.body.append(a);
                     a.click();
                     a.remove();
