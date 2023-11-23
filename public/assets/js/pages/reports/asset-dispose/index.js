@@ -57,7 +57,7 @@ var index = function () {
                     var a = document.createElement('a');
                     var url = window.URL.createObjectURL(data);
                     a.href = url;
-                    a.download = 'assets.xlsx';
+                    a.download = 'asset-disposes.xlsx';
                     document.body.append(a);
                     a.click();
                     a.remove();
