@@ -84,7 +84,7 @@ var KTModalCersAdd = function () {
             ],
             ajax: {
                 type: "POST",
-                url: "http://202.148.22.198:8080/api/budgetdept/remaining",
+                url: "http://103.165.225.250:8080/api/budgetdept/remaining",
                 data: {
                     'deptcode': [$('input[name="deptcode"').val()]
                 }

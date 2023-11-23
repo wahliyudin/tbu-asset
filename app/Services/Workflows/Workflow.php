@@ -23,7 +23,7 @@ abstract class Workflow extends Checker
 {
     protected array $additionalParams = [];
 
-    protected int|string $barrier;
+    protected int|string $barrier = 0;
 
     public function __construct(
         protected Model $model,
