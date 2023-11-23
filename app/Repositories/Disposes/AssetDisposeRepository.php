@@ -4,6 +4,7 @@ namespace App\Repositories\Disposes;
 
 use App\DataTransferObjects\Disposes\AssetDisposeData;
 use App\Facades\Elasticsearch;
+use App\Kafka\Enums\Nested;
 use App\Kafka\Enums\Topic;
 use App\Kafka\Facades\Message;
 use App\Models\Disposes\AssetDispose;
@@ -30,13 +31,13 @@ class AssetDisposeRepository
 
     public function deleteFromElasticsearch(AssetDispose $assetDispose)
     {
-        // return Message::deleted(Topic::ASSET_DISPOSE, 'id', $assetDispose->getKey(), Nested::ASSET_DISPOSE);
+        return Message::deleted(Topic::ASSET_DISPOSE, 'id', $assetDispose->getKey(), Nested::ASSET_DISPOSE);
     }
 
     public function sendToElasticsearch(AssetDispose $assetDispose, $key)
     {
         $assetDispose->load(['asset', 'workflows']);
-        // return Message::updateOrCreate(Topic::ASSET_DISPOSE, $assetDispose->getKey(), $assetDispose->toArray());
+        return Message::updateOrCreate(Topic::ASSET_DISPOSE, $assetDispose->getKey(), $assetDispose->toArray());
     }
 
     public static function storeWorkflow()
