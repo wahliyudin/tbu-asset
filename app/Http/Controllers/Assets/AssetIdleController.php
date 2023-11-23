@@ -14,30 +14,30 @@ class AssetIdleController extends Controller
         return view('assets.idle.index');
     }
 
-    public function datatable(Request $request, AssetService $assetService)
+    public function datatable(AssetService $assetService)
     {
-        return DataTables::collection($assetService->assetIdle($request->get('search')))
+        return datatables()->collection($assetService->assetIdle())
             ->editColumn('kode', function ($asset) {
-                return $asset->_source->kode;
+                return $asset->kode;
             })
             ->editColumn('kode_unit', function ($asset) {
-                return $asset->_source->asset_unit?->kode;
+                return $asset->assetUnit?->kode;
             })
             ->editColumn('unit_model', function ($asset) {
-                return $asset->_source->asset_unit?->unit?->model;
+                return $asset->assetUnit?->unit?->model;
             })
             ->editColumn('unit_type', function ($asset) {
-                return $asset->_source->asset_unit?->type;
+                return $asset->assetUnit?->type;
             })
             ->editColumn('asset_location', function ($asset) {
-                return $asset->_source->project?->project;
+                return $asset->project?->project;
             })
             ->editColumn('pic', function ($asset) {
-                return $asset->_source->employee?->nama_karyawan ?? $asset->_source->pic;
+                return $asset->employee?->nama_karyawan ?? $asset->pic;
             })
             ->editColumn('action', function ($asset) {
                 return view('assets.idle.action', [
-                    'kode' => $asset->_source->kode
+                    'kode' => $asset->kode
                 ])->render();
             })
             ->rawColumns(['action'])

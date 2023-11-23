@@ -185,8 +185,7 @@ class AssetMasterController extends Controller
             $request->validate([
                 'date' => ['date'],
             ]);
-            $lifetime = Lifetime::query()->find($lifetime_id);
-            $depresiasi = $this->assetDepreciationService->generate($lifetime?->masa_pakai, CarbonHelper::convertDate($date), Helper::resetRupiah($price));
+            $depresiasi = $this->assetDepreciationService->generate($lifetime_id, CarbonHelper::convertDate($date), Helper::resetRupiah($price));
             return response()->json($depresiasi);
         } catch (\Throwable $th) {
             throw $th;

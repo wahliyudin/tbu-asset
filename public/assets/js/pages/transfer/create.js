@@ -54,9 +54,9 @@ var KTModalAdd = function () {
             ajax: {
                 type: "POST",
                 url: "/asset-transfers/datatable-asset",
-                data: function (d) {
-                    d.search = $('#data_asset input[name="search"]').val();
-                }
+                // data: function (d) {
+                //     d.search = $('#data_asset input[name="search"]').val();
+                // }
             },
             columns: [{
                 name: 'action',
@@ -92,7 +92,8 @@ var KTModalAdd = function () {
 
         const filterSearch = document.querySelector('[data-kt-data-asset-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatableAsset.ajax.reload();
+            // datatableAsset.ajax.reload();
+            datatableAsset.search(e.target.value).draw();
         });
 
         initActionAsset();

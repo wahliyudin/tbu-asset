@@ -4,6 +4,8 @@ namespace App\Repositories\Transfers;
 
 use App\DataTransferObjects\Transfers\AssetTransferData;
 use App\Facades\Elasticsearch;
+use App\Kafka\Enums\Topic;
+use App\Kafka\Facades\Message;
 use App\Models\Transfers\AssetTransfer;
 
 class AssetTransferRepository
@@ -44,10 +46,7 @@ class AssetTransferRepository
     public function sendToElasticsearch(AssetTransfer $assetTransfer, $key)
     {
         $assetTransfer->load(['asset', 'workflows', 'statusTransfer']);
-        if ($key) {
-            return Elasticsearch::setModel(AssetTransfer::class)->updated(AssetTransferData::from($assetTransfer));
-        }
-        return Elasticsearch::setModel(AssetTransfer::class)->created(AssetTransferData::from($assetTransfer));
+        // return Message::updateOrCreate(Topic::ASSET_TRANSFER, $assetTransfer->getKey(), $assetTransfer->toArray());
     }
 
     public static function storeWorkflow()

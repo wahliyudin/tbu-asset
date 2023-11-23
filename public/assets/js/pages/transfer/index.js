@@ -23,9 +23,9 @@ var TransfersList = function () {
             ajax: {
                 type: "POST",
                 url: "/asset-transfers/datatable",
-                data: function (d) {
-                    d.search = $('input[name="search"]').val();
-                }
+                // data: function (d) {
+                //     d.search = $('input[name="search"]').val();
+                // }
             },
             columns: [
                 {
@@ -70,7 +70,8 @@ var TransfersList = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-transfer-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            datatable.ajax.reload();
+            // datatable.ajax.reload();
+            datatable.search(e.target.value).draw();
         });
     }
 

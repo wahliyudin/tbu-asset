@@ -11,9 +11,9 @@ var list = function () {
             ajax: {
                 type: "POST",
                 url: "/asset-idles/datatable",
-                data: function (d) {
-                    d.search = $('input[name="search"]').val();
-                }
+                // data: function (d) {
+                //     d.search = $('input[name="search"]').val();
+                // }
             },
             columns: [
                 {
@@ -53,8 +53,8 @@ var list = function () {
     var handleSearchDatatable = () => {
         const filterSearch = document.querySelector('[data-kt-asset-idle-table-filter="search"]');
         filterSearch.addEventListener('change', function (e) {
-            // datatable.search(e.target.value).draw();
-            datatable.ajax.reload();
+            datatable.search(e.target.value).draw();
+            // datatable.ajax.reload();
         });
     }
 

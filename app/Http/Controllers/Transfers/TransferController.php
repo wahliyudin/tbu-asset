@@ -32,26 +32,27 @@ class TransferController extends Controller
         return view('transfers.transfer.index');
     }
 
-    public function datatable(Request $request)
+    public function datatable()
     {
-        return DataTables::of($this->service->allToAssetTransferData($request->get('search')))
+        $data = $this->service->datatable();
+        return datatables()->of($data)
             ->editColumn('no_transaksi', function ($assetTransfer) {
-                return $assetTransfer->_source?->no_transaksi;
+                return $assetTransfer->no_transaksi;
             })
             ->editColumn('asset', function ($assetTransfer) {
-                return $assetTransfer->_source?->asset?->kode;
+                return $assetTransfer->asset?->kode;
             })
             ->editColumn('old_pic', function ($assetTransfer) {
-                return $assetTransfer->_source?->oldPic?->nama_karyawan;
+                return $assetTransfer->oldPic?->nama_karyawan;
             })
             ->editColumn('new_pic', function ($assetTransfer) {
-                return $assetTransfer->_source?->newPic?->nama_karyawan;
+                return $assetTransfer->newPic?->nama_karyawan;
             })
             ->editColumn('status_transfer', function ($assetTransfer) {
-                return Status::tryFrom($assetTransfer->_source?->status_transfer?->status)?->badge();
+                return $assetTransfer->status_transfer?->status?->badge();
             })
             ->editColumn('status', function ($assetTransfer) {
-                return WorkflowsStatus::tryFrom($assetTransfer->_source?->status)?->badge();
+                return $assetTransfer->status?->badge();
             })
             ->editColumn('action', function ($assetTransfer) {
                 return view('transfers.transfer.action', compact('assetTransfer'))->render();
@@ -60,29 +61,30 @@ class TransferController extends Controller
             ->make();
     }
 
-    public function datatableAsset(Request $request)
+    public function datatableAsset()
     {
-        return DataTables::of($this->assetService->all($request->get('search')))
+        $data = $this->assetService->datatableForTransfers();
+        return datatables()->of($data)
             ->editColumn('nama', function ($asset) {
-                return $asset->_source->asset_unit?->unit?->model;
+                return $asset->assetUnit?->unit?->model;
             })
             ->editColumn('merk_tipe_model', function ($asset) {
-                return $asset->_source->asset_unit?->brand;
+                return $asset->assetUnit?->brand;
             })
             ->editColumn('serial_number', function ($asset) {
-                return $asset->_source->asset_unit?->serial_number;
+                return $asset->assetUnit?->serial_number;
             })
             ->editColumn('nomor_asset', function ($asset) {
-                return $asset->_source->kode;
+                return $asset->kode;
             })
             ->editColumn('niali_buku', function ($asset) {
-                return Helper::formatRupiah($asset->_source->nilai_sisa, true);
+                return Helper::formatRupiah($asset->nilai_sisa, true);
             })
             ->editColumn('kelengkapan', function ($asset) {
-                return $asset->_source->asset_unit?->spesification;
+                return $asset->assetUnit?->spesification;
             })
             ->editColumn('action', function ($asset) {
-                return '<button type="button" data-asset="' . $asset->_id . '" class="btn btn-sm btn-primary select-asset">select</button>';
+                return '<button type="button" data-asset="' . $asset->id . '" class="btn btn-sm btn-primary select-asset">select</button>';
             })
             ->rawColumns(['action'])
             ->make();

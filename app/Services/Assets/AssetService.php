@@ -69,13 +69,22 @@ class AssetService
         return $this->assetRepository->applySearchFilters($searchTerm, $query);
     }
 
+    public function datatableForTransfers()
+    {
+        return Asset::query()->with([
+            'assetUnit',
+            'assetUnit.unit',
+        ])->get();
+    }
+
     public function assetIdle($search = null, $size = 50)
     {
-        return Elasticsearch::setModel(Asset::class)
-            ->searchMultipleQuery($search, terms: [
-                new Term('status', Status::IDLE->value)
-            ], size: $size)
-            ->all();
+        // return Elasticsearch::setModel(Asset::class)
+        //     ->searchMultipleQuery($search, terms: [
+        //         new Term('status', Status::IDLE->value)
+        //     ], size: $size)
+        //     ->all();
+        return Asset::query()->with(['assetUnit', 'project', 'employee'])->where('status', Status::IDLE)->get();
     }
 
     public function getById($id)
@@ -105,8 +114,7 @@ class AssetService
             $nilaiSisa = Helper::resetRupiah($request->nilai_sisa);
             $data = AssetData::from(array_merge($request->all(), ['asset_unit_id' => $assetUnit->getKey(), 'nilai_sisa' => $nilaiSisa]));
             $asset = $this->assetRepository->updateOrCreate($data->except('new_id_asset'));
-            $lifetime = Lifetime::query()->find($request->lifetime_id);
-            $deprecations = $this->prepareDeprecation($asset->getKey(), $lifetime->masa_pakai, $request->date, Helper::resetRupiah($request->price));
+            $deprecations = $this->prepareDeprecation($asset->getKey(), $request->lifetime_id, $request->date, Helper::resetRupiah($request->price));
             $asset->depreciations()->delete();
             $asset->depreciations()->createMany($deprecations);
             $this->assetInsuranceRepository->updateOrCreateByAsset(AssetInsuranceData::fromRequest($request), $asset);
@@ -273,26 +281,32 @@ class AssetService
 
     public function dataForExport(Request $request)
     {
-        $matchs = [];
-        $terms = [];
-        $search  = isset($request->search['value']) ? $request->search['value'] : null;
-        if ($status = $request->status) {
-            $terms[] = new Term('status', $status);
-        }
-        if ($project = $request->project) {
-            $terms[] = new Term('asset_location', $project);
-        }
-        if ($category = $request->category) {
-            $terms[] = new Term('sub_cluster.cluster.category_id', $category);
-        }
-        if ($cluster = $request->cluster) {
-            $terms[] = new Term('sub_cluster.cluster_id', $cluster);
-        }
-        if ($sub_cluster = $request->sub_cluster) {
-            $terms[] = new Term('sub_cluster_id', $sub_cluster);
-        }
-        return Elasticsearch::setModel(Asset::class)
-            ->searchMultipleQuery($search, $matchs, $terms, 1000)->all();
+        return Asset::query()
+            ->with([
+                'activity', 'project', 'department', 'condition', 'uom', 'lifetime', 'subCluster.cluster.category', 'employee', 'assetUnit'
+            ])
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->when($request->project, function ($query, $asset_location) {
+                $query->where('asset_location', $asset_location);
+            })
+            ->when($request->category, function ($query, $category) {
+                $query->whereHas('subCluster', function ($query) use ($category) {
+                    $query->whereHas('cluster', function ($query) use ($category) {
+                        $query->where('category_id', $category);
+                    });
+                });
+            })
+            ->when($request->cluster, function ($query, $cluster) {
+                $query->whereHas('subCluster', function ($query) use ($cluster) {
+                    $query->where('cluster_id', $cluster);
+                });
+            })
+            ->when($request->sub_cluster, function ($query, $sub_cluster) {
+                $query->where('sub_cluster_id', $sub_cluster);
+            })
+            ->get();
     }
 
     public function assetWithExistTransfers()

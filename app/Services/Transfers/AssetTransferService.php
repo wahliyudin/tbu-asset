@@ -46,6 +46,18 @@ class AssetTransferService
         return AssetTransfer::query()->with(['asset.assetUnit.unit'])->findOrFail($id);
     }
 
+    public function datatable()
+    {
+        return AssetTransfer::query()->with([
+            'asset',
+            'oldPic',
+            'newPic',
+            'statusTransfer',
+        ])
+            ->where('nik', AuthHelper::getNik())
+            ->get();
+    }
+
     public function allToAssetTransferData($search = null, $length = 50)
     {
         $data = Elasticsearch::setModel(AssetTransfer::class)->searchMultipleQuery($search, terms: [

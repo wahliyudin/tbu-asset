@@ -188,7 +188,8 @@ var form = function () {
         }
         var request = initSelect(...Object.values(uom));
         $.when(request).done(function () {
-            $('select[name="uom_id"').data('placeholder', 'UOM');
+            console.log($('select[name="uom_id"] ~ .select2-selection__placeholder'));
+            $('select[name="uom_id"] ~ .select2-selection__placeholder').text('UOM');
         });
     }
 
@@ -202,7 +203,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(subCluster));
         $.when(request).done(function () {
-            $('select[name="sub_cluster_id"').data('placeholder', 'Sub Cluster');
+            $('select[name="sub_cluster_id"] ~ .select2-selection__placeholder').text('Sub Cluster');
         });
     }
 
@@ -217,7 +218,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(unit));
         $.when(request).done(function () {
-            $('select[name="unit_unit_id"').data('placeholder', 'Unit');
+            $('select[name="unit_unit_id"] ~ .select2-selection__placeholder').text('Unit');
         });
     }
 
@@ -231,7 +232,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(activity));
         $.when(request).done(function () {
-            $('select[name="activity_id"').data('placeholder', 'Activity');
+            $('select[name="activity_id"] ~ .select2-selection__placeholder').text('Activity');
         });
     }
 
@@ -245,7 +246,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(condition));
         $.when(request).done(function () {
-            $('select[name="condition_id"').data('placeholder', 'Kondisi');
+            $('select[name="condition_id"] ~ .select2-selection__placeholder').text('Kondisi');
         });
     }
 
@@ -259,7 +260,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(dealer));
         $.when(request).done(function () {
-            $('select[name="dealer_id_leasing"').data('placeholder', 'Dealer');
+            $('select[name="dealer_id_leasing"] ~ .select2-selection__placeholder').text('Dealer');
         });
     }
 
@@ -273,7 +274,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(leasing));
         $.when(request).done(function () {
-            $('select[name="leasing_id_leasing"').data('placeholder', 'Leasing');
+            $('select[name="leasing_id_leasing"] ~ .select2-selection__placeholder').text('Leasing');
         });
     }
 
@@ -287,7 +288,7 @@ var form = function () {
         }
         var request = initSelect(...Object.values(project));
         $.when(request).done(function () {
-            $('select[name="asset_location"').data('placeholder', 'Asset Location');
+            $('select[name="asset_location"] ~ .select2-selection__placeholder').text('Asset Location');
         });
     }
 
@@ -301,7 +302,8 @@ var form = function () {
         }
         var request = initSelect(...Object.values(employee));
         $.when(request).done(function () {
-            $('select[name="pic"').data('placeholder', 'PIC');
+            $('select[name="pic"]').next().find('.select2-selection__placeholder').text('PIC')
+            // $('select[name="pic"] ~ .select2-selection__placeholder').text('PIC');
         });
     }
 
@@ -319,9 +321,9 @@ var form = function () {
         }
         var request = initSelect(...Object.values(lifetime));
         $.when(request).done(function () {
-            $('select[name="jangka_waktu_leasing"').data('placeholder', 'Jangka Waktu');
-            $('select[name="jangka_waktu_insurance"').data('placeholder', 'Jangka Waktu');
-            $('select[name="lifetime_id"').data('placeholder', 'Masa Pakai');
+            $('select[name="jangka_waktu_leasing"] ~ .select2-selection__placeholder').text('Jangka Waktu');
+            $('select[name="jangka_waktu_insurance"] ~ .select2-selection__placeholder').text('Jangka Waktu');
+            $('select[name="lifetime_id"] ~ .select2-selection__placeholder').text('Masa Pakai');
         });
     }
 
