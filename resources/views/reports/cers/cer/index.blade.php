@@ -68,7 +68,20 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="asset_request_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="min-w-125px">Id Asset</th>
+                        <th class="min-w-125px">No Cer</th>
+                        <th class="min-w-125px">Employee</th>
+                        <th class="min-w-125px">Tipe Budger</th>
+                        <th class="min-w-125px">Department</th>
+                        <th class="min-w-125px">Budget Ref</th>
+                        <th class="min-w-125px">Peruntukkan</th>
+                        <th class="min-w-125px">Tanggal Kebutuhan</th>
+                        <th class="min-w-125px">Justifikasi</th>
+                        <th class="min-w-125px">Sumber Pendanaan</th>
+                        <th class="min-w-125px">Cost Analyst</th>
+                        <th class="min-w-125px">Note</th>
+                        <th class="min-w-125px">File UCR</th>
+                        <th class="min-w-125px">Status PR</th>
+                        <th class="min-w-125px">Status</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">

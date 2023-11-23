@@ -17,8 +17,60 @@ var index = function () {
             },
             columns: [
                 {
-                    name: 'kode',
-                    data: 'kode',
+                    name: 'no_cer',
+                    data: 'no_cer',
+                },
+                {
+                    name: 'employee',
+                    data: 'employee',
+                },
+                {
+                    name: 'type_budget',
+                    data: 'type_budget',
+                },
+                {
+                    name: 'department',
+                    data: 'department',
+                },
+                {
+                    name: 'budget_ref',
+                    data: 'budget_ref',
+                },
+                {
+                    name: 'peruntukan',
+                    data: 'peruntukan',
+                },
+                {
+                    name: 'tgl_kebutuhan',
+                    data: 'tgl_kebutuhan',
+                },
+                {
+                    name: 'justifikasi',
+                    data: 'justifikasi',
+                },
+                {
+                    name: 'sumber_pendanaan',
+                    data: 'sumber_pendanaan',
+                },
+                {
+                    name: 'cost_analyst',
+                    data: 'cost_analyst',
+                },
+                {
+                    name: 'note',
+                    data: 'note',
+                },
+                {
+                    name: 'file_ucr',
+                    data: 'file_ucr',
+                },
+                {
+                    name: 'status_pr',
+                    data: 'status_pr',
+                },
+                {
+                    name: 'status',
+                    data: 'status',
                 },
             ],
         });
