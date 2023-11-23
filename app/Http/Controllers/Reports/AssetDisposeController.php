@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Reports;
 
 use App\Exports\Reports\AssetDispose\DisposeExport;
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Services\Disposes\AssetDisposeService;
 use Illuminate\Http\Request;
@@ -25,19 +26,19 @@ class AssetDisposeController extends Controller
         $data = $this->assetDisposeService->dataForExport($request);
         return datatables()->of($data)
             ->editColumn('asset_id', function ($data) {
-                return $data->asset_id;
+                return $data->asset?->kode;
             })
             ->editColumn('no_dispose', function ($data) {
                 return $data->no_dispose;
             })
-            ->editColumn('nik', function ($data) {
-                return $data->nik;
+            ->editColumn('employee', function ($data) {
+                return $data->employee?->nama_karyawan;
             })
             ->editColumn('nilai_buku', function ($data) {
-                return $data->nilai_buku;
+                return Helper::formatRupiah($data->nilai_buku, true);
             })
             ->editColumn('est_harga_pasar', function ($data) {
-                return $data->est_harga_pasar;
+                return Helper::formatRupiah($data->est_harga_pasar, true);
             })
             ->editColumn('notes', function ($data) {
                 return $data->notes;
@@ -46,7 +47,7 @@ class AssetDisposeController extends Controller
                 return $data->justifikasi;
             })
             ->editColumn('pelaksanaan', function ($data) {
-                return $data->pelaksanaan;
+                return $data->pelaksanaan?->badge();
             })
             ->editColumn('remark', function ($data) {
                 return $data->remark;
@@ -55,9 +56,9 @@ class AssetDisposeController extends Controller
                 return $data->note;
             })
             ->editColumn('status', function ($data) {
-                return $data->status;
+                return $data->status?->badge();
             })
-            ->rawColumns(['status', 'justifikasi'])
+            ->rawColumns(['status', 'justifikasi', 'pelaksanaan'])
             ->make();
     }
 

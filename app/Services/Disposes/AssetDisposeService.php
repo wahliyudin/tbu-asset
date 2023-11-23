@@ -73,6 +73,13 @@ class AssetDisposeService
 
     public function dataForExport(Request $request)
     {
-        return AssetDispose::query()->get();
+        return AssetDispose::query()->with(['employee'])
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->when($request->employee, function ($query, $employee) {
+                $query->where('nik', $employee);
+            })
+            ->get();
     }
 }
