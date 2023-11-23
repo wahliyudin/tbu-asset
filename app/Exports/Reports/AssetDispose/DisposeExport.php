@@ -2,6 +2,7 @@
 
 namespace App\Exports\Reports\AssetDispose;
 
+use App\Helpers\Helper;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -27,17 +28,17 @@ class DisposeExport implements FromCollection, WithMapping, WithTitle, ShouldAut
     public function map($row): array
     {
         return [
-            $row->asset_id,
             $row->no_dispose,
-            $row->nik,
-            $row->nilai_buku,
-            $row->est_harga_pasar,
+            $row->asset?->kode,
+            $row->employee?->nama_karyawan,
+            Helper::formatRupiah($row->nilai_buku, true),
+            Helper::formatRupiah($row->est_harga_pasar, true),
             $row->notes,
             $row->justifikasi,
-            $row->pelaksanaan,
+            $row->pelaksanaan?->label(),
             $row->remark,
             $row->note,
-            $row->status,
+            $row->status?->label(),
         ];
     }
 

@@ -111,9 +111,16 @@
                                 <select class="form-select form-select" name="status" data-control="select2"
                                     data-placeholder="All" data-dropdown-parent=".status" data-allow-clear="true">
                                     <option></option>
-                                    @foreach (\App\Enums\Asset\Status::cases() as $status)
+                                    @foreach (\App\Enums\Workflows\Status::cases() as $status)
                                         <option value="{{ $status->value }}">{{ $status->label() }}</option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4 employee">
+                                <label class="required fs-6 fw-semibold mb-2">Employee</label>
+                                <select class="form-select form-select" name="employee" data-control="select2"
+                                    data-placeholder="Loading..." data-dropdown-parent=".employee" data-allow-clear="true">
+                                    <option></option>
                                 </select>
                             </div>
                         </div>

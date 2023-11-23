@@ -7,6 +7,7 @@ use App\Enums\Disposes\Dispose\Pelaksanaan;
 use App\Enums\Workflows\LastAction;
 use App\Enums\Workflows\Status;
 use App\Models\Assets\Asset;
+use App\Models\Employee;
 use App\Services\Workflows\Contracts\ModelThatHaveWorkflow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -69,5 +70,10 @@ class AssetDispose extends Model implements ModelThatHaveWorkflow, Elasticsearch
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'nik', 'nik');
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'nik', 'nik');
     }
 }
