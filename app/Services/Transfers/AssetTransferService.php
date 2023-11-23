@@ -236,6 +236,24 @@ class AssetTransferService
 
     public function dataForExport(Request $request)
     {
-        return AssetTransfer::query()->get();
+        return AssetTransfer::query()->with([
+            'asset', 'oldProject', 'oldPic', 'newProject', 'newPic'
+        ])
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->when($request->old_project, function ($query, $old_project) {
+                $query->where('old_project', $old_project);
+            })
+            ->when($request->old_pic, function ($query, $old_pic) {
+                $query->where('old_pic', $old_pic);
+            })
+            ->when($request->new_project, function ($query, $new_project) {
+                $query->where('new_project', $new_project);
+            })
+            ->when($request->new_pic, function ($query, $new_pic) {
+                $query->where('new_pic', $new_pic);
+            })
+            ->get();
     }
 }

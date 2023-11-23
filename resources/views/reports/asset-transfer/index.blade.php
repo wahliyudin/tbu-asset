@@ -122,9 +122,41 @@
                                 <select class="form-select form-select" name="status" data-control="select2"
                                     data-placeholder="All" data-dropdown-parent=".status" data-allow-clear="true">
                                     <option></option>
-                                    @foreach (\App\Enums\Asset\Status::cases() as $status)
+                                    @foreach (\App\Enums\Workflows\Status::cases() as $status)
                                         <option value="{{ $status->value }}">{{ $status->label() }}</option>
                                     @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4 old-project">
+                                <label class="required fs-6 fw-semibold mb-2">Old Project</label>
+                                <select class="form-select form-select" name="old_project" data-control="select2"
+                                    data-placeholder="Loading..." data-dropdown-parent=".old-project"
+                                    data-allow-clear="true">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 old-pic">
+                                <label class="required fs-6 fw-semibold mb-2">Old PIC</label>
+                                <select class="form-select form-select" name="old_pic" data-control="select2"
+                                    data-placeholder="Loading..." data-dropdown-parent=".old-pic"
+                                    data-allow-clear="true">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mt-2 new-project">
+                                <label class="required fs-6 fw-semibold mb-2">New Project</label>
+                                <select class="form-select form-select" name="new_project" data-control="select2"
+                                    data-placeholder="Loading..." data-dropdown-parent=".new-project"
+                                    data-allow-clear="true">
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mt-2 new-pic">
+                                <label class="required fs-6 fw-semibold mb-2">New PIC</label>
+                                <select class="form-select form-select" name="new_pic" data-control="select2"
+                                    data-placeholder="Loading..." data-dropdown-parent=".new-pic"
+                                    data-allow-clear="true">
+                                    <option></option>
                                 </select>
                             </div>
                         </div>

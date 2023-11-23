@@ -191,4 +191,14 @@ class TransferController extends Controller
             throw $th;
         }
     }
+
+    public function downloadFileBast(AssetTransfer $assetTransfer)
+    {
+        try {
+            $file = asset("storage/{$assetTransfer->file_bast}");
+            return response()->download($file);
+        } catch (\Throwable $th) {
+            return back();
+        }
+    }
 }

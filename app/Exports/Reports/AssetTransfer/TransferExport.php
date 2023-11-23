@@ -29,15 +29,15 @@ class TransferExport implements FromCollection, WithMapping, WithTitle, ShouldAu
     {
         return [
             $row->no_transaksi,
-            $row->nik,
-            $row->asset_id,
-            $row->old_project,
-            $row->old_pic,
+            $row->employee?->nama_karyawan,
+            $row->asset?->kode,
+            $row->oldProject?->project,
+            $row->oldPic?->nama_karyawan,
             $row->old_location,
             $row->old_divisi,
             $row->old_department,
-            $row->new_project,
-            $row->new_pic,
+            $row->newProject?->project,
+            $row->newPic?->nama_karyawan,
             $row->new_location,
             $row->new_divisi,
             $row->new_department,
@@ -48,7 +48,7 @@ class TransferExport implements FromCollection, WithMapping, WithTitle, ShouldAu
             CarbonHelper::dateFormatdFY($row->transfer_date),
             CarbonHelper::dateFormatdFY($row->tanggal_bast),
             $row->no_bast,
-            $row->file_bast,
+            asset("storage/{$row->file_bast}"),
             $row->status?->label(),
         ];
     }
@@ -75,8 +75,8 @@ class TransferExport implements FromCollection, WithMapping, WithTitle, ShouldAu
             'Note',
             'Transfer Date',
             'Tanggal BAST',
-            'File BAST',
             'No BAST',
+            'File BAST',
             'Status',
         ];
     }
