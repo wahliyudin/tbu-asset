@@ -45,7 +45,7 @@ abstract class Workflow extends Checker
         $approvals = $this->approvalsByModule();
 
         $data = $this->prepareApprovals($approvals);
-
+        
         $response = $this->patchDataWorkflows($data, AuthHelper::getNik());
 
         return $this->responseToCollectionsOfWorkflowData($response);
@@ -60,10 +60,10 @@ abstract class Workflow extends Checker
     {
         $data = [];
         foreach ($approvals as $key => $approval) {
-            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
             if (!$this->delimiterCheck($approval)) {
                 break;
             }
+            array_push($data, $this->payloadApprovalForHRIS($approval, $key++));
         }
         return $data;
     }

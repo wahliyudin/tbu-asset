@@ -97,7 +97,6 @@ class RegisterController extends Controller
     {
         try {
             $response = $this->cerItemService->getByCerItemId($id);
-            // dd($response);
             return response()->json([
                 'is_register' => isset($response['gr']['status_gr']) ? $response['gr']['status_gr'] : false,
                 [

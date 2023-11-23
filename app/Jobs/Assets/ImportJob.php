@@ -58,8 +58,6 @@ class ImportJob implements ShouldQueue
                 'name' => $val['asset_category']
             ]);
 
-
-
             $cluster = ClusterService::store([
                 'id' => $val['kode_asset_cluster'],
                 'name' => $val['asset_cluster'],
@@ -71,7 +69,6 @@ class ImportJob implements ShouldQueue
                 'name' => $val['asset_sub_cluster'],
                 'cluster_id' => $cluster?->getKey()
             ]);
-
 
 
             $unit = UnitService::store([
@@ -145,6 +142,7 @@ class ImportJob implements ShouldQueue
                 'gr_number' => isset($val['gr']) ? $val['gr'] : null,
                 'remark' => isset($val['keterangan']) ? $val['keterangan'] : null,
                 'status_asset' => isset($val['status']) ? $val['status'] : null,
+                'status' => isset($val['status_unit']) ? $val['status_unit'] : null,
             ]);
 
             $tanggal_awal_leasing = CarbonHelper::convertDate($val['tanggal_awal_leasing']);

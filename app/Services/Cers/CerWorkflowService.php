@@ -42,8 +42,9 @@ class CerWorkflowService extends Workflow
 
     protected function handleChanges(Model $cer)
     {
-        $cer->load(['items', 'workflows']);
-        $data = CerData::from($cer);
-        return Elasticsearch::setModel(Cer::class)->updated($data);
+        // $cer->load(['items', 'workflows']);
+        // $data = CerData::from($cer);
+        // return Elasticsearch::setModel(Cer::class)->updated($data);
+        return true;
     }
 }

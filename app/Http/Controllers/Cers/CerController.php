@@ -36,7 +36,7 @@ class CerController extends Controller
 
     public function datatable(Request $request)
     {
-        return DataTables::of($this->service->all($request->get('search')))
+        return DataTables::of($this->service->allNotElastic())
             ->editColumn('no_cer', function ($cer) {
                 return $cer->no_cer;
             })

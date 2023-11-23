@@ -39,6 +39,12 @@ class CerService
         return CerData::collection(Arr::pluck($data, '_source'))->toCollection();
     }
 
+    public function allNotElastic($search = null)
+    {
+        return Cer::query()->where('nik', AuthHelper::getNik())->get();
+    }
+    
+
     public function updateOrCreate(CerRequest $request, bool $isDraft = false)
     {
         $data = CerData::fromRequest($request, $isDraft);
@@ -54,7 +60,7 @@ class CerService
                     ->setBarrier($data->grandTotal())
                     ->store();
             }
-            $this->sendToElasticsearch($cer, $data->getKey());
+            // $this->sendToElasticsearch($cer, $data->getKey());
             return $cer;
         });
     }

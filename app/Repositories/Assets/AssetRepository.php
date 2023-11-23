@@ -129,6 +129,7 @@ class AssetRepository
             'gr_number' => $data['gr_number'],
             'remark' => $data['remark'],
             'status_asset' => $data['status_asset'],
+            'status' => $data['status_unit'],
         ]);
     }
 
