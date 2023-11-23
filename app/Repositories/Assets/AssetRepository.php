@@ -94,7 +94,7 @@ class AssetRepository
                 }
             ])
             ->where('kode', $kode)
-            ->firstOrFail();
+            ->first();
     }
 
     public function getByStatus(Status $status)
@@ -129,7 +129,7 @@ class AssetRepository
             'gr_number' => $data['gr_number'],
             'remark' => $data['remark'],
             'status_asset' => $data['status_asset'],
-            'status' => $data['status_unit'],
+            'status' => $data['status'],
         ]);
     }
 

@@ -49,7 +49,7 @@ class SubClusterService
             return $subCluster;
         }
         return SubCluster::query()->create([
-            'id' => $data['id'],
+            // 'id' => $data['id'],
             'cluster_id' => $data['cluster_id'],
             'name' => $data['name'],
         ]);

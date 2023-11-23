@@ -49,7 +49,7 @@ class ClusterService
             return $cluster;
         }
         return Cluster::query()->create([
-            'id' => $data['id'],
+            // 'id' => $data['id'],
             'category_id' => $data['category_id'],
             'name' => $data['name'],
         ]);

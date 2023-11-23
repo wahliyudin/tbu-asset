@@ -49,7 +49,7 @@ class CategoryService
             return $category;
         }
         return Category::query()->create([
-            'id' => $data['id'],
+            // 'id' => $data['id'],
             'name' => $data['name']
         ]);
     }

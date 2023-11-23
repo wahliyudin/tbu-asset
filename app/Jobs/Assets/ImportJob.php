@@ -146,10 +146,13 @@ class ImportJob implements ShouldQueue
             ]);
 
             $tanggal_awal_leasing = CarbonHelper::convertDate($val['tanggal_awal_leasing']);
+            $tanggal_akhir_leasing = CarbonHelper::convertDate($val['tanggal_akhir_leasing']);
             $jangka_waktu_leasing = is_int($val['jangka_waktu_leasing']) ? $val['jangka_waktu_leasing'] : null;
-            $tanggal_akhir_leasing = null;
-            if ($tanggal_awal_leasing && $jangka_waktu_leasing) {
+
+            if ($tanggal_awal_leasing && $jangka_waktu_leasing && !$tanggal_akhir_leasing) {
                 $tanggal_akhir_leasing = Carbon::parse($tanggal_awal_leasing)->addMonths($jangka_waktu_leasing)->format('Y-m-d');
+            } else if ($tanggal_akhir_leasing && $jangka_waktu_leasing && !$tanggal_awal_leasing) {
+                $tanggal_awal_leasing = Carbon::parse($tanggal_akhir_leasing)->addMonths(-$jangka_waktu_leasing)->format('Y-m-d');
             }
             $assetLeasing = AssetLeasingService::store([
                 'asset_id' => $asset->getKey(),
