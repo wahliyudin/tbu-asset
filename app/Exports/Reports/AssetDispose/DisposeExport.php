@@ -27,14 +27,34 @@ class DisposeExport implements FromCollection, WithMapping, WithTitle, ShouldAut
     public function map($row): array
     {
         return [
-            $row->kode,
+            $row->asset_id,
+            $row->no_dispose,
+            $row->nik,
+            $row->nilai_buku,
+            $row->est_harga_pasar,
+            $row->notes,
+            $row->justifikasi,
+            $row->pelaksanaan,
+            $row->remark,
+            $row->note,
+            $row->status,
         ];
     }
 
     public function headings(): array
     {
         return  [
-            'Id Asset',
+            'No Dispose',
+            'Kode Asset',
+            'Employee',
+            'Nilai Buku',
+            'Est. Harga Pasar',
+            'Notes',
+            'Justifikasi',
+            'Pelaksanaan',
+            'Remark',
+            'Note',
+            'Status',
         ];
     }
 

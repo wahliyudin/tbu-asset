@@ -68,7 +68,17 @@
             <table class="table align-middle table-row-dashed fs-6 gy-5" id="asset_dispose_table">
                 <thead>
                     <tr class="text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0">
-                        <th class="min-w-125px">Id Asset</th>
+                        <th class="min-w-125px">No Dispose</th>
+                        <th class="min-w-125px">Kode Asset</th>
+                        <th class="min-w-125px">Employee</th>
+                        <th class="min-w-125px">Nilai Buku</th>
+                        <th class="min-w-125px">Est. Harga Pasar</th>
+                        <th class="min-w-125px">Notes</th>
+                        <th class="min-w-125px">Justifikasi</th>
+                        <th class="min-w-125px">Pelaksanaan</th>
+                        <th class="min-w-125px">Remark</th>
+                        <th class="min-w-125px">Note</th>
+                        <th class="min-w-125px">Status</th>
                     </tr>
                 </thead>
                 <tbody class="fw-semibold text-gray-600">
