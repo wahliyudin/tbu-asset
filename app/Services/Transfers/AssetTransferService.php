@@ -233,4 +233,9 @@ class AssetTransferService
         $maxId = substr($lastKode, $prefixLength + 1, $idLength);
         return $prefix . str_pad((int)$maxId + 1, $idLength, '0', STR_PAD_LEFT);
     }
+
+    public function dataForExport(Request $request)
+    {
+        return AssetTransfer::query()->get();
+    }
 }
