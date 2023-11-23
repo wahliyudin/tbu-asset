@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Transfers;
 
 use App\Http\Controllers\Controller;
 use App\Services\Assets\AssetService;
-use Yajra\DataTables\Facades\DataTables;
 
 class HistoryController extends Controller
 {
@@ -20,7 +19,7 @@ class HistoryController extends Controller
 
     public function datatable()
     {
-        return DataTables::of($this->assetService->assetWithExistTransfers())
+        return datatables()->of($this->assetService->assetWithExistTransfers())
             ->editColumn('id_asset', function ($asset) {
                 return $asset->kode;
             })

@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Transfers;
 
 use App\DataTransferObjects\Assets\AssetData;
 use App\DataTransferObjects\Transfers\AssetTransferData;
-use App\Enums\Transfers\Transfer\Status;
-use App\Enums\Workflows\Status as WorkflowsStatus;
 use App\Helpers\AuthHelper;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;

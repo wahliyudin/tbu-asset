@@ -40,13 +40,13 @@ class AssetTransferRepository
 
     public function deleteFromElasticsearch(AssetTransfer $assetTransfer)
     {
-        // return Message::deleted(Topic::ASSET_TRANSFER, 'id', $assetTransfer->getKey(), Nested::ASSET_TRANSFER);
+        return Message::deleted(Topic::ASSET_TRANSFER, 'id', $assetTransfer->getKey(), Nested::ASSET_TRANSFER);
     }
 
     public function sendToElasticsearch(AssetTransfer $assetTransfer, $key)
     {
         $assetTransfer->load(['asset', 'workflows', 'statusTransfer']);
-        // return Message::updateOrCreate(Topic::ASSET_TRANSFER, $assetTransfer->getKey(), $assetTransfer->toArray());
+        return Message::updateOrCreate(Topic::ASSET_TRANSFER, $assetTransfer->getKey(), $assetTransfer->toArray());
     }
 
     public static function storeWorkflow()
